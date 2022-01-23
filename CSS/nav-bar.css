@@ -1,0 +1,31 @@
+
+.button {
+
+    -fx-background-color:  transparent;
+    -fx-background-radius: 0;
+}
+
+
+.button:hover{
+    -fx-background-color: #2591AC;
+    -fx-text-fill: white;
+
+}
+
+
+
+.button:focused {
+    -fx-background-color: #2799B6;
+    -fx-text-fill: white;
+}
+
+
+
+.button:pressed {
+
+    -fx-background-color: #2FB0D1;
+    -fx-text-fill: white;
+}
+
+
+
