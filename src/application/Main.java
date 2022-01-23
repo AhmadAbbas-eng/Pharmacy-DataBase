@@ -28,7 +28,7 @@ public class Main extends Application {
 
 	public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException, ParseException {
 
-		System.out.println("Ahmad is Readingd a");
+		System.out.println("Ahmad fis Readingd a");
 		Main.readingData();
 		launch(args);
 	}
