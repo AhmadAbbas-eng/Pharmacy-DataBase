@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
@@ -30,43 +31,32 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class signupController implements Initializable {
+
 	int flag = 0;
 
 	@FXML
-	private Label warning;
+	private Button addNewUserButton;
 
 	@FXML
-	private Button add;
+	private Button cancelButton;
 
 	@FXML
-	private Button cancel;
+	private DatePicker dateOfWorkPicker;
 
 	@FXML
-	private DatePicker date;
+	private TextField hourlyPaidTextField;
 
 	@FXML
-	private TextField hourlypaid;
+	private TextField employeeNameTextField;
 
 	@FXML
-	private TextField name;
-
-	@FXML
-	private TextField nid;
-
-	@FXML
-	private TextField phone;
+	private TextField nationalIDTextField;
 
 	@FXML
 	private CheckBox isManager;
 
 	@FXML
-	private PasswordField password;
-
-	@FXML
-	private Button ccancel;
-
-	@FXML
-	private Button yes;
+	private PasswordField passwordTextField;
 
 	@FXML
 	private ListView<String> phoneList;
@@ -78,25 +68,17 @@ public class signupController implements Initializable {
 	private ImageView deletePhone;
 
 	@FXML
-	private ImageView savePhone;
-
-	@FXML
-	private Label title;
-
-	@FXML
 	private TextField phoneTextField;
-
-	@FXML
-	private Label savedLabel;
-	@FXML
-	private ImageView savedIcon;
 
 	public void listOnEditCommit(ListView.EditEvent<String> editedPhone) {
 		if (editedPhone.getNewValue().matches("[0-9]{10}")) {
 			phoneList.getItems().set(editedPhone.getIndex(), editedPhone.getNewValue());
-			warning.setText("");
 		} else {
-			warning.setText("Phone Number Must Contain 10 Digits");
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Wrong Input");
+			alert.setHeaderText(null);
+			alert.setContentText("Phone Number Must Contain 10 Digits");
+			alert.showAndWait();
 		}
 	}
 
@@ -106,29 +88,14 @@ public class signupController implements Initializable {
 			if (phone.matches("[0-9]{10}")) {
 				phoneList.getItems().add(phone);
 				phoneTextField.setText("");
-				warning.setText("");
 			} else {
-				warning.setText("Phone Number Must Contain 10 Digits");
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setTitle("Wrong Input");
+				alert.setHeaderText(null);
+				alert.setContentText("Phone Number Must Contain 10 Digits");
+				alert.showAndWait();
 			}
 		}
-	}
-
-	public void saveOnMouseReleased() {
-		ColorAdjust effect = new ColorAdjust();
-		effect.setBrightness(0);
-		savePhone.setEffect(effect);
-	}
-
-	public void saveOnMouseEntered() {
-		ColorAdjust effect = new ColorAdjust();
-		effect.setBrightness(0.4);
-		savePhone.setEffect(effect);
-	}
-
-	public void saveOnMouseExited() {
-		ColorAdjust effect = new ColorAdjust();
-		effect.setBrightness(0);
-		savePhone.setEffect(effect);
 	}
 
 	public void deleteOnMousePressed() {
@@ -137,7 +104,6 @@ public class signupController implements Initializable {
 		deletePhone.setEffect(effect);
 		String phone = phoneList.getSelectionModel().getSelectedItem();
 		phoneList.getItems().remove(phone);
-		warning.setText("");
 
 	}
 
@@ -167,9 +133,12 @@ public class signupController implements Initializable {
 		if (phone.matches("[0-9]{10}")) {
 			phoneList.getItems().add(phone);
 			phoneTextField.setText("");
-			warning.setText("");
 		} else {
-			warning.setText("Phone Number must contain 10 digits");
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Wrong Input");
+			alert.setHeaderText(null);
+			alert.setContentText("Phone Number Must Contain 10 Digits");
+			alert.showAndWait();
 		}
 	}
 
@@ -193,7 +162,7 @@ public class signupController implements Initializable {
 
 	public void cancelButton(ActionEvent e) throws IOException {
 
-		Stage stage = (Stage) cancel.getScene().getWindow();
+		Stage stage = (Stage) cancelButton.getScene().getWindow();
 		stage.close();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("LogIn.fxml"));
 		Parent root1 = (Parent) loader.load();
@@ -207,32 +176,40 @@ public class signupController implements Initializable {
 
 		boolean flag = false;
 
-		if (name.getText().isBlank() == false && nid.getText().isBlank() == false
-				&& date.getValue().toString().isBlank() == false && hourlypaid.getText().isBlank() == false
-				&& password.getText().isBlank() == false) {
-			if (nid.getText().matches("[0-9]{9}")) {
+		if (employeeNameTextField.getText().isBlank() == false && nationalIDTextField.getText().isBlank() == false
+				&& dateOfWorkPicker.getValue().toString().isBlank() == false
+				&& hourlyPaidTextField.getText().isBlank() == false && passwordTextField.getText().isBlank() == false) {
+			if (nationalIDTextField.getText().matches("[0-9]{9}")) {
 				ArrayList<Employee> List = new ArrayList<>();
 				List = Employee.getEmployeeData(Queries.queryResult(
 						"select * from Employee where Employee_National_ID = ? order by Employee_ID;",
-						new ArrayList<>(Arrays.asList(nid.getText()))));
+						new ArrayList<>(Arrays.asList(nationalIDTextField.getText()))));
 				if (List.isEmpty() == false) {
-					warning.setText("This Employee Already Exists!!");
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setTitle("Wrong Input");
+					alert.setHeaderText(null);
+					alert.setContentText(" Employee Already Exists!");
+					alert.showAndWait();
 				} else {
 					try {
-						Double num = Double.parseDouble(hourlypaid.getText());
+						Double num = Double.parseDouble(hourlyPaidTextField.getText());
 						if (num < 0) {
 							flag = true;
 						}
 					} catch (NumberFormatException e1) {
 						flag = true;
 					}
-					String str = name.getText().replaceAll("\\s", "");
+					String str = employeeNameTextField.getText().replaceAll("\\s", "");
 					if (str.matches("[a-zA-Z]+") == false) {
 						flag = true;
 					}
 
 					if (flag) {
-						warning.setText("Wrong Input Format!");
+						Alert alert = new Alert(Alert.AlertType.ERROR);
+						alert.setTitle("Wrong Input");
+						alert.setHeaderText(null);
+						alert.setContentText("Wrong Input Format!");
+						alert.showAndWait();
 					} else {
 						ArrayList<String> phones = new ArrayList<>(phoneList.getItems());
 
@@ -241,16 +218,17 @@ public class signupController implements Initializable {
 							ismanager = "true";
 						}
 
-						Employee temp = new Employee(Employee.getMaxID(), name.getText(), nid.getText(),
-								date.getValue(), Double.parseDouble(hourlypaid.getText()), phones, password.getText(),
+						Employee temp = new Employee(Employee.getMaxID(), employeeNameTextField.getText(),
+								nationalIDTextField.getText(), dateOfWorkPicker.getValue(),
+								Double.parseDouble(hourlyPaidTextField.getText()), phones, passwordTextField.getText(),
 								ismanager, "true");
 						Employee.getData().add(temp);
 
-						Employee.insertEmployee(name.getText(), nid.getText(), date.getValue(),
-								Double.parseDouble(hourlypaid.getText()), phones, password.getText(), ismanager,
-								"true");
+						Employee.insertEmployee(employeeNameTextField.getText(), nationalIDTextField.getText(),
+								dateOfWorkPicker.getValue(), Double.parseDouble(hourlyPaidTextField.getText()), phones,
+								passwordTextField.getText(), ismanager, "true");
 
-						Stage stage = (Stage) add.getScene().getWindow();
+						Stage stage = (Stage) addNewUserButton.getScene().getWindow();
 						stage.close();
 						FXMLLoader loader = new FXMLLoader(getClass().getResource("LogIn.fxml"));
 						Parent root1 = (Parent) loader.load();
@@ -260,11 +238,19 @@ public class signupController implements Initializable {
 					}
 				}
 			} else {
-				warning.setText("Wrong National ID!!");
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setTitle("Wrong Input");
+				alert.setHeaderText(null);
+				alert.setContentText("Wrong National ID!!");
+				alert.showAndWait();
 			}
 
 		} else {
-			warning.setText("Fields Need To BE Full!!");
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Empty Fields");
+			alert.setHeaderText(null);
+			alert.setContentText("Fields Need To BE Full!!");
+			alert.showAndWait();
 		}
 
 	}

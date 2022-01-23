@@ -20,25 +20,25 @@ import Relations.Employee;
 public class MainPageController implements Initializable {
 
 	@FXML
-	private Label choosenButton;
+	private Label choosenButtonLabel;
 
 	@FXML
-	private Button EmployeesButton;
+	private Button employeesButton;
 
 	@FXML
-	private Button OrdersButton;
+	private Button ordersButton;
 
 	@FXML
-	private Button PaymentButton;
+	private Button paymentButton;
 
 	@FXML
-	private Button PatientsButton;
+	private Button customersButton;
 
 	@FXML
-	private Button ProductsButton;
+	private Button productsButton;
 
 	@FXML
-	private Button SupplierButton;
+	private Button supplierButton;
 
 	@FXML
 	private StackPane contentArea;
@@ -56,33 +56,30 @@ public class MainPageController implements Initializable {
 	private Button sellButton;
 
 	@FXML
-	private Button dispose;
+	private Button disposeButton;
 	
 	@FXML
-	private Button payingOff;
+	private Button payingOffButton;
 
 	@FXML
-	private Label title;
-
-	@FXML
-	private Label userName;
+	private Label userNameLabel;
 	
 	public void PayingOffOnAction(ActionEvent e) throws IOException {
-		choosenButton.setText("Paying Off");
+		choosenButtonLabel.setText("Paying Off");
 		Parent page = FXMLLoader.load(getClass().getResource("PayingOff.fxml"));
 		contentArea.getChildren().removeAll();
 		contentArea.getChildren().setAll(page);
 	}
 
 	public void DisposeOnAction(ActionEvent e) throws IOException {
-		choosenButton.setText("Dispose");
+		choosenButtonLabel.setText("Dispose");
 		Parent page = FXMLLoader.load(getClass().getResource("dissipation.fxml"));
 		contentArea.getChildren().removeAll();
 		contentArea.getChildren().setAll(page);
 	}
 	
 	public void ReportOnAction(ActionEvent e) throws IOException {
-		choosenButton.setText("Reports");
+		choosenButtonLabel.setText("Reports");
 		
 		if (Employee.hasAccess()) {
 			Parent page = FXMLLoader.load(getClass().getResource("Reports.fxml"));
@@ -107,7 +104,7 @@ public class MainPageController implements Initializable {
 	}
 
 	public void SellOnAction(ActionEvent e) throws IOException {
-		choosenButton.setText("New Sell");
+		choosenButtonLabel.setText("New Sell");
 
 		Parent page = FXMLLoader.load(getClass().getResource("Sell.fxml"));
 		contentArea.getChildren().removeAll();
@@ -115,7 +112,7 @@ public class MainPageController implements Initializable {
 	}
 	
 	public void CustomerOnAction(ActionEvent e) throws IOException {
-		choosenButton.setText("Customers");
+		choosenButtonLabel.setText("Customers");
 
 		Parent page = FXMLLoader.load(getClass().getResource("Customer.fxml"));
 		contentArea.getChildren().removeAll();
@@ -123,7 +120,7 @@ public class MainPageController implements Initializable {
 	}
 
 	public void DashboardOnAction(ActionEvent e) throws IOException {
-		choosenButton.setText("Dashboard");
+		choosenButtonLabel.setText("Dashboard");
 
 		Parent page = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
 		contentArea.getChildren().removeAll();
@@ -131,7 +128,7 @@ public class MainPageController implements Initializable {
 	}
 
 	public void ProductsOnAction(ActionEvent e) throws IOException {
-		choosenButton.setText("Storage");
+		choosenButtonLabel.setText("Storage");
 
 		Parent page = FXMLLoader.load(getClass().getResource("Product.fxml"));
 		contentArea.getChildren().removeAll();
@@ -139,7 +136,7 @@ public class MainPageController implements Initializable {
 	}
 
 	public void EmployeesOnAction(ActionEvent e) throws IOException {
-		choosenButton.setText("Employees");
+		choosenButtonLabel.setText("Employees");
 		if (Employee.hasAccess()) {
 			Parent page = FXMLLoader.load(getClass().getResource("Employee.fxml"));
 			contentArea.getChildren().removeAll();
@@ -153,7 +150,7 @@ public class MainPageController implements Initializable {
 	}
 
 	public void SupplierOnAction(ActionEvent e) throws IOException {
-		choosenButton.setText("Suppliers");
+		choosenButtonLabel.setText("Suppliers");
 		if (Employee.hasAccess()) {
 			Parent page = FXMLLoader.load(getClass().getResource("Supplier.fxml"));
 			contentArea.getChildren().removeAll();
@@ -167,7 +164,7 @@ public class MainPageController implements Initializable {
 	}
 
 	public void PaymentOnAction(ActionEvent e) throws IOException {
-		choosenButton.setText("Payment");
+		choosenButtonLabel.setText("Payment");
 		if (Employee.hasAccess()) {
 			Parent page = FXMLLoader.load(getClass().getResource("Payment.fxml"));
 			contentArea.getChildren().removeAll();
@@ -181,7 +178,7 @@ public class MainPageController implements Initializable {
 	}
 
 	public void OrdersOnAction(ActionEvent e) throws IOException {
-		choosenButton.setText("Orders");
+		choosenButtonLabel.setText("Orders");
 		Parent page = FXMLLoader.load(getClass().getResource("SupplierReceivedOrder.fxml"));
 		contentArea.getChildren().removeAll();
 		contentArea.getChildren().setAll(page);
@@ -191,14 +188,14 @@ public class MainPageController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 
 		if (Employee.getCurrentID() != 0) {
-			userName.setText(Employee.getEmployeeName());
+			userNameLabel.setText(Employee.getEmployeeName());
 		} else {
-			userName.setText("");
+			userNameLabel.setText("");
 		}
 
 		Parent page;
 		try {
-			choosenButton.setText("Dashboard");
+			choosenButtonLabel.setText("Dashboard");
 			page = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
 			contentArea.getChildren().setAll(page);
 		} catch (IOException e) {

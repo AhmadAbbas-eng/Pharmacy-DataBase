@@ -21,17 +21,12 @@
          <children>
             <ImageView fitHeight="229.0" fitWidth="210.0" layoutX="41.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../Downloads/icons8-pharmacy-64%20(1).png" />
+                  <Image url="@..\..\Icons\icons8-pharmacy-64 (1).png" />
                </image>
             </ImageView>
             <Label layoutX="41.0" layoutY="308.0" prefHeight="18.0" prefWidth="227.0" text="صيدلية البركة" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="39.0" />
-               </font>
-            </Label>
-            <Label fx:id="warning" alignment="CENTER" layoutX="23.0" layoutY="404.0" prefHeight="18.0" prefWidth="222.0" textAlignment="CENTER" textFill="#d4a9c7">
-               <font>
-                  <Font name="System Bold" size="12.0" />
                </font>
             </Label>
          </children>
@@ -44,7 +39,7 @@
                </font>
             </Label>
             <Line endX="226.7928924560547" endY="-0.2071182131767273" layoutX="185.0" layoutY="44.0" startX="-184.4000244140625" startY="-1.52587890625E-5" stroke="#1d6f84" AnchorPane.bottomAnchor="434.8786988258362" AnchorPane.leftAnchor="0.0999755859375" AnchorPane.rightAnchor="0.8928588867187273" AnchorPane.topAnchor="43.0" />
-            <Button fx:id="add" layoutX="120.0" layoutY="404.0" mnemonicParsing="false" onAction="#addUser" prefHeight="26.0" prefWidth="145.0" stylesheets="@../../CSS/button.css" text="Add New User" />
+            <Button fx:id="addNewUserButton" layoutX="120.0" layoutY="404.0" mnemonicParsing="false" onAction="#addUser" prefHeight="26.0" prefWidth="145.0" stylesheets="@../../CSS/button.css" text="Add New User" />
             <HBox layoutX="18.0" layoutY="55.0" prefHeight="316.0" prefWidth="384.0">
                <children>
                   <VBox prefHeight="280.0" prefWidth="121.0" spacing="22.0">
@@ -84,10 +79,10 @@
                   </VBox>
                   <VBox prefHeight="316.0" prefWidth="222.0" spacing="15.0">
                      <children>
-                        <TextField fx:id="nid" prefHeight="26.0" prefWidth="210.0" promptText="National ID(xxxxxxxxxx)" stylesheets="@../../CSS/textField.css" />
-                        <TextField fx:id="name" prefHeight="26.0" prefWidth="210.0" promptText="Name(only characters)" stylesheets="@../../CSS/textField.css" />
-                        <TextField fx:id="hourlypaid" prefHeight="26.0" prefWidth="210.0" promptText="Hourly Paid(a number)" stylesheets="@../../CSS/textField.css" />
-                        <DatePicker fx:id="date" prefHeight="26.0" prefWidth="286.0" promptText="Date" stylesheets="@../../CSS/textField.css" />
+                        <TextField fx:id="nationalIDTextFeild" prefHeight="26.0" prefWidth="210.0" promptText="National ID(xxxxxxxxxx)" stylesheets="@../../CSS/textField.css" />
+                        <TextField fx:id="employeeNameTextField" prefHeight="26.0" prefWidth="210.0" promptText="Name(only characters)" stylesheets="@../../CSS/textField.css" />
+                        <TextField fx:id="hourlyPaidTextField" prefHeight="26.0" prefWidth="210.0" promptText="Hourly Paid(a number)" stylesheets="@../../CSS/textField.css" />
+                        <DatePicker fx:id="dateOfWorkPicker" prefHeight="26.0" prefWidth="286.0" promptText="Date" stylesheets="@../../CSS/textField.css" />
                         <HBox prefHeight="30.0" prefWidth="222.0">
                            <children>
                               <TextField fx:id="phoneTextField" prefHeight="26.0" prefWidth="198.0" promptText="Phone(xxxxxxxxxx)" stylesheets="@../../CSS/textField.css" />
@@ -99,7 +94,7 @@
                            </children>
                         </HBox>
                         <ListView fx:id="phoneList" onEditCommit="#listOnEditCommit" prefHeight="44.0" prefWidth="222.0" stylesheets="@../../CSS/list.css" />
-                        <PasswordField fx:id="password" promptText="Password" stylesheets="@../../CSS/textField.css" />
+                        <PasswordField fx:id="passwordTextField" promptText="Password" stylesheets="@../../CSS/textField.css" />
                      </children>
                   </VBox>
                   <VBox prefHeight="202.0" prefWidth="24.0" spacing="25.0">
@@ -143,7 +138,7 @@
                   </VBox>
                </children>
             </HBox>
-            <Button fx:id="cancel" layoutX="120.0" layoutY="439.0" mnemonicParsing="false" onAction="#cancelButton" prefHeight="26.0" prefWidth="145.0" stylesheets="@../../CSS/button.css" text="Cancel" />
+            <Button fx:id="cancelButton" layoutX="120.0" layoutY="439.0" mnemonicParsing="false" onAction="#cancelButton" prefHeight="26.0" prefWidth="145.0" stylesheets="@../../CSS/button.css" text="Cancel" />
             <Label layoutX="347.0" layoutY="20.0" text="* Required" textFill="RED" />
             <CheckBox fx:id="isManager" layoutX="25.0" layoutY="371.0" mnemonicParsing="false" text="Manager" textFill="#1d6f84">
                <font>
