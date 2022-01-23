@@ -1,0 +1,11 @@
+.label{
+    -fx-background-color: transparent;
+    -fx-font-weight: Bold;
+}
+
+.label .text{
+    -fx-font-weight: Bold;
+    -fx-background-color: transparent;
+    -fx-font-size: 22px;
+    -fx-fill: white;
+}
