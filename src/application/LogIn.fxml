@@ -14,35 +14,34 @@
    <children>
       <AnchorPane layoutX="292.0" prefHeight="498.0" prefWidth="422.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TextField fx:id="employeeid" layoutX="85.0" layoutY="193.0" prefHeight="26.0" prefWidth="239.0" promptText="Employee ID" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="85.0" />
-            <Button fx:id="login" layoutX="122.0" layoutY="292.0" mnemonicParsing="false" onAction="#logIn" prefHeight="26.0" prefWidth="145.0" stylesheets="@../../CSS/button.css" text="LOG IN" AnchorPane.leftAnchor="122.0" />
+            <TextField fx:id="employeeIDTextField" layoutX="85.0" layoutY="193.0" prefHeight="26.0" prefWidth="239.0" promptText="Employee ID" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="85.0" />
+            <Button fx:id="logInButton" layoutX="122.0" layoutY="292.0" mnemonicParsing="false" onAction="#logIn" prefHeight="26.0" prefWidth="145.0" stylesheets="@../../CSS/button.css" text="LOG IN" AnchorPane.leftAnchor="122.0" />
             <Label layoutX="110.0" layoutY="60.0" prefHeight="54.0" prefWidth="174.0" text="LOG IN" textFill="#1d6f84" AnchorPane.topAnchor="60.0">
                <font>
                   <Font name="System Bold" size="51.0" />
                </font>
             </Label>
             <Line endX="210.99996948242188" endY="-3.9347543716430664" layoutX="197.0" layoutY="134.0" startX="-184.4000244140625" startY="-1.52587890625E-5" stroke="#1d6f84" AnchorPane.topAnchor="133.49998474121094" />
-            <Button fx:id="signup" layoutX="122.0" layoutY="329.0" mnemonicParsing="false" onAction="#signUp" prefHeight="26.0" prefWidth="145.0" stylesheets="@../../CSS/button.css" text="SIGN UP" AnchorPane.leftAnchor="122.0" />
-            <Button fx:id="cancel" layoutX="122.0" layoutY="365.0" mnemonicParsing="false" onAction="#cancelButton" prefHeight="26.0" prefWidth="145.0" stylesheets="@../../CSS/button.css" text="Cancel" AnchorPane.leftAnchor="122.0" />
+            <Button fx:id="signUpButton" layoutX="122.0" layoutY="329.0" mnemonicParsing="false" onAction="#signUp" prefHeight="26.0" prefWidth="145.0" stylesheets="@../../CSS/button.css" text="SIGN UP" AnchorPane.leftAnchor="122.0" />
+            <Button fx:id="cancelButton" layoutX="122.0" layoutY="365.0" mnemonicParsing="false" onAction="#cancelButton" prefHeight="26.0" prefWidth="145.0" stylesheets="@../../CSS/button.css" text="Cancel" AnchorPane.leftAnchor="122.0" />
             <Label layoutX="40.0" layoutY="196.0" text="ID" textFill="#1d6f84" AnchorPane.leftAnchor="40.0">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <PasswordField fx:id="password" layoutX="85.0" layoutY="242.0" prefHeight="26.0" prefWidth="241.0" promptText="Password" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="85.0" />
+            <PasswordField fx:id="passwordTextField" layoutX="85.0" layoutY="242.0" prefHeight="26.0" prefWidth="241.0" promptText="Password" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="85.0" />
             <Label layoutX="21.0" layoutY="245.0" text="Password" textFill="#1d6f84" AnchorPane.leftAnchor="21.0">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="warning" alignment="CENTER" layoutX="56.0" layoutY="157.0" prefHeight="18.0" prefWidth="310.0" textFill="RED" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="497.0" prefWidth="292.0" style="-fx-background-color: #1D6F84;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fitHeight="229.0" fitWidth="210.0" layoutX="41.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="41.0">
                <image>
-                  <Image url="@../../../../Downloads/icons8-pharmacy-64%20(1).png" />
+                  <Image url="@..\..\Icons\icons8-pharmacy-64 (1).png" />
                </image>
             </ImageView>
             <Label layoutX="41.0" layoutY="308.0" prefHeight="18.0" prefWidth="227.0" text="صيدلية البركة" textFill="WHITE" AnchorPane.leftAnchor="41.0">
