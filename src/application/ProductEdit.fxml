@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ProductEditController">
+   <children>
+      <Label layoutX="35.0" layoutY="14.0" prefHeight="25.0" prefWidth="152.0" text="Edit Selected Row" textFill="#1d6f84" AnchorPane.leftAnchor="35.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TableView fx:id="productTable" editable="true" layoutX="25.0" layoutY="54.0" prefHeight="74.0" prefWidth="635.0" style="-fx-background-color: transparent;" stylesheets="@../../CSS/tableWithoutScroll.css">
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+         <columns>
+            <TableColumn fx:id="idColumn" minWidth="35.0" prefWidth="169.99997520446777" text="Product ID" />
+            <TableColumn fx:id="nameColumn" minWidth="35.0" prefWidth="115.33335876464844" text="Product Name" />
+            <TableColumn fx:id="priceColumn" minWidth="20.0" prefWidth="145.33331298828125" text="Price" />
+            <TableColumn fx:id="dosageFormColumn" prefWidth="75.0" text="Dosage Form" />
+         </columns>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </TableView>
+      <Line endX="555.0" endY="3.0517578125E-5" layoutX="135.0" layoutY="152.0" startX="-100.0" startY="3.0517578125E-5" stroke="#1d6f84" />
+      <Label layoutX="35.0" layoutY="184.0" prefHeight="25.0" prefWidth="133.0" text="Add New Product" textFill="#1d6f84" AnchorPane.leftAnchor="35.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="addProduct" fitHeight="28.0" fitWidth="28.0" layoutX="173.0" layoutY="183.0" onMouseEntered="#addProductOnMouseEntered" onMouseExited="#addProductOnMouseExited" onMousePressed="#addProductOnMousePressed" onMouseReleased="#addProductOnMouseReleased" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/icons8-add-48.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="saveProduct" fitHeight="28.0" fitWidth="28.0" layoutX="663.0" layoutY="54.0" onMouseEntered="#saveOnMouseEntered" onMouseExited="#saveOnMouseExited" onMousePressed="#saveOnMousePressed" onMouseReleased="#saveOnMouseReleased" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/icons8-save-60.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="addErrorLabel" alignment="TOP_LEFT" layoutX="224.0" layoutY="184.0" prefHeight="25.0" prefWidth="313.0" textFill="RED" wrapText="true" />
+      <Label fx:id="editErrorLabel" alignment="TOP_LEFT" layoutX="210.0" layoutY="14.0" prefHeight="25.0" prefWidth="313.0" textFill="RED" wrapText="true" />
+      <VBox layoutX="38.0" layoutY="280.0" prefHeight="190.0" prefWidth="296.0">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="3.0">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="114.0" text="Product Name:" textFill="#1d6f84">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="nameTextField" promptText="Product Name" stylesheets="@../../CSS/textField.css" />
+                  <Label text="  *" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="3.0">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="114.0" text="Price:" textFill="#1d6f84">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="priceTextField" promptText="Price" stylesheets="@../../CSS/textField.css" />
+                  <Label text="  *" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="3.0">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="114.0" text="Manufaturer:" textFill="#1d6f84">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="manufaturerTextField" promptText="Manufaturer" stylesheets="@../../CSS/textField.css" />
+                  <Label text="  *" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox fx:id="drugInfoHBox" prefHeight="100.0" prefWidth="269.0" spacing="3.0">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="114.0" text="Scientific Name:" textFill="#1d6f84">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="scientificNameTextField" promptText="Scientific Name" stylesheets="@../../CSS/textField.css" />
+                  <Label text="  *" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox fx:id="drugInfoVBox" layoutX="356.0" layoutY="235.0" prefHeight="236.0" prefWidth="350.0">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="3.0">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="170.0" text="Risk Pregnency Category:" textFill="#1d6f84">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="pregnencyCategorySelector" prefWidth="150.0" promptText="-Select Category-" stylesheets="@../../CSS/combobox.css" />
+                  <Label text="  *" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="3.0">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="170.0" text="Drug Category:" textFill="#1d6f84">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="drugCategoryTextField" promptText="Drug Category" stylesheets="@../../CSS/textField.css" />
+                  <Label text="  *" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="3.0">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="170.0" text="Dosage:" textFill="#1d6f84">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="dosageTextField" promptText="Dosage" stylesheets="@../../CSS/textField.css" />
+                  <Label text="  *" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="269.0" spacing="3.0">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="170.0" text="Dosage Form:" textFill="#1d6f84">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="dosageFormTextField" promptText="Dosage Form" stylesheets="@../../CSS/textField.css" />
+                  <Label text="  *" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="269.0" spacing="3.0">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="170.0" text="Pharmacetical Category:" textFill="#1d6f84">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="pharmaceticalCategorySelector" prefWidth="150.0" promptText="non" stylesheets="@../../CSS/combobox.css" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <CheckBox fx:id="isDrug" layoutX="38.0" layoutY="235.0" lineSpacing="100.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#drugSelection" text="Drug                     " textFill="#1d6f84">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </CheckBox>
+      <Label fx:id="savedLabel" layoutX="26.0" layoutY="128.0" prefHeight="17.0" prefWidth="99.0" text="Saved Successfully" />
+      <ImageView fx:id="savedIcon" fitHeight="15.0" fitWidth="15.0" layoutX="129.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/icons8-save-close-24.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="addedLabel" layoutX="210.0" layoutY="188.0" prefHeight="17.0" prefWidth="107.0" text="Added Successfully" />
+      <ImageView fx:id="addedIcon" fitHeight="15.0" fitWidth="15.0" layoutX="317.0" layoutY="189.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/icons8-done-24.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

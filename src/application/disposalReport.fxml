@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.disposalReportController">
+   <children>
+      <TableView fx:id="disposal" prefHeight="400.0" prefWidth="600.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <columns>
+            <TableColumn fx:id="disName" prefWidth="87.99999618530273" text="Product Name" />
+            <TableColumn fx:id="disPD" prefWidth="75.0" text="Production Date" />
+            <TableColumn fx:id="disED" prefWidth="75.0" text="Expiry Date" />
+            <TableColumn fx:id="disAmount" prefWidth="62.399993896484375" text="Amount" />
+            <TableColumn fx:id="DateOfDis" prefWidth="75.0" text="Date Of Disposal" />
+            <TableColumn fx:id="disEN" prefWidth="75.0" text="Employee Name" />
+            <TableColumn fx:id="disCost" prefWidth="75.0" text="Disposal Cost" />
+         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+   </children>
+</AnchorPane>

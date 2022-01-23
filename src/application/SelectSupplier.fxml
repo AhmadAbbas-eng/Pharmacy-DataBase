@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SupplierOrderController">
+   <center>
+      <AnchorPane prefHeight="400.0" prefWidth="550.0" BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="STable" layoutX="22.0" layoutY="68.0" prefHeight="317.0" prefWidth="506.0" stylesheets="@../../../../Downloads/table.css" AnchorPane.bottomAnchor="14.399999999999977" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="68.0">
+              <columns>
+                <TableColumn fx:id="SName" prefWidth="124.80004501342773" text="Name" />
+                <TableColumn fx:id="SEmail" minWidth="0.0" prefWidth="195.19996643066406" text="Email" />
+                  <TableColumn fx:id="SAddress" prefWidth="184.79996337890623" text="Address" />
+              </columns>
+            </TableView>
+            <TextField fx:id="SupplierName" layoutX="21.0" layoutY="25.0" prefHeight="26.0" prefWidth="330.0" promptText="Search" stylesheets="@../../../../Downloads/search.css" AnchorPane.bottomAnchor="348.6" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="199.0" AnchorPane.topAnchor="25.0" />
+            <Button fx:id="selectValue" layoutX="391.0" layoutY="25.0" mnemonicParsing="false" onAction="#selectButton" prefHeight="26.0" prefWidth="56.0" stylesheets="@../../../../Downloads/button%20(1).css" text="Select" AnchorPane.bottomAnchor="348.6" AnchorPane.leftAnchor="391.0" AnchorPane.rightAnchor="103.39999999999998" AnchorPane.topAnchor="25.0" />
+          <Button fx:id="cancel" layoutX="467.0" layoutY="25.0" mnemonicParsing="false" onAction="#cancelButton" prefHeight="26.0" prefWidth="60.0" stylesheets="@../../../../Downloads/button%20(1).css" text="Cancel" AnchorPane.bottomAnchor="348.6" AnchorPane.leftAnchor="468.4" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="25.0" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

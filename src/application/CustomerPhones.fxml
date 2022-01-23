@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="427.0" prefWidth="513.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.CustomerPhoneController">
+   <children>
+      <BorderPane layoutX="-10.0" layoutY="47.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <AnchorPane prefHeight="42.0" prefWidth="409.0" style="-fx-background-color: #1D6F84;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="title" layoutX="14.0" layoutY="1.0" prefHeight="42.0" prefWidth="491.0" stylesheets="@../../CSS/TitleLabel.css" text="Patient Phones" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="0.0">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </top>
+         <center>
+            <AnchorPane prefHeight="385.0" prefWidth="469.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fx:id="addPhone" fitHeight="28.0" fitWidth="28.0" layoutX="205.0" layoutY="307.3333333333333" onMouseEntered="#addOnMouseEntered" onMouseExited="#addOnMouseExited" onMousePressed="#addOnMousePressed" onMouseReleased="#addOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="205.0">
+                     <image>
+                        <Image url="@../../Icons/icons8-add-48.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="deletePhone" fitHeight="20.0" fitWidth="20.0" layoutX="361.0" layoutY="61.0" onMouseEntered="#deleteOnMouseEntered" onMouseExited="#deleteOnMouseExited" onMousePressed="#deleteOnMousePressed" onMouseReleased="#deleteOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="226.33333333333331" AnchorPane.rightAnchor="48.0" AnchorPane.topAnchor="60.0">
+                     <image>
+                        <Image url="@../../Icons/icons8-delete-60.png" />
+                     </image>
+                  </ImageView>
+                  <ListView fx:id="phoneList" layoutX="48.0" layoutY="35.0" onEditCommit="#listOnEditCommit" prefHeight="221.0" prefWidth="397.0" stylesheets="@../../CSS/list.css" AnchorPane.bottomAnchor="129.0" AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="68.0" AnchorPane.topAnchor="35.0" />
+                  <TextField fx:id="phoneTextField" layoutX="48.0" layoutY="307.3333333333333" onKeyPressed="#textOnEnter" prefHeight="28.0" prefWidth="154.0" promptText="Add Phone" stylesheets="@../../CSS/textField.css" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="48.0" />
+                  <ImageView fx:id="savePhone" fitHeight="20.0" fitWidth="20.0" layoutX="361.0" layoutY="39.0" onMouseEntered="#saveOnMouseEntered" onMouseExited="#saveOnMouseExited" onMousePressed="#saveOnMousePressed" onMouseReleased="#saveOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="248.33333333333331" AnchorPane.rightAnchor="48.0" AnchorPane.topAnchor="39.0">
+                     <image>
+                        <Image url="@../../Icons/icons8-save-60.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="errorLabel" alignment="TOP_LEFT" layoutX="257.0" layoutY="308.0" prefHeight="61.0" prefWidth="185.0" textFill="RED" wrapText="true" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="257.0" AnchorPane.rightAnchor="68.0" />
+                  <Label fx:id="savedLabel" layoutX="48.0" layoutY="267.0" prefHeight="17.0" prefWidth="99.0" text="Saved Successfully" AnchorPane.bottomAnchor="101.0" AnchorPane.leftAnchor="48.0" />
+                  <ImageView fx:id="savedIcon" fitHeight="15.0" fitWidth="15.0" layoutX="151.0" layoutY="268.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="101.0" AnchorPane.leftAnchor="151.0">
+                     <image>
+                        <Image url="@../../Icons/icons8-save-close-24.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

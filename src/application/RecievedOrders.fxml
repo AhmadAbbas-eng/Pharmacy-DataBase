@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="706.0" prefWidth="1314.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ReceivedController">
+   <children>
+      <AnchorPane prefHeight="413.0" prefWidth="597.0">
+         <children>
+            <TableView fx:id="table" layoutX="15.0" layoutY="45.0" prefHeight="334.0" prefWidth="574.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="45.0">
+               <columns>
+                  <TableColumn fx:id="id" prefWidth="35.19998264312744" text="ID" />
+                  <TableColumn fx:id="orderby" prefWidth="84.800048828125" text="Order By " />
+                  <TableColumn fx:id="orderfrom" prefWidth="84.800048828125" text="Order From" />
+                  <TableColumn fx:id="date" prefWidth="139.20001220703125" text="Date Of Order" />
+                  <TableColumn fx:id="RecivedDate" minWidth="0.0" prefWidth="152.79998779296875" text="Recived Date" />
+                  <TableColumn fx:id="Recivedby" minWidth="0.0" prefWidth="162.4000244140625" text="Recived By" />
+                  <TableColumn fx:id="PayDueDate" minWidth="0.0" prefWidth="135.9998779296875" text="Pay Due Date" />
+                  <TableColumn fx:id="cost" prefWidth="60.0" text="Cost" />
+                  <TableColumn fx:id="discount" prefWidth="66.40000915527344" text="Discount" />
+               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+            <TextField fx:id="search" layoutX="28.0" layoutY="13.0" prefHeight="26.0" prefWidth="180.0" promptText="Search" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="13.0" />
+            <ImageView fx:id="back" fitHeight="15.0" fitWidth="13.0" layoutX="9.0" layoutY="20.0" onMousePressed="#backOnAction" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="20.0">
+               <image>
+                  <Image url="@../../Icons/icons8-back-50.png" />
+               </image>
+            </ImageView>
+            <ComboBox fx:id="searchOP" layoutX="223.0" layoutY="14.0" prefWidth="150.0" promptText="- Search -" stylesheets="@../../CSS/combobox.css" />
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

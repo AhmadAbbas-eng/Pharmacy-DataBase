@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="706.0" prefWidth="1314.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.DashboardController">
+   <children>
+      <VBox layoutX="19.0" layoutY="16.0" prefHeight="672.0" prefWidth="1276.0" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="16.0">
+         <children>
+            <HBox prefHeight="722.0" prefWidth="1314.0">
+               <children>
+                  <VBox prefHeight="587.0" prefWidth="906.0" spacing="25.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="85.0" prefWidth="924.0" spacing="40.0">
+                           <children>
+                              <AnchorPane layoutX="213.0" layoutY="10.0" prefHeight="91.0" prefWidth="95.0" style="-fx-background-color: #a47bd9; -fx-background-radius: 25;">
+                                 <children>
+                                    <ImageView fitHeight="67.0" fitWidth="95.0" layoutX="14.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;">
+                                       <image>
+                                          <Image url="@../../Icons/icons8-pharmacist-64.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label fx:id="numberEmployees" alignment="CENTER" contentDisplay="CENTER" layoutX="8.0" layoutY="24.0" prefHeight="35.0" prefWidth="78.0" textAlignment="CENTER" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="4.0" layoutY="62.0" prefHeight="18.0" prefWidth="88.0" text="Total Employees" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="11.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="91.0" prefWidth="95.0" style="-fx-background-color: #5a9fd0; -fx-background-radius: 25;">
+                                 <children>
+                                    <ImageView fitHeight="67.0" fitWidth="95.0" layoutX="14.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;">
+                                       <image>
+                                          <Image url="@../../Icons/icons8-branch-64.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label fx:id="numberSupplier" alignment="CENTER" contentDisplay="CENTER" layoutX="12.0" layoutY="23.0" prefHeight="35.0" prefWidth="78.0" textAlignment="CENTER" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="8.0" layoutY="59.0" prefHeight="18.0" prefWidth="77.0" text="Total Suppliers" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="11.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="633.0" layoutY="10.0" prefHeight="91.0" prefWidth="95.0" style="-fx-background-color: #62ad89; -fx-background-radius: 25;">
+                                 <children>
+                                    <ImageView fitHeight="67.0" fitWidth="95.0" layoutX="14.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;">
+                                       <image>
+                                          <Image url="@../../Icons/icons8-business-building-80.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label fx:id="numberCustomer" alignment="CENTER" contentDisplay="CENTER" layoutX="8.0" layoutY="24.0" prefHeight="35.0" prefWidth="78.0" textAlignment="CENTER" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="4.0" layoutY="62.0" prefHeight="18.0" prefWidth="88.0" text="Total Customers" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="11.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="400.0" layoutY="10.0" prefHeight="91.0" prefWidth="95.0" style="-fx-background-color: #278FAA; -fx-background-radius: 25;">
+                                 <children>
+                                    <ImageView fitHeight="67.0" fitWidth="95.0" layoutX="14.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;">
+                                       <image>
+                                          <Image url="@../../Icons/icons8-medicine-64.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label fx:id="numberProduct" alignment="CENTER" layoutX="24.0" layoutY="23.0" prefHeight="35.0" prefWidth="56.0" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="9.0" layoutY="59.0" prefHeight="18.0" prefWidth="77.0" text="Total Products" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="11.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="460.0" layoutY="10.0" prefHeight="91.0" prefWidth="95.0" style="-fx-background-color: #f5c95e; -fx-background-radius: 25;">
+                                 <children>
+                                    <ImageView fitHeight="67.0" fitWidth="95.0" layoutX="14.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;">
+                                       <image>
+                                          <Image url="@../../Icons/icons8-out-of-stock-50.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label fx:id="numberOFS" alignment="CENTER" layoutX="20.0" layoutY="23.0" prefHeight="35.0" prefWidth="56.0" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="13.0" layoutY="59.0" prefHeight="18.0" prefWidth="77.0" text="Out Of Stock" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="11.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="520.0" layoutY="10.0" prefHeight="91.0" prefWidth="95.0" style="-fx-background-color: #f16333; -fx-background-radius: 25;">
+                                 <children>
+                                    <ImageView fitHeight="67.0" fitWidth="95.0" layoutX="14.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;">
+                                       <image>
+                                          <Image url="@../../Icons/icons8-schedule-50.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label fx:id="numberExpired" alignment="CENTER" layoutX="24.0" layoutY="23.0" prefHeight="35.0" prefWidth="56.0" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="29.0" layoutY="59.0" prefHeight="18.0" prefWidth="45.0" text="Expired" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="11.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </HBox>
+                        <Line endX="821.8929443359375" endY="-2.0710225105285645" startX="-100.0" style="-fx-opacity: 0.1;" />
+                        <HBox layoutX="10.0" layoutY="10.0" prefHeight="532.0" prefWidth="924.0">
+                           <children>
+                              <VBox prefHeight="511.0" prefWidth="916.0" spacing="15.0">
+                                 <children>
+                                    <HBox prefHeight="258.0" prefWidth="904.0" spacing="15.0">
+                                       <children>
+                                          <VBox prefHeight="258.0" prefWidth="284.0" style="-fx-background-color: #f1f1f1;">
+                                             <effect>
+                                                <DropShadow>
+                                                   <color>
+                                                      <Color red="0.8543999791145325" green="0.8677499890327454" blue="0.8899999856948853" />
+                                                   </color>
+                                                </DropShadow>
+                                             </effect>
+                                             <children>
+                                                <AnchorPane prefHeight="253.0" prefWidth="269.0" style="-fx-background-color: #f9f9f9;">
+                                                   <children>
+                                                      <HBox layoutX="10.0" layoutY="44.0" prefHeight="200.0" prefWidth="250.0">
+                                                         <children>
+                                                            <VBox prefHeight="200.0" prefWidth="173.0">
+                                                               <children>
+                                                                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="158.0" style="-fx-background-color: #d1e2e7; -fx-border-color: #bbd3db;" text="Today's Report" />
+                                                                  <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="50.0" prefWidth="156.0" style="-fx-background-color: #e8f0f3; -fx-border-color: #bbd3db;" text="Total Sales" />
+                                                                  <Label alignment="CENTER" layoutX="10.0" layoutY="60.0" prefHeight="50.0" prefWidth="155.0" style="-fx-background-color: #d1e2e7; -fx-border-color: #bbd3db;" text="Total Discount" />
+                                                                  <Label alignment="CENTER" layoutX="10.0" layoutY="111.0" prefHeight="50.0" prefWidth="154.0" style="-fx-background-color: #e8f0f3; -fx-border-color: #bbd3db;" text="Total Paid" />
+                                                                  <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="50.0" prefWidth="158.0" style="-fx-background-color: #d1e2e7; -fx-border-color: #bbd3db;" text="Total Dept" />
+                                                               </children>
+                                                            </VBox>
+                                                            <VBox layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="124.0">
+                                                               <children>
+                                                                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="124.0" style="-fx-background-color: #d1e2e7; -fx-border-color: #bbd3db;" text="Amount" />
+                                                                  <Label fx:id="totalSale" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="50.0" prefWidth="124.0" style="-fx-background-color: #e8f0f3; -fx-border-color: #bbd3db;" text="0.0" />
+                                                                  <Label fx:id="totalDiscount" alignment="CENTER" layoutX="10.0" layoutY="60.0" prefHeight="50.0" prefWidth="124.0" style="-fx-background-color: #d1e2e7; -fx-border-color: #bbd3db;" text="0.0" />
+                                                                  <Label fx:id="totalReceived" alignment="CENTER" layoutX="10.0" layoutY="111.0" prefHeight="50.0" prefWidth="124.0" style="-fx-background-color: #e8f0f3; -fx-border-color: #bbd3db;" text="0.0" />
+                                                                  <Label fx:id="totalDept" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="50.0" prefWidth="124.0" style="-fx-background-color: #d1e2e7; -fx-border-color: #bbd3db;" text="0.0" />
+                                                               </children>
+                                                            </VBox>
+                                                         </children>
+                                                      </HBox>
+                                                      <Label layoutX="8.0" layoutY="5.0" text="Today's Report" textFill="#1d6f84">
+                                                         <font>
+                                                            <Font size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Line endX="120.80001831054688" endY="3.814697265625E-6" layoutX="148.0" layoutY="34.0" startX="-147.99998474121094" startY="3.814697265625E-6" style="-fx-opacity: 0.1;" />
+                                                   </children></AnchorPane>
+                                             </children>
+                                          </VBox>
+                                          <VBox layoutX="309.0" layoutY="10.0" prefHeight="249.0" prefWidth="191.0" style="-fx-background-color: #f9f9f9;">
+                                             <effect>
+                                                <DropShadow>
+                                                   <color>
+                                                      <Color red="0.8543999791145325" green="0.8677499890327454" blue="0.8899999856948853" />
+                                                   </color>
+                                                </DropShadow>
+                                             </effect>
+                                             <children>
+                                                <AnchorPane prefHeight="44.0" prefWidth="442.0">
+                                                   <children>
+                                                      <Label layoutX="36.0" layoutY="7.0" prefHeight="27.0" prefWidth="118.0" text="Out Of Stock" textAlignment="JUSTIFY" textFill="#1d6f84">
+                                                         <font>
+                                                            <Font name="System Bold Italic" size="18.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </AnchorPane>
+                                                <TableView fx:id="OFS" prefHeight="291.0" prefWidth="331.0" stylesheets="@../../CSS/table.css">
+                                                   <columns>
+                                                      <TableColumn fx:id="outOSName" prefWidth="75.0" text="Product Name" />
+                                                   </columns>
+                                                   <columnResizePolicy>
+                                                      <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                                   </columnResizePolicy>
+                                                </TableView>
+                                             </children>
+                                          </VBox>
+                                          <VBox prefHeight="249.0" prefWidth="399.0" style="-fx-background-color: #f9f9f9;">
+                                             <effect>
+                                                <DropShadow>
+                                                   <color>
+                                                      <Color red="0.8543999791145325" green="0.8677499890327454" blue="0.8899999856948853" />
+                                                   </color>
+                                                </DropShadow>
+                                             </effect>
+                                             <children>
+                                                <AnchorPane prefHeight="44.0" prefWidth="442.0">
+                                                   <children>
+                                                      <Label layoutX="94.0" layoutY="6.0" prefHeight="27.0" prefWidth="210.0" text="Expires within 30 days  " textAlignment="JUSTIFY" textFill="#1d6f84">
+                                                         <font>
+                                                            <Font name="System Bold Italic" size="18.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </AnchorPane>
+                                                <TableView fx:id="Expires" prefHeight="291.0" prefWidth="331.0" stylesheets="@../../CSS/table.css">
+                                                  <columns>
+                                                    <TableColumn fx:id="eID" prefWidth="75.0" text="Product ID" />
+                                                    <TableColumn fx:id="eName" prefWidth="103.4666976928711" text="Product Name" />
+                                                      <TableColumn fx:id="epdate" prefWidth="113.33329772949219" text="Production Date" />
+                                                      <TableColumn fx:id="eedate" prefWidth="81.86669921875" text="Expiry Date" />
+                                                      <TableColumn fx:id="eAmount" prefWidth="57.600006103515625" text="Amount" />
+                                                  </columns>
+                                                   <columnResizePolicy>
+                                                      <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                                   </columnResizePolicy>
+                                                </TableView>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <VBox prefHeight="257.0" prefWidth="904.0" style="-fx-background-color: #f1f1f1;">
+                                       <effect>
+                                          <DropShadow>
+                                             <color>
+                                                <Color red="0.8543999791145325" green="0.8677499890327454" blue="0.8899999856948853" />
+                                             </color>
+                                          </DropShadow>
+                                       </effect>
+                                       <children>
+                                          <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="904.0" spacing="20.0">
+                                             <children>
+                                                <ComboBox fx:id="month" prefWidth="150.0" promptText="- Month -" stylesheets="@../../CSS/combobox.css" />
+                                                <ComboBox fx:id="year" layoutX="10.0" layoutY="10.0" prefWidth="150.0" promptText="- Year -" stylesheets="@../../CSS/combobox.css" />
+                                             </children>
+                                          </HBox>
+                                          <LineChart fx:id="monthlySell" prefHeight="261.0" prefWidth="904.0">
+                                            <xAxis>
+                                              <CategoryAxis side="BOTTOM" />
+                                            </xAxis>
+                                            <yAxis>
+                                              <NumberAxis side="LEFT" />
+                                            </yAxis>
+                                          </LineChart>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="598.0" prefWidth="362.0" spacing="5.0">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" />
+                     </HBox.margin>
+                     <children>
+                        <VBox alignment="TOP_CENTER" prefHeight="336.0" prefWidth="332.0" spacing="5.0" style="-fx-background-color: #f9f9f9;">
+                           <effect>
+                              <DropShadow>
+                                 <color>
+                                    <Color red="0.8543999791145325" green="0.8677499890327454" blue="0.8899999856948853" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                           <children>
+                              <Label prefHeight="27.0" prefWidth="290.0" text="Orders to be paid whithin 30 days" textAlignment="JUSTIFY" textFill="#1d6f84">
+                                 <font>
+                                    <Font name="System Bold Italic" size="18.0" />
+                                 </font>
+                              </Label>
+                              <TableView fx:id="toBePaid" prefHeight="310.0" prefWidth="332.0" stylesheets="@../../CSS/table.css">
+                                <columns>
+                                  <TableColumn fx:id="orderID" prefWidth="56.000059485435486" text="Order ID" />
+                                  <TableColumn fx:id="supplierName" prefWidth="95.20008087158203" text="Supplier Name" />
+                                    <TableColumn fx:id="dueDate" prefWidth="136.0" text="Due Date Of Payment" />
+                                    <TableColumn fx:id="cost" prefWidth="43.199951171875" text="Cost" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </VBox>
+                        <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="336.0" prefWidth="332.0" spacing="5.0" style="-fx-background-color: #f9f9f9;">
+                           <effect>
+                              <DropShadow>
+                                 <color>
+                                    <Color red="0.8543999791145325" green="0.8677499890327454" blue="0.8899999856948853" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                           <children>
+                              <Label alignment="CENTER" prefHeight="27.0" prefWidth="210.0" text="Out Of Stock Soon" textAlignment="JUSTIFY" textFill="#1d6f84">
+                                 <font>
+                                    <Font name="System Bold Italic" size="18.0" />
+                                 </font>
+                              </Label>
+                              <TableView fx:id="outOfStock" prefHeight="307.0" prefWidth="332.0" stylesheets="@../../CSS/table.css">
+                                <columns>
+                                  <TableColumn fx:id="oID" prefWidth="75.0" text="Product ID" />
+                                  <TableColumn fx:id="oName" prefWidth="88.5333251953125" text="Product Name" />
+                                    <TableColumn fx:id="opdate" prefWidth="101.066650390625" text="Production Date" />
+                                    <TableColumn fx:id="oedate" prefWidth="89.066650390625" text="Exoiry Date" />
+                                    <TableColumn fx:id="amount" prefWidth="72.0" text="Amount" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

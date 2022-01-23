@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="468.0" prefWidth="628.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.EmployeeEditController">
+   <children>
+      <Label layoutX="35.0" layoutY="14.0" prefHeight="25.0" prefWidth="152.0" text="Edit Selected Row" textFill="#1d6f84" AnchorPane.leftAnchor="35.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TableView fx:id="employeeTable" editable="true" layoutX="25.0" layoutY="54.0" prefHeight="74.0" prefWidth="555.0" style="-fx-background-color: transparent;" stylesheets="@../../CSS/tableWithoutScroll.css" AnchorPane.leftAnchor="25.0">
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <columns>
+            <TableColumn fx:id="idColumn" prefWidth="66.00000190734863" text="ID" />
+            <TableColumn fx:id="nameColumn" minWidth="20.0" prefWidth="121.33330535888672" text="Name" />
+            <TableColumn fx:id="nidColumn" minWidth="50.0" prefWidth="94.66665649414062" text="NID" />
+            <TableColumn fx:id="hourlyPaidColumn" minWidth="30.0" prefWidth="104.66668701171875" text="Hourly Paid" />
+            <TableColumn fx:id="isManagerColumn" minWidth="20.0" prefWidth="64.00003051757812" text="IsManager" />
+            <TableColumn fx:id="isActiveColumn" minWidth="20.0" prefWidth="64.00003051757812" text="isActive" />
+            <TableColumn fx:id="passwordColumn" minWidth="50.0" prefWidth="64.00003051757812" text="Password" />
+         </columns>
+      </TableView>
+      <Line endX="461.0" endY="6.103515625E-5" layoutX="135.0" layoutY="152.0" startX="-115.0" startY="6.103515625E-5" stroke="#1d6f84" />
+      <Label layoutX="35.0" layoutY="184.0" prefHeight="25.0" prefWidth="138.0" text="Add New Empolyee" textFill="#1d6f84" AnchorPane.leftAnchor="35.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="addEmployee" fitHeight="28.0" fitWidth="28.0" layoutX="173.0" layoutY="183.0" onMouseEntered="#addEmployeeOnMouseEntered" onMouseExited="#addEmployeeOnMouseExited" onMousePressed="#addEmployeeOnMousePressed" onMouseReleased="#addEmployeeOnMouseReleased" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/icons8-add-48.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="saveEmployee" fitHeight="20.0" fitWidth="28.0" layoutX="579.0" layoutY="57.0" onMouseEntered="#saveOnMouseEntered" onMouseExited="#saveOnMouseExited" onMousePressed="#saveOnMousePressed" onMouseReleased="#saveOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="25.0">
+         <image>
+            <Image url="@../../Icons/icons8-save-60.png" />
+         </image>
+      </ImageView>
+      <VBox layoutX="35.0" layoutY="225.0" prefHeight="169.0" prefWidth="269.0">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="3.0">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="83.0" text="National ID:" textFill="#1d6f84">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="nidTextField" promptText="National ID (xxxxxxxxx)" stylesheets="@../../CSS/textField.css" />
+                  <Label text="  *" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="3.0">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="83.0" text="Name:" textFill="#1d6f84">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="nameTextField" promptText="Name" stylesheets="@../../CSS/textField.css" />
+                  <Label text="  *" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="3.0">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="83.0" text="Hourly Paid:" textFill="#1d6f84">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="hourlyPaidTextField" promptText="Hourly Paid (Number)" stylesheets="@../../CSS/textField.css" />
+                  <Label text="  *" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="13.0" prefWidth="269.0" spacing="3.0">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="83.0" text="Password:" textFill="#1d6f84">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="passwordTextField" promptText="Password" stylesheets="@../../CSS/textField.css" />
+                  <Label text="  *" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <ListView fx:id="phoneList" layoutX="405.0" layoutY="321.0" onEditCommit="#listOnEditCommit" prefHeight="114.0" prefWidth="137.0" stylesheets="@../../CSS/list.css" />
+      <Label fx:id="errorLabel" alignment="TOP_LEFT" layoutX="224.0" layoutY="184.0" prefHeight="25.0" prefWidth="313.0" textFill="RED" wrapText="true" />
+      <Label fx:id="phoneErrorLabel" alignment="TOP_LEFT" layoutX="308.0" layoutY="321.0" prefHeight="114.0" prefWidth="80.0" textFill="RED" wrapText="true">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="deletePhone" fitHeight="20.0" fitWidth="20.0" layoutX="551.0" layoutY="321.0" onMouseEntered="#deletePhoneOnMouseEntered" onMouseExited="#deletePhoneOnMouseExited" onMousePressed="#deletePhoneOnMousePressed" onMouseReleased="#deletePhoneOnMouseReleased" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/icons8-delete-60.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="editErrorLabel" alignment="TOP_LEFT" layoutX="210.0" layoutY="14.0" prefHeight="25.0" prefWidth="313.0" textFill="RED" wrapText="true" />
+      <VBox layoutX="305.0" layoutY="225.0" prefHeight="96.0" prefWidth="296.0">
+         <children>
+            <HBox prefHeight="47.0" prefWidth="269.0" spacing="3.0">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="97.0" text="Date of Work:" textFill="#1d6f84">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <DatePicker fx:id="dateOfWork" prefHeight="26.0" prefWidth="165.0" promptText="date" />
+                  <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="15.0" text="  *" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="38.0" prefWidth="283.0" spacing="3.0">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="97.0" text="Add Phone:" textFill="#1d6f84">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="phoneTextField" onKeyPressed="#phoneTextOnEnter" prefWidth="137.0" promptText="Add Phone" stylesheets="@../../CSS/textField.css" />
+                  <ImageView fx:id="addPhone" fitHeight="28.0" fitWidth="28.0" onMouseEntered="#addPhoneOnMouseEntered" onMouseExited="#addPhoneOnMouseExited" onMousePressed="#addPhoneOnMousePressed" onMouseReleased="#addPhoneOnMouseReleased" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Icons/icons8-add-48.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="  *" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <CheckBox fx:id="isManager" layoutX="35.0" layoutY="415.0" lineSpacing="100.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Manager:      " textFill="#1d6f84">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </CheckBox>
+   </children>
+</AnchorPane>

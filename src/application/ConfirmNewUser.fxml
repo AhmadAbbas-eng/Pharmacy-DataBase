@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="184.0" prefWidth="434.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ConferNewUserController">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #1D6F84;" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="id" layoutX="151.0" layoutY="59.0" prefHeight="26.0" prefWidth="226.0" promptText="Work ID" stylesheets="@../../CSS/textField.css" />
+            <PasswordField fx:id="password" layoutX="151.0" layoutY="104.0" prefHeight="26.0" prefWidth="226.0" promptText="Password" stylesheets="@../../CSS/textField.css" />
+            <Label layoutX="37.0" layoutY="57.0" text="Manager ID" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="37.0" layoutY="103.0" text="Password" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="29.0" layoutY="14.0" prefHeight="20.0" prefWidth="376.0" text="Confirm Manager Informations For Adding New Employee" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="confirm" layoutX="125.0" layoutY="145.0" mnemonicParsing="false" onAction="#confirm" style="-fx-background-color: #1496b7;" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Confirm">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button fx:id="cancel" layoutX="238.0" layoutY="145.0" mnemonicParsing="false" onAction="#cancelButton" prefHeight="26.0" prefWidth="60.0" style="-fx-background-color: #1496b7;" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Cancel">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Label fx:id="warning" layoutX="43.0" layoutY="34.0" prefHeight="18.0" prefWidth="341.0" textFill="#f50000">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+   </center>
+</BorderPane>
