@@ -33,7 +33,7 @@
                   <Button fx:id="unreceivedOrdersButton" layoutX="15.0" layoutY="359.0" mnemonicParsing="false" onAction="#unReceiveOrderOnAction" prefHeight="26.0" prefWidth="121.0" stylesheets="@../../CSS/button.css" text="Unreceived Orders" AnchorPane.bottomAnchor="14.600000000000001" AnchorPane.leftAnchor="15.0" />
                   <ImageView fx:id="newOrderIcon" fitHeight="30.0" fitWidth="32.0" layoutX="545.0" layoutY="13.0" onMouseEntered="#newOrderOnMouseEntered" onMouseExited="#newOrderOnMouseExited" onMousePressed="#newOrderOnMousePressed" onMouseReleased="#newOrderOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="13.0">
                      <image>
-                        <Image url="@../../../../Downloads/icons8-create-order-50.png" />
+                        <Image url="@../../Icons/icons8-create-order-50.png" />
                      </image>
                   </ImageView>
                   <Button fx:id="receivedOrdersButton" layoutX="145.0" layoutY="359.0" mnemonicParsing="false" onAction="#receivedOrdersOnAction" prefHeight="26.0" prefWidth="122.0" stylesheets="@../../CSS/button.css" text="Received Orders" AnchorPane.bottomAnchor="14.600000000000001" AnchorPane.leftAnchor="145.0" />
