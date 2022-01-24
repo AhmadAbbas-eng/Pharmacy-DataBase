@@ -210,6 +210,7 @@ public class CustomerPhoneController implements Initializable {
 		addPhone.setEffect(effect);
 	}
 
+	@SuppressWarnings("exports")
 	public void setPhoneNumbers(Customer customer) {
 		this.customer = customer;
 		title.setText(customer.getName() + " Phones");

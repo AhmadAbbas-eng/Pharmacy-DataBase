@@ -333,6 +333,7 @@ public class EmployeeEditController implements Initializable {
 		deletePhone.setEffect(effect);
 	}
 
+	@SuppressWarnings("exports")
 	public void setRow(Employee employee, EmployeeController caller) {
 		this.caller = caller;
 		this.employee = employee;
