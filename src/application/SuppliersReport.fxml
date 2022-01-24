@@ -12,11 +12,11 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
          <columns>
-            <TableColumn fx:id="idColumn" prefWidth="66.00000190734863" text="ID" />
-            <TableColumn fx:id="nameColumn" minWidth="20.0" prefWidth="121.33330535888672" text="Name" />
-            <TableColumn fx:id="addressColumn" minWidth="50.0" prefWidth="64.00003051757812" text="Address" />
-            <TableColumn fx:id="duesColumn" minWidth="50.0" prefWidth="64.00003051757812" text="Dues" />
-            <TableColumn fx:id="emaiColumn" minWidth="50.0" prefWidth="64.00003051757812" text="Email" />
+            <TableColumn fx:id="supplierIdColumn" prefWidth="66.00000190734863" text="ID" />
+            <TableColumn fx:id="supplierNameColumn" minWidth="20.0" prefWidth="121.33330535888672" text="Name" />
+            <TableColumn fx:id="supplierAddressColumn" minWidth="50.0" prefWidth="64.00003051757812" text="Address" />
+            <TableColumn fx:id="supplierDuesColumn" minWidth="50.0" prefWidth="64.00003051757812" text="Dues" />
+            <TableColumn fx:id="supplierEmaiColumn" minWidth="50.0" prefWidth="64.00003051757812" text="Email" />
          </columns>
          <opaqueInsets>
             <Insets />

@@ -9,10 +9,10 @@
    <children>
       <TableView fx:id="paymentTable" prefHeight="396.0" prefWidth="600.0" style="-fx-background-color: transparent;" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columns>
-            <TableColumn fx:id="id" minWidth="70.0" prefWidth="70.0" text="ID" />
-            <TableColumn fx:id="date" minWidth="200.0" prefWidth="207.99993896484375" text="Payment Date" />
-            <TableColumn fx:id="amount" minWidth="70.0" prefWidth="92.00006103515625" text="Value" />
-            <TableColumn fx:id="method" minWidth="200.0" prefWidth="200.0" text="Paying Method" />
+            <TableColumn fx:id="paymentIDColumn" minWidth="70.0" prefWidth="70.0" text="ID" />
+            <TableColumn fx:id="paymentDateColumn" minWidth="200.0" prefWidth="207.99993896484375" text="Payment Date" />
+            <TableColumn fx:id="paymentAmountColumn" minWidth="70.0" prefWidth="92.00006103515625" text="Value" />
+            <TableColumn fx:id="paymentMethodColumn" minWidth="200.0" prefWidth="200.0" text="Paying Method" />
          </columns>
          <opaqueInsets>
             <Insets />

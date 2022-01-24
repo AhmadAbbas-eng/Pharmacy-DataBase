@@ -21,16 +21,16 @@ public class ChequesReportController implements Initializable {
 	private TableView<ArrayList<String>> cheque;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> date;
+	private TableColumn<ArrayList<String>, String> chequeDateColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> id;
+	private TableColumn<ArrayList<String>, String> chequeIDColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> name;
+	private TableColumn<ArrayList<String>, String> chequeNameColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> value;
+	private TableColumn<ArrayList<String>, String> chequeValueColumn;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -46,7 +46,7 @@ public class ChequesReportController implements Initializable {
 			e.printStackTrace();
 		}
 
-		id.setCellValueFactory(
+		chequeIDColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -59,7 +59,7 @@ public class ChequesReportController implements Initializable {
 					}
 				});
 		
-		name.setCellValueFactory(
+		chequeNameColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -72,7 +72,7 @@ public class ChequesReportController implements Initializable {
 					}
 				});
 		
-		date.setCellValueFactory(
+		chequeDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -85,7 +85,7 @@ public class ChequesReportController implements Initializable {
 					}
 				});
 		
-		value.setCellValueFactory(
+		chequeValueColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {

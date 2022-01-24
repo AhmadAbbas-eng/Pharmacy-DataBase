@@ -9,10 +9,10 @@
    <children>
       <TableView fx:id="productTable" prefHeight="396.0" prefWidth="600.0" style="-fx-background-color: transparent;" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columns>
-            <TableColumn fx:id="idColumn" minWidth="70.0" prefWidth="70.0" text="ID" />
-            <TableColumn fx:id="nameColumn" minWidth="200.0" prefWidth="207.99993896484375" text="Product Name" />
-            <TableColumn fx:id="priceColumn" minWidth="70.0" prefWidth="92.00006103515625" text="Price" />
-            <TableColumn fx:id="manufacturerColumn" minWidth="200.0" prefWidth="200.0" text="Manufacturer" />
+            <TableColumn fx:id="productIdColumn" minWidth="70.0" prefWidth="70.0" text="ID" />
+            <TableColumn fx:id="productNameColumn" minWidth="200.0" prefWidth="207.99993896484375" text="Product Name" />
+            <TableColumn fx:id="productPriceColumn" minWidth="70.0" prefWidth="92.00006103515625" text="Price" />
+            <TableColumn fx:id="productManufacturerColumn" minWidth="200.0" prefWidth="200.0" text="Manufacturer" />
          </columns>
          <opaqueInsets>
             <Insets />

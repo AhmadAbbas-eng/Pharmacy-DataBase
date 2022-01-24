@@ -18,28 +18,28 @@ public class disposalReportController implements Initializable {
 
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> disAmount;
+	private TableColumn<ArrayList<String>, String> disposalAmountColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> disCost;
+	private TableColumn<ArrayList<String>, String> disposalCostColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> disED;
+	private TableColumn<ArrayList<String>, String> disposalExpiryDateColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> disEN;
+	private TableColumn<ArrayList<String>, String> disposalEmployeeNameColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> disName;
+	private TableColumn<ArrayList<String>, String> disposalProductNameColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> disPD;
+	private TableColumn<ArrayList<String>, String> disposalProductionDateColumn;
 
 	@FXML
 	private TableView<ArrayList<String>> disposal;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> DateOfDis;
+	private TableColumn<ArrayList<String>, String> disposalDateColumn;
 
 
 	@Override
@@ -55,7 +55,7 @@ public class disposalReportController implements Initializable {
 			e1.printStackTrace();
 		}
 
-		disCost.setCellValueFactory(
+		disposalCostColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -68,7 +68,7 @@ public class disposalReportController implements Initializable {
 					}
 				});
 
-		DateOfDis.setCellValueFactory(
+		disposalDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -81,7 +81,7 @@ public class disposalReportController implements Initializable {
 					}
 				});
 
-		disEN.setCellValueFactory(
+		disposalEmployeeNameColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -94,7 +94,7 @@ public class disposalReportController implements Initializable {
 					}
 				});
 
-		disED.setCellValueFactory(
+		disposalExpiryDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -107,7 +107,7 @@ public class disposalReportController implements Initializable {
 					}
 				});
 
-		disAmount.setCellValueFactory(
+		disposalAmountColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -120,7 +120,7 @@ public class disposalReportController implements Initializable {
 					}
 				});
 
-		disName.setCellValueFactory(
+		disposalProductNameColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -133,7 +133,7 @@ public class disposalReportController implements Initializable {
 					}
 				});
 
-		disPD.setCellValueFactory(
+		disposalProductionDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {

@@ -18,16 +18,16 @@ import javafx.util.Callback;
 public class PaymentReportController  implements Initializable{
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> id;
+	private TableColumn<ArrayList<String>, String> paymentIDColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> date;
+	private TableColumn<ArrayList<String>, String> paymentDateColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> amount;
+	private TableColumn<ArrayList<String>, String> paymentAmountColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> method;
+	private TableColumn<ArrayList<String>, String> paymentMethodColumn;
 
 	@FXML
 	private TableView<ArrayList<String>> paymentTable;
@@ -44,7 +44,7 @@ public class PaymentReportController  implements Initializable{
 			e.printStackTrace();
 		}
 
-		id.setCellValueFactory(
+		paymentIDColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -57,7 +57,7 @@ public class PaymentReportController  implements Initializable{
 					}
 				});
 
-		date.setCellValueFactory(
+		paymentDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -70,7 +70,7 @@ public class PaymentReportController  implements Initializable{
 					}
 				});
 
-		amount.setCellValueFactory(
+		paymentAmountColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -83,7 +83,7 @@ public class PaymentReportController  implements Initializable{
 					}
 				});
 
-		method.setCellValueFactory(
+		paymentMethodColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
