@@ -122,9 +122,12 @@ public class MainPageController implements Initializable {
 	public void DashboardOnAction(ActionEvent e) throws IOException {
 		choosenButtonLabel.setText("Dashboard");
 
-		Parent page = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
+		Region  page = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
 		contentArea.getChildren().removeAll();
 		contentArea.getChildren().setAll(page);
+		page.prefWidthProperty().bind(contentArea.widthProperty());
+		page.prefHeightProperty().bind(contentArea.heightProperty());
+		
 	}
 
 	public void ProductsOnAction(ActionEvent e) throws IOException {
@@ -195,10 +198,13 @@ public class MainPageController implements Initializable {
 			userNameLabel.setText("");
 		}
 
-		Parent page;
+		Region page;
 		try {
+			
 			choosenButtonLabel.setText("Dashboard");
 			page = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
+			page.prefWidthProperty().bind(contentArea.widthProperty());
+			page.prefHeightProperty().bind(contentArea.heightProperty());
 			contentArea.getChildren().setAll(page);
 		} catch (IOException e) {
 			e.printStackTrace();

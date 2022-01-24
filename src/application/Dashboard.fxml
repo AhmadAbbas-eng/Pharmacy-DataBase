@@ -67,7 +67,7 @@
             </TableView>
          </children>
       </VBox>
-      <VBox alignment="CENTER" layoutX="6.0" layoutY="406.0" prefHeight="238.0" prefWidth="887.0" style="-fx-background-color: #f1f1f1;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="406.0">
+      <VBox alignment="TOP_CENTER" layoutX="6.0" layoutY="406.0" prefHeight="238.0" prefWidth="887.0" style="-fx-background-color: #f1f1f1;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="406.0">
          <effect>
             <DropShadow>
                <color>
@@ -82,18 +82,6 @@
                   <ComboBox fx:id="yearBox" layoutX="10.0" layoutY="10.0" prefWidth="150.0" promptText="- Year -" stylesheets="@../../CSS/combobox.css" />
                </children>
             </HBox>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <LineChart fx:id="monthlySellChart" prefHeight="261.0" prefWidth="904.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <xAxis>
-                        <CategoryAxis side="BOTTOM" />
-                     </xAxis>
-                     <yAxis>
-                        <NumberAxis side="LEFT" />
-                     </yAxis>
-                  </LineChart>
-               </children>
-            </AnchorPane>
          </children>
       </VBox>
       <Label layoutX="28.0" layoutY="108.0" prefHeight="0.0" prefWidth="887.0" style="-fx-background-color: #000000; -fx-opacity: 0.1;" textFill="#c1d7dc" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="108.0">
@@ -310,6 +298,18 @@
                   <Font name="System Bold" size="11.0" />
                </font>
             </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="3.0" layoutY="443.0" prefHeight="200.0" prefWidth="887.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="443.0">
+         <children>
+            <LineChart fx:id="monthlySellChart" prefHeight="261.0" prefWidth="904.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <xAxis>
+                  <CategoryAxis side="BOTTOM" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis side="LEFT" />
+               </yAxis>
+            </LineChart>
          </children>
       </AnchorPane>
    </children>
