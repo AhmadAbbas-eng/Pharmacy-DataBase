@@ -350,11 +350,9 @@ public class DashboardController implements Initializable {
 
 			if (todaysTotalIncomeAmountArrayList.get(0).get(0)==null) {
 				totalIncomeLabel.setText("0.0");
-				totalDeptLabel.setText(totalSoled + "");
 
 			} else {
 				totalIncome = Double.parseDouble(todaysTotalIncomeAmountArrayList.get(0).get(0));
-				totalDeptLabel.setText((totalSoled -totalIncome - totalDiscount) + "");
 				totalIncomeLabel.setText(totalIncome + "" );
 				
 			}
