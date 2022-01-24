@@ -18,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -80,21 +81,16 @@ public class SelectProductController implements Initializable {
 	private ImageView addDrug;
 
 	@FXML
-	private Label warning;
-
-	@FXML
 	private ImageView delete;
 
 	public void deleteOnMousePressed() {
 		ColorAdjust effect = new ColorAdjust();
 		if (listOrder.getItems().isEmpty()) {
 			effect.setBrightness(0);
-			warning.setText("");
 		} else {
 			effect.setBrightness(0.8);
 			String order = listOrder.getSelectionModel().getSelectedItem();
 			listOrder.getItems().remove(order);
-			warning.setText("");
 		}
 		delete.setEffect(effect);
 
@@ -166,7 +162,6 @@ public class SelectProductController implements Initializable {
 					totalCost += Cost * Quantity;
 					listOrder.getItems().add("ID ="+Table2.getSelectionModel().getSelectedItem().getID() + ",Product Name ="+Table2.getSelectionModel().getSelectedItem().getName() + ", Quantity="
 							+ Quantity + ", Cost/Peice=" + Cost);
-					warning.setText("");
 					cost.clear();
 					quantity.clear();
 					Table.getSelectionModel().clearSelection();
@@ -175,17 +170,29 @@ public class SelectProductController implements Initializable {
 					cost.clear();
 					quantity.clear();
 					Table.getSelectionModel().clearSelection();
-					warning.setText("The Cost and Quantity Cannot Be Negative!!");
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setTitle(null);
+					alert.setHeaderText(null);
+					alert.setContentText("The Cost and Quantity Cannot Be Negative!!");
+					alert.showAndWait();
 				}
 			} else {
-				warning.setText("Select The Commertial Name");
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setTitle(null);
+				alert.setHeaderText(null);
+				alert.setContentText("Select The Commertial Name");
+				alert.showAndWait();
 			}
 
 		} catch (NumberFormatException e1) {
 			cost.clear();
 			quantity.clear();
 			Table.getSelectionModel().clearSelection();
-			warning.setText("Fill the cost and quantity fields");
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle(null);
+			alert.setHeaderText(null);
+			alert.setContentText("Fill the cost and quantity fields");
+			alert.showAndWait();
 		}
 
 	}
@@ -219,7 +226,11 @@ public class SelectProductController implements Initializable {
 
 	public void addDrugList(ActionEvent event) {
 		if (listOrder.getItems().isEmpty()) {
-			warning.setText("You Have To Add Something!!");
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle(null);
+			alert.setHeaderText(null);
+			alert.setContentText("You Have To Add Something!");
+			alert.showAndWait();
 		} else {
 			sendProductList();
 			Stage stage = (Stage) cancel.getScene().getWindow();

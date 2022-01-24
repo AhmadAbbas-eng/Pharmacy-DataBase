@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -105,9 +106,6 @@ public class PaymentController implements Initializable {
 
 	@FXML
 	private Button clearTax;
-
-	@FXML
-	private Label taxWarning;
 
 	@FXML
 	private ComboBox<String> taxop;
@@ -210,7 +208,6 @@ public class PaymentController implements Initializable {
 								} catch (ClassNotFoundException | SQLException e) {
 									e.printStackTrace();
 								}
-								taxWarning.setText("");
 								newtaxid.clear();
 								newamountTax.clear();
 								banktax.clear();
@@ -218,13 +215,25 @@ public class PaymentController implements Initializable {
 								chequeTax.setSelected(false);
 							}
 						} else {
-							taxWarning.setText("This Cheque ID Already Exists!");
+							Alert alert = new Alert(Alert.AlertType.ERROR);
+							alert.setTitle(null);
+							alert.setHeaderText(null);
+							alert.setContentText("This Cheque ID Already Exists!");
+							alert.showAndWait();
 						}
 					} else {
-						taxWarning.setText("This Tax ID Already Exists!");
+						Alert alert = new Alert(Alert.AlertType.ERROR);
+						alert.setTitle(null);
+						alert.setHeaderText(null);
+						alert.setContentText("This Tax ID Already Exists!");
+						alert.showAndWait();
 					}
 				} else {
-					taxWarning.setText("Fill The Cheque Fields");
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setTitle(null);
+					alert.setHeaderText(null);
+					alert.setContentText("Fill The Cheque Fields");
+					alert.showAndWait();
 				}
 			} else {
 				ArrayList<Tax> List = new ArrayList<>();
@@ -263,21 +272,32 @@ public class PaymentController implements Initializable {
 						newtaxid.clear();
 						newamountTax.clear();
 					} else {
-						taxWarning.setText("Wrong Information!");
+						Alert alert = new Alert(Alert.AlertType.ERROR);
+						alert.setTitle(null);
+						alert.setHeaderText(null);
+						alert.setContentText("Wrong Information!");
+						alert.showAndWait();
 					}
 					// add payment
 				} else {
-					taxWarning.setText("This Tax Already Exists");
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setTitle(null);
+					alert.setHeaderText(null);
+					alert.setContentText("This Tax Already Exists");
+					alert.showAndWait();
 				}
 			}
 		} else {
-			taxWarning.setText("Fill The Required Fields");
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle(null);
+			alert.setHeaderText(null);
+			alert.setContentText("Fill The Required Fields");
+			alert.showAndWait();
 		}
 
 	}
 
 	public void clearTaxButton(ActionEvent event) {
-		taxWarning.setText("");
 		newtaxid.clear();
 		newamountTax.clear();
 		banktax.clear();

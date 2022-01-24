@@ -22,10 +22,10 @@ public class Queries {
 
 	// All information needed to connect the date base with java
 	private static String userName = "root";
-	private static String password = "k2m36htg";
+	private static String password = "IamTheBest!";
 	private static String host = "127.0.0.1";
 	private static String port = "3306";
-	private static String dataBaseName = "pharmacy";
+	private static String dataBaseName = "newData";
 	private static String ConnectionURL = "jdbc:mysql://" + host + ":" + port + "/" + dataBaseName
 			+ "?verifyServerCertificate=false";
 

@@ -9,6 +9,7 @@ import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -56,11 +57,6 @@ public class addProductController implements Initializable {
 	@FXML
 	private ImageView saveProduct;
 
-	@FXML
-	private Label addErrorLabel;
-
-	@FXML
-	private Label editErrorLabel;
 
 	@FXML
 	private TextField dosageTextField;
@@ -135,7 +131,10 @@ public class addProductController implements Initializable {
 
 		if ((Queries.queryResult("select * from Product where Product_Name=?;", new ArrayList<>(Arrays.asList(name))))
 				.size() != 0) {
-			addErrorLabel.setText("ERROR: Product with this name already exists!");
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setHeaderText(null);
+			alert.setContentText("Product with this name already exists!");
+			alert.showAndWait();
 		}
 
 		else if (checkPrice && price > 0 && !name.isBlank() && !name.isBlank() && !manufaturer.isEmpty()
@@ -148,8 +147,7 @@ public class addProductController implements Initializable {
 							new ArrayList<>(Arrays.asList(name, manufaturer)));
 					Drug.insertDrug(name, price, scientificName, pregnencyCategory, dosage, drugCategory, dosageForm,
 							pharmaceticalCategory);
-					caller.saveEdits();
-					addErrorLabel.setText("");
+					caller.saveEdits();					
 					showAndFade(addedLabel);
 					showAndFade(addedIcon);
 					nameTextField.setText("");
@@ -160,14 +158,17 @@ public class addProductController implements Initializable {
 					dosageFormTextField.setText("");
 					priceTextField.setText("");
 				} else {
-					addErrorLabel.setText("Fill all required fields");
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setTitle(null);
+					alert.setHeaderText(null);
+					alert.setContentText("Fill all required fields");
+					alert.showAndWait();
 				}
 			} else {
 				Queries.queryUpdate("Insert into Name_Manu values(?, ?);",
 						new ArrayList<>(Arrays.asList(name, manufaturer)));
 				Product.insertProduct(name, price);
 				caller.saveEdits();
-				addErrorLabel.setText("");
 				showAndFade(addedLabel);
 				showAndFade(addedIcon);
 				nameTextField.setText("");
@@ -181,7 +182,11 @@ public class addProductController implements Initializable {
 			}
 
 		} else {
-			addErrorLabel.setText("Fill all required fields");
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle(null);
+			alert.setHeaderText(null);
+			alert.setContentText("Fill all required fields");
+			alert.showAndWait();
 		}
 	}
 
