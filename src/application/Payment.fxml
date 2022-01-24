@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<TabPane prefHeight="489.0" prefWidth="893.0" stylesheets="@../../../../Desktop/tabPane.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PaymentController">
+<TabPane prefHeight="489.0" prefWidth="893.0" stylesheets="@../../CSS/tabPane.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PaymentController">
    <tabs>
       <Tab text="Salary">
          <content>
