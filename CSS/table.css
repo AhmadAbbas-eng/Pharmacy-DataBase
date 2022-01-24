@@ -11,9 +11,9 @@
 }
 
 .table-view .column-header-background{
-    -fx-background-color: linear-gradient(to bottom,#77a8b7, #f1f6f7);
+    -fx-background-color: linear-gradient(to bottom, #77a8b7, #f1f6f7);
     -fx-background-radius: 7px 7px 0px 0px;
-    -fx-background-insets: 0 0 0 0;
+    -fx-background-insets: 0 0 0 0; 
     -fx-padding: 0 0 5px 0;
 }
 
@@ -28,16 +28,16 @@
     -fx-padding: 2 0 2 10px;
 }
 
-.table-row-cell hover {
+.table-row-cell: hover {
     -fx-background-color: #93f9b911;
     -fx-text-background-color:  #1D6F84;
 }
-.table-row-cell odd{
+.table-row-cell: odd{
     -fx-background-color: #93f9b911;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
 }
-.table-row-cell even{
+.table-row-cell: even{
     -fx-background-color: #1dbbdd11;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
@@ -47,7 +47,7 @@
 .table-row-cell:selected {
    -fx-background-color: #BBDFE8; 
 }
-.table-row-cell hover {
+.table-row-cell: hover {
     -fx-background-color: #B2D4DD;
     -fx-text-background-color:  #1D6F84;
 }
@@ -71,23 +71,15 @@
 }
 
 
-/*
-.table-view .virtual-flow .scroll-bar .increment-button,
-.table-view .virtual-flow .scroll-bar .decrement-button {
-    -fx-opacity: 0;
-    -fx-padding: 2;
-}
-*/
-
 .table-view .virtual-flow .scroll-bar .increment-button .increment-arrow,
 .table-view .virtual-flow .scroll-bar .decrement-button .decrement-arrow {
     -fx-background-color: #1D6F84;
 }
 
-
+/*scrollbar color*/
 .table-view .virtual-flow .scroll-bar:vertical .thumb{
-    -fx-background-color:  linear-gradient(to bottom,#77a8b7, #f1f6f7);
+    -fx-background-color:  #77a8b7;
 }
 .table-view .virtual-flow .scroll-bar:horizontal .thumb {
-    -fx-background-color:  linear-gradient(to right,#77a8b7, #f1f6f7);
+    -fx-background-color:  #77a8b7;
 }
