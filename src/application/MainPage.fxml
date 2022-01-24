@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="544.0" prefWidth="973.0" style="-fx-background-color: #1d6f84;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainPageController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="655.0" prefWidth="1113.0" style="-fx-background-color: #1d6f84;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainPageController">
    <center>
       <AnchorPane prefHeight="569.0" prefWidth="883.0" style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
          <children>
@@ -31,14 +31,14 @@
       </AnchorPane>
    </center>
    <left>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="547.0" prefWidth="115.0" style="-fx-background-color: #1d6f84;" BorderPane.alignment="CENTER">
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="657.0" prefWidth="115.0" style="-fx-background-color: #1d6f84;" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="logOutButton" layoutY="517.6" mnemonicParsing="false" onAction="#logOutAction" prefHeight="20.0" prefWidth="131.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Log Out" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <VBox alignment="TOP_CENTER" layoutX="-1.0" layoutY="2.0" prefHeight="440.0" prefWidth="115.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0">
+            <VBox alignment="TOP_CENTER" layoutX="-1.0" layoutY="-55.0" prefHeight="497.0" prefWidth="115.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0">
                <children>
                   <ImageView fitHeight="28.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
                      <image>

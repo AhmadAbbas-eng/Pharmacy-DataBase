@@ -24,6 +24,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
 public class UnReceivedController implements Initializable {
@@ -72,10 +73,11 @@ public class UnReceivedController implements Initializable {
 			"Order By", "Order Month", "Order Year");
 
 	public void backOnAction() throws IOException {
-
-		Parent page = FXMLLoader.load(getClass().getResource("SupplierReceivedOrder.fxml"));
+		Region page = FXMLLoader.load(getClass().getResource("SupplierReceivedOrder.fxml"));
 		mainPane.getChildren().removeAll();
 		mainPane.getChildren().setAll(page);
+		page.prefWidthProperty().bind(mainPane.widthProperty());
+		page.prefHeightProperty().bind(mainPane.heightProperty());
 
 	}
 
@@ -85,13 +87,14 @@ public class UnReceivedController implements Initializable {
 			if (unreceivedOrdersTable.getSelectionModel().getSelectedItem() != null) {
 
 				editLoader = new FXMLLoader(getClass().getResource("ReceiveOrder.fxml"));
-				Parent editPane = (Parent) editLoader.load();
+				Region editPane = (Region) editLoader.load();
+			
 				ReceiveOrdersController edit = editLoader.getController();
-
 				edit.setRow(unreceivedOrdersTable.getSelectionModel().getSelectedItem());
-
 				mainPane.getChildren().removeAll();
 				mainPane.getChildren().setAll(editPane);
+				editPane.prefWidthProperty().bind(mainPane.widthProperty());
+				editPane.prefHeightProperty().bind(mainPane.heightProperty());
 			} else {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle("Unselected Feild");
