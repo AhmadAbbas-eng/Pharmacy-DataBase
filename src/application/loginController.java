@@ -71,7 +71,7 @@ public class loginController{
 							FXMLLoader loader = new FXMLLoader(getClass().getResource("MainPage.fxml"));
 							Parent root1 = (Parent) loader.load();
 							Stage stage2 = new Stage();
-							stage2.setScene(new Scene(root1));
+							stage2.setScene(new Scene(root1,500,500));
 							stage2.show();
 						}
 

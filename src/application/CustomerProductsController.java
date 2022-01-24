@@ -61,6 +61,7 @@ public class CustomerProductsController implements Initializable {
 
 	private String stringToSearch = "";
 
+	@SuppressWarnings("exports")
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 		title.setText(customer.getName() + " Bought Products");

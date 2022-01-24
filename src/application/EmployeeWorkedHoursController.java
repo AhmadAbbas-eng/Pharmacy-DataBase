@@ -211,6 +211,7 @@ public class EmployeeWorkedHoursController implements Initializable {
 		addButton.setEffect(effect);
 	}
 
+	@SuppressWarnings("exports")
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 		title.setText(employee.getName() + " Worked Hours");

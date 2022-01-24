@@ -213,6 +213,7 @@ public class SupplierPhoneController implements Initializable {
 		addPhone.setEffect(effect);
 	}
 
+	@SuppressWarnings("exports")
 	public void setPhoneNumbers(Supplier supplier) {
 		this.supplier = supplier;
 		title.setText("Supplier With ID " + supplier.getID() + " Phones");

@@ -271,6 +271,7 @@ public class ReceiveOrdersController implements Initializable {
 
 	}
 
+	@SuppressWarnings("exports")
 	public void setRow(SupplierOrder supplierOrder) throws ClassNotFoundException, SQLException, ParseException {
 		// this.caller = caller;
 		this.supplierOrder = supplierOrder; // order id
