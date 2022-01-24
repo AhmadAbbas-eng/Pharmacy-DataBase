@@ -155,7 +155,7 @@ public class Product {
 	 * @throws ParseException         If any exception data type parsing occurred
 	 * @throws IOException
 	 */
-	public void report(String path) throws ClassNotFoundException, SQLException, IOException {
+	public static void report(String path) throws ClassNotFoundException, SQLException, IOException {
 		Queries.reportQuerey("select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer\r\n"
 				+ "from product p,Name_manu m\r\n" + "where P.product_name=m.product_name;", path);
 	}

@@ -166,7 +166,7 @@ public class Batch {
 	 * @throws ParseException         If any exception data type parsing occurred
 	 * @throws IOException
 	 */
-	public void report(String path) throws ClassNotFoundException, SQLException, IOException {
+	public static void report(String path) throws ClassNotFoundException, SQLException, IOException {
 		Queries.reportQuerey("select p.product_name,b.batch_production_date,b.batch_expiry_date\r\n"
 				+ "from product p,batch b\r\n" + "where p.product_ID=b.product_Id and b.batch_production_date <> '1111-01-01';", path);
 	}
