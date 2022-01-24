@@ -22,6 +22,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
 public class ReceivedController implements Initializable {
@@ -73,10 +74,11 @@ public class ReceivedController implements Initializable {
 			"Order Month", "Order Year", "Recieved Month", "Recieved Year", "Recieved By");
 
 	public void backOnAction() throws IOException {
-
-		Parent page = FXMLLoader.load(getClass().getResource("SupplierReceivedOrder.fxml"));
+		Region page = FXMLLoader.load(getClass().getResource("SupplierReceivedOrder.fxml"));
 		mainPane.getChildren().removeAll();
 		mainPane.getChildren().setAll(page);
+		page.prefWidthProperty().bind(mainPane.widthProperty());
+		page.prefHeightProperty().bind(mainPane.heightProperty());
 
 	}
 	

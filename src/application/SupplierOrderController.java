@@ -35,6 +35,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -170,9 +171,11 @@ public class SupplierOrderController implements Initializable {
 	}
 
 	public void cancelOnAction(ActionEvent e) throws IOException {
-		Parent page = FXMLLoader.load(getClass().getResource("SupplierReceivedOrder.fxml"));
+		Region page = FXMLLoader.load(getClass().getResource("SupplierReceivedOrder.fxml"));
 		mainPane.getChildren().removeAll();
 		mainPane.getChildren().setAll(page);
+		page.prefWidthProperty().bind(mainPane.widthProperty());
+		page.prefHeightProperty().bind(mainPane.heightProperty());
 	}
 
 	public void confirmOnAction(ActionEvent e)
@@ -250,9 +253,12 @@ public class SupplierOrderController implements Initializable {
 
 				}
 
-				Parent page = FXMLLoader.load(getClass().getResource("SupplierReceivedOrder.fxml"));
+				Region page = FXMLLoader.load(getClass().getResource("SupplierReceivedOrder.fxml"));
 				mainPane.getChildren().removeAll();
 				mainPane.getChildren().setAll(page);
+				page.prefWidthProperty().bind(mainPane.widthProperty());
+				page.prefHeightProperty().bind(mainPane.heightProperty());
+
 
 			}
 
