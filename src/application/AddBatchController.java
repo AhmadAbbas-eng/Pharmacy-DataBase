@@ -35,13 +35,18 @@ public class AddBatchController implements Initializable {
 	@FXML
 	private Label pname;
 
-	private String pid, product;
+	private String product;
+	
+	private int pid;
 
 	ListView<Batch> batchlist;
+	
+	private ReceiveOrdersController caller;
 
-	public void setPID(String id, String name) {
+	public void setProduct(int id, String name,ReceiveOrdersController caller) {
 		this.pid = id;
 		this.product = name;
+		this.caller=caller;
 	}
 
 	public void cancelButton(ActionEvent event) {
@@ -62,12 +67,14 @@ public class AddBatchController implements Initializable {
 						"select * from Batch " + " where Product_ID = ? " + " and batch_production_date = ? "
 								+ " and batch_expiry_date = ? ;",
 						new ArrayList<>(
-								Arrays.asList(Integer.parseInt(pid)+ "", pdate.getValue().toString(), edate.getValue().toString()))));
+								Arrays.asList(pid+ "", pdate.getValue().toString(), edate.getValue().toString()))));
 
-				if (batch.isEmpty() == true) {
-					Batch.insertBatch(Integer.parseInt(pid), pdate.getValue(), edate.getValue(), 0);
+				if (batch.isEmpty()) {
+					Batch.insertBatch(pid, pdate.getValue(), edate.getValue(), 0);
 					Stage stage = (Stage) add.getScene().getWindow();
 					stage.close();
+					caller.updateTable();
+					//-----------------------------
 
 				} else {
 					Alert alert = new Alert(Alert.AlertType.ERROR);

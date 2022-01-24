@@ -234,7 +234,7 @@ public class ReceiveOrdersController implements Initializable {
 		effect.setBrightness(0.8);
 		addBatchIcon.setEffect(effect);
 		AddBatchController addBatchController = new AddBatchController();
-		addBatchController.setPID(supplierOrder.getID()+"", ProductName);
+		addBatchController.setProduct(supplierOrder.getID(), ProductName, this);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("AddBatch.fxml"));
 		Parent root1 = (Parent) loader.load();
 		Stage stage2 = new Stage();
