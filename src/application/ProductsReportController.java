@@ -17,16 +17,16 @@ import Relations.Queries;
 
 public class ProductsReportController implements Initializable {
 	@FXML
-	private TableColumn<ArrayList<String>, String> idColumn;
+	private TableColumn<ArrayList<String>, String> productIdColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> nameColumn;
+	private TableColumn<ArrayList<String>, String> productNameColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> priceColumn;
+	private TableColumn<ArrayList<String>, String> productPriceColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> manufacturerColumn;
+	private TableColumn<ArrayList<String>, String> productManufacturerColumn;
 
 	@FXML
 	private TableView<ArrayList<String>> productTable;
@@ -44,7 +44,7 @@ public class ProductsReportController implements Initializable {
 			e.printStackTrace();
 		}
 
-		idColumn.setCellValueFactory(
+		productIdColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -57,7 +57,7 @@ public class ProductsReportController implements Initializable {
 					}
 				});
 
-		nameColumn.setCellValueFactory(
+		productNameColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -70,7 +70,7 @@ public class ProductsReportController implements Initializable {
 					}
 				});
 
-		priceColumn.setCellValueFactory(
+		productPriceColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -83,7 +83,7 @@ public class ProductsReportController implements Initializable {
 					}
 				});
 
-		manufacturerColumn.setCellValueFactory(
+		productManufacturerColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {

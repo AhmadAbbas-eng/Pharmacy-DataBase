@@ -12,9 +12,9 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
          <columns>
-            <TableColumn fx:id="NID" prefWidth="60.79998701810837" text="National ID" />
-            <TableColumn fx:id="Name" minWidth="20.0" prefWidth="70.40002822875977" text="Name" />
-            <TableColumn fx:id="Debt" minWidth="50.0" prefWidth="64.00003051757812" text="Debt" />
+            <TableColumn fx:id="nationalIDColumn" prefWidth="60.79998701810837" text="National ID" />
+            <TableColumn fx:id="customerNameColumn" minWidth="20.0" prefWidth="70.40002822875977" text="Name" />
+            <TableColumn fx:id="customerDebtColumn" minWidth="50.0" prefWidth="64.00003051757812" text="Debt" />
          </columns>
          <opaqueInsets>
             <Insets />

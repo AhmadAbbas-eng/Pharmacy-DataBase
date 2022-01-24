@@ -21,13 +21,13 @@ public class BatchReportController implements Initializable {
     private TableView<ArrayList<String>> batch;
 
     @FXML
-    private TableColumn<ArrayList<String>, String> edate;
+    private TableColumn<ArrayList<String>, String> expiryDateColumn;
 
     @FXML
-    private TableColumn<ArrayList<String>, String> name;
+    private TableColumn<ArrayList<String>, String> productNameColumn;
 
     @FXML
-    private TableColumn<ArrayList<String>, String> pdate;
+    private TableColumn<ArrayList<String>, String> productionDateColumn;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -40,7 +40,7 @@ public class BatchReportController implements Initializable {
 			e1.printStackTrace();
 		}
 
-		name.setCellValueFactory(
+		productNameColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -52,7 +52,7 @@ public class BatchReportController implements Initializable {
 						}
 					}
 				});
-		pdate.setCellValueFactory(
+		productionDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -65,7 +65,7 @@ public class BatchReportController implements Initializable {
 					}
 				});
 
-		edate.setCellValueFactory(
+		expiryDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {

@@ -15,19 +15,19 @@ public class CustomersReportController implements Initializable {
 	private TableView<Customer> CustomerTable;
 
 	@FXML
-	private TableColumn<Customer, Double> Debt;
+	private TableColumn<Customer, Double> customerDebtColumn;
 
 	@FXML
-	private TableColumn<Customer, String> NID;
+	private TableColumn<Customer, String> nationalIDColumn;
 
 	@FXML
-	private TableColumn<Customer, String> Name;
+	private TableColumn<Customer, String> customerNameColumn;
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		NID.setCellValueFactory(new PropertyValueFactory<Customer, String>("NID"));
-		Name.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
-		Debt.setCellValueFactory(new PropertyValueFactory<Customer, Double>("debt"));
+		nationalIDColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("nationalIDColumn"));
+		customerNameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
+		customerDebtColumn.setCellValueFactory(new PropertyValueFactory<Customer, Double>("debt"));
 
 		CustomerTable.setItems(Customer.getDataList());
 	}
