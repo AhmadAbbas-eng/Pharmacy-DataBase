@@ -79,7 +79,7 @@ public class UnReceivedController implements Initializable {
 
 	}
 
-	public void Receive(ActionEvent event) throws IOException, ClassNotFoundException, SQLException, ParseException {
+	public void receiveOnAction(ActionEvent event) throws IOException, ClassNotFoundException, SQLException, ParseException {
 
 		try {
 			if (unreceivedOrdersTable.getSelectionModel().getSelectedItem() != null) {

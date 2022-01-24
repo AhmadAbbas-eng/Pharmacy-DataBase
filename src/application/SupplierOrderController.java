@@ -23,6 +23,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -39,77 +40,74 @@ import javafx.stage.Stage;
 
 public class SupplierOrderController implements Initializable {
 	@FXML
-	private TableView<Supplier> Table1;
+	private TableView<Supplier> supplierTable;
 
 	@FXML
-	private TextField discount;
+	private TextField discountTextField;
 
 	@FXML
-	private ImageView addProduct;
+	private ImageView addProductIcon;
 
 	@FXML
-	private Button confirm;
+	private Button confirmButton;
 
 	@FXML
-	private Button cancel;
+	private Button cancelButton;
 
 	@FXML
-	private Label cost;
+	private Label costLabel;
 
 	private double costValue;
 
 	@FXML
-	private ListView<String> list;
+	private ListView<String> orderdProductsList;
 
 	@FXML
-	private TextField search;
+	private TextField searchTextField;
 
 	@FXML
-	private TableColumn<Employee, String> name;
+	private TableColumn<Employee, String> employeeNameColumn;
 
 	@FXML
-	private TableColumn<Employee, String> nid;
+	private TableColumn<Employee, String> nationalIDColumn;
 
 	@FXML
-	private DatePicker orderDate;
+	private DatePicker orderDatePicker;
 
 	@FXML
-	private ComboBox<String> selectOP;
+	private ComboBox<String> searchOperationComboBox;
 
 	@FXML
-	private TableColumn<Supplier, String> sname;
+	private TableColumn<Supplier, String> supplierNameColumn;
 
 	@FXML
-	private TableView<Employee> table2;
+	private TableView<Employee> managerTable;
 
 	@FXML
 	private ImageView addEmployee;
 
 	@FXML
-	private ImageView addSupplier;
+	private ImageView addSupplierImage;
 
 	@FXML
-	private Label warning;
-
-	@FXML
-	private Label orderno;
+	private Label orderNOLabel;
 
 	@FXML
 	private StackPane mainPane;
-	
-	private String stringToSearch="";
-	
+
+	private String stringToSearch = "";
+
 	ObservableList<String> Choices = FXCollections.observableArrayList("Select", "Supplier", "Manager");
 
 	public void addOnMousePressed() throws IOException {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
-		addProduct.setEffect(effect);
+		addProductIcon.setEffect(effect);
 
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("SelectProduct.fxml"));
 		Parent root1 = (Parent) loader.load();
 		SelectProductController temp = loader.getController();
-		temp.getProductList(new ArrayList<String>(list.getItems()), this);
+		temp.getProductList(new ArrayList<String>(orderdProductsList.getItems()), this);
 		Stage stage2 = new Stage();
 		stage2.setScene(new Scene(root1));
 		stage2.show();
@@ -119,7 +117,7 @@ public class SupplierOrderController implements Initializable {
 	public void addSupplierOnMousePressed() throws IOException {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
-		addProduct.setEffect(effect);
+		addProductIcon.setEffect(effect);
 
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("AddSupplier.fxml"));
 		Parent root1 = (Parent) loader.load();
@@ -131,82 +129,91 @@ public class SupplierOrderController implements Initializable {
 
 	public void setProductList(ArrayList<String> data, double costValue) {
 		this.costValue = costValue;
-		cost.setText("" + costValue + "");
-		list.setItems(FXCollections.observableArrayList(data));
+		costLabel.setText("" + costValue + "");
+		orderdProductsList.setItems(FXCollections.observableArrayList(data));
 	}
 
 	public void addSupplierOnMouseReleased() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0);
-		addSupplier.setEffect(effect);
+		addSupplierImage.setEffect(effect);
 	}
 
 	public void addSupplierOnMouseEntered() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.4);
-		addSupplier.setEffect(effect);
+		addSupplierImage.setEffect(effect);
 	}
 
 	public void addSupplierOnMouseExited() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0);
-		addSupplier.setEffect(effect);
+		addSupplierImage.setEffect(effect);
 	}
 
 	public void addOnMouseReleased() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0);
-		addProduct.setEffect(effect);
+		addProductIcon.setEffect(effect);
 	}
 
 	public void addOnMouseEntered() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.4);
-		addProduct.setEffect(effect);
+		addProductIcon.setEffect(effect);
 	}
 
 	public void addOnMouseExited() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0);
-		addProduct.setEffect(effect);
+		addProductIcon.setEffect(effect);
 	}
 
-	public void cancelButton(ActionEvent e) throws IOException {
+	public void cancelOnAction(ActionEvent e) throws IOException {
 		Parent page = FXMLLoader.load(getClass().getResource("SupplierReceivedOrder.fxml"));
 		mainPane.getChildren().removeAll();
 		mainPane.getChildren().setAll(page);
 	}
 
-	public void confirmButton(ActionEvent e) throws ClassNotFoundException, SQLException, ParseException, IOException {
-		if (table2.getSelectionModel().getSelectedItem() != null && Table1.getSelectionModel().getSelectedItem() != null
-				&& orderDate.getValue() != null && list.getItems().isEmpty() == false) {
+	public void confirmOnAction(ActionEvent e)
+			throws ClassNotFoundException, SQLException, ParseException, IOException {
+		if (managerTable.getSelectionModel().getSelectedItem() != null
+				&& supplierTable.getSelectionModel().getSelectedItem() != null && orderDatePicker.getValue() != null
+				&& orderdProductsList.getItems().isEmpty() == false) {
 
-			if (orderDate.getValue().compareTo(LocalDate.now()) > 0) {
-				warning.setText("Wrong Date!!");
+			if (orderDatePicker.getValue().compareTo(LocalDate.now()) > 0) {
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setTitle("Wrong Input");
+				alert.setHeaderText(null);
+				alert.setContentText("The Date Value Is Incorrect!");
+				alert.showAndWait();
 
 			} else {
 				double Discount = 0.0;
-				if (discount.getText().isBlank() == false) {
-					Discount = Double.parseDouble(discount.getText());
+				if (discountTextField.getText().isBlank() == false) {
+					Discount = Double.parseDouble(discountTextField.getText());
 				}
 
-				SupplierOrder insertOrder = new SupplierOrder(SupplierOrder.getMaxID(), orderDate.getValue(),
-						Double.parseDouble(cost.getText()), Discount, LocalDate.parse("1111-01-01"),
-						Table1.getSelectionModel().getSelectedItem().getID(),
-						table2.getSelectionModel().getSelectedItem().getID(), -1, LocalDate.parse("1111-01-01"));
+				SupplierOrder insertOrder = new SupplierOrder(SupplierOrder.getMaxID(), orderDatePicker.getValue(),
+						Double.parseDouble(costLabel.getText()), Discount, LocalDate.parse("1111-01-01"),
+						supplierTable.getSelectionModel().getSelectedItem().getID(),
+						managerTable.getSelectionModel().getSelectedItem().getID(), -1, LocalDate.parse("1111-01-01"));
 
-				double newSupplierDues = Table1.getSelectionModel().getSelectedItem().getDues() + costValue - Discount;
+				double newSupplierDues = supplierTable.getSelectionModel().getSelectedItem().getDues() + costValue
+						- Discount;
 
-				Queries.queryUpdate("update Supplier set supplier_dues =? where Supplier_ID =?;", new ArrayList<>(Arrays
-						.asList(newSupplierDues + "", Table1.getSelectionModel().getSelectedItem().getID() + "")));
+				Queries.queryUpdate("update Supplier set supplier_dues =? where Supplier_ID =?;",
+						new ArrayList<>(Arrays.asList(newSupplierDues + "",
+								supplierTable.getSelectionModel().getSelectedItem().getID() + "")));
 
 				SupplierOrder.getData().add(insertOrder);// new order
 
-				SupplierOrder.insertSupplierOrder(orderDate.getValue(), Double.parseDouble(cost.getText()), Discount,
-						LocalDate.parse("1111-01-01"), Table1.getSelectionModel().getSelectedItem().getID(),
-						table2.getSelectionModel().getSelectedItem().getID(), -1, LocalDate.parse("1111-01-01"));
+				SupplierOrder.insertSupplierOrder(orderDatePicker.getValue(), Double.parseDouble(costLabel.getText()),
+						Discount, LocalDate.parse("1111-01-01"),
+						supplierTable.getSelectionModel().getSelectedItem().getID(),
+						managerTable.getSelectionModel().getSelectedItem().getID(), -1, LocalDate.parse("1111-01-01"));
 
-				ArrayList<String> temp = new ArrayList<String>(list.getItems());// add order products
+				ArrayList<String> temp = new ArrayList<String>(orderdProductsList.getItems());
 
 				for (int i = 0; i < temp.size(); ++i) {
 
@@ -220,14 +227,14 @@ public class SupplierOrderController implements Initializable {
 									+ " Batch_Production_Date = '1111-01-01' and Batch_Expiry_Date = '1111-01-01';",
 							new ArrayList<>(Arrays.asList(ProductIdTemp[1]))));
 
-					if (filteredList == null) {
+					if (filteredList.size()==0) {
 						Batch.insertBatch(Integer.parseInt(ProductIdTemp[1]), LocalDate.parse("1111-01-01"),
 								LocalDate.parse("1111-01-01"), Integer.parseInt(quantityTemp[1]));
 					} else {
 
 						Queries.queryUpdate(
 								"update Batch set Batch_Amount = Batch_Amount + ? where Product_ID = ? and "
-										+ "Batch_Production_Date = '1111-01-01' and Batch_Expiry_Date = '1111-01-01;",
+										+ "Batch_Production_Date = '1111-01-01' and Batch_Expiry_Date = '1111-01-01';",
 								new ArrayList<>(Arrays.asList(quantityTemp[1], ProductIdTemp[1])));
 
 					}
@@ -250,27 +257,31 @@ public class SupplierOrderController implements Initializable {
 			}
 
 		} else {
-			warning.setText("You Have To Fill Order Fields !!");
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Empty Fields");
+			alert.setHeaderText(null);
+			alert.setContentText("You Have To Fill Order Fields !!");
+			alert.showAndWait();
 		}
 
 	}
-	
-	public void filterList() {
-		ArrayList<Supplier> filteredList1 = new ArrayList<>();
-		ArrayList<Employee> filteredList2 = new ArrayList<>();
+
+	public void filterList() throws ParseException {
+		ArrayList<Supplier> supplierFilteredList = new ArrayList<>();
+		ArrayList<Employee> employeeFilteredList = new ArrayList<>();
 
 		if (stringToSearch == null || stringToSearch.isEmpty() || stringToSearch.isBlank()
-				|| selectOP.getSelectionModel().getSelectedItem() == "Manager") {
+				|| searchOperationComboBox.getSelectionModel().getSelectedItem() == "Manager") {
 			try {
-				filteredList1 = Supplier.getSupplierData(Queries.queryResult("select * from Supplier;", null));
+				supplierFilteredList = Supplier.getSupplierData(Queries.queryResult("select * from Supplier;", null));
 
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
-		} else if (selectOP.getSelectionModel().getSelectedItem() == "Supplier") {
+		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Supplier") {
 			try {
 
-				filteredList1 = Supplier
+				supplierFilteredList = Supplier
 						.getSupplierData(Queries.queryResult("select * from Supplier where  supplier_name like ? ;",
 								new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
 			} catch (ClassNotFoundException | SQLException e) {
@@ -279,66 +290,73 @@ public class SupplierOrderController implements Initializable {
 		} else {
 			try {
 
-				filteredList1 = Supplier.getSupplierData(Queries.queryResult("select * from Supplier;", null));
+				supplierFilteredList = Supplier
+						.getSupplierData(Queries.queryResult("select * from Supplier  where  supplier_name like ?;",
+								new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
 		}
 
 		if (stringToSearch == null || stringToSearch.isEmpty() || stringToSearch.isBlank()
-				|| selectOP.getSelectionModel().getSelectedItem() == "Supplier") {
+				|| searchOperationComboBox.getSelectionModel().getSelectedItem() == "Supplier") {
 			try {
 
-				filteredList2 = Employee.getEmployeeData(
-						Queries.queryResult("select * from Employee where isManager = 'true' and isActive = 'true';", null));
+				employeeFilteredList = Employee.getEmployeeData(Queries
+						.queryResult("select * from Employee where isManager = 'true' and isActive = 'true';", null));
 
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
 				e.printStackTrace();
 			}
-		} else if (selectOP.getSelectionModel().getSelectedItem() == "Manager") {
+		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Manager") {
 			try {
 
-				filteredList2 = Employee.getEmployeeData(Queries.queryResult(
-						"select * from Employee where isManager = 'true' " + "and  Employee_name like and isActive = 'true'? ;",
+				employeeFilteredList = Employee.getEmployeeData(Queries.queryResult(
+						"select * from Employee where isManager = 'true' "
+								+ "and  Employee_name like ? and isActive = 'true' ;",
 						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
 				e.printStackTrace();
 			}
 		} else {
 			try {
-
-				filteredList1 = Supplier.getSupplierData(Queries.queryResult("select * from employee;", null));
+				employeeFilteredList = Employee.getEmployeeData(Queries.queryResult(
+						"select * from Employee where isManager = 'true' and isActive = 'true' and  Employee_name like ?;",
+						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
 		}
 
-		table2.setItems(FXCollections.observableArrayList(filteredList2));
-		Table1.setItems(FXCollections.observableArrayList(filteredList1));
+		managerTable.setItems(FXCollections.observableArrayList(employeeFilteredList));
+		supplierTable.setItems(FXCollections.observableArrayList(supplierFilteredList));
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		selectOP.setValue("Select");
-		selectOP.setItems(Choices);
-		sname.setCellValueFactory(new PropertyValueFactory<Supplier, String>("name"));
-		name.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
-		nid.setCellValueFactory(new PropertyValueFactory<Employee, String>("NID"));
+		searchOperationComboBox.setValue("Select");
+		searchOperationComboBox.setItems(Choices);
+		supplierNameColumn.setCellValueFactory(new PropertyValueFactory<Supplier, String>("name"));
+		employeeNameColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
+		nationalIDColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("NID"));
 		int max = SupplierOrder.getMaxID() + 1;
-		orderno.setText("Order NO." + max);
+		orderNOLabel.setText("Order NO." + max);
 
-		Table1.setItems(Supplier.getDataList());
+		supplierTable.setItems(Supplier.getDataList());
 		try {
-			table2.setItems(FXCollections.observableArrayList(Employee
-					.getEmployeeData(Queries.queryResult("select * from Employee where isManager = 'true' and isActive = 'true';", null))));
+			managerTable.setItems(FXCollections.observableArrayList(Employee.getEmployeeData(Queries
+					.queryResult("select * from Employee where isManager = 'true' and isActive = 'true';", null))));
 		} catch (ClassNotFoundException | SQLException | ParseException e1) {
 			e1.printStackTrace();
 		}
 
-		search.textProperty().addListener((observable, oldValue, newValue) -> {
-			stringToSearch=newValue;
-			filterList();
-			
+		searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+			stringToSearch = newValue;
+			try {
+				filterList();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 		});
 
 	}
