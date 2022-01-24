@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
@@ -42,119 +43,125 @@ public class ReceiveOrdersController implements Initializable {
 	private int counter = 0;
 
 	@FXML
-	private TableView<ArrayList<String>> orderProducts;
+	private TableView<ArrayList<String>> orderProductTabel;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> amount;
+	private TableColumn<ArrayList<String>, String> quantityColumn;
 
 	@FXML
-	private TableColumn<Batch, String> bedate;
+	private TableColumn<Batch, String> batchExpiryDateColumn;
 
 	@FXML
-	private TableColumn<Batch, String> bpdate;
+	private TableColumn<Batch, String> batchProductionDateColumn;
 
 	@FXML
-	private Button cancel;
+	private Button cancelButton;
 
 	@FXML
-	private Button confirmBatch;
+	private Button confirmBatchButton;
 
 	@FXML
-	private CheckBox confirmq;
+	private CheckBox confirmQuantityCheckBox;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> eDate;
+	private TableColumn<ArrayList<String>, String> expiryDateColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> pid;
+	private TableColumn<ArrayList<String>, String> productIDColumn;
 
 	@FXML
-	private Label errorLabel;
+	private TableColumn<ArrayList<String>, String> productionDateColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> pDate;
+	private TableColumn<ArrayList<String>, String> productNameColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> product;
+	private TextField quantityTextField;
 
 	@FXML
-	private TextField quantity;
+	private TextField costTextField;
 
 	@FXML
-	private TextField cost;
+	private DatePicker receivedDatePicker;
 
 	@FXML
-	private DatePicker receivedDate;
+	private DatePicker payDueDatePicker;
 
 	@FXML
-	private DatePicker payDueDate;
+	private Label savedQuantityLabel;
 
 	@FXML
-	private Label savedQ;
-
-	SupplierOrder supplierOrder;
-
-	UnReceivedController caller;
+	private TableView<Batch> productsBatchColumn;
 
 	@FXML
-	private TableView<Batch> ProductsBatch;
-
-	private static ArrayList<SupplierOrderBatch> orderedProducts;
-
-	private static ArrayList<ArrayList<String>> data = new ArrayList<>();
+	private Label orderNumberLabel;
 
 	@FXML
-	private Label orderNO;
+	private Label choosenProductLabel;
 
 	@FXML
-	private Label choosenProduct;
+	private ImageView saveIcon;
 
 	@FXML
-	private Label warning;
+	private ImageView addBatchIcon;
 
+	@FXML
+	private StackPane mainPane;
+	
 	private String ProductName;
 
 	private String ProductId;
 
 	private String QuantityStored;
+	
+	SupplierOrder supplierOrder;
 
-	@FXML
-	private ImageView save;
+	UnReceivedController caller;
 
-	@FXML
-	private ImageView addBatch;
+	private static ArrayList<SupplierOrderBatch> orderedProducts;
 
-	@FXML
-	private StackPane mainPane;
+	private static ArrayList<ArrayList<String>> data = new ArrayList<>();
+	
+	public void checkBoxOnAction(ActionEvent e) {
+		if(confirmQuantityCheckBox.isSelected()==true) {
+			quantityTextField.setOpacity(0);
+
+		}else {
+			quantityTextField.setOpacity(1);
+		}
+	}
 
 	public void saveOnMousePressed() throws IOException, ClassNotFoundException, SQLException {
-		if (receivedDate.getValue() != null && payDueDate.getValue() != null) {
+		if (receivedDatePicker.getValue() != null && payDueDatePicker.getValue() != null) {
 
-			if (receivedDate.getValue().compareTo(payDueDate.getValue()) == 0
-					|| receivedDate.getValue().compareTo(payDueDate.getValue()) > 0
-					|| supplierOrder.getDateOfOrder().compareTo(payDueDate.getValue()) > 0
-					&& receivedDate.getValue().compareTo(LocalDate.now()) > 0) {
-				warning.setText("Set A Reasonable Date");
+			if (receivedDatePicker.getValue().compareTo(payDueDatePicker.getValue()) == 0
+					|| receivedDatePicker.getValue().compareTo(payDueDatePicker.getValue()) > 0
+					|| supplierOrder.getDateOfOrder().compareTo(payDueDatePicker.getValue()) > 0
+					&& receivedDatePicker.getValue().compareTo(LocalDate.now()) > 0) {
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setTitle("Wrong Input");
+				alert.setHeaderText(null);
+				alert.setContentText("Set A Reasonable Date");
+				alert.showAndWait();
 
-			} else if (orderedProducts.size() == counter && receivedDate.getValue() != null
-					&& payDueDate.getValue() != null) {
-				warning.setText("");
+			} else if (orderedProducts.size() == counter && receivedDatePicker.getValue() != null
+					&& payDueDatePicker.getValue() != null) {
 				ColorAdjust effect = new ColorAdjust();
 				effect.setBrightness(0.8);
-				save.setEffect(effect);
+				saveIcon.setEffect(effect);
 
-				if (cost.getText().isBlank() == false) {
+				if (costTextField.getText().isBlank() == false) {
 
 					Queries.queryUpdate(
 							"update s_order set Recieved_by=? , Recieved_Date=? , order_cost =?  where order_id=? ;",
-							new ArrayList<>(Arrays.asList(Employee.getCurrentID()+"", receivedDate.getValue().toString(),
-									cost.getText(), supplierOrder.getID()+"")));
+							new ArrayList<>(Arrays.asList(Employee.getCurrentID()+"", receivedDatePicker.getValue().toString(),
+									costTextField.getText(), supplierOrder.getID()+"")));
 					Queries.queryUpdate("update Supplier set supplier_dues =? where Supplier_ID =?;"
-			                  ,new ArrayList<>(Arrays.asList(cost.getText(),supplierOrder.getSupplierID()+"")));
+			                  ,new ArrayList<>(Arrays.asList(costTextField.getText(),supplierOrder.getSupplierID()+"")));
 					
 				} else {
 					Queries.queryUpdate("update s_order set Recieved_by=? , Recieved_Date=? where order_id=? ;",
-							new ArrayList<>(Arrays.asList(Employee.getCurrentID()+"", receivedDate.getValue().toString(),
+							new ArrayList<>(Arrays.asList(Employee.getCurrentID()+"", receivedDatePicker.getValue().toString(),
 									supplierOrder.getID()+"")));
 				}
 				counter = 0;
@@ -187,7 +194,11 @@ public class ReceiveOrdersController implements Initializable {
 				mainPane.getChildren().setAll(page);
 			}
 		} else {
-			warning.setText("Set A Date And Fill All Fields");
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Wrong Input");
+			alert.setHeaderText(null);
+			alert.setContentText("Set A Date And Fill All Fields");
+			alert.showAndWait();
 		}
 
 	}
@@ -199,26 +210,26 @@ public class ReceiveOrdersController implements Initializable {
 		} else {
 			effect.setBrightness(0.8);
 		}
-		save.setEffect(effect);
+		saveIcon.setEffect(effect);
 	}
 
 	public void saveOnMouseEntered() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.4);
-		save.setEffect(effect);
+		saveIcon.setEffect(effect);
 	}
 
 	public void saveOnMouseExited() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0);
-		save.setEffect(effect);
+		saveIcon.setEffect(effect);
 
 	}
 
 	public void addOnMousePressed() throws IOException {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
-		addBatch.setEffect(effect);
+		addBatchIcon.setEffect(effect);
 		AddBatchController addBatchController = new AddBatchController();
 		addBatchController.setPID(supplierOrder.getID()+"", ProductName);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("AddBatch.fxml"));
@@ -232,31 +243,31 @@ public class ReceiveOrdersController implements Initializable {
 	public void addOnMouseReleased() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0);
-		save.setEffect(effect);
+		saveIcon.setEffect(effect);
 	}
 
 	public void addOnMouseEntered() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.4);
-		save.setEffect(effect);
+		saveIcon.setEffect(effect);
 	}
 
 	public void addOnMouseExited() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0);
-		save.setEffect(effect);
+		saveIcon.setEffect(effect);
 	}
 
 	public void updateTable() throws ClassNotFoundException, SQLException, ParseException {
 
 		// upload batches to the listview
 		
-		ProductsBatch.setItems(
+		productsBatchColumn.setItems(
 				FXCollections.observableArrayList(Batch.getBatchData(Queries.queryResult(
 						"select * from Batch where product_id =? and batch_production_date <> '1111-01-01';"
 						,new ArrayList<>(Arrays.asList(orderedProducts.get(counter).getPID()+""))))));
 		// set order number
-		orderNO.setText("Order NO." + supplierOrder.getID());
+		orderNumberLabel.setText("Order NO." + supplierOrder.getID());
 
 		// get products ids
 		ArrayList<Product> productName = Product.getProductData(Queries.queryResult("select * from Product where product_id =?;"
@@ -266,8 +277,8 @@ public class ReceiveOrdersController implements Initializable {
 		ProductId = orderedProducts.get(counter).getPID()+"";
 		QuantityStored = orderedProducts.get(counter).getAmount() + "";
 
-		choosenProduct.setText(productName.get(0).getName());
-		savedQ.setText("Quantity = " + orderedProducts.get(counter).getAmount() + "");
+		choosenProductLabel.setText(productName.get(0).getName());
+		savedQuantityLabel.setText("Quantity = " + orderedProducts.get(counter).getAmount() + "");
 
 	}
 
@@ -279,68 +290,65 @@ public class ReceiveOrdersController implements Initializable {
 		orderedProducts = SupplierOrderBatch.getSupplierOrderBatchData(Queries.queryResult("select * from s_order_batch where order_id =?;"
 				,new ArrayList<>(Arrays.asList(supplierOrder.getID()+""))));
 		// upload first product batches
-		ProductsBatch.setItems(
+		productsBatchColumn.setItems(
 				FXCollections.observableArrayList(Batch.getBatchData(Queries.queryResult("select * from batch where product_id =? and Batch_Production_Date <> '1111-01-01';"
 						,new ArrayList<>(Arrays.asList(orderedProducts.get(0).getPID()+""))))));
 
-		orderNO.setText("Order NO." + supplierOrder.getID());
+		orderNumberLabel.setText("Order NO." + supplierOrder.getID());
 		
 		ArrayList<Product> productName = Product.getProductData(Queries.queryResult("select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer "
 				+ " from product p,Name_manu m where P.product_name=m.product_name and Product_ID =?;"
 				,new ArrayList<>(Arrays.asList(orderedProducts.get(0).getPID()+""))));
 		
-		choosenProduct.setText(productName.get(0).getName());
-		savedQ.setText("Quantity = " + orderedProducts.get(0).getAmount() + "");
+		choosenProductLabel.setText(productName.get(0).getName());
+		savedQuantityLabel.setText("Quantity = " + orderedProducts.get(0).getAmount() + "");
 		ProductName = productName.get(0).getName();
 		ProductId = orderedProducts.get(0).getPID()+"";
 		QuantityStored = orderedProducts.get(0).getAmount() + "";
 
 	}
 
-	public void ConfirmAdd(ActionEvent event) throws ClassNotFoundException, SQLException, ParseException {
-		System.out.println(counter + "confirm1");
+	public void confirmBatchOnAction(ActionEvent event) throws ClassNotFoundException, SQLException, ParseException {
 		if (orderedProducts.size() > counter) {
-			if ( orderedProducts.size() > counter && ProductsBatch.getSelectionModel().getSelectedItem() != null) {
-				warning.setText("");
-				//
+			if ( orderedProducts.size() > counter && productsBatchColumn.getSelectionModel().getSelectedItem() != null) {
 				ArrayList<String> productsEntered = new ArrayList<String>();
-				if (confirmq.isSelected() == true) {
-					System.out.println(counter + "confirmq true");
-
+				if (confirmQuantityCheckBox.isSelected() == true) {
+					quantityTextField.setOpacity(0);
 					productsEntered.add(ProductId);
 					productsEntered.add(ProductName);
-					productsEntered.add(ProductsBatch.getSelectionModel().getSelectedItem().getProductionDate().toString());
-					productsEntered.add(ProductsBatch.getSelectionModel().getSelectedItem().getExpiryDate().toString());
+					productsEntered.add(productsBatchColumn.getSelectionModel().getSelectedItem().getProductionDate().toString());
+					productsEntered.add(productsBatchColumn.getSelectionModel().getSelectedItem().getExpiryDate().toString());
 					productsEntered.add(QuantityStored);
 
 					if (orderedProducts.size() > counter && productsEntered.isEmpty() == false) {
-						System.out.println(counter + "add");
-
 						data.add(productsEntered);
-						orderProducts.setItems(FXCollections.observableArrayList(data));
+						orderProductTabel.setItems(FXCollections.observableArrayList(data));
 						++counter;
 						if (orderedProducts.size() > counter)
 							updateTable();
 
 					}
-					confirmq.setSelected(false);
+					confirmQuantityCheckBox.setSelected(false);
 				} else {
-					System.out.println(counter + "confirmq false");
-					if (quantity.getText().isBlank() == true) {
-						warning.setText("You Have To Enter The New Quantity!");
+					if (quantityTextField.getText().isBlank() == true) {
+						Alert alert = new Alert(Alert.AlertType.ERROR);
+						alert.setTitle("Empty Field!");
+						alert.setHeaderText(null);
+						alert.setContentText("You Have To Enter The New Quantity!");
+						alert.showAndWait();
 					} else {
-						int Qtemp = Integer.parseInt(quantity.getText());
+						int Qtemp = Integer.parseInt(quantityTextField.getText());
 						productsEntered.add(ProductId);
 						productsEntered.add(ProductName);
 						productsEntered.add(
-								ProductsBatch.getSelectionModel().getSelectedItem().getProductionDate().toString());
+								productsBatchColumn.getSelectionModel().getSelectedItem().getProductionDate().toString());
 						productsEntered
-								.add(ProductsBatch.getSelectionModel().getSelectedItem().getExpiryDate().toString());
+								.add(productsBatchColumn.getSelectionModel().getSelectedItem().getExpiryDate().toString());
 						productsEntered.add(Qtemp + "");
 
 						if (orderedProducts.size() > counter && productsEntered.isEmpty() == false) {
 							data.add(productsEntered);
-							orderProducts.setItems(FXCollections.observableArrayList(data));
+							orderProductTabel.setItems(FXCollections.observableArrayList(data));
 							++counter;
 							if (orderedProducts.size() > counter)
 								updateTable();
@@ -349,10 +357,18 @@ public class ReceiveOrdersController implements Initializable {
 					}
 				}
 			} else {
-				warning.setText("You Have To Select A Batch");
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setTitle("Empty Field!");
+				alert.setHeaderText(null);
+				alert.setContentText("You Have To Select A Batch");
+				alert.showAndWait();
 			}
 		} else {
-			warning.setText("You Have To Save The Data");
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText(null);
+			alert.setContentText("You Have To Save The Data");
+			alert.showAndWait();
 		}
 	}
 
@@ -364,10 +380,19 @@ public class ReceiveOrdersController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		bpdate.setCellValueFactory(new PropertyValueFactory<Batch, String>("productionDate"));
-		bedate.setCellValueFactory(new PropertyValueFactory<Batch, String>("expiryDate"));
+		
+		if(confirmQuantityCheckBox.isSelected()==true) {
+			
+			quantityTextField.setOpacity(0);
 
-		pid.setCellValueFactory(
+		}else {
+			quantityTextField.setOpacity(1);
+		}
+		
+		batchProductionDateColumn.setCellValueFactory(new PropertyValueFactory<Batch, String>("productionDate"));
+		batchExpiryDateColumn.setCellValueFactory(new PropertyValueFactory<Batch, String>("expiryDate"));
+
+		productIDColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -379,7 +404,7 @@ public class ReceiveOrdersController implements Initializable {
 						}
 					}
 				});
-		product.setCellValueFactory(
+		productNameColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -392,7 +417,7 @@ public class ReceiveOrdersController implements Initializable {
 					}
 				});
 
-		eDate.setCellValueFactory(
+		expiryDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -405,7 +430,7 @@ public class ReceiveOrdersController implements Initializable {
 					}
 				});
 
-		amount.setCellValueFactory(
+		quantityColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -417,7 +442,7 @@ public class ReceiveOrdersController implements Initializable {
 						}
 					}
 				});
-		pDate.setCellValueFactory(
+		productionDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
