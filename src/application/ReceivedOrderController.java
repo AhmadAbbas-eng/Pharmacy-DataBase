@@ -104,11 +104,9 @@ public class ReceivedOrderController implements Initializable {
 			page.prefWidthProperty().bind(mainPane.widthProperty());
 			page.prefHeightProperty().bind(mainPane.heightProperty());
 		} else {
-			Region page = FXMLLoader.load(getClass().getResource("notAvailable.fxml"));
+			Region page = FXMLLoader.load(getClass().getResource("NotAvailable.fxml"));
 			mainPane.getChildren().removeAll();
 			mainPane.getChildren().setAll(page);
-			page.prefWidthProperty().bind(mainPane.widthProperty());
-			page.prefHeightProperty().bind(mainPane.heightProperty());
 		}
 	}
 
@@ -121,11 +119,9 @@ public class ReceivedOrderController implements Initializable {
 			page.prefWidthProperty().bind(mainPane.widthProperty());
 			page.prefHeightProperty().bind(mainPane.heightProperty());
 		} else {
-			Region page = FXMLLoader.load(getClass().getResource("notAvailable.fxml"));
+			Region page = FXMLLoader.load(getClass().getResource("NotAvailable.fxml"));
 			mainPane.getChildren().removeAll();
 			mainPane.getChildren().setAll(page);
-			page.prefWidthProperty().bind(mainPane.widthProperty());
-			page.prefHeightProperty().bind(mainPane.heightProperty());
 		}
 		
 	}

@@ -21,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -189,9 +190,11 @@ public class ReceiveOrdersController implements Initializable {
 					++counter;
 				}
 
-				Parent page = FXMLLoader.load(getClass().getResource("UnReceivedOrders.fxml"));
+				Region page = FXMLLoader.load(getClass().getResource("UnReceivedOrders.fxml"));
 				mainPane.getChildren().removeAll();
 				mainPane.getChildren().setAll(page);
+				page.prefWidthProperty().bind(mainPane.widthProperty());
+				page.prefHeightProperty().bind(mainPane.heightProperty());
 			}
 		} else {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
