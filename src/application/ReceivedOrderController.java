@@ -17,7 +17,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -27,6 +26,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
 public class ReceivedOrderController implements Initializable {
@@ -98,26 +98,34 @@ public class ReceivedOrderController implements Initializable {
 	public void newOrderOnMousePressed() throws IOException {
 		
 		if (Employee.hasAccess()) {
-			Parent page = FXMLLoader.load(getClass().getResource("SupplierOrder.fxml"));
+			Region page = FXMLLoader.load(getClass().getResource("SupplierOrder.fxml"));
 			mainPane.getChildren().removeAll();
 			mainPane.getChildren().setAll(page);
+			page.prefWidthProperty().bind(mainPane.widthProperty());
+			page.prefHeightProperty().bind(mainPane.heightProperty());
 		} else {
-			Parent page = FXMLLoader.load(getClass().getResource("notAvailable.fxml"));
+			Region page = FXMLLoader.load(getClass().getResource("notAvailable.fxml"));
 			mainPane.getChildren().removeAll();
 			mainPane.getChildren().setAll(page);
+			page.prefWidthProperty().bind(mainPane.widthProperty());
+			page.prefHeightProperty().bind(mainPane.heightProperty());
 		}
 	}
 
 	public void receivedOrdersOnAction(ActionEvent event) throws IOException {
 		
 		if (Employee.hasAccess()) {
-			Parent page = FXMLLoader.load(getClass().getResource("RecievedOrders.fxml"));
+			Region page = FXMLLoader.load(getClass().getResource("RecievedOrders.fxml"));
 			mainPane.getChildren().removeAll();
 			mainPane.getChildren().setAll(page);
+			page.prefWidthProperty().bind(mainPane.widthProperty());
+			page.prefHeightProperty().bind(mainPane.heightProperty());
 		} else {
-			Parent page = FXMLLoader.load(getClass().getResource("notAvailable.fxml"));
+			Region page = FXMLLoader.load(getClass().getResource("notAvailable.fxml"));
 			mainPane.getChildren().removeAll();
 			mainPane.getChildren().setAll(page);
+			page.prefWidthProperty().bind(mainPane.widthProperty());
+			page.prefHeightProperty().bind(mainPane.heightProperty());
 		}
 		
 	}
@@ -127,9 +135,11 @@ public class ReceivedOrderController implements Initializable {
 		ArrayList<SupplierOrder> unRecievedOrdersArrayList = SupplierOrder
 				.getSupplierOrderData(Queries.queryResult("select * from S_Order where Recieved_By = '-1' ;", null));
 		if (unRecievedOrdersArrayList.size()!=0) {
-			Parent page = FXMLLoader.load(getClass().getResource("UnReceivedOrders.fxml"));
+			Region page = FXMLLoader.load(getClass().getResource("UnReceivedOrders.fxml"));
 			mainPane.getChildren().removeAll();
 			mainPane.getChildren().setAll(page);
+			page.prefWidthProperty().bind(mainPane.widthProperty());
+			page.prefHeightProperty().bind(mainPane.heightProperty());
 
 		} else {
 			Alert alert = new Alert(Alert.AlertType.ERROR);

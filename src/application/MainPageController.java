@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -178,9 +179,11 @@ public class MainPageController implements Initializable {
 
 	public void OrdersOnAction(ActionEvent e) throws IOException {
 		choosenButtonLabel.setText("Orders");
-		Parent page = FXMLLoader.load(getClass().getResource("SupplierReceivedOrder.fxml"));
+		Region page = FXMLLoader.load(getClass().getResource("SupplierReceivedOrder.fxml"));
 		contentArea.getChildren().removeAll();
 		contentArea.getChildren().setAll(page);
+		page.prefWidthProperty().bind(contentArea.widthProperty());
+		page.prefHeightProperty().bind(contentArea.heightProperty());
 	}
 
 	@Override

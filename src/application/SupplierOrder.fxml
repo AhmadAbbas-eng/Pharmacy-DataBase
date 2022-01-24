@@ -14,32 +14,32 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="706.0" prefWidth="1314.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SupplierOrderController">
+<StackPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="1129.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SupplierOrderController">
    <children>
-      <AnchorPane prefHeight="394.0" prefWidth="692.0">
+      <AnchorPane prefHeight="706.0" prefWidth="1143.0">
          <children>
-            <ListView fx:id="orderdProductsList" layoutX="20.0" layoutY="342.0" prefHeight="351.0" prefWidth="1049.0" stylesheets="@../../CSS/list.css" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="245.0" AnchorPane.topAnchor="342.0" />
-            <ImageView fx:id="addProductIcon" fitHeight="28.0" fitWidth="32.0" layoutX="1074.0" layoutY="347.0" onMouseEntered="#addOnMouseEntered" onMouseExited="#addOnMouseExited" onMousePressed="#addOnMousePressed" onMouseReleased="#addOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="212.4000000000001" AnchorPane.topAnchor="347.0">
+            <ListView fx:id="orderdProductsList" layoutX="20.0" layoutY="342.0" prefHeight="300.0" prefWidth="864.0" stylesheets="@../../CSS/list.css" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="245.0" />
+            <ImageView fx:id="addProductIcon" fitHeight="28.0" fitWidth="32.0" layoutX="888.9333333333332" layoutY="289.33333333333337" onMouseEntered="#addOnMouseEntered" onMouseExited="#addOnMouseExited" onMousePressed="#addOnMousePressed" onMouseReleased="#addOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="284.0" AnchorPane.rightAnchor="212.4000000000001">
                <image>
                   <Image url="@../../Icons/icons8-add-48.png" />
                </image>
             </ImageView>
             <TextField fx:id="searchTextField" layoutX="20.0" layoutY="52.0" prefHeight="26.0" prefWidth="170.0" promptText="Search" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="52.0" />
-            <Label layoutX="1115.0" layoutY="353.0" text="Add Products" textFill="#1d6f84" AnchorPane.rightAnchor="109.80000000000018" AnchorPane.topAnchor="353.0">
+            <Label layoutX="930.1999999999997" layoutY="295.33333333333337" text="Add Products" textFill="#1d6f84" AnchorPane.bottomAnchor="286.0" AnchorPane.rightAnchor="109.80000000000018">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label layoutX="1100.0" layoutY="400.0" prefHeight="27.0" prefWidth="92.0" text="Total Cost" textFill="#1d6f84" AnchorPane.rightAnchor="122.40000000000009">
+            <Label layoutX="914.9333333333332" layoutY="342.33333333333337" prefHeight="27.0" prefWidth="92.0" text="Total Cost" textFill="#1d6f84" AnchorPane.bottomAnchor="231.66666666666669" AnchorPane.rightAnchor="122.40000000000009">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label fx:id="costLabel" layoutX="1191.0" layoutY="401.0" prefHeight="28.0" prefWidth="92.0">
+            <Label fx:id="costLabel" layoutX="1191.0" layoutY="401.0" prefHeight="28.0" prefWidth="92.0" AnchorPane.bottomAnchor="277.0" AnchorPane.rightAnchor="31.0">
                <font>
                   <Font size="16.0" />
                </font></Label>
-            <TableView fx:id="supplierTable" layoutX="20.0" layoutY="102.0" prefHeight="225.0" prefWidth="506.0" stylesheets="@../../CSS/table.css" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="102.0">
+            <TableView fx:id="supplierTable" layoutX="20.0" layoutY="102.0" prefHeight="225.0" prefWidth="506.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="331.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="102.0">
                <columns>
                   <TableColumn fx:id="supplierNameColumn" prefWidth="265.6000122070312" text=" Supplier Name" />
                </columns>
@@ -49,19 +49,19 @@
             </TableView>
             <Button fx:id="confirmButton" layoutX="1126.0" layoutY="626.0" mnemonicParsing="false" onAction="#confirmOnAction" prefHeight="26.0" prefWidth="134.0" stylesheets="@../../CSS/button.css" text="Confirm " AnchorPane.bottomAnchor="54.0" AnchorPane.rightAnchor="54.0" />
             <Button fx:id="cancelButton" layoutX="1126.0" layoutY="662.0" mnemonicParsing="false" onAction="#cancelOnAction" prefHeight="26.0" prefWidth="134.0" stylesheets="@../../CSS/button.css" text="Cancel" AnchorPane.bottomAnchor="18.0" AnchorPane.rightAnchor="54.0" />
-            <DatePicker fx:id="orderDatePicker" layoutX="381.0" layoutY="52.0" prefHeight="26.0" prefWidth="191.0" promptText="Order Date" AnchorPane.topAnchor="52.0" />
-            <ImageView fx:id="addSupplierImage" fitHeight="20.0" fitWidth="16.0" layoutX="496.0" layoutY="111.0" onMouseEntered="#addSupplierOnMouseEntered" onMouseExited="#addSupplierOnMouseExited" onMousePressed="#addSupplierOnMousePressed" onMouseReleased="#addSupplierOnMouseReleased" pickOnBounds="true" preserveRatio="true">
+            <DatePicker fx:id="orderDatePicker" layoutX="381.0" layoutY="52.0" prefHeight="26.0" prefWidth="191.0" promptText="Order Date" AnchorPane.leftAnchor="381.0" AnchorPane.topAnchor="52.0" />
+            <ImageView fx:id="addSupplierImage" fitHeight="20.0" fitWidth="16.0" layoutX="504.0" layoutY="108.0" onMouseEntered="#addSupplierOnMouseEntered" onMouseExited="#addSupplierOnMouseExited" onMousePressed="#addSupplierOnMousePressed" onMouseReleased="#addSupplierOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="504.0" AnchorPane.topAnchor="108.0">
                <image>
                   <Image url="@../../Icons/icons8-add-48.png" />
                </image>
             </ImageView>
-            <Label fx:id="orderNOLabel" layoutX="20.0" layoutY="16.0" prefHeight="26.0" prefWidth="170.0" textFill="#1d6f84">
+            <Label fx:id="orderNOLabel" layoutX="20.0" layoutY="16.0" prefHeight="26.0" prefWidth="170.0" textFill="#1d6f84" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="16.0">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
             <TextField fx:id="discountTextField" layoutX="589.0" layoutY="52.0" prefHeight="26.0" prefWidth="68.0" promptText="Discount" AnchorPane.leftAnchor="589.0" AnchorPane.topAnchor="52.0" />
-            <TableView fx:id="managerTable" layoutX="559.0" layoutY="102.0" prefHeight="224.0" prefWidth="506.0" stylesheets="@../../CSS/table.css" AnchorPane.leftAnchor="559.0" AnchorPane.topAnchor="102.0">
+            <TableView fx:id="managerTable" layoutX="559.0" layoutY="102.0" prefHeight="168.0" prefWidth="506.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="331.0" AnchorPane.leftAnchor="559.0" AnchorPane.topAnchor="102.0">
                <columns>
                   <TableColumn fx:id="nationalIDColumn" prefWidth="116.0" text="National Id" />
                   <TableColumn fx:id="employeeNameColumn" prefWidth="146.40001220703124" text="Name" />
@@ -70,7 +70,7 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <ComboBox fx:id="searchOperationComboBox" layoutX="211.0" layoutY="53.0" onAction="#filterList" prefWidth="150.0" promptText="- Select -" stylesheets="@../../CSS/combobox.css" />
+            <ComboBox fx:id="searchOperationComboBox" layoutX="211.0" layoutY="53.0" onAction="#filterList" prefWidth="150.0" promptText="- Select -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="211.0" AnchorPane.topAnchor="53.0" />
          </children>
       </AnchorPane>
    </children>
