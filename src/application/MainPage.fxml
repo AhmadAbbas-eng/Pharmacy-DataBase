@@ -5,14 +5,15 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="741.0" prefWidth="1498.0" style="-fx-background-color: #1d6f84;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainPageController">
-   <children>
-      <AnchorPane layoutX="151.0" layoutY="18.0" prefHeight="741.0" prefWidth="1347.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="151.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="715.0" prefWidth="1233.0" style="-fx-background-color: #1d6f84;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainPageController">
+   <center>
+      <AnchorPane prefHeight="400.0" prefWidth="456.0" style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="choosenButtonLabel" layoutX="61.0" layoutY="13.0" text="Title" textFill="#1d6f84">
                <font>
@@ -25,84 +26,89 @@
                   <Image url="@../../Icons/icons8-pharmacy-64%20(1).png" />
                </image>
             </ImageView>
-            <Line endX="1211.5" endY="-0.9999885559082031" layoutX="109.0" layoutY="51.0" startX="-96.80001831054688" startY="-0.9999885559082031" style="-fx-opacity: 0.1;" />
+            <Line endX="976.0001220703125" endY="-0.9999771118164062" layoutX="109.0" layoutY="51.0" startX="-96.80001831054688" startY="-0.9999885559082031" style="-fx-opacity: 0.1;" />
          </children>
       </AnchorPane>
-      <VBox alignment="TOP_CENTER" layoutX="3.0" layoutY="11.0" prefHeight="652.0" prefWidth="146.0" AnchorPane.bottomAnchor="78.0" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="11.0">
+   </center>
+   <left>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="718.0" prefWidth="131.0" style="-fx-background-color: #1d6f84;" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="42.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../Icons/icons8-user-64.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="userNameLabel" alignment="CENTER" prefHeight="47.0" prefWidth="114.0" text="User Name" textFill="WHITE">
+            <Button fx:id="logOutButton" layoutX="13.0" layoutY="672.0" mnemonicParsing="false" onAction="#logOutAction" prefHeight="20.0" prefWidth="131.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Log Out" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <font>
-                  <Font name="System Bold" size="19.0" />
-               </font>
-            </Label>
-            <Line endX="23.492910385131836" endY="-0.28514742851257324" fill="WHITE" startX="-100.0" stroke="WHITE" />
-            <Label prefHeight="40.0" prefWidth="30.0" />
-            <Button fx:id="dashboardButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#DashboardOnAction" prefHeight="0.0" prefWidth="140.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Dashboard">
-               <font>
-                  <Font name="System Bold" size="19.0" />
+                  <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="sellButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#SellOnAction" prefHeight="0.0" prefWidth="146.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="New Sell">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font>
-            </Button>
-            <Button fx:id="payingOffButton" layoutX="10.0" layoutY="182.0" mnemonicParsing="false" onAction="#PayingOffOnAction" prefHeight="0.0" prefWidth="146.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Paying Off">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font>
-            </Button>
-            <Button fx:id="customersButton" layoutX="10.0" layoutY="298.0" mnemonicParsing="false" onAction="#CustomerOnAction" prefHeight="0.0" prefWidth="146.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Customers">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font>
-            </Button>
-            <Button fx:id="supplierButton" layoutX="10.0" layoutY="106.0" mnemonicParsing="false" onAction="#SupplierOnAction" prefHeight="2.0" prefWidth="146.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Suppliers">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font>
-            </Button>
-            <Button fx:id="employeesButton" layoutX="10.0" layoutY="202.0" mnemonicParsing="false" onAction="#EmployeesOnAction" prefHeight="0.0" prefWidth="146.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Employees">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font>
-            </Button>
-            <Button fx:id="productsButton" layoutX="10.0" layoutY="58.0" mnemonicParsing="false" onAction="#ProductsOnAction" prefHeight="0.0" prefWidth="146.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Storage">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font>
-            </Button>
-            <Button fx:id="ordersButton" layoutX="10.0" layoutY="154.0" mnemonicParsing="false" onAction="#OrdersOnAction" prefHeight="0.0" prefWidth="146.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Orders">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font>
-            </Button>
-            <Button fx:id="paymentButton" layoutX="10.0" layoutY="250.0" mnemonicParsing="false" onAction="#PaymentOnAction" prefHeight="11.0" prefWidth="146.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Payment">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font>
-            </Button>
-            <Button fx:id="disposeButton" layoutX="10.0" layoutY="427.0" mnemonicParsing="false" onAction="#DisposeOnAction" prefHeight="11.0" prefWidth="146.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Dispose">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font>
-            </Button>
-            <Button fx:id="reportButton" layoutX="10.0" layoutY="468.0" mnemonicParsing="false" onAction="#ReportOnAction" prefHeight="11.0" prefWidth="146.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Reports">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font>
-            </Button>
+            <VBox alignment="TOP_CENTER" layoutY="-1.0" prefHeight="527.0" prefWidth="131.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-1.0">
+               <children>
+                  <ImageView fitHeight="42.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Icons/icons8-user-64.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="userNameLabel" alignment="CENTER" prefHeight="28.0" prefWidth="126.0" text="User Name" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Label>
+                  <Line endX="-36.707157135009766" endY="1.228369951248169" fill="WHITE" startX="-142.2257080078125" startY="1.5637924671173096" stroke="WHITE" />
+                  <Button fx:id="dashboardButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#DashboardOnAction" prefHeight="41.0" prefWidth="126.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Dashboard">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="sellButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#SellOnAction" prefHeight="41.0" prefWidth="121.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="New Sell">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="payingOffButton" layoutX="10.0" layoutY="182.0" mnemonicParsing="false" onAction="#PayingOffOnAction" prefHeight="41.0" prefWidth="124.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Paying Off">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="customersButton" layoutX="10.0" layoutY="298.0" mnemonicParsing="false" onAction="#CustomerOnAction" prefHeight="41.0" prefWidth="127.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Customers">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="supplierButton" layoutX="10.0" layoutY="106.0" mnemonicParsing="false" onAction="#SupplierOnAction" prefHeight="41.0" prefWidth="138.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Suppliers">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="employeesButton" layoutX="10.0" layoutY="202.0" mnemonicParsing="false" onAction="#EmployeesOnAction" prefHeight="41.0" prefWidth="122.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Employees">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="productsButton" layoutX="10.0" layoutY="58.0" mnemonicParsing="false" onAction="#ProductsOnAction" prefHeight="41.0" prefWidth="124.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Storage">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="ordersButton" layoutX="10.0" layoutY="154.0" mnemonicParsing="false" onAction="#OrdersOnAction" prefHeight="41.0" prefWidth="107.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Orders">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="paymentButton" layoutX="10.0" layoutY="250.0" mnemonicParsing="false" onAction="#PaymentOnAction" prefHeight="41.0" prefWidth="110.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Payment">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="disposeButton" layoutX="10.0" layoutY="427.0" mnemonicParsing="false" onAction="#DisposeOnAction" prefHeight="41.0" prefWidth="98.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Dispose">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="reportButton" layoutX="10.0" layoutY="468.0" mnemonicParsing="false" onAction="#ReportOnAction" prefHeight="41.0" prefWidth="98.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Reports">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
          </children>
-      </VBox>
-      <Button fx:id="logOutButton" layoutX="13.0" layoutY="672.0" mnemonicParsing="false" onAction="#logOutAction" prefHeight="48.0" prefWidth="126.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Log Out" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="13.0">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
-   </children>
-</AnchorPane>
+      </AnchorPane>
+   </left>
+</BorderPane>
