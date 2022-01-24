@@ -13,13 +13,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class ConferNewUserController {
+public class ConfirmNewUserController {
 	@FXML
 	private Button cancel;
 
@@ -31,9 +32,6 @@ public class ConferNewUserController {
 
 	@FXML
 	private PasswordField password;
-
-	@FXML
-	private Label warning;
 
 	public void cancelButton(ActionEvent e) throws IOException {
 
@@ -48,7 +46,6 @@ public class ConferNewUserController {
 	}
 
 	public void confirm(ActionEvent event) throws IOException, ClassNotFoundException, SQLException, ParseException {
-		warning.setText("");
 
 		ArrayList<Employee> filteredList = new ArrayList<>();
 		if (id.getText().isBlank() == false && password.getText().isBlank() == false) {
@@ -58,7 +55,12 @@ public class ConferNewUserController {
 					Queries.queryResult("select * from Employee where Employee_ID = ? order by Employee_ID;",
 							new ArrayList<>(Arrays.asList(id.getText()))));
 			if (filteredList.isEmpty() == true) {
-				warning.setText("This User ID is Not Available!!");
+
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setTitle(null);
+				alert.setHeaderText(null);
+				alert.setContentText("This User ID is Not Available!!");
+				alert.showAndWait();
 
 			} else {
 				filteredList = Employee.getEmployeeData(Queries.queryResult(
@@ -66,14 +68,22 @@ public class ConferNewUserController {
 								+ " and Employee_password = ? order by Employee_ID;",
 						new ArrayList<>(Arrays.asList(id.getText(), password.getText()))));
 				if (filteredList.isEmpty() == true) {
-					warning.setText("Wrong Password!!");
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setTitle(null);
+					alert.setHeaderText(null);
+					alert.setContentText("Wrong Password!!");
+					alert.showAndWait();
 				} else {
 					filteredList = Employee.getEmployeeData(Queries.queryResult(
 							"select * from Employee where Employee_ID = ? and isManager = "
 									+ "'true' and Employee_password = ? order by Employee_ID;",
 							new ArrayList<>(Arrays.asList(id.getText(), password.getText()))));
 					if (filteredList.isEmpty() == true) {
-						warning.setText("You Have To Be The Manager To Add Users!!");
+						Alert alert = new Alert(Alert.AlertType.ERROR);
+						alert.setTitle(null);
+						alert.setHeaderText(null);
+						alert.setContentText("You Have To Be The Manager To Add Users!!");
+						alert.showAndWait();
 					} else {
 						Stage stage1 = (Stage) confirm.getScene().getWindow();
 						stage1.close();
@@ -94,7 +104,11 @@ public class ConferNewUserController {
 			id.clear();
 			password.clear();
 			} catch (NumberFormatException e1) {
-				warning.setText("Employee ID Consist Of Numbers Only! ");
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setTitle(null);
+				alert.setHeaderText(null);
+				alert.setContentText("Employee ID Consist Of Numbers Only! ");
+				alert.showAndWait();
 				id.clear();
 				password.clear();
 			}
@@ -102,7 +116,11 @@ public class ConferNewUserController {
 
 			id.clear();
 			password.clear();
-			warning.setText("Please Enter Your ID & Password");
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle(null);
+			alert.setHeaderText(null);
+			alert.setContentText("Please Enter Your ID & Password");
+			alert.showAndWait();
 		}
 
 	}

@@ -90,8 +90,6 @@ public class SellController implements Initializable {
 	@FXML
 	private ImageView deleteCustomerButton;
 
-	@FXML
-	private Label customerErrorLabel;
 
 	@FXML
 	private TextField paidTextField;
@@ -212,9 +210,17 @@ public class SellController implements Initializable {
 				&& Double.parseDouble(costAfterDiscountLabel.getText()) >= 0 && paidStr != null && !paidStr.isBlank()
 				&& !paidStr.isEmpty() && checkPaid) {
 			if (numbrOfDangerDrugs > 0 && !isCustomerSelected) {
-				customerErrorLabel.setText("Customer must be selected for danger drugs");
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setTitle(null);
+				alert.setHeaderText(null);
+				alert.setContentText("Customer must be selected for danger drugs");
+				alert.showAndWait();
 			} else if (paidAmount < Double.parseDouble(costAfterDiscountLabel.getText()) && !isCustomerSelected) {
-				customerErrorLabel.setText("Customer must be selected when buying in debt");
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setTitle(null);
+				alert.setHeaderText(null);
+				alert.setContentText("Customer must be selected when buying in debt");
+				alert.showAndWait();
 			} else {
 				String customerNID = chooseCustomerButton.getText().equals("Choose Customer") ? "0"
 						: chooseCustomerButton.getText();
@@ -243,7 +249,6 @@ public class SellController implements Initializable {
 				paidTextField.setText("");
 				discountTextField.setText("");
 				chooseCustomerButton.setText("Choose Customer");
-				customerErrorLabel.setText("");
 				isCustomerSelected = false;
 			}
 

@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -62,8 +63,6 @@ public class SampleController implements Initializable {
 	@FXML
 	private Button cancel;
 	@FXML
-	private Label warning;
-	@FXML
 	private Button confirm;
 	@FXML
 	private TextField user;
@@ -89,7 +88,11 @@ public class SampleController implements Initializable {
 		if (user.getText().isBlank() == false && password.getText().isBlank() == false) {
 			//warning.setText("You are trying to login");
 		} else {
-			warning.setText("You have to enter the user name and password");
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle(null);
+			alert.setHeaderText(null);
+			alert.setContentText("You have to enter the user name and password");
+			alert.showAndWait();
 		}
 	}
 

@@ -23,6 +23,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -59,9 +60,6 @@ public class DisposalController implements Initializable {
 
 	@FXML
 	private TableColumn<ArrayList<String>, String> epdate;
-
-	@FXML
-	private Label warning;
 
 	@FXML
 	private TextField search;
@@ -131,22 +129,33 @@ public class DisposalController implements Initializable {
 	}
 
 	public void disposeOnAction(ActionEvent e) throws ClassNotFoundException, SQLException {
-		warning.setText("");
 		if (Batches.getSelectionModel().getSelectedItem() != null) {
 			if (expired.isSelected()) {
 				if (cost.getText().isBlank()) {
-					warning.setText("Fill The Disposing Cost!");
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setTitle(null);
+					alert.setHeaderText(null);
+					alert.setContentText("Fill The Disposing Cost!");
+					alert.showAndWait();
 				} else {
 					boolean flag = false;
 					try {
 						Double num = Double.parseDouble(cost.getText());
 						if (num < 0) {
 							flag = true;
-							warning.setText("The Cost Can't Be Negative!");
+							Alert alert = new Alert(Alert.AlertType.ERROR);
+							alert.setTitle(null);
+							alert.setHeaderText(null);
+							alert.setContentText("The Cost Can't Be Negative!");
+							alert.showAndWait();
 
 						}
 					} catch (NumberFormatException e1) {
-						warning.setText("Enter A Valid Cost!");
+						Alert alert = new Alert(Alert.AlertType.ERROR);
+						alert.setTitle(null);
+						alert.setHeaderText(null);
+						alert.setContentText("Enter A Valid Cost!");
+						alert.showAndWait();
 						flag = true;
 					}
 					if (flag == false) {
@@ -176,7 +185,11 @@ public class DisposalController implements Initializable {
 				}
 			} else {
 				if (cost.getText().isBlank() == true || amount.getText().isBlank() == true) {
-					warning.setText("Fill The Required Fields!");
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setTitle(null);
+					alert.setHeaderText(null);
+					alert.setContentText("Fill The Required Fields!");
+					alert.showAndWait();
 				} else {
 
 					boolean flag = false;
@@ -185,24 +198,40 @@ public class DisposalController implements Initializable {
 						int num2 = Integer.parseInt(amount.getText());
 						if (num2 < 0) {
 							flag = true;
-							warning.setText("The Amount Can't Be Negative!");
+							Alert alert = new Alert(Alert.AlertType.ERROR);
+							alert.setTitle(null);
+							alert.setHeaderText(null);
+							alert.setContentText("The Amount Can't Be Negative!");
+							alert.showAndWait();
 
 						} else {
 							try {
 								Double num = Double.parseDouble(cost.getText());
 								if (num < 0) {
 									flag = true;
-									warning.setText("The Cost Can't Be Negative!");
+									Alert alert = new Alert(Alert.AlertType.ERROR);
+									alert.setTitle(null);
+									alert.setHeaderText(null);
+									alert.setContentText("The Cost Can't Be Negative!");
+									alert.showAndWait();
 
 								}
 							} catch (NumberFormatException e1) {
-								warning.setText("Enter A Valid Cost!");
+								Alert alert = new Alert(Alert.AlertType.ERROR);
+								alert.setTitle(null);
+								alert.setHeaderText(null);
+								alert.setContentText("Enter A Valid Cost!");
+								alert.showAndWait();
 								flag = true;
 							}
 						}
 
 					} catch (NumberFormatException e1) {
-						warning.setText("Enter A Valid Amount!");
+						Alert alert = new Alert(Alert.AlertType.ERROR);
+						alert.setTitle(null);
+						alert.setHeaderText(null);
+						alert.setContentText("Enter A Valid Amount!");
+						alert.showAndWait();
 						flag = true;
 					}
 
@@ -234,8 +263,11 @@ public class DisposalController implements Initializable {
 			}
 
 		} else {
-			warning.setText("Select A Batch");
-
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle(null);
+			alert.setHeaderText(null);
+			alert.setContentText("Select A Batch");
+			alert.showAndWait();
 		}
 		amount.clear();
 		cost.clear();

@@ -11,6 +11,7 @@ import Relations.Queries;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -36,9 +37,6 @@ public class AddBatchController implements Initializable {
 
 	private String pid, product;
 
-	@FXML
-	private Label warning;
-
 	ListView<Batch> batchlist;
 
 	public void setPID(String id, String name) {
@@ -53,9 +51,12 @@ public class AddBatchController implements Initializable {
 
 	public void addBatch(ActionEvent event) throws ClassNotFoundException, SQLException, ParseException {
 		if (pdate.getValue() != null && edate.getValue() != null) {
-			warning.setText("");
 			if (pdate.getValue().compareTo(edate.getValue()) > 0 || pdate.getValue().compareTo(edate.getValue()) == 0) {
-				warning.setText("Choose Reasonable Dates");
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setTitle("Wrong Input Format");
+				alert.setHeaderText(null);
+				alert.setContentText("Choose Reasonable Dates");
+				alert.showAndWait();
 			} else {
 				ArrayList<Batch> batch = Batch.getBatchData(Queries.queryResult(
 						"select * from Batch " + " where Product_ID = ? " + " and batch_production_date = ? "
@@ -65,16 +66,23 @@ public class AddBatchController implements Initializable {
 
 				if (batch.isEmpty() == true) {
 					Batch.insertBatch(Integer.parseInt(pid), pdate.getValue(), edate.getValue(), 0);
-					warning.setText("");
 					Stage stage = (Stage) add.getScene().getWindow();
 					stage.close();
 
 				} else {
-					warning.setText("This Batch Already Exists");
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setHeaderText(null);
+					alert.setContentText("This Batch Already Exists");
+					alert.showAndWait();
 				}
 			}
-		} else
-			warning.setText("Choose Batch Dates");
+		} else {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle(null);
+			alert.setHeaderText(null);
+			alert.setContentText("Choose Batch Dates");
+			alert.showAndWait();
+		}
 	}
 
 	@Override
