@@ -73,7 +73,7 @@ public class MainPageController implements Initializable {
 
 	public void DisposeOnAction(ActionEvent e) throws IOException {
 		choosenButtonLabel.setText("Dispose");
-		Parent page = FXMLLoader.load(getClass().getResource("dissipation.fxml"));
+		Parent page = FXMLLoader.load(getClass().getResource("Disposal.fxml"));
 		contentArea.getChildren().removeAll();
 		contentArea.getChildren().setAll(page);
 	}
@@ -86,7 +86,7 @@ public class MainPageController implements Initializable {
 			contentArea.getChildren().removeAll();
 			contentArea.getChildren().setAll(page);
 		} else {
-			Parent page = FXMLLoader.load(getClass().getResource("notAvailable.fxml"));
+			Parent page = FXMLLoader.load(getClass().getResource("NotAvailable.fxml"));
 			contentArea.getChildren().removeAll();
 			contentArea.getChildren().setAll(page);
 		}
@@ -145,7 +145,7 @@ public class MainPageController implements Initializable {
 			contentArea.getChildren().removeAll();
 			contentArea.getChildren().setAll(page);
 		} else {
-			Parent page = FXMLLoader.load(getClass().getResource("notAvailable.fxml"));
+			Parent page = FXMLLoader.load(getClass().getResource("NotAvailable.fxml"));
 			contentArea.getChildren().removeAll();
 			contentArea.getChildren().setAll(page);
 		}
@@ -159,7 +159,7 @@ public class MainPageController implements Initializable {
 			contentArea.getChildren().removeAll();
 			contentArea.getChildren().setAll(page);
 		} else {
-			Parent page = FXMLLoader.load(getClass().getResource("notAvailable.fxml"));
+			Parent page = FXMLLoader.load(getClass().getResource("NotAvailable.fxml"));
 			contentArea.getChildren().removeAll();
 			contentArea.getChildren().setAll(page);
 		}
@@ -173,7 +173,7 @@ public class MainPageController implements Initializable {
 			contentArea.getChildren().removeAll();
 			contentArea.getChildren().setAll(page);
 		} else {
-			Parent page = FXMLLoader.load(getClass().getResource("notAvailable.fxml"));
+			Parent page = FXMLLoader.load(getClass().getResource("NotAvailable.fxml"));
 			contentArea.getChildren().removeAll();
 			contentArea.getChildren().setAll(page);
 		}

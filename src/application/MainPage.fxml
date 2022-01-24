@@ -31,7 +31,7 @@
       </AnchorPane>
    </center>
    <left>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="657.0" prefWidth="115.0" style="-fx-background-color: #1d6f84;" BorderPane.alignment="CENTER">
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="658.0" prefWidth="134.0" style="-fx-background-color: #1d6f84;" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="logOutButton" layoutY="517.6" mnemonicParsing="false" onAction="#logOutAction" prefHeight="20.0" prefWidth="131.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Log Out" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <font>

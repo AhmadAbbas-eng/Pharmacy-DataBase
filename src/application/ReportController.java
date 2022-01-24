@@ -15,34 +15,44 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
-public class ReportController implements Initializable{
-    @FXML
-    private Button choose;
+public class ReportController implements Initializable {
+	@FXML
+	private Button choosePathButton;
 
-    @FXML
-    private StackPane display;
-    
-    @FXML
-    private TextField path;
+	@FXML
+	private StackPane display;
 
-    @FXML
-    private ComboBox<String> reportType;
+	@FXML
+	private TextField pathTextField;
 
-    @FXML
-    private Button save;
+	@FXML
+	private ComboBox<String> reportType;
 
-    public void saveOnAction(ActionEvent e) {
-    	
-    }
-	ObservableList<String> reports = FXCollections.observableArrayList("Payment","Suppliers","Cheques","Disposal","Customers", 
-			"Products Information", "Product Batches");
-	
+	@FXML
+	private Button saveReportButton;
+
+	public void saveOnAction(ActionEvent e) {
+
+	}
+
+	ObservableList<String> reports = FXCollections.observableArrayList("Select", "Payment", "Suppliers", "Cheques",
+			"Disposal", "Customers", "Products Information", "Product Batches");
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		reportType.setItems(reports);
 		
+
+		try {	
+			Region page;
+			page = FXMLLoader.load(getClass().getResource("EmptyScene.fxml"));
+			display.getChildren().setAll(page);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
 		reportType.setOnAction(e -> {
-			if(reportType.getSelectionModel().getSelectedItem() == "Payment") {
+			if (reportType.getSelectionModel().getSelectedItem() == "Payment") {
 				Region page;
 				try {
 					page = FXMLLoader.load(getClass().getResource("paymentReport.fxml"));
@@ -53,8 +63,8 @@ public class ReportController implements Initializable{
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				
-			}else if(reportType.getSelectionModel().getSelectedItem() == "Suppliers") {
+
+			} else if (reportType.getSelectionModel().getSelectedItem() == "Suppliers") {
 				Region page;
 				try {
 					page = FXMLLoader.load(getClass().getResource("SuppliersReport.fxml"));
@@ -65,8 +75,8 @@ public class ReportController implements Initializable{
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				
-			}else if(reportType.getSelectionModel().getSelectedItem() == "Cheques") {
+
+			} else if (reportType.getSelectionModel().getSelectedItem() == "Cheques") {
 				Region page;
 				try {
 					page = FXMLLoader.load(getClass().getResource("ChequeReport.fxml"));
@@ -77,8 +87,8 @@ public class ReportController implements Initializable{
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				
-			}else if(reportType.getSelectionModel().getSelectedItem() == "Disposal") {
+
+			} else if (reportType.getSelectionModel().getSelectedItem() == "Disposal") {
 				Region page;
 				try {
 					page = FXMLLoader.load(getClass().getResource("disposalReport.fxml"));
@@ -89,8 +99,8 @@ public class ReportController implements Initializable{
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				
-			}else if(reportType.getSelectionModel().getSelectedItem() == "Customers") {
+
+			} else if (reportType.getSelectionModel().getSelectedItem() == "Customers") {
 				Region page;
 				try {
 					page = FXMLLoader.load(getClass().getResource("CustomersReport.fxml"));
@@ -101,8 +111,8 @@ public class ReportController implements Initializable{
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				
-			}else if(reportType.getSelectionModel().getSelectedItem() == "Products Information") {
+
+			} else if (reportType.getSelectionModel().getSelectedItem() == "Products Information") {
 				Region page;
 				try {
 					page = FXMLLoader.load(getClass().getResource("ProductsReport.fxml"));
@@ -113,8 +123,8 @@ public class ReportController implements Initializable{
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				
-			}else if(reportType.getSelectionModel().getSelectedItem() == "Product Batches") {
+
+			} else if (reportType.getSelectionModel().getSelectedItem() == "Product Batches") {
 				Region page;
 				try {
 					page = FXMLLoader.load(getClass().getResource("BatchReport.fxml"));
@@ -125,12 +135,19 @@ public class ReportController implements Initializable{
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				
-			}else {
 
+			} else {
+				Region page;
+				try {
+					page = FXMLLoader.load(getClass().getResource("EmptyScene.fxml"));
 					display.getChildren().removeAll();
-		
+					display.getChildren().setAll(page);
+					
+				} catch (IOException e1) {
+					e1.printStackTrace();
 				}
+
+			}
 		});
 	}
 }
