@@ -306,6 +306,7 @@ public class CustomerEditController implements Initializable {
 		deletePhone.setEffect(effect);
 	}
 
+	@SuppressWarnings("exports")
 	public void setRow(Customer customer, CustomerController caller) {
 		this.caller = caller;
 		this.customer = customer;

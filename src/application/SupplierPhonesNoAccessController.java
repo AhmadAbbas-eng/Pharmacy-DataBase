@@ -17,6 +17,7 @@ public class SupplierPhonesNoAccessController implements Initializable {
 	@FXML
 	private Label title;
 
+	@SuppressWarnings("exports")
 	public void setPhoneNumbers(Supplier supplier) {
 		title.setText("Supplier With ID " + supplier.getID() + " Phones");
 		phoneList.setItems(FXCollections.observableArrayList(supplier.getPhones()));

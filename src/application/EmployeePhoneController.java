@@ -208,6 +208,7 @@ public class EmployeePhoneController implements Initializable {
 		addPhone.setEffect(effect);
 	}
 
+	@SuppressWarnings("exports")
 	public void setPhoneNumbers(Employee employee) {
 		this.employee = employee;
 		title.setText(employee.getName() + " Phones");
