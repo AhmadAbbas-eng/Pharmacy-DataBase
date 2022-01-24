@@ -12,19 +12,18 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="706.0" prefWidth="1413.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ReceiveOrdersController">
+<StackPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="623.0" prefWidth="1078.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ReceiveOrdersController">
    <children>
-      <AnchorPane prefHeight="378.0" prefWidth="594.0">
+      <AnchorPane prefHeight="622.0" prefWidth="1078.0">
          <children>
             <Label fx:id="orderNumberLabel" layoutX="45.0" layoutY="1.0" prefHeight="26.0" prefWidth="242.0" text="order no" textFill="#1d6f84" AnchorPane.leftAnchor="45.0" AnchorPane.topAnchor="1.0">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
             </Label>
-            <TableView fx:id="orderProductTabel" editable="true" layoutX="34.0" layoutY="241.0" prefHeight="418.0" prefWidth="1358.0" style="-fx-background-color: transparent;" stylesheets="@../../CSS/table.css" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="33.0" AnchorPane.topAnchor="241.0">
+            <TableView fx:id="orderProductTabel" editable="true" layoutX="34.0" layoutY="241.0" prefHeight="418.0" prefWidth="1358.0" style="-fx-background-color: transparent;" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="33.0" AnchorPane.topAnchor="241.0">
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
@@ -39,7 +38,6 @@
                   <Insets />
                </opaqueInsets>
             </TableView>
-            <Line endX="1182.2991943359375" endY="-12.978975296020508" layoutX="-1159.0" layoutY="195.0" startX="2538.79296875" startY="-13.186081886291504" stroke="#1d6f84" AnchorPane.leftAnchor="32.7935791015625" AnchorPane.rightAnchor="33.90000000000009" AnchorPane.topAnchor="181.1068115234375" />
             <Label fx:id="choosenProductLabel" layoutX="45.0" layoutY="33.0" prefHeight="43.0" prefWidth="477.0" text="product name" textFill="#1d6f84" AnchorPane.leftAnchor="45.0" AnchorPane.topAnchor="33.0">
                <font>
                   <Font name="System Bold" size="29.0" />
@@ -68,20 +66,25 @@
                </font></CheckBox>
             <TextField fx:id="quantityTextField" layoutX="228.0" layoutY="91.0" prefHeight="26.0" prefWidth="93.0" promptText="New Quantity" AnchorPane.leftAnchor="228.0" AnchorPane.topAnchor="91.0" />
             <Button fx:id="confirmBatchButton" layoutX="45.0" layoutY="138.0" mnemonicParsing="false" onAction="#confirmBatchOnAction" prefHeight="26.0" prefWidth="80.0" stylesheets="@../../CSS/button.css" text="Confirm" AnchorPane.leftAnchor="45.0" AnchorPane.topAnchor="138.0" />
-            <DatePicker fx:id="receivedDatePicker" layoutX="263.0" layoutY="197.0" prefHeight="26.0" prefWidth="203.0" promptText="Received Date" AnchorPane.bottomAnchor="483.0" AnchorPane.leftAnchor="263.0" />
+            <DatePicker fx:id="receivedDatePicker" layoutX="263.0" layoutY="197.0" prefHeight="26.0" prefWidth="203.0" promptText="Received Date" AnchorPane.leftAnchor="263.0" AnchorPane.topAnchor="197.0" />
             <ImageView fx:id="saveIcon" fitHeight="26.0" fitWidth="26.0" layoutX="1369.0" layoutY="200.0" onMouseEntered="#saveOnMouseEntered" onMouseExited="#saveOnMouseExited" onMousePressed="#saveOnMousePressed" onMouseReleased="#saveOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="200.0">
                <image>
                   <Image url="@../../Icons/icons8-save-60.png" />
                </image>
             </ImageView>
             <Button fx:id="cancelButton" layoutX="23.0" layoutY="665.0" mnemonicParsing="false" onAction="#cancelOnAction" prefHeight="26.0" prefWidth="80.0" stylesheets="@../../CSS/button.css" text="cancel" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="23.0" />
-            <ImageView fx:id="addBatchIcon" fitHeight="20.0" fitWidth="20.0" layoutX="1359.0" layoutY="26.0" onMouseEntered="#addOnMouseEntered" onMouseExited="#addOnMouseExited" onMousePressed="#addOnMousePressed" onMouseReleased="#addOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="45.799999999999955" AnchorPane.topAnchor="26.0">
+            <ImageView fx:id="addBatchIcon" fitHeight="20.0" fitWidth="20.0" layoutX="1364.8666666666668" layoutY="9.0" onMouseEntered="#addOnMouseEntered" onMouseExited="#addOnMouseExited" onMousePressed="#addOnMousePressed" onMouseReleased="#addOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="39.799999999999955" AnchorPane.topAnchor="9.0">
                <image>
                   <Image url="@../../Icons/icons8-add-48.png" />
                </image>
             </ImageView>
             <TextField fx:id="costTextField" layoutX="486.0" layoutY="197.0" prefHeight="26.0" prefWidth="94.0" promptText="New Total Cost" AnchorPane.leftAnchor="486.0" AnchorPane.topAnchor="197.0" />
-            <DatePicker fx:id="payDueDatePicker" layoutX="34.0" layoutY="197.0" prefHeight="26.0" prefWidth="203.0" promptText="Pay Due Date" AnchorPane.bottomAnchor="483.0" AnchorPane.leftAnchor="34.0" />
+            <DatePicker fx:id="payDueDatePicker" layoutX="34.0" layoutY="197.0" prefHeight="26.0" prefWidth="203.0" promptText="Pay Due Date" AnchorPane.leftAnchor="34.0" AnchorPane.topAnchor="197.0" />
+            <Label layoutX="119.0" layoutY="177.0" prefHeight="1.0" prefWidth="706.0" style="-fx-background-color: #1d6f84;" textFill="#1d6f84" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="177.0">
+               <font>
+                  <Font size="1.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

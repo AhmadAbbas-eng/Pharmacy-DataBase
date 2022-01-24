@@ -5,6 +5,7 @@ module Database {
 	requires transitive mysql.connector.java;
 	requires java.desktop;
 	requires java.management;
+	requires javafx.graphics;
 	exports application;
 	
 	opens Relations to javafx.graphics, javafx.fxml,javafx.base;

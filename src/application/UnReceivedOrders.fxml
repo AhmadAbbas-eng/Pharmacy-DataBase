@@ -11,11 +11,11 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="706.0" prefWidth="1314.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.UnReceivedController">
+<StackPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="493.0" prefWidth="713.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.UnReceivedController">
    <children>
-      <AnchorPane prefHeight="400.0" prefWidth="600.0">
+      <AnchorPane prefHeight="568.0" prefWidth="917.0">
          <children>
-            <TableView fx:id="unreceivedOrdersTable" layoutX="15.0" layoutY="53.0" prefHeight="602.0" prefWidth="1284.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="51.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="53.0">
+            <TableView fx:id="unreceivedOrdersTable" layoutX="15.0" layoutY="53.0" prefHeight="464.0" prefWidth="837.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="51.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="53.0">
                <columns>
                   <TableColumn fx:id="unreceivedOrderIDColumn" prefWidth="43.20001220703125" text="ID" />
                   <TableColumn fx:id="orderByIDColumn" prefWidth="98.4000244140625" text="Order By " />
@@ -38,7 +38,7 @@
                   <Image url="@../../Icons/icons8-back-50.png" />
                </image>
             </ImageView>
-            <ComboBox fx:id="searchOperationComboBox" layoutX="218.0" layoutY="15.0" onAction="#filterList" prefWidth="150.0" promptText="- Select -" stylesheets="@../../CSS/combobox.css" />
+            <ComboBox fx:id="searchOperationComboBox" layoutX="218.0" layoutY="15.0" onAction="#filterList" prefWidth="150.0" promptText="- Select -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="218.0" AnchorPane.topAnchor="15.0" />
          </children>
       </AnchorPane>
    </children>
