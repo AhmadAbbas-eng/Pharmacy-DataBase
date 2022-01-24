@@ -231,7 +231,7 @@ public class EmployeeEditController implements Initializable {
 			alert.showAndWait();
 		}
 
-		else if (!checkHourlyPaid || hourlyPaid <= 0 || !NID.matches("[0-9]{9}") || !name.matches("[a-z[A-Z]\s]+")
+		else if (!checkHourlyPaid || hourlyPaid <= 0 || !NID.matches("[0-9]{9}") || !name.matches("[a-z[A-Z]\\s]+")
 				|| passwordTextField.getText().isBlank() || passwordTextField.getText().isEmpty()
 				|| !date.matches("[0-9]{4}-(0[1-9]|1[02])-(0[1-9]|[1-3][0-9])")) { // check*******----------------------
 
@@ -393,7 +393,7 @@ public class EmployeeEditController implements Initializable {
 		});
 
 		nameColumn.setOnEditCommit((CellEditEvent<Employee, String> t) -> {
-			if (t.getNewValue().matches("[a-z[A-Z]\s]+")) {
+			if (t.getNewValue().matches("[a-z[A-Z]\\s]+")) {
 				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow())).setName(t.getNewValue());
 			} else {
 				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow())).setName(t.getOldValue());

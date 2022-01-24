@@ -224,7 +224,7 @@ public class CustomerEditController implements Initializable {
 			alert.showAndWait();
 		}
 
-		else if (!NID.matches("[0-9]{9}") || !name.matches("[a-z[A-Z]\s]+")) {
+		else if (!NID.matches("[0-9]{9}") || !name.matches("[a-z[A-Z]\\s]+")) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Wrong Input Format");
 			alert.setHeaderText("Wrong Input Format");
@@ -365,7 +365,7 @@ public class CustomerEditController implements Initializable {
 		});
 
 		nameColumn.setOnEditCommit((CellEditEvent<Customer, String> t) -> {
-			if (t.getNewValue().matches("[a-z[A-Z]\s]+")) {
+			if (t.getNewValue().matches("[a-z[A-Z]\\s]+")) {
 				((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setName(t.getNewValue());
 			} else {
 				((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setName(t.getOldValue());
