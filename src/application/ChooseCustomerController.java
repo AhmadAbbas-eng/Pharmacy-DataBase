@@ -199,7 +199,7 @@ public class ChooseCustomerController implements Initializable {
 			alert.showAndWait();
 		}
 
-		else if (!NID.matches("[0-9]{9}") || !name.matches("[a-z[A-Z]\s]+")) {
+		else if (!NID.matches("[0-9]{9}") || !name.matches("[a-z[A-Z]\\s]+")) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Wrong Input Format");
 			alert.setHeaderText("Wrong Input Format");

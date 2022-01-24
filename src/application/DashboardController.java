@@ -24,107 +24,107 @@ import javafx.util.Callback;
 
 public class DashboardController implements Initializable {
 	@FXML
-	private TableColumn<ArrayList<String>, String> amount;
+	private TableColumn<ArrayList<String>, String> outOfStockAmountColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> eAmount;
+	private TableColumn<ArrayList<String>, String> expiresAmountColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> eID;
+	private TableColumn<ArrayList<String>, String> expiresProductIDColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> eName;
+	private TableColumn<ArrayList<String>, String> expiresProductNameColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> eedate;
+	private TableColumn<ArrayList<String>, String> expiresExpiryDateColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> epdate;
+	private TableColumn<ArrayList<String>, String> expiresProductionDateColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> oID;
+	private TableColumn<ArrayList<String>, String> outOfStockSoonIDColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> oName;
+	private TableColumn<ArrayList<String>, String> outOfStockSoonNameColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> oedate;
+	private TableColumn<ArrayList<String>, String> outOfStockSoonExpiryDateColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> opdate;
+	private TableColumn<ArrayList<String>, String> outOfStockSoonProductionDateColumn;
 
 	@FXML
-	private TableView<ArrayList<String>> outOfStock;
+	private TableView<ArrayList<String>> outOfStockSoonTable;
 
 	@FXML
-	private TableView<ArrayList<String>> Expires;
+	private TableView<ArrayList<String>> expiresTabel;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> cost;
+	private TableColumn<ArrayList<String>, String> toBePaidCostColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> dueDate;
+	private TableColumn<ArrayList<String>, String> toBePaidDueDateOfPaymentColumn;
 
 	@FXML
-	private Label numberCustomer;
+	private Label numberOfCustomerLabel;
 
 	@FXML
-	private Label numberEmployees;
+	private Label numberOfEmployeesLabel;
 
 	@FXML
-	private Label numberExpired;
+	private Label numberOfExpiredProductsLabel;
 
 	@FXML
-	private Label numberOFS;
+	private Label outOfStockLabel;
 
 	@FXML
-	private Label numberProduct;
+	private Label numberOfProductLabel;
 
 	@FXML
-	private Label numberSupplier;
+	private Label numberOfSupplierLabel;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> orderID;
+	private TableColumn<ArrayList<String>, String> toBePaidIDColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> supplierName;
+	private TableColumn<ArrayList<String>, String> toBePaidSupplierNameColumn;
 
 	@FXML
-	private TableView<ArrayList<String>> toBePaid;
+	private TableView<ArrayList<String>> toBePaidTable;
 
 	@FXML
-	private Label totalDept;
+	private Label totalDeptLabel;
 
 	@FXML
-	private Label totalDiscount;
+	private Label totalDiscountLabel;
 
 	@FXML
-	private Label totalReceived;
+	private Label totalIncomeLabel;
 
 	@FXML
-	private Label totalSale;
+	private Label totalSaleLabel;
 
 	@FXML
-	private LineChart<String, Double> monthlySell;
+	private LineChart<String, Double> monthlySellChart;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> outOSName;
+	private TableColumn<ArrayList<String>, String> outOfStockNameColumn;
 
 	@FXML
-	private TableView<ArrayList<String>> OFS;
+	private TableView<ArrayList<String>> outOfStockTable;
 
 	@FXML
-	private ComboBox<String> month;
+	private ComboBox<String> monthBox;
 
 	@FXML
-	private ComboBox<String> year;
+	private ComboBox<String> yearBox;
 	int counter = 0;
 	ObservableList<String> months = FXCollections.observableArrayList("January", "February", "March", "April", "May",
 			"June", "July", "August", "September", "October", "November", "December");
 
 	ObservableList<String> years = FXCollections.observableArrayList("2018", "2019", "2020", "2021");
 
-	ArrayList<ArrayList<String>> dailyS = null;
+	ArrayList<ArrayList<String>> dailySalesArrayList = null;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -132,14 +132,14 @@ public class DashboardController implements Initializable {
 		if (years.indexOf(current_date.getYear() + "") == -1) {
 			years.add(current_date.getYear() + "");
 		}
-		year.setItems(years);
-		month.setItems(months);
+		yearBox.setItems(years);
+		monthBox.setItems(months);
 
 		XYChart.Series<String, Double> series = new XYChart.Series<>();
 		series.setName("Daily Sales");
 
 		try {
-			dailyS = Queries.queryResult("select sum(order_price), day(order_date)\r\n" + "	from c_order\r\n"
+			dailySalesArrayList = Queries.queryResult("select sum(order_price), day(order_date)\r\n" + "	from c_order\r\n"
 					+ "	where  year(order_date) = year(date(now())) and month(order_date) = month(date(now())) \r\n"
 					+ "	group by day(order_date) ;", null);
 		} catch (ClassNotFoundException | SQLException e1) {
@@ -148,9 +148,9 @@ public class DashboardController implements Initializable {
 
 		for (int i = 1; i <= 31; ++i) {
 
-			if (counter < dailyS.size()) {
-				if (Integer.parseInt(dailyS.get(counter).get(1)) == i) {
-					series.getData().add(new XYChart.Data<>(i + "", Double.parseDouble(dailyS.get(counter).get(0))));
+			if (counter < dailySalesArrayList.size()) {
+				if (Integer.parseInt(dailySalesArrayList.get(counter).get(1)) == i) {
+					series.getData().add(new XYChart.Data<>(i + "", Double.parseDouble(dailySalesArrayList.get(counter).get(0))));
 					++counter;
 				} else {
 					series.getData().add(new XYChart.Data<>(i + "", 0.0));
@@ -161,22 +161,22 @@ public class DashboardController implements Initializable {
 
 			}
 		}
-		monthlySell.getData().add(series);
+		monthlySellChart.getData().add(series);
 
-		year.setOnAction(e -> {
+		yearBox.setOnAction(e -> {
 			XYChart.Series<String, Double> series2 = new XYChart.Series<>();
 			series2.setName("Daily Sales");
-			monthlySell.getData().clear();
+			monthlySellChart.getData().clear();
 
 			int thisMonth;
-			if (month.getSelectionModel().getSelectedIndex() == -1) {
+			if (monthBox.getSelectionModel().getSelectedIndex() == -1) {
 				thisMonth = Calendar.MONTH - 1;
 			} else {
-				thisMonth = month.getSelectionModel().getSelectedIndex() + 1;
+				thisMonth = monthBox.getSelectionModel().getSelectedIndex() + 1;
 			}
-			if (year.getSelectionModel().getSelectedItem() == null) {
+			if (yearBox.getSelectionModel().getSelectedItem() == null ) {
 				try {
-					dailyS = Queries.queryResult(
+					dailySalesArrayList = Queries.queryResult(
 							"select sum(order_price), day(order_date)\r\n" + "	from c_order\r\n"
 									+ "	where  year(order_date) = year(date(now())) and month(order_date) = ? \r\n"
 									+ "	group by day(order_date) ;",
@@ -185,9 +185,9 @@ public class DashboardController implements Initializable {
 					e1.printStackTrace();
 				}
 			} else {
-				int currentYear = year.getSelectionModel().getSelectedIndex() + 2018;
+				int currentYear = yearBox.getSelectionModel().getSelectedIndex() + 2018;
 				try {
-					dailyS = Queries.queryResult("select sum(order_price), day(order_date)\r\n" + "	from c_order\r\n"
+					dailySalesArrayList = Queries.queryResult("select sum(order_price), day(order_date)\r\n" + "	from c_order\r\n"
 							+ "	where  year(order_date) = ? and month(order_date) = ?" + "	group by day(order_date) ;",
 							new ArrayList<String>(Arrays.asList(currentYear + "", "" + thisMonth)));
 				} catch (ClassNotFoundException | SQLException e1) {
@@ -197,10 +197,10 @@ public class DashboardController implements Initializable {
 
 			counter = 0;
 			for (int i = 1; i <= 31; ++i) {
-				if (counter < dailyS.size()) {
-					if (Integer.parseInt(dailyS.get(counter).get(1)) == i) {
+				if (counter < dailySalesArrayList.size()) {
+					if (Integer.parseInt(dailySalesArrayList.get(counter).get(1)) == i) {
 						series2.getData()
-								.add(new XYChart.Data<>(i + "", Double.parseDouble(dailyS.get(counter).get(0))));
+								.add(new XYChart.Data<>(i + "", Double.parseDouble(dailySalesArrayList.get(counter).get(0))));
 						++counter;
 					} else {
 						series2.getData().add(new XYChart.Data<>(i + "", 0.0));
@@ -212,25 +212,25 @@ public class DashboardController implements Initializable {
 				}
 			}
 
-			monthlySell.getData().add(series2);
+			monthlySellChart.getData().add(series2);
 
 		});
 
-		month.setOnAction(e -> {
+		monthBox.setOnAction(e -> {
 
 			XYChart.Series<String, Double> series2 = new XYChart.Series<>();
 			series2.setName("Daily Sales");
-			monthlySell.getData().clear();
+			monthlySellChart.getData().clear();
 
 			int thisMonth;
-			if (month.getSelectionModel().getSelectedIndex() == -1) {
+			if (monthBox.getSelectionModel().getSelectedIndex() == -1) {
 				thisMonth = Calendar.MONTH - 1;
 			} else {
-				thisMonth = month.getSelectionModel().getSelectedIndex() + 1;
+				thisMonth = monthBox.getSelectionModel().getSelectedIndex() + 1;
 			}
-			if (year.getSelectionModel().getSelectedItem() == null) {
+			if (yearBox.getSelectionModel().getSelectedItem() == null ) {
 				try {
-					dailyS = Queries.queryResult(
+					dailySalesArrayList = Queries.queryResult(
 							"select sum(order_price), day(order_date)\r\n" + "	from c_order\r\n"
 									+ "	where  year(order_date) = year(date(now())) and month(order_date) = ? \r\n"
 									+ "	group by day(order_date) ;",
@@ -239,9 +239,9 @@ public class DashboardController implements Initializable {
 					e1.printStackTrace();
 				}
 			} else {
-				int currentYear = year.getSelectionModel().getSelectedIndex() + 2018;
+				int currentYear = yearBox.getSelectionModel().getSelectedIndex() + 2018;
 				try {
-					dailyS = Queries.queryResult("select sum(order_price), day(order_date)\r\n" + "	from c_order\r\n"
+					dailySalesArrayList = Queries.queryResult("select sum(order_price), day(order_date)\r\n" + "	from c_order\r\n"
 							+ "	where  year(order_date) = ? and month(order_date) = ?" + "	group by day(order_date) ;",
 							new ArrayList<String>(Arrays.asList(currentYear + "", "" + thisMonth)));
 				} catch (ClassNotFoundException | SQLException e1) {
@@ -253,10 +253,10 @@ public class DashboardController implements Initializable {
 
 			for (int i = 1; i <= 31; ++i) {
 
-				if (counter < dailyS.size()) {
-					if (Integer.parseInt(dailyS.get(counter).get(1)) == i) {
+				if (counter < dailySalesArrayList.size()) {
+					if (Integer.parseInt(dailySalesArrayList.get(counter).get(1)) == i) {
 						series2.getData()
-								.add(new XYChart.Data<>(i + "", Double.parseDouble(dailyS.get(counter).get(0))));
+								.add(new XYChart.Data<>(i + "", Double.parseDouble(dailySalesArrayList.get(counter).get(0))));
 						++counter;
 					} else {
 						series2.getData().add(new XYChart.Data<>(i + "", 0.0));
@@ -267,24 +267,24 @@ public class DashboardController implements Initializable {
 				}
 			}
 
-			monthlySell.getData().add(series2);
+			monthlySellChart.getData().add(series2);
 
 		});
 
 		try {
-			Expires.setItems(FXCollections.observableArrayList(Queries.expiryDate()));
+			expiresTabel.setItems(FXCollections.observableArrayList(Queries.expiryDate()));
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
 
 		try {
-			outOfStock.setItems(FXCollections.observableArrayList(Queries.amountToFinish()));
+			outOfStockSoonTable.setItems(FXCollections.observableArrayList(Queries.amountToFinish()));
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
 
 		try {
-			toBePaid.setItems(FXCollections.observableArrayList(Queries.queryResult(
+			toBePaidTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
 					"select o.order_id,s.supplier_name,o.due_date_for_payment,o.order_cost\r\n"
 							+ "from s_order o,supplier s\r\n"
 							+ "where o.supplier_Id=s.supplier_ID and o.due_date_for_payment >DATE_ADD(DATE(NOW()), INTERVAL 30 DAY);",
@@ -294,7 +294,7 @@ public class DashboardController implements Initializable {
 		}
 
 		try {
-			OFS.setItems(FXCollections.observableArrayList(Queries.queryResult("select P.product_name\r\n"
+			outOfStockTable.setItems(FXCollections.observableArrayList(Queries.queryResult("select P.product_name\r\n"
 					+ "		from product p where p.product_id not in(\r\n" + " select b.product_id\r\n"
 					+ "		from batch b\r\n" + "		where  b.batch_amount>0\r\n" + "		);", null)));
 		} catch (ClassNotFoundException | SQLException e) {
@@ -303,110 +303,109 @@ public class DashboardController implements Initializable {
 
 		try {
 			int numc = 0, productNum = 0;
-			ArrayList<ArrayList<String>> expires = Queries.queryResult("SELECT count(*)\r\n"
+			ArrayList<ArrayList<String>> numberOfExpiredProductsArrayList = Queries.queryResult("SELECT count(*)\r\n"
 					+ "		from batch b\r\n"
 					+ "		where b.batch_amount>0 and b.batch_expiry_date <DATE(NOW()) and b.batch_production_date <>'1111-01-01';",
 					null);
 
-			ArrayList<ArrayList<String>> employee = Queries
+			ArrayList<ArrayList<String>> numberOfEmployeesArrayList = Queries
 					.queryResult("SELECT count(*)\r\n" + "	from employee\r\n" + "	where isActive='true';\r\n", null);
 
-			ArrayList<ArrayList<String>> supplier = Queries.queryResult("SELECT count(*)\r\n" + "from supplier;", null);
+			ArrayList<ArrayList<String>> numberOfSuppliersArrayList = Queries.queryResult("SELECT count(*)\r\n" + "from supplier;", null);
 
-			ArrayList<ArrayList<String>> customer = Queries.queryResult("SELECT count(*)" + " from customer;", null);
+			ArrayList<ArrayList<String>> numberOfCustomersArrayList = Queries.queryResult("SELECT count(*)" + " from customer;", null);
 
-			ArrayList<ArrayList<String>> product = Queries.queryResult("SELECT count(*)" + " from product;", null);
+			ArrayList<ArrayList<String>> numberOfAvailableProductsArrayList = Queries.queryResult("SELECT count(*)" + " from product;", null);
 
-			ArrayList<ArrayList<String>> totalDis = Queries.queryResult(
+			ArrayList<ArrayList<String>> todaysTotalDiscountArrayList = Queries.queryResult(
 					"select sum(order_discount)\r\n" + "from c_order\r\n" + "where order_date = date(now());", null);
 
-			ArrayList<ArrayList<String>> totalp = Queries.queryResult(
+			ArrayList<ArrayList<String>> todaysTotalPaidAmountArrayList = Queries.queryResult(
 					"select sum(order_price)\r\n" + "	from c_order\r\n" + "	where order_date = date(now());", null);
 
-			ArrayList<ArrayList<String>> outOS = Queries.queryResult("select count(*) \r\n"
+			ArrayList<ArrayList<String>> numberOfOutOfStockArrayList = Queries.queryResult("select count(*) \r\n"
 					+ "from product p where p.product_id not in(\r\n" + "select b.product_id\r\n" + "from batch b\r\n"
 					+ "where  b.batch_amount > 0 and b.batch_production_date <>'1111-01-01');", null);
 
-			ArrayList<ArrayList<String>> income = Queries
+			ArrayList<ArrayList<String>> todaysTotalIncomeAmountArrayList = Queries
 					.queryResult("select sum(income_amount) from income where income_Date=date(now());", null);
 
 			
-			double totalSaled =0.0, totalIncome =0.0,discount =0.0;
+			double totalSoled =0.0, totalIncome =0.0,totalDiscount =0.0;
 			
-			if (totalDis.size() == 0) {
-				totalDiscount.setText("0.0");
+			if (todaysTotalDiscountArrayList.get(0).get(0)==null) {
+				totalDiscountLabel.setText("0.0");
 			} else {
-				totalDiscount.setText(totalDis.get(0).get(0));
-				discount = Double.parseDouble(totalDis.get(0).get(0));
+				System.out.println(todaysTotalDiscountArrayList.toString());
+				totalDiscountLabel.setText(todaysTotalDiscountArrayList.get(0).get(0));
+				totalDiscount = Double.parseDouble(todaysTotalDiscountArrayList.get(0).get(0));
 			}
 
-			if (totalp.size() == 0) {
-				totalSale.setText("0.0");
+			if (todaysTotalPaidAmountArrayList.get(0).get(0)==null) {
+				totalSaleLabel.setText("0.0");
 			} else {
-				totalSale.setText(totalp.get(0).get(0));
-				totalSaled = Double.parseDouble(totalp.get(0).get(0));
+				totalSaleLabel.setText(todaysTotalPaidAmountArrayList.get(0).get(0));
+				totalSoled = Double.parseDouble(todaysTotalPaidAmountArrayList.get(0).get(0));
 			}
 
-			if (income.size() == 0) {
-				totalReceived.setText("0.0");
-				totalDept.setText(totalSaled + "");
+			if (todaysTotalIncomeAmountArrayList.get(0).get(0)==null) {
+				totalIncomeLabel.setText("0.0");
+				totalDeptLabel.setText(totalSoled + "");
 
 			} else {
-				totalIncome = Double.parseDouble(income.get(0).get(0));
-				totalDept.setText((totalSaled -totalIncome - discount) + "");
-				totalReceived.setText(totalIncome + "" );
+				totalIncome = Double.parseDouble(todaysTotalIncomeAmountArrayList.get(0).get(0));
+				totalDeptLabel.setText((totalSoled -totalIncome - totalDiscount) + "");
+				totalIncomeLabel.setText(totalIncome + "" );
 				
 			}
-			
 
-			if (customer.size() == 0) {
-				numberCustomer.setText("0");
+			if (numberOfCustomersArrayList.get(0).get(0)==null) {
+				numberOfCustomerLabel.setText("0");
 			} else {
-				numc = Integer.parseInt(customer.get(0).get(0)) - 1;
-				numberCustomer.setText("" + numc);
+				numc = Integer.parseInt(numberOfCustomersArrayList.get(0).get(0)) - 1;
+				numberOfCustomerLabel.setText("" + numc);
 			}
 
-			if (expires.size() == 0) {
-				numberExpired.setText("0");
+			if (numberOfExpiredProductsArrayList.get(0).get(0)==null) {
+				numberOfExpiredProductsLabel.setText("0");
 			} else {
-				numberExpired.setText(expires.get(0).get(0));
+				numberOfExpiredProductsLabel.setText(numberOfExpiredProductsArrayList.get(0).get(0));
 			}
 
-			if (employee.size() == 0) {
-				numberEmployees.setText("0");
+			if (numberOfEmployeesArrayList.get(0).get(0)==null) {
+				numberOfEmployeesLabel.setText("0");
 			} else {
-				numberEmployees.setText(employee.get(0).get(0));
+				numberOfEmployeesLabel.setText(numberOfEmployeesArrayList.get(0).get(0));
 			}
 
-			if (supplier.size() == 0) {
-				numberSupplier.setText("0");
+			if (numberOfSuppliersArrayList.get(0).get(0)==null) {
+				numberOfSupplierLabel.setText("0");
 			} else {
-				numberSupplier.setText(supplier.get(0).get(0));
+				numberOfSupplierLabel.setText(numberOfSuppliersArrayList.get(0).get(0));
 			}
 
-			if (product.size() == 0) {
-				numberProduct.setText("0");
+			if (numberOfAvailableProductsArrayList.get(0).get(0)==null) {
+				numberOfProductLabel.setText("0");
 			} else {
-				if (expires.get(0).get(0) != null)
-					productNum = Integer.parseInt(product.get(0).get(0)) - Integer.parseInt(expires.get(0).get(0));
+				if (numberOfExpiredProductsArrayList.get(0).get(0) != null)
+					productNum = Integer.parseInt(numberOfAvailableProductsArrayList.get(0).get(0)) - Integer.parseInt(numberOfExpiredProductsArrayList.get(0).get(0));
 				else
-					productNum = Integer.parseInt(product.get(0).get(0));
+					productNum = Integer.parseInt(numberOfAvailableProductsArrayList.get(0).get(0));
 
-				numberProduct.setText(productNum + "");
+				numberOfProductLabel.setText(productNum + "");
 			}
 
-			if (outOS.size() == 0) {
-				numberOFS.setText("0");
+			if (numberOfOutOfStockArrayList.get(0).get(0)==null) {
+				outOfStockLabel.setText("0");
 			} else {
-				numberOFS.setText(outOS.get(0).get(0));
+				outOfStockLabel.setText(numberOfOutOfStockArrayList.get(0).get(0));
 			}
 
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		outOSName.setCellValueFactory(
+		outOfStockNameColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -419,7 +418,7 @@ public class DashboardController implements Initializable {
 					}
 				});
 
-		orderID.setCellValueFactory(
+		toBePaidIDColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -431,7 +430,7 @@ public class DashboardController implements Initializable {
 						}
 					}
 				});
-		supplierName.setCellValueFactory(
+		toBePaidSupplierNameColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -443,7 +442,7 @@ public class DashboardController implements Initializable {
 						}
 					}
 				});
-		dueDate.setCellValueFactory(
+		toBePaidDueDateOfPaymentColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -455,7 +454,7 @@ public class DashboardController implements Initializable {
 						}
 					}
 				});
-		cost.setCellValueFactory(
+		toBePaidCostColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -468,7 +467,7 @@ public class DashboardController implements Initializable {
 					}
 				});
 
-		eID.setCellValueFactory(
+		expiresProductIDColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -480,7 +479,7 @@ public class DashboardController implements Initializable {
 						}
 					}
 				});
-		eName.setCellValueFactory(
+		expiresProductNameColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -492,7 +491,7 @@ public class DashboardController implements Initializable {
 						}
 					}
 				});
-		epdate.setCellValueFactory(
+		expiresProductionDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -504,7 +503,7 @@ public class DashboardController implements Initializable {
 						}
 					}
 				});
-		eedate.setCellValueFactory(
+		expiresExpiryDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -516,7 +515,7 @@ public class DashboardController implements Initializable {
 						}
 					}
 				});
-		eAmount.setCellValueFactory(
+		expiresAmountColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -528,7 +527,7 @@ public class DashboardController implements Initializable {
 						}
 					}
 				});
-		oID.setCellValueFactory(
+		outOfStockSoonIDColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -540,7 +539,7 @@ public class DashboardController implements Initializable {
 						}
 					}
 				});
-		oName.setCellValueFactory(
+		outOfStockSoonNameColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -552,7 +551,7 @@ public class DashboardController implements Initializable {
 						}
 					}
 				});
-		opdate.setCellValueFactory(
+		outOfStockSoonProductionDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -564,7 +563,7 @@ public class DashboardController implements Initializable {
 						}
 					}
 				});
-		oedate.setCellValueFactory(
+		outOfStockSoonExpiryDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -576,7 +575,7 @@ public class DashboardController implements Initializable {
 						}
 					}
 				});
-		amount.setCellValueFactory(
+		outOfStockAmountColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
