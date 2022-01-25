@@ -16,9 +16,9 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1335.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.DashboardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="807.0" prefWidth="1658.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.DashboardController">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="1072.0" layoutY="5.0" prefHeight="290.0" prefWidth="258.0" spacing="5.0" style="-fx-background-color: #f9f9f9;" AnchorPane.bottomAnchor="330.0" AnchorPane.leftAnchor="1072.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+      <VBox alignment="TOP_CENTER" layoutX="1075.0" layoutY="5.0" prefHeight="455.0" prefWidth="578.0" spacing="5.0" style="-fx-background-color: #f9f9f9;" AnchorPane.bottomAnchor="347.0" AnchorPane.leftAnchor="1075.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <effect>
             <DropShadow>
                <color>
@@ -32,7 +32,7 @@
                   <Font name="System Bold Italic" size="16.0" />
                </font>
             </Label>
-            <TableView fx:id="outOfStockSoonTable" prefHeight="283.0" prefWidth="462.0" stylesheets="@../../CSS/table.css">
+            <TableView fx:id="outOfStockSoonTable" prefHeight="462.0" prefWidth="582.0" stylesheets="@../../CSS/table.css">
                <columns>
                   <TableColumn fx:id="outOfStockSoonIDColumn" prefWidth="75.0" text="Product ID" />
                   <TableColumn fx:id="outOfStockSoonNameColumn" prefWidth="88.5333251953125" text="Product Name" />
@@ -43,7 +43,7 @@
             </TableView>
          </children>
       </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="1072.0" layoutY="356.0" prefHeight="316.0" prefWidth="257.0" spacing="5.0" style="-fx-background-color: #f9f9f9;" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="1072.0" AnchorPane.rightAnchor="6.0">
+      <VBox alignment="TOP_CENTER" layoutX="1072.0" layoutY="356.0" prefHeight="327.0" prefWidth="580.0" spacing="5.0" style="-fx-background-color: #f9f9f9;" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="1072.0" AnchorPane.rightAnchor="6.0">
          <effect>
             <DropShadow>
                <color>
