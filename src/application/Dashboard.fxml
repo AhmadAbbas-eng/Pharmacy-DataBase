@@ -198,7 +198,7 @@
             </LineChart>
          </children>
       </AnchorPane>
-      <HBox layoutX="6.0" layoutY="3.0" prefHeight="100.0" prefWidth="1058.0" spacing="90.0" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="3.0">
+      <HBox layoutX="6.0" layoutY="3.0" prefHeight="100.0" prefWidth="1058.0" spacing="85.0" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="3.0">
          <children>
             <AnchorPane prefHeight="100.0" prefWidth="108.0" style="-fx-background-color: #a47bd9; -fx-background-radius: 25;">
                <children>
