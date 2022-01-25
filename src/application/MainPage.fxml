@@ -11,46 +11,24 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="655.0" prefWidth="1113.0" style="-fx-background-color: #1d6f84;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainPageController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="729.0" prefWidth="1305.0" style="-fx-background-color: #1d6f84;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainPageController">
    <center>
       <AnchorPane prefHeight="569.0" prefWidth="883.0" style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="choosenButtonLabel" layoutX="61.0" layoutY="13.0" text="Title" textFill="#1d6f84" AnchorPane.leftAnchor="61.0" AnchorPane.topAnchor="13.0">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font>
-            </Label>
-            <StackPane fx:id="contentArea" layoutX="3.0" layoutY="50.0" prefHeight="588.0" prefWidth="1009.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
-            <ImageView fitHeight="41.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <image>
-                  <Image url="@../../Icons/icons8-pharmacy-64%20(1).png" />
-               </image>
-            </ImageView>
-            <Line endX="740.7999877929688" endY="-1.0000038146972656" layoutX="109.0" layoutY="51.0" startX="-95.20001220703125" startY="-1.0000038146972656" style="-fx-opacity: 0.1;" AnchorPane.leftAnchor="13.29998779296875" AnchorPane.rightAnchor="8.100012207031227" AnchorPane.topAnchor="49.499996185302734" />
+            <StackPane fx:id="contentArea" layoutX="3.0" prefHeight="590.0" prefWidth="979.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
    </center>
    <left>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="658.0" prefWidth="134.0" style="-fx-background-color: #1d6f84;" BorderPane.alignment="CENTER">
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="663.0" prefWidth="134.0" style="-fx-background-color: #1d6f84;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="logOutButton" layoutY="517.6" mnemonicParsing="false" onAction="#logOutAction" prefHeight="20.0" prefWidth="131.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Log Out" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <Button fx:id="logOutButton" layoutY="591.0" mnemonicParsing="false" onAction="#logOutAction" prefHeight="20.0" prefWidth="131.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Log Out" AnchorPane.bottomAnchor="46.60000000000002" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <VBox alignment="TOP_CENTER" layoutX="-1.0" layoutY="-55.0" prefHeight="497.0" prefWidth="115.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0">
+            <VBox alignment="TOP_CENTER" layoutX="-1.0" layoutY="-55.0" prefHeight="497.0" prefWidth="115.0" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0">
                <children>
-                  <ImageView fitHeight="28.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Icons/icons8-user-64.png" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="userNameLabel" alignment="CENTER" prefHeight="28.0" prefWidth="126.0" text="User Name" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Line endX="-65.93278503417969" endY="1.8992385864257812" fill="WHITE" startX="-142.2257080078125" startY="1.5637924671173096" stroke="WHITE" />
                   <Button fx:id="dashboardButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#DashboardOnAction" prefHeight="7.0" prefWidth="106.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Dashboard">
                      <font>
                         <Font name="System Bold" size="15.0" />
@@ -111,4 +89,32 @@
          </children>
       </AnchorPane>
    </left>
+   <top>
+      <AnchorPane prefHeight="33.0" prefWidth="1114.0" style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="41.0" fitWidth="46.0" layoutX="134.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="134.0" AnchorPane.topAnchor="11.0">
+               <image>
+                  <Image url="@../../Icons/icons8-pharmacy-64%20(1).png" />
+               </image>
+            </ImageView>
+            <Label layoutY="-2.0" prefHeight="66.0" prefWidth="134.0" style="-fx-background-color: #1d6f84;" AnchorPane.bottomAnchor="0.1" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <ImageView fitHeight="28.0" fitWidth="44.0" layoutX="53.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="53.0" AnchorPane.topAnchor="8.0">
+               <image>
+                  <Image url="@../../Icons/icons8-user-64.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="userNameLabel" alignment="CENTER" layoutX="4.0" layoutY="35.0" prefHeight="28.0" prefWidth="126.0" text="User Name" textFill="WHITE" AnchorPane.leftAnchor="4.0" AnchorPane.topAnchor="35.0">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="choosenButtonLabel" layoutX="202.0" layoutY="23.0" text="Title" textFill="#1d6f84" AnchorPane.leftAnchor="202.0" AnchorPane.topAnchor="23.0">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+            <Line endX="859.7929077148438" endY="-1.0000030994415283" layoutX="239.0" layoutY="64.0" startX="-95.20001220703125" startY="-1.0000038146972656" style="-fx-opacity: 0.1;" AnchorPane.leftAnchor="143.09288024902344" AnchorPane.rightAnchor="14.100015258788972" AnchorPane.topAnchor="62.29288935661316" />
+         </children>
+      </AnchorPane>
+   </top>
 </BorderPane>

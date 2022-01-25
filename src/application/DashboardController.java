@@ -132,7 +132,7 @@ public class DashboardController implements Initializable {
 		if (years.indexOf(current_date.getYear() + "") == -1) {
 			years.add(current_date.getYear() + "");
 		}
-		yearBox.setItems(years);
+		yearBox.setItems(years); 
 		monthBox.setItems(months);
 
 		XYChart.Series<String, Double> series = new XYChart.Series<>();
