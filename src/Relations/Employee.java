@@ -52,8 +52,8 @@ public class Employee {
 	 * @param isManager
 	 * @param isActive
 	 */
-	public Employee(int iD, String name, String nID, LocalDate dateOfWork, double hourlyPaid,
-			ArrayList<String> phones, String password, String isManager, String isActive) {
+	public Employee(int iD, String name, String nID, LocalDate dateOfWork, double hourlyPaid, ArrayList<String> phones,
+			String password, String isManager, String isActive) {
 		super();
 		ID = iD;
 		this.name = name;
@@ -146,7 +146,6 @@ public class Employee {
 		this.isManager = isManager;
 	}
 
-
 	public static ObservableList<Employee> getDataList() {
 		return dataList;
 	}
@@ -178,6 +177,7 @@ public class Employee {
 	public void setIsActive(String isActive) {
 		this.isActive = isActive;
 	}
+
 	public static int getCurrentID() {
 		return currentID;
 	}
@@ -213,6 +213,7 @@ public class Employee {
 	public static void setEmployeeName(String employeeName) {
 		EmployeeName = employeeName;
 	}
+
 	public static void getEmployeeData() throws ClassNotFoundException, SQLException, ParseException {
 
 		data.clear();
@@ -221,14 +222,14 @@ public class Employee {
 		for (int i = 0; i < table.size(); i++) {
 			LocalDate date = LocalDate.parse(table.get(i).get(3));
 
-			Employee temp = new Employee(Integer.parseInt(table.get(i).get(0)), table.get(i).get(1), table.get(i).get(2), date,
-					Double.parseDouble(table.get(i).get(4)), null, table.get(i).get(5), table.get(i).get(6),
-					table.get(i).get(7));
+			Employee temp = new Employee(Integer.parseInt(table.get(i).get(0)), table.get(i).get(1),
+					table.get(i).get(2), date, Double.parseDouble(table.get(i).get(4)), null, table.get(i).get(5),
+					table.get(i).get(6), table.get(i).get(7));
 
 			getEmployeePhone(temp);
 			data.add(temp);
 		}
-		maxID=Integer.parseInt(Queries.queryResult("select max(employee_ID) from employee;", null).get(0).get(0));
+		maxID = Integer.parseInt(Queries.queryResult("select max(employee_ID) from employee;", null).get(0).get(0));
 		dataList = FXCollections.observableArrayList(data);
 	}
 
@@ -240,9 +241,9 @@ public class Employee {
 		for (int i = 0; i < table.size(); i++) {
 			LocalDate date = LocalDate.parse(table.get(i).get(3));
 
-			Employee temp = new Employee(Integer.parseInt(table.get(i).get(0)), table.get(i).get(1), table.get(i).get(2), date,
-					Double.parseDouble(table.get(i).get(4)), null, table.get(i).get(5), table.get(i).get(6),
-					table.get(i).get(7));
+			Employee temp = new Employee(Integer.parseInt(table.get(i).get(0)), table.get(i).get(1),
+					table.get(i).get(2), date, Double.parseDouble(table.get(i).get(4)), null, table.get(i).get(5),
+					table.get(i).get(6), table.get(i).get(7));
 			getEmployeePhone(temp);
 			tempData.add(temp);
 		}
@@ -250,17 +251,16 @@ public class Employee {
 	}
 
 	public static void getEmployeePhone(Employee employee) throws SQLException, ClassNotFoundException {
-		Connection getPhoneConnection = Queries.dataBaseConnection();
-		String query = "select Phone from Employee_Phone where Employee_ID=" + employee.getID() + ";";
-		Statement getPhoneStmt = getPhoneConnection.createStatement();
-		ResultSet getPhoneSet = getPhoneStmt.executeQuery(query);
+		ArrayList<ArrayList<String>> phonesSet = Queries.queryResult(
+				"select Phone from Employee_Phone where Employee_ID=? ;",
+				new ArrayList<>(Arrays.asList(employee.getID()+"")));
+
 		ArrayList<String> phones = new ArrayList<String>();
 
-		while (getPhoneSet.next())
-			phones.add(getPhoneSet.getString(1));
+		for (int i = 0; i < phonesSet.size(); i++) {
+			phones.add(phonesSet.get(i).get(0));
+		}
 
-		getPhoneStmt.close();
-		getPhoneSet.close();
 		employee.setPhones(phones);
 	}
 
@@ -268,7 +268,7 @@ public class Employee {
 		for (int i = 0; i < getPhones().size(); i++) {
 			try {
 				Queries.queryResult("delete from  Employee_Phone where Employee_ID=? ;",
-						new ArrayList<>(Arrays.asList(getID()+"")));
+						new ArrayList<>(Arrays.asList(getID() + "")));
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
@@ -279,7 +279,7 @@ public class Employee {
 
 		try {
 			Queries.queryUpdate("Insert into Employee_Phone (Employee_ID, Phone) values(?, ?);",
-					new ArrayList<>(Arrays.asList(employeeID+"", phone)));
+					new ArrayList<>(Arrays.asList(employeeID + "", phone)));
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
@@ -305,8 +305,6 @@ public class Employee {
 			e.printStackTrace();
 		}
 	}
-
-
 
 	/**
 	 * Report Employees informations on csv file
