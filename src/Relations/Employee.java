@@ -259,6 +259,7 @@ public class Employee {
 		while (getPhoneSet.next())
 			phones.add(getPhoneSet.getString(1));
 
+		getPhoneConnection.close();
 		getPhoneStmt.close();
 		getPhoneSet.close();
 		employee.setPhones(phones);
