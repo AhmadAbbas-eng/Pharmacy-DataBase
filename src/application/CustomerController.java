@@ -6,9 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.scene.control.TableView;
 import javafx.fxml.Initializable;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.ColorAdjust;
@@ -107,6 +105,10 @@ public class CustomerController implements Initializable {
 
 	public void showProductsOnAction() {
 		if (customerTable.getSelectionModel().getSelectedItem() == null) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setHeaderText("Customer Must Be Chosen First");
+			alert.setContentText("Choose A Customer From The Table");
+			alert.showAndWait();
 			return;
 		}
 		try {
@@ -127,29 +129,12 @@ public class CustomerController implements Initializable {
 		}
 	}
 
-	public void showProductsOnMousePressed() {
-		if (customerTable.getSelectionModel().getSelectedItem() != null) {
-			showProductsButton.setStyle("-fx-background-color: #1A6477");
-		}
-	}
-
-	public void showProductsOnMouseReleased() {
-		showProductsButton.setStyle("-fx-background-color: #1D6F84; ");
-	}
-
-	public void showProductsOnMouseEntered() {
-		if (customerTable.getSelectionModel().getSelectedItem() != null) {
-			showProductsButton.setStyle("-fx-background-color: #278FAA; ");
-		}
-
-	}
-
-	public void showProductsOnMouseExited() {
-		showProductsButton.setStyle("-fx-background-color: #1D6F84; ");
-	}
-
 	public void showInfoOnAction() {
 		if (customerTable.getSelectionModel().getSelectedItem() == null) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setHeaderText("Customer Must Be Chosen First");
+			alert.setContentText("Choose A Customer From The Table");
+			alert.showAndWait();
 			return;
 		}
 		try {
@@ -168,27 +153,6 @@ public class CustomerController implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	public void showInfoOnMousePressed() {
-		if (customerTable.getSelectionModel().getSelectedItem() != null) {
-			showInfoButton.setStyle("-fx-background-color: #1A6477");
-		}
-	}
-
-	public void showInfoOnMouseReleased() {
-		showInfoButton.setStyle("-fx-background-color: #1D6F84; ");
-	}
-
-	public void showInfoOnMouseEntered() {
-		if (customerTable.getSelectionModel().getSelectedItem() != null) {
-			showInfoButton.setStyle("-fx-background-color: #278FAA; ");
-		}
-
-	}
-
-	public void showInfoOnMouseExited() {
-		showInfoButton.setStyle("-fx-background-color: #1D6F84; ");
 	}
 
 	public void editOnMousePressed() {
@@ -242,7 +206,7 @@ public class CustomerController implements Initializable {
 		}
 	}
 
-	public void saveEdits() {// ------------------------------------------
+	public void saveEdits() {
 		customerTable.setItems(Customer.getDataList());
 		customerTable.refresh();
 	}

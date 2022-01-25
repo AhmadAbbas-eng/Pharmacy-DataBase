@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -82,6 +83,10 @@ public class EmployeeController implements Initializable {
 
 	public void showWorkOnAction() {
 		if (employeeTable.getSelectionModel().getSelectedItem() == null) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setHeaderText("Employee Must Be Chosen First");
+			alert.setContentText("Choose An Employee From The Table");
+			alert.showAndWait();
 			return;
 		}
 		try {
@@ -102,29 +107,12 @@ public class EmployeeController implements Initializable {
 		}
 	}
 
-	public void showWorkOnMousePressed() {
-		if (employeeTable.getSelectionModel().getSelectedItem() != null) {
-			showWorkButton.setStyle("-fx-background-color: #1A6477");
-		}
-	}
-
-	public void showWorkOnMouseReleased() {
-		showWorkButton.setStyle("-fx-background-color: #1D6F84; ");
-	}
-
-	public void showWorkOnMouseEntered() {
-		if (employeeTable.getSelectionModel().getSelectedItem() != null) {
-			showWorkButton.setStyle("-fx-background-color: #278FAA; ");
-		}
-
-	}
-
-	public void showWorkOnMouseExited() {
-		showWorkButton.setStyle("-fx-background-color: #1D6F84; ");
-	}
-
 	public void showInfoOnAction() {
 		if (employeeTable.getSelectionModel().getSelectedItem() == null) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setHeaderText("Employee Must Be Chosen First");
+			alert.setContentText("Choose An Employee From The Table");
+			alert.showAndWait();
 			return;
 		}
 		try {
@@ -143,27 +131,6 @@ public class EmployeeController implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	public void showInfoOnMousePressed() {
-		if (employeeTable.getSelectionModel().getSelectedItem() != null) {
-			showInfoButton.setStyle("-fx-background-color: #1A6477");
-		}
-	}
-
-	public void showInfoOnMouseReleased() {
-		showInfoButton.setStyle("-fx-background-color: #1D6F84; ");
-	}
-
-	public void showInfoOnMouseEntered() {
-		if (employeeTable.getSelectionModel().getSelectedItem() != null) {
-			showInfoButton.setStyle("-fx-background-color: #278FAA; ");
-		}
-
-	}
-
-	public void showInfoOnMouseExited() {
-		showInfoButton.setStyle("-fx-background-color: #1D6F84; ");
 	}
 
 	public void editOnMousePressed() {
