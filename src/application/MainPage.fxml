@@ -83,7 +83,7 @@
       </AnchorPane>
    </left>
    <top>
-      <AnchorPane fx:id="topNode" prefHeight="44.0" prefWidth="1059.0" style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="topNode" prefHeight="18.0" prefWidth="1059.0" style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="41.0" fitWidth="46.0" layoutX="134.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="134.0" AnchorPane.topAnchor="11.0">
                <image>
@@ -96,12 +96,12 @@
                </font>
             </Label>
             <Label layoutX="391.0" layoutY="-11.0" prefHeight="57.0" prefWidth="134.0" style="-fx-background-color: #1d6f84;" AnchorPane.bottomAnchor="0.1" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <ImageView fitHeight="28.0" fitWidth="35.0" layoutX="1001.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="38.200000000000045" AnchorPane.topAnchor="19.0">
+            <ImageView fitHeight="28.0" fitWidth="35.0" layoutX="996.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="35.200000000000045" AnchorPane.topAnchor="10.0">
                <image>
                   <Image url="@../../Icons/icons8-logout-64.png" />
                </image>
             </ImageView>
-            <Button fx:id="logOutButton" layoutX="999.0" layoutY="18.0" mnemonicParsing="false" onAction="#logOutAction" prefHeight="27.0" prefWidth="34.0" style="-fx-background-color: #f1ffff; -fx-opacity: 0;" AnchorPane.rightAnchor="33.80000000000005" AnchorPane.topAnchor="18.0" />
+            <Button fx:id="logOutButton" layoutX="991.0000000000001" layoutY="8.0" mnemonicParsing="false" onAction="#logOutAction" prefHeight="27.0" prefWidth="34.0" style="-fx-background-color: #f1ffff; -fx-opacity: 0;" AnchorPane.rightAnchor="33.799999999999955" AnchorPane.topAnchor="8.0" />
             <Label fx:id="userNameLabel" alignment="CENTER" layoutX="4.0" layoutY="28.0" prefHeight="28.0" prefWidth="126.0" text="User Name" textFill="WHITE" AnchorPane.leftAnchor="4.0" AnchorPane.topAnchor="28.0">
                <font>
                   <Font name="System Bold" size="15.0" />
@@ -112,6 +112,7 @@
                   <Image url="@../../Icons/icons8-user-64.png" />
                </image>
             </ImageView>
+            <Label layoutX="986.0" layoutY="37.0" text="Log Out" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="37.0" />
          </children>
       </AnchorPane>
    </top>
