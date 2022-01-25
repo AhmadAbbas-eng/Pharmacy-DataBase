@@ -12,7 +12,7 @@
 
 <BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="608.0" prefWidth="1059.0" style="-fx-background-color: #1d6f84;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainPageController">
    <center>
-      <AnchorPane prefHeight="569.0" prefWidth="883.0" style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="569.0" prefWidth="883.0" style="-fx-background-color: #ffffff;">
          <children>
             <StackPane fx:id="contentArea" layoutY="-1.0" prefHeight="668.0" prefWidth="1171.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
@@ -22,7 +22,7 @@
       </AnchorPane>
    </center>
    <left>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="553.0" prefWidth="134.0" style="-fx-background-color: #1d6f84;" BorderPane.alignment="CENTER">
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="553.0" prefWidth="134.0" style="-fx-background-color: #1d6f84;">
          <children>
             <Button fx:id="dashboardButton" contentDisplay="CENTER" layoutX="-24.0" layoutY="-6.0" mnemonicParsing="false" onAction="#DashboardOnAction" prefHeight="38.0" prefWidth="133.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Dashboard" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <font>
@@ -83,7 +83,7 @@
       </AnchorPane>
    </left>
    <top>
-      <AnchorPane fx:id="topNode" prefHeight="31.0" prefWidth="1306.0" style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="topNode" prefHeight="44.0" prefWidth="1059.0" style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="41.0" fitWidth="46.0" layoutX="134.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="134.0" AnchorPane.topAnchor="11.0">
                <image>
@@ -102,12 +102,12 @@
                </image>
             </ImageView>
             <Button fx:id="logOutButton" layoutX="999.0" layoutY="18.0" mnemonicParsing="false" onAction="#logOutAction" prefHeight="27.0" prefWidth="34.0" style="-fx-background-color: #f1ffff; -fx-opacity: 0;" AnchorPane.rightAnchor="33.80000000000005" AnchorPane.topAnchor="18.0" />
-            <Label fx:id="userNameLabel" alignment="CENTER" layoutX="4.0" layoutY="28.0" prefHeight="28.0" prefWidth="126.0" text="User Name" textFill="WHITE" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="936.8000000000001">
+            <Label fx:id="userNameLabel" alignment="CENTER" layoutX="4.0" layoutY="28.0" prefHeight="28.0" prefWidth="126.0" text="User Name" textFill="WHITE" AnchorPane.leftAnchor="4.0" AnchorPane.topAnchor="28.0">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <ImageView fitHeight="28.0" fitWidth="44.0" layoutX="56.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="28.0" fitWidth="44.0" layoutX="56.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="56.0" AnchorPane.topAnchor="3.0">
                <image>
                   <Image url="@../../Icons/icons8-user-64.png" />
                </image>
