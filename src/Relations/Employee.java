@@ -217,7 +217,7 @@ public class Employee {
 	public static void getEmployeeData() throws ClassNotFoundException, SQLException, ParseException {
 
 		data.clear();
-		ArrayList<ArrayList<String>> table = Queries.queryResult("select * from Employee;", null);
+		ArrayList<ArrayList<String>> table = Queries.queryResult("select * from Employee where Employee_ID<>-1;", null);
 
 		for (int i = 0; i < table.size(); i++) {
 			LocalDate date = LocalDate.parse(table.get(i).get(3));
@@ -253,7 +253,7 @@ public class Employee {
 	public static void getEmployeePhone(Employee employee) throws SQLException, ClassNotFoundException {
 		ArrayList<ArrayList<String>> phonesSet = Queries.queryResult(
 				"select Phone from Employee_Phone where Employee_ID=? ;",
-				new ArrayList<>(Arrays.asList(employee.getID()+"")));
+				new ArrayList<>(Arrays.asList(employee.getID() + "")));
 
 		ArrayList<String> phones = new ArrayList<String>();
 
