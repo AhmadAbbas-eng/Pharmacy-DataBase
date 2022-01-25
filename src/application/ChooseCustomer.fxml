@@ -33,7 +33,7 @@
       </TableView>
       <TextField fx:id="searchBox" layoutX="19.0" layoutY="20.0" promptText="Search ..." stylesheets="@../../CSS/search.css" AnchorPane.leftAnchor="22.0" />
       <ComboBox fx:id="fieldSelector" layoutX="188.0" layoutY="20.0" prefWidth="150.0" promptText="-Specify Field-" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="188.0" />
-      <Button fx:id="selectButton" layoutX="28.0" layoutY="221.0" mnemonicParsing="false" onAction="#selectCustomerOnAction" onMouseEntered="#selectCustomerOnMouseEntered" onMouseExited="#selectCustomerOnMouseExited" onMousePressed="#selectCustomerOnMousePressed" onMouseReleased="#selectCustomerOnMouseReleased" stylesheets="@../../CSS/button.css" text="Select Customer" />
+      <Button fx:id="selectButton" layoutX="28.0" layoutY="221.0" mnemonicParsing="false" onAction="#selectCustomerOnAction" stylesheets="@../../CSS/button.css" text="Select Customer" />
       <Line endX="429.0" endY="4.57763671875E-5" layoutX="143.0" layoutY="263.0" startX="-100.0" startY="3.0517578125E-5" stroke="#1d6f84" />
       <Label layoutX="43.0" layoutY="279.0" prefHeight="25.0" prefWidth="133.0" text="Add New Customer" textFill="#1d6f84">
          <font>
@@ -85,12 +85,6 @@
          </children>
       </HBox>
       <ListView fx:id="phoneList" layoutX="394.0" layoutY="358.0" onEditCommit="#listOnEditCommit" prefHeight="74.0" prefWidth="152.0" stylesheets="@../../CSS/list.css" />
-      <Label fx:id="errorLabel" alignment="TOP_LEFT" layoutX="232.0" layoutY="279.0" prefHeight="25.0" prefWidth="313.0" textFill="RED" wrapText="true" />
-      <Label fx:id="phoneErrorLabel" alignment="TOP_LEFT" layoutX="311.0" layoutY="358.0" prefHeight="82.0" prefWidth="80.0" textFill="RED" wrapText="true">
-         <font>
-            <Font size="11.0" />
-         </font>
-      </Label>
       <ImageView fx:id="deletePhone" fitHeight="20.0" fitWidth="20.0" layoutX="550.0" layoutY="358.0" onMouseEntered="#deletePhoneOnMouseEntered" onMouseExited="#deletePhoneOnMouseExited" onMousePressed="#deletePhoneOnMousePressed" onMouseReleased="#deletePhoneOnMouseReleased" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Icons/icons8-delete-60.png" />

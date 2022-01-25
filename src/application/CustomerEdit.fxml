@@ -90,18 +90,11 @@
          </children>
       </HBox>
       <ListView fx:id="phoneList" layoutX="386.0" layoutY="263.0" onEditCommit="#listOnEditCommit" prefHeight="82.0" prefWidth="152.0" stylesheets="@../../CSS/list.css" />
-      <Label fx:id="errorLabel" alignment="TOP_LEFT" layoutX="224.0" layoutY="184.0" prefHeight="25.0" prefWidth="313.0" textFill="RED" wrapText="true" />
-      <Label fx:id="phoneErrorLabel" alignment="TOP_LEFT" layoutX="303.0" layoutY="263.0" prefHeight="82.0" prefWidth="80.0" textFill="RED" wrapText="true">
-         <font>
-            <Font size="11.0" />
-         </font>
-      </Label>
       <ImageView fx:id="deletePhone" fitHeight="20.0" fitWidth="20.0" layoutX="544.0" layoutY="263.0" onMouseEntered="#deletePhoneOnMouseEntered" onMouseExited="#deletePhoneOnMouseExited" onMousePressed="#deletePhoneOnMousePressed" onMouseReleased="#deletePhoneOnMouseReleased" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Icons/icons8-delete-60.png" />
          </image>
       </ImageView>
-      <Label fx:id="editErrorLabel" alignment="TOP_LEFT" layoutX="210.0" layoutY="14.0" prefHeight="25.0" prefWidth="313.0" textFill="RED" wrapText="true" />
       <Label fx:id="addedLabel" layoutX="209.0" layoutY="188.0" prefHeight="17.0" prefWidth="107.0" text="Added Successfully" />
       <ImageView fx:id="addedIcon" fitHeight="15.0" fitWidth="15.0" layoutX="316.0" layoutY="189.0" pickOnBounds="true" preserveRatio="true">
          <image>

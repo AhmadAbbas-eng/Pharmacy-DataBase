@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -107,6 +108,10 @@ public class SupplierController implements Initializable {
 
 	public void showOnAction() {
 		if (supplierTable.getSelectionModel().getSelectedItem() == null) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setHeaderText("Supplier Must Be Chosen First");
+			alert.setContentText("Choose A Supplier From The Table");
+			alert.showAndWait();
 			return;
 		}
 
@@ -152,21 +157,6 @@ public class SupplierController implements Initializable {
 		if (supplierTable.getSelectionModel().getSelectedItem() != null) {
 			showInfoButton.setStyle("-fx-background-color: #1A6477");
 		}
-	}
-
-	public void showOnMouseReleased() {
-		showInfoButton.setStyle("-fx-background-color: #1D6F84; ");
-	}
-
-	public void showOnMouseEntered() {
-		if (supplierTable.getSelectionModel().getSelectedItem() != null) {
-			showInfoButton.setStyle("-fx-background-color: #278FAA; ");
-		}
-
-	}
-
-	public void showOnMouseExited() {
-		showInfoButton.setStyle("-fx-background-color: #1D6F84; ");
 	}
 
 	public void addOnMousePressed() {

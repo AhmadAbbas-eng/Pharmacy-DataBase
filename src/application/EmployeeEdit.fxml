@@ -121,18 +121,11 @@
          </children>
       </VBox>
       <ListView fx:id="phoneList" layoutX="405.0" layoutY="321.0" onEditCommit="#listOnEditCommit" prefHeight="114.0" prefWidth="137.0" stylesheets="@../../CSS/list.css" />
-      <Label fx:id="errorLabel" alignment="TOP_LEFT" layoutX="224.0" layoutY="184.0" prefHeight="25.0" prefWidth="313.0" textFill="RED" wrapText="true" />
-      <Label fx:id="phoneErrorLabel" alignment="TOP_LEFT" layoutX="308.0" layoutY="321.0" prefHeight="114.0" prefWidth="80.0" textFill="RED" wrapText="true">
-         <font>
-            <Font size="11.0" />
-         </font>
-      </Label>
       <ImageView fx:id="deletePhone" fitHeight="20.0" fitWidth="20.0" layoutX="551.0" layoutY="321.0" onMouseEntered="#deletePhoneOnMouseEntered" onMouseExited="#deletePhoneOnMouseExited" onMousePressed="#deletePhoneOnMousePressed" onMouseReleased="#deletePhoneOnMouseReleased" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Icons/icons8-delete-60.png" />
          </image>
       </ImageView>
-      <Label fx:id="editErrorLabel" alignment="TOP_LEFT" layoutX="210.0" layoutY="14.0" prefHeight="25.0" prefWidth="313.0" textFill="RED" wrapText="true" />
       <VBox layoutX="305.0" layoutY="225.0" prefHeight="96.0" prefWidth="296.0">
          <children>
             <HBox prefHeight="47.0" prefWidth="269.0" spacing="3.0">
