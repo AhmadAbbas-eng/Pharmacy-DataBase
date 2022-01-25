@@ -3,6 +3,7 @@ package application;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
@@ -35,13 +36,18 @@ public class AddBatchController implements Initializable {
 	@FXML
 	private Label pname;
 
-	private String pid, product;
+	private String product;
+
+	private int pid=1;
 
 	ListView<Batch> batchlist;
 
-	public void setPID(String id, String name) {
-		this.pid = id;
+	private ReceiveOrdersController caller;
+
+	public void setProduct(int id, String name, ReceiveOrdersController caller) {
+		setPid(id);
 		this.product = name;
+		this.caller = caller;
 	}
 
 	public void cancelButton(ActionEvent event) {
@@ -51,7 +57,8 @@ public class AddBatchController implements Initializable {
 
 	public void addBatch(ActionEvent event) throws ClassNotFoundException, SQLException, ParseException {
 		if (pdate.getValue() != null && edate.getValue() != null) {
-			if (pdate.getValue().compareTo(edate.getValue()) > 0 || pdate.getValue().compareTo(edate.getValue()) == 0) {
+			if (pdate.getValue().compareTo(edate.getValue()) > 0 || pdate.getValue().compareTo(edate.getValue()) == 0
+					|| pdate.getValue().compareTo(LocalDate.now()) > 0) {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle("Wrong Input Format");
 				alert.setHeaderText(null);
@@ -62,12 +69,14 @@ public class AddBatchController implements Initializable {
 						"select * from Batch " + " where Product_ID = ? " + " and batch_production_date = ? "
 								+ " and batch_expiry_date = ? ;",
 						new ArrayList<>(
-								Arrays.asList(Integer.parseInt(pid)+ "", pdate.getValue().toString(), edate.getValue().toString()))));
+								Arrays.asList(pid + "", pdate.getValue().toString(), edate.getValue().toString()))));
 
-				if (batch.isEmpty() == true) {
-					Batch.insertBatch(Integer.parseInt(pid), pdate.getValue(), edate.getValue(), 0);
+				if (batch.isEmpty()) {
+					Batch.insertBatch(pid, pdate.getValue(), edate.getValue(), 0);
 					Stage stage = (Stage) add.getScene().getWindow();
 					stage.close();
+					caller.saveUpdates();
+					// -----------------------------
 
 				} else {
 					Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -83,6 +92,14 @@ public class AddBatchController implements Initializable {
 			alert.setContentText("Choose Batch Dates");
 			alert.showAndWait();
 		}
+	}
+
+	public int getPid() {
+		return pid;
+	}
+
+	public void setPid(int pid) {
+		this.pid = pid;
 	}
 
 	@Override

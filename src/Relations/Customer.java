@@ -208,7 +208,7 @@ public class Customer {
 	 * @throws ParseException         If any exception data type parsing occurred
 	 * @throws IOException
 	 */
-	public void report(String path) throws ClassNotFoundException, SQLException, IOException {
+	public static void report(String path) throws ClassNotFoundException, SQLException, IOException {
 		Queries.reportQuerey(" select c.*,sum(co.order_price) \r\n"
 				+ "	 from customer c,customer2order c2o,c_order co\r\n"
 				+ "	 where c.customer_NID=c2o.customer_NID and c2o.order_ID=co.order_ID\r\n"
@@ -218,7 +218,7 @@ public class Customer {
 				path);
 	}
 
-	public void reportDangerDrugCustomer(String path) throws ClassNotFoundException, SQLException, IOException {
+	public static void reportDangerDrugCustomer(String path) throws ClassNotFoundException, SQLException, IOException {
 		Queries.reportQuerey(
 				"select c.customer_name, p.product_name,d.Drug_Scientific_Name,d.drug_pharmacetical_category\r\n"
 						+ "from customer c, c_order_batch co,drug d , customer2order c2o,product p\r\n"

@@ -142,7 +142,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <DatePicker fx:id="dateOfWork" prefHeight="26.0" prefWidth="165.0" promptText="date" />
+                  <DatePicker fx:id="dateOfWork" prefHeight="26.0" prefWidth="165.0" promptText="date" stylesheets="@../../CSS/datePicker.css" />
                   <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="15.0" text="  *" textFill="RED">
                      <font>
                         <Font name="System Bold" size="12.0" />

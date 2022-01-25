@@ -27,154 +27,146 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 public class PaymentController implements Initializable {
-
-	@FXML
-	private Button taxReport;
 	// --------------------------------------Disposal-----------------------------------------------
 	@FXML
-	private TextField searchDisposal;
+	private TextField searchDisposalTextField;
 
 	@FXML
-	private ComboBox<String> disposalOP;
+	private ComboBox<String> disposalOperationComboBox;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> disAmount;
+	private TableColumn<ArrayList<String>, String> disposalAmountColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> disCost;
+	private TableColumn<ArrayList<String>, String> disposalCostColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> disED;
+	private TableColumn<ArrayList<String>, String> disposalExpiryDateColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> disEN;
+	private TableColumn<ArrayList<String>, String> disposalEmployeeNameColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> disName;
+	private TableColumn<ArrayList<String>, String> disposalProductName;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> disPD;
+	private TableColumn<ArrayList<String>, String> disposalProductionDateColumn;
 
 	@FXML
-	private TableView<ArrayList<String>> disposal;
+	private TableView<ArrayList<String>> disposalTable;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> DateOfDis;
+	private TableColumn<ArrayList<String>, String> dateOfDisposalColumn;
 
 	// --------------------------------------tax----------------------------------------------------
-	@FXML
-	private TableColumn<ArrayList<String>, String> Amount;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> amounttax;
+	private TableColumn<ArrayList<String>, String> amountaTaxColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> dateofpaymenttax;
+	private TableColumn<ArrayList<String>, String> dateOfPaymentTaxColumn;
 
 	@FXML
 	private TableView<ArrayList<String>> taxTable;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> taxid;
+	private TableColumn<ArrayList<String>, String> taxIDColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> mnametax;
+	private TableColumn<ArrayList<String>, String> managerNametaxColumn;
 
 	@FXML
-	private CheckBox cashTax;
+	private CheckBox chequeTaxCheckBox;
 
 	@FXML
-	private CheckBox chequeTax;
+	private TextField chequeIDTaxTextField;
 
 	@FXML
-	private TextField chequeidtax;
+	private Label availableUnitlTaxLabel;
 
 	@FXML
-	private Label AUTaxLabel;
+	private Label bankNameTaxLabel;
 
 	@FXML
-	private Label BankNameTaxLabel;
-
-	@FXML
-	private Label WDTaxLabel;
+	private Label writindDateTaxLabel;
 
 	@FXML
 	private Label chequeTaxLabel;
 
 	@FXML
-	private Button addTax;
+	private Button addTaxButton;
 
 	@FXML
-	private Button clearTax;
+	private Button clearTaxButton;
 
 	@FXML
-	private ComboBox<String> taxop;
+	private ComboBox<String> taxOperationComboBox;
 
 	@FXML
-	private TextField searchtax;
+	private TextField searchTaxTextField;
 
 	@FXML
-	private TextField newamountTax;
+	private TextField amountTaxTextField;
 
 	@FXML
-	private TextField banktax;
+	private TextField bankNameTaxTextField;
 
 	@FXML
-	private TextField newtaxid;
+	private TextField taxIDTextField;
 
 	@FXML
-	private DatePicker udatetax;
+	private DatePicker availableUntilDateTax;
 
 	@FXML
-	private DatePicker wdatetax;
+	private DatePicker writingDateTax;
 
 	ObservableList<String> TaxChoices = FXCollections.observableArrayList("Tax ID", "Manager Name", "Payment Month",
 			"Payment Year");
 
 	public void chequeTaxOnAction(ActionEvent event) {
-		if (chequeTax.isSelected() == true) {
-			banktax.setOpacity(1);
-			wdatetax.setOpacity(1);
-			chequeidtax.setOpacity(1);
-			AUTaxLabel.setOpacity(1);
-			BankNameTaxLabel.setOpacity(1);
-			WDTaxLabel.setOpacity(1);
+		if (chequeTaxCheckBox.isSelected() == true) {
+			bankNameTaxTextField.setOpacity(1);
+			writingDateTax.setOpacity(1);
+			chequeIDTaxTextField.setOpacity(1);
+			availableUnitlTaxLabel.setOpacity(1);
+			bankNameTaxLabel.setOpacity(1);
+			writindDateTaxLabel.setOpacity(1);
 			chequeTaxLabel.setOpacity(1);
-			udatetax.setOpacity(1);
+			availableUntilDateTax.setOpacity(1);
 		} else {
-			banktax.setOpacity(0);
-			udatetax.setOpacity(0);
-			wdatetax.setOpacity(0);
-			chequeidtax.setOpacity(0);
-			AUTaxLabel.setOpacity(0);
-			BankNameTaxLabel.setOpacity(0);
-			WDTaxLabel.setOpacity(0);
+			bankNameTaxTextField.setOpacity(0);
+			availableUntilDateTax.setOpacity(0);
+			writingDateTax.setOpacity(0);
+			chequeIDTaxTextField.setOpacity(0);
+			availableUnitlTaxLabel.setOpacity(0);
+			bankNameTaxLabel.setOpacity(0);
+			writindDateTaxLabel.setOpacity(0);
 			chequeTaxLabel.setOpacity(0);
 		}
 	}
 
-	public void addTaxButton(ActionEvent event) throws ClassNotFoundException, SQLException, ParseException {
-		if (newtaxid.getText().isBlank() == false && newamountTax.getText().isBlank() == false) {
+	public void addTaxOnAction(ActionEvent event) throws ClassNotFoundException, SQLException, ParseException {
+		if (taxIDTextField.getText().isBlank() == false && amountTaxTextField.getText().isBlank() == false) {
 
-			if (chequeTax.isSelected() == true) {
-				if (chequeidtax.getText().isBlank() == false && banktax.getText().isBlank() == false
-						&& wdatetax.getValue() != null && udatetax.getValue() != null) {
+			if (chequeTaxCheckBox.isSelected() == true) {
+				if (chequeIDTaxTextField.getText().isBlank() == false && bankNameTaxTextField.getText().isBlank() == false
+						&& writingDateTax.getValue() != null && availableUntilDateTax.getValue() != null) {
 					boolean flag = false;
-					if (wdatetax.getValue().compareTo(udatetax.getValue()) == 0
-							|| wdatetax.getValue().compareTo(udatetax.getValue()) > 0) {
+					if (writingDateTax.getValue().compareTo(availableUntilDateTax.getValue()) == 0
+							|| writingDateTax.getValue().compareTo(availableUntilDateTax.getValue()) > 0) {
 						flag = true;
 					}
 					ArrayList<Tax> List = new ArrayList<>();
 					List = Tax.getTaxData(Queries.queryResult("select * from Tax where tax_ID = ? ;",
-							new ArrayList<>(Arrays.asList(newtaxid.getText().toString()))));
+							new ArrayList<>(Arrays.asList(taxIDTextField.getText().toString()))));
 					if (List.isEmpty() == true) {
 						ArrayList<Cheque> List2 = new ArrayList<>();
 						List2 = Cheque.getChequeData(Queries.queryResult("select * from cheque where cheque_ID = ? ;",
-								new ArrayList<>(Arrays.asList(chequeidtax.getText().toString()))));
+								new ArrayList<>(Arrays.asList(chequeIDTaxTextField.getText().toString()))));
 						if (List2.isEmpty() == true) {
 							try {
 
-								Double num = Double.parseDouble(newamountTax.getText());
+								Double num = Double.parseDouble(amountTaxTextField.getText());
 								if (num == 0) {
 									flag = true;
 								}
@@ -182,22 +174,22 @@ public class PaymentController implements Initializable {
 								flag = true;
 							}
 
-							String str = banktax.getText().replaceAll("\\s", "");
+							String str = bankNameTaxTextField.getText().replaceAll("\\s", "");
 							if (str.matches("[a-zA-Z]+") == false) {
 								flag = true;
 							}
 							if (flag == false) {
 								Payment.insertPayment(java.time.LocalDate.now(),
-										Double.parseDouble(newamountTax.getText()), "Cheque");
-								Cheque.insertCheque(chequeidtax.getText(), banktax.getText(), wdatetax.getValue(),
-										udatetax.getValue(), Payment.getMaxID(), Employee.getCurrentID());
-								Tax.insertTax(newtaxid.getText().toString(), java.time.LocalDate.now(),
-										Double.parseDouble(newamountTax.getText()));
+										Double.parseDouble(amountTaxTextField.getText()), "Cheque");
+								Cheque.insertCheque(chequeIDTaxTextField.getText(), bankNameTaxTextField.getText(), writingDateTax.getValue(),
+										availableUntilDateTax.getValue(), Payment.getMaxID(), Employee.getCurrentID());
+								Tax.insertTax(taxIDTextField.getText().toString(), java.time.LocalDate.now(),
+										Double.parseDouble(amountTaxTextField.getText()));
 								Queries.queryUpdate(
 										"insert into taxes_payment (payment_id, tax_id, manager_id) "
 												+ "values (?, ?, ?) ;",
 										new ArrayList<>(Arrays.asList(Payment.getMaxID() + "",
-												newtaxid.getText().toString() + "", Employee.getCurrentID() + "")));
+												taxIDTextField.getText().toString() + "", Employee.getCurrentID() + "")));
 
 								try {
 									taxTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
@@ -208,11 +200,11 @@ public class PaymentController implements Initializable {
 								} catch (ClassNotFoundException | SQLException e) {
 									e.printStackTrace();
 								}
-								newtaxid.clear();
-								newamountTax.clear();
-								banktax.clear();
-								chequeidtax.clear();
-								chequeTax.setSelected(false);
+								taxIDTextField.clear();
+								amountTaxTextField.clear();
+								bankNameTaxTextField.clear();
+								chequeIDTaxTextField.clear();
+								chequeTaxCheckBox.setSelected(false);
 							}
 						} else {
 							Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -238,12 +230,12 @@ public class PaymentController implements Initializable {
 			} else {
 				ArrayList<Tax> List = new ArrayList<>();
 				List = Tax.getTaxData(Queries.queryResult("select * from Tax where tax_ID = ? ;",
-						new ArrayList<>(Arrays.asList(newtaxid.getText().toString()))));
+						new ArrayList<>(Arrays.asList(taxIDTextField.getText().toString()))));
 				if (List.isEmpty() == true) {
 					boolean flag = false;
 					try {
 
-						Double num = Double.parseDouble(newamountTax.getText());
+						Double num = Double.parseDouble(amountTaxTextField.getText());
 						if (num == 0) {
 							flag = true;
 						}
@@ -251,15 +243,15 @@ public class PaymentController implements Initializable {
 						flag = true;
 					}
 					if (!flag) {
-						Payment.insertPayment(java.time.LocalDate.now(), Double.parseDouble(newamountTax.getText()),
+						Payment.insertPayment(java.time.LocalDate.now(), Double.parseDouble(amountTaxTextField.getText()),
 								"Cash");
-						Tax.insertTax(newtaxid.getText().toString(), java.time.LocalDate.now(),
-								Double.parseDouble(newamountTax.getText()));
+						Tax.insertTax(taxIDTextField.getText().toString(), java.time.LocalDate.now(),
+								Double.parseDouble(amountTaxTextField.getText()));
 						Queries.queryUpdate(
 								"insert into taxes_payment " + " (payment_id, tax_id, manager_id)"
 										+ "Values (?, ?, ?) ;",
 								new ArrayList<>(Arrays.asList(Payment.getMaxID() + "",
-										newtaxid.getText().toString() + "", Employee.getCurrentID() + "")));
+										taxIDTextField.getText().toString() + "", Employee.getCurrentID() + "")));
 						try {
 							taxTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
 									"select distinct t.tax_id,e.employee_name,t.tax_date,p.payment_amount "
@@ -269,8 +261,8 @@ public class PaymentController implements Initializable {
 						} catch (ClassNotFoundException | SQLException e) {
 							e.printStackTrace();
 						}
-						newtaxid.clear();
-						newamountTax.clear();
+						taxIDTextField.clear();
+						amountTaxTextField.clear();
 					} else {
 						Alert alert = new Alert(Alert.AlertType.ERROR);
 						alert.setTitle(null);
@@ -297,154 +289,155 @@ public class PaymentController implements Initializable {
 
 	}
 
-	public void clearTaxButton(ActionEvent event) {
-		newtaxid.clear();
-		newamountTax.clear();
-		banktax.clear();
-		chequeidtax.clear();
-		chequeTax.setSelected(false);
-		banktax.setOpacity(0);
-		udatetax.setOpacity(0);
-		wdatetax.setOpacity(0);
-		chequeidtax.setOpacity(0);
-		AUTaxLabel.setOpacity(0);
-		BankNameTaxLabel.setOpacity(0);
-		WDTaxLabel.setOpacity(0);
+	public void clearTaxOnAction(ActionEvent event) {
+		taxIDTextField.clear();
+		amountTaxTextField.clear();
+		bankNameTaxTextField.clear();
+		chequeIDTaxTextField.clear();
+		chequeTaxCheckBox.setSelected(false);
+		bankNameTaxTextField.setOpacity(0);
+		availableUntilDateTax.setOpacity(0);
+		writingDateTax.setOpacity(0);
+		chequeIDTaxTextField.setOpacity(0);
+		availableUnitlTaxLabel.setOpacity(0);
+		bankNameTaxLabel.setOpacity(0);
+		writindDateTaxLabel.setOpacity(0);
 		chequeTaxLabel.setOpacity(0);
 	}
 
 	// ----------------------------------------supplier------------------------------------------------
 	@FXML
-	private TableColumn<ArrayList<String>, String> supplierName;
+	private TableColumn<ArrayList<String>, String> supplierPaymentNameColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> supplierMName;
+	private TableColumn<ArrayList<String>, String> supplierManagerNameColum;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> paymentDate;
+	private TableColumn<ArrayList<String>, String> supplierPaymentDateColumn;
+	
+	@FXML
+	private TableColumn<ArrayList<String>, String> supplierAmountColumn;
 
 	@FXML
-	private TableView<ArrayList<String>> supplierPayment;
+	private TableView<ArrayList<String>> supplierPaymentTable;
 
 	@FXML
-	private TableView<Supplier> supplierData;
+	private TableView<Supplier> supplierDataTable;
 
 	@FXML
-	private TableColumn<Supplier, String> sname;
+	private TableColumn<Supplier, String> supplierNameColumn;
 
 	@FXML
-	private TableColumn<Supplier, Double> sDues;
+	private TableColumn<Supplier, Double> supplierDuesColumn;
 
 	@FXML
-	private TextField searchSupplier;
+	private TextField searchSupplierTextField;
 
 	@FXML
-	private ComboBox<String> searchSupplierOp;
+	private ComboBox<String> searchSupplierOperationComboBox;
 
 	@FXML
-	private TextField searchSupplierPayment;
+	private TextField searchSupplierPaymentTextField;
 
 	@FXML
-	private Label supplierWarning;
+	private DatePicker availablUntilDateSupplier;
 
 	@FXML
-	private DatePicker udateSupplier;
+	private DatePicker writingDateSupplier;
 
 	@FXML
-	private DatePicker wdateSupplier;
+	private Button addSupplierButton;
 
 	@FXML
-	private Button addSupplier;
+	private Button clearSupplierButton;
 
 	@FXML
-	private Button clearSupplier;
+	private TextField amountSupplierTextField;
 
 	@FXML
-	private TextField amountSupplier;
+	private TextField bankNameSupplierTextField;
 
 	@FXML
-	private TextField bankSupplier;
+	private CheckBox chequeSupplierCheckBox;
 
 	@FXML
-	private CheckBox chequeSupplier;
+	private TextField chequeIDSupplierTextField;
 
 	@FXML
-	private TextField chequeidSupplier;
+	private Label supplierAvailableUntilLabel;
 
 	@FXML
-	private Label aulabel;
+	private Label supplierWritingDateLabel;
 
 	@FXML
-	private Label wdlabel;
+	private Label supplierBankNameLabel;
 
 	@FXML
-	private Label blabel;
-
-	@FXML
-	private Label idlabel;
+	private Label supplierChequeIDLabel;
 
 	ObservableList<String> SupplierPaymentChoices = FXCollections.observableArrayList("Supplier Name", "Manager Name",
 			"Payment Month", "Payment Year");
 
 	public void chequeSupplierOnAction(ActionEvent event) {
-		supplierWarning.setText("");
-		if (chequeSupplier.isSelected() == true) {
-			bankSupplier.setOpacity(1);
-			wdateSupplier.setOpacity(1);
-			udateSupplier.setOpacity(1);
-			chequeidSupplier.setOpacity(1);
-			aulabel.setOpacity(1);
-			wdlabel.setOpacity(1);
-			blabel.setOpacity(1);
-			idlabel.setOpacity(1);
+		if (chequeSupplierCheckBox.isSelected() == true) {
+			bankNameSupplierTextField.setOpacity(1);
+			writingDateSupplier.setOpacity(1);
+			availablUntilDateSupplier.setOpacity(1);
+			chequeIDSupplierTextField.setOpacity(1);
+			supplierAvailableUntilLabel.setOpacity(1);
+			supplierWritingDateLabel.setOpacity(1);
+			supplierBankNameLabel.setOpacity(1);
+			supplierChequeIDLabel.setOpacity(1);
 		} else {
-			bankSupplier.setOpacity(0);
-			wdateSupplier.setOpacity(0);
-			udateSupplier.setOpacity(0);
-			chequeidSupplier.setOpacity(0);
-			aulabel.setOpacity(0);
-			wdlabel.setOpacity(0);
-			blabel.setOpacity(0);
-			idlabel.setOpacity(0);
+			bankNameSupplierTextField.setOpacity(0);
+			writingDateSupplier.setOpacity(0);
+			availablUntilDateSupplier.setOpacity(0);
+			chequeIDSupplierTextField.setOpacity(0);
+			supplierAvailableUntilLabel.setOpacity(0);
+			supplierWritingDateLabel.setOpacity(0);
+			supplierBankNameLabel.setOpacity(0);
+			supplierChequeIDLabel.setOpacity(0);
 		}
 	}
 
-	public void clearSupplierButton(ActionEvent event) {
-		supplierWarning.setText("");
-		amountSupplier.clear();
-		bankSupplier.clear();
-		chequeidSupplier.clear();
-		chequeSupplier.setSelected(false);
-		bankSupplier.setOpacity(0);
-		wdateSupplier.setOpacity(0);
-		udateSupplier.setOpacity(0);
-		chequeidSupplier.setOpacity(0);
-		aulabel.setOpacity(0);
-		wdlabel.setOpacity(0);
-		blabel.setOpacity(0);
-		idlabel.setOpacity(0);
+	public void clearSupplierOnAction(ActionEvent event) {
+		amountSupplierTextField.clear();
+		bankNameSupplierTextField.clear();
+		chequeIDSupplierTextField.clear();
+		chequeSupplierCheckBox.setSelected(false);
+		bankNameSupplierTextField.setOpacity(0);
+		writingDateSupplier.setOpacity(0);
+		availablUntilDateSupplier.setOpacity(0);
+		chequeIDSupplierTextField.setOpacity(0);
+		supplierAvailableUntilLabel.setOpacity(0);
+		supplierWritingDateLabel.setOpacity(0);
+		supplierBankNameLabel.setOpacity(0);
+		supplierChequeIDLabel.setOpacity(0);
 	}
 
-	public void addSupplierButton(ActionEvent event) throws ClassNotFoundException, SQLException, ParseException {
-		supplierWarning.setText("");
+	public void addSupplierOnAction(ActionEvent event) throws ClassNotFoundException, SQLException, ParseException {
 
-		if (amountSupplier.getText().isBlank() == false && supplierData.getSelectionModel().getSelectedItem() != null) {
-			if (chequeSupplier.isSelected() == true) {
-				if (chequeidSupplier.getText().isBlank() == false && bankSupplier.getText().isBlank() == false
-						&& udateSupplier.getValue() != null && wdateSupplier.getValue() != null) {
+		if (amountSupplierTextField.getText().isBlank() == false && supplierDataTable.getSelectionModel().getSelectedItem() != null) {
+			if (chequeSupplierCheckBox.isSelected() == true) {
+				if (chequeIDSupplierTextField.getText().isBlank() == false && bankNameSupplierTextField.getText().isBlank() == false
+						&& availablUntilDateSupplier.getValue() != null && writingDateSupplier.getValue() != null) {
 					boolean flag = false;
-					if (wdateSupplier.getValue().compareTo(udateSupplier.getValue()) == 0
-							|| wdateSupplier.getValue().compareTo(udateSupplier.getValue()) > 0) {
-						supplierWarning.setText("Set Reasonable Date!");
+					if (writingDateSupplier.getValue().compareTo(availablUntilDateSupplier.getValue()) == 0
+							|| writingDateSupplier.getValue().compareTo(availablUntilDateSupplier.getValue()) > 0) {
+						Alert alert = new Alert(Alert.AlertType.ERROR);
+						alert.setTitle(null);
+						alert.setHeaderText(null);
+						alert.setContentText("Set Reasonable Date!");
+						alert.showAndWait();
 					} else {
 
 						ArrayList<Cheque> List2 = new ArrayList<>();
 						List2 = Cheque.getChequeData(Queries.queryResult("select * from cheque where cheque_ID = ? ;",
-								new ArrayList<>(Arrays.asList(chequeidSupplier.getText().toString()))));
+								new ArrayList<>(Arrays.asList(chequeIDSupplierTextField.getText().toString()))));
 						if (List2.isEmpty() == true) {
 
 							try {
-								Double num = Double.parseDouble(amountSupplier.getText());
+								Double num = Double.parseDouble(amountSupplierTextField.getText());
 								if (num == 0) {
 									flag = true;
 								}
@@ -452,64 +445,75 @@ public class PaymentController implements Initializable {
 								flag = true;
 							}
 
-							String str = bankSupplier.getText().replaceAll("\\s", "");
+							String str = bankNameSupplierTextField.getText().replaceAll("\\s", "");
 							if (str.matches("[a-zA-Z]+") == false) {
 								flag = true;
 							}
 							if (!flag) {
 								Payment.insertPayment(java.time.LocalDate.now(),
-										Double.parseDouble(amountSupplier.getText()), "Cheque");
+										Double.parseDouble(amountSupplierTextField.getText()), "Cheque");
 
-								Cheque.insertCheque(chequeidSupplier.getText(), bankSupplier.getText(),
-										wdateSupplier.getValue(), udateSupplier.getValue(), Payment.getMaxID(),
+								Cheque.insertCheque(chequeIDSupplierTextField.getText(), bankNameSupplierTextField.getText(),
+										writingDateSupplier.getValue(), availablUntilDateSupplier.getValue(), Payment.getMaxID(),
 										Employee.getCurrentID());
 
 								Queries.queryUpdate(
 										"insert into supplier_payment (supplier_id, manager_id, payment_id)"
 												+ " Values (?, ?, ?);",
 										new ArrayList<>(Arrays.asList(
-												supplierData.getSelectionModel().getSelectedItem().getID() + "",
+												supplierDataTable.getSelectionModel().getSelectedItem().getID() + "",
 												Employee.getCurrentID() + "", Payment.getMaxID() + "")));
 								Queries.queryUpdate(
 										"update Supplier set supplier_dues = supplier_dues -? where Supplier_ID =?;",
-										new ArrayList<>(Arrays.asList(amountSupplier.getText(),
-												supplierData.getSelectionModel().getSelectedItem().getID() + "")));
+										new ArrayList<>(Arrays.asList(amountSupplierTextField.getText(),
+												supplierDataTable.getSelectionModel().getSelectedItem().getID() + "")));
 
 								try {
-									supplierPayment.setItems(FXCollections.observableArrayList(Queries.queryResult(
+									supplierPaymentTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
 											"select distinct e.employee_name, s.supplier_name,p.payment_date,p.payment_amount "
 													+ " from employee e, supplier s, payment p, supplier_payment op, s_order so "
 													+ " where op.manager_ID=e.employee_ID and op.supplier_Id = so.supplier_id and p.payment_id= op.payment_id "
 													+ " and so.supplier_id=s.supplier_id;",
 											null)));
-									supplierData.setItems(FXCollections.observableArrayList(Supplier
+									supplierDataTable.setItems(FXCollections.observableArrayList(Supplier
 											.getSupplierData(Queries.queryResult("select * from Supplier;", null))));
 
 								} catch (ClassNotFoundException | SQLException e) {
 									e.printStackTrace();
 								}
-								supplierWarning.setText("");
-								amountSupplier.clear();
-								bankSupplier.clear();
-								chequeidSupplier.clear();
-								chequeSupplier.setSelected(false);
+								amountSupplierTextField.clear();
+								bankNameSupplierTextField.clear();
+								chequeIDSupplierTextField.clear();
+								chequeSupplierCheckBox.setSelected(false);
 							} else {
-								supplierWarning.setText("Wrong Information!");
+								Alert alert = new Alert(Alert.AlertType.ERROR);
+								alert.setTitle(null);
+								alert.setHeaderText(null);
+								alert.setContentText("Wrong Information!");
+								alert.showAndWait();
 							}
 						} else {
-							supplierWarning.setText("This Cheque ID Already Exists!");
+							Alert alert = new Alert(Alert.AlertType.ERROR);
+							alert.setTitle(null);
+							alert.setHeaderText(null);
+							alert.setContentText("This Cheque ID Already Exists!");
+							alert.showAndWait();
 						}
 					}
 
 				} else {
-					supplierWarning.setText("Fill The Cheque Fields");
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setTitle(null);
+					alert.setHeaderText(null);
+					alert.setContentText("Fill The Cheque Fields");
+					alert.showAndWait();
 				}
 			} else {
 
 				boolean flag = false;
 				try {
 
-					Double num = Double.parseDouble(amountSupplier.getText());
+					Double num = Double.parseDouble(amountSupplierTextField.getText());
 					if (num == 0) {
 						flag = true;
 					}
@@ -517,167 +521,171 @@ public class PaymentController implements Initializable {
 					flag = true;
 				}
 				if (!flag) {
-					Payment.insertPayment(java.time.LocalDate.now(), Double.parseDouble(amountSupplier.getText()),
+					Payment.insertPayment(java.time.LocalDate.now(), Double.parseDouble(amountSupplierTextField.getText()),
 							"Cash");
 					Queries.queryUpdate(
 							"insert into supplier_payment (supplier_id, manager_id, payment_id) Values (?, ?, ?) ;",
 							new ArrayList<>(
-									Arrays.asList(supplierData.getSelectionModel().getSelectedItem().getID() + "",
+									Arrays.asList(supplierDataTable.getSelectionModel().getSelectedItem().getID() + "",
 											Employee.getCurrentID() + "", Payment.getMaxID() + "")));
 					Queries.queryUpdate("update Supplier set supplier_dues = supplier_dues -? where Supplier_ID =?;",
-							new ArrayList<>(Arrays.asList(amountSupplier.getText(),
-									supplierData.getSelectionModel().getSelectedItem().getID() + "")));
+							new ArrayList<>(Arrays.asList(amountSupplierTextField.getText(),
+									supplierDataTable.getSelectionModel().getSelectedItem().getID() + "")));
 
 					try {
-						supplierPayment.setItems(FXCollections.observableArrayList(Queries.queryResult(
+						supplierPaymentTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
 								"select distinct e.employee_name, s.supplier_name,p.payment_date,p.payment_amount "
 										+ " from employee e, supplier s, payment p, supplier_payment op, s_order so"
 										+ " where op.manager_ID=e.employee_ID and op.supplier_Id = so.supplier_id and p.payment_id= op.payment_id "
 										+ " and so.supplier_id=s.supplier_id;",
 								null)));
-						supplierData.setItems(FXCollections.observableArrayList(
+						supplierDataTable.setItems(FXCollections.observableArrayList(
 								Supplier.getSupplierData(Queries.queryResult("select * from Supplier;", null))));
 					} catch (ClassNotFoundException | SQLException e) {
 						e.printStackTrace();
 					}
-					supplierWarning.setText("");
-					amountSupplier.clear();
+					amountSupplierTextField.clear();
 
 				}
 
 			}
 		} else {
-			supplierWarning.setText("Fill The Required Fields And Select A Supplier");
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle(null);
+			alert.setHeaderText(null);
+			alert.setContentText("Fill The Required Fields And Select A Supplier");
+			alert.showAndWait();
 		}
 	}
 
 	// --------------------------------------Employee-----------------------------------------------------
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> amountep;
+	private TableColumn<ArrayList<String>, String> employeePaymentAmountColumn;
 	@FXML
-	private TableColumn<ArrayList<String>, String> eName;
+	private TableColumn<ArrayList<String>, String> employeePaymentNameColumn;
 
 	@FXML
-	private TableColumn<Employee, String> employeeName;
+	private TableColumn<Employee, String> employeeNameColumn;
 
 	@FXML
-	private TableColumn<Employee, String> employeeID;
+	private TableColumn<Employee, String> employeeIDColumn;
 
 	@FXML
-	private TableView<ArrayList<String>> employeePayment;
+	private TableView<ArrayList<String>> employeePaymentTable;
 
 	@FXML
 	private TableView<Employee> employeeTable;
 	@FXML
-	private TableColumn<ArrayList<String>, String> pDate;
+	private TableColumn<ArrayList<String>, String> employeePaymentDateColumn;
 	@FXML
-	private Button ClearEmployeeFields;
+	private Button clearEmployeeFieldsButton;
 
 	@FXML
-	private Button addNewEmployeePayment;
+	private Button addNewEmployeePaymentButton;
 
 	@FXML
-	private TextField amountEmployee;
+	private TextField amountEmployeeTextField;
 
 	@FXML
-	private CheckBox chequeE;
+	private CheckBox chequeEmployeeCheckBox;
 
 	@FXML
-	private DatePicker employeeADate;
+	private DatePicker employeeAvailableUntilDatePicker;
 
 	@FXML
-	private TextField employeeBank;
+	private TextField employeeBankNameTextField;
 
 	@FXML
-	private DatePicker employeeWDate;
+	private DatePicker employeeWritindDatePicker;
+	
+	@FXML
+	private TextField searchEmployeeTextField;
 
 	@FXML
-	private Label employeeWarning;
-	@FXML
-	private TextField searchEmployee;
-
-	@FXML
-	private TextField employeeIDp;
+	private TextField employeeChequeIDTextField;
 
 	@FXML
 	private ComboBox<String> searchEmployeeOp;
 
 	@FXML
-	private TextField searchEmployeePayment;
+	private TextField searchEmployeePaymentTextField;
 
 	@FXML
-	private Label wemp;
+	private Label writingDateEmployeeLabel;
 
 	@FXML
-	private Label uemp;
+	private Label availableUntilDateEmployeeLabel;
+	
 	@FXML
-	private Label idemp;
+	private Label chequeIDEmployeeLabel;
+	
 	@FXML
-	private Label bankemp;
+	private Label bankNameLabel;
+	
 	ObservableList<String> EmployeeChoices = FXCollections.observableArrayList("Employee Name", "Payment Month",
 			"Payment Year");
 
 	public void chequeEmployeeOnAction(ActionEvent event) {
-		employeeWarning.setText("");
-		if (chequeE.isSelected() == true) {
-			employeeBank.setOpacity(1);
-			employeeWDate.setOpacity(1);
-			employeeADate.setOpacity(1);
-			employeeIDp.setOpacity(1);
-			bankemp.setOpacity(1);
-			uemp.setOpacity(1);
-			idemp.setOpacity(1);
-			wemp.setOpacity(1);
+		if (chequeEmployeeCheckBox.isSelected() == true) {
+			employeeBankNameTextField.setOpacity(1);
+			employeeWritindDatePicker.setOpacity(1);
+			employeeAvailableUntilDatePicker.setOpacity(1);
+			employeeChequeIDTextField.setOpacity(1);
+			bankNameLabel.setOpacity(1);
+			availableUntilDateEmployeeLabel.setOpacity(1);
+			chequeIDEmployeeLabel.setOpacity(1);
+			writingDateEmployeeLabel.setOpacity(1);
 		} else {
-			employeeBank.setOpacity(0);
-			employeeWDate.setOpacity(0);
-			employeeADate.setOpacity(0);
-			employeeIDp.setOpacity(0);
-			bankemp.setOpacity(0);
-			uemp.setOpacity(0);
-			idemp.setOpacity(0);
-			wemp.setOpacity(0);
+			employeeBankNameTextField.setOpacity(0);
+			employeeWritindDatePicker.setOpacity(0);
+			employeeAvailableUntilDatePicker.setOpacity(0);
+			employeeChequeIDTextField.setOpacity(0);
+			bankNameLabel.setOpacity(0);
+			availableUntilDateEmployeeLabel.setOpacity(0);
+			chequeIDEmployeeLabel.setOpacity(0);
+			writingDateEmployeeLabel.setOpacity(0);
 		}
 	}
 
-	public void clearEmployeeButton(ActionEvent event) {
-		employeeWarning.setText("");
-		amountEmployee.clear();
-		employeeBank.clear();
-		employeeIDp.clear();
-		chequeE.setSelected(false);
-		employeeBank.setOpacity(0);
-		employeeWDate.setOpacity(0);
-		employeeADate.setOpacity(0);
-		employeeIDp.setOpacity(0);
-		bankemp.setOpacity(0);
-		uemp.setOpacity(0);
-		idemp.setOpacity(0);
-		wemp.setOpacity(0);
+	public void clearEmployeeOnAction(ActionEvent event) {
+		amountEmployeeTextField.clear();
+		employeeBankNameTextField.clear();
+		employeeChequeIDTextField.clear();
+		chequeEmployeeCheckBox.setSelected(false);
+		employeeBankNameTextField.setOpacity(0);
+		employeeWritindDatePicker.setOpacity(0);
+		employeeAvailableUntilDatePicker.setOpacity(0);
+		employeeChequeIDTextField.setOpacity(0);
+		bankNameLabel.setOpacity(0);
+		availableUntilDateEmployeeLabel.setOpacity(0);
+		chequeIDEmployeeLabel.setOpacity(0);
+		writingDateEmployeeLabel.setOpacity(0);
 	}
 
-	public void addEmployeeButton(ActionEvent event) throws ClassNotFoundException, SQLException, ParseException {
-		employeeWarning.setText("");
-
-		if (amountEmployee.getText().isBlank() == false
+	public void addEmployeeOnAction(ActionEvent event) throws ClassNotFoundException, SQLException, ParseException {
+		if (amountEmployeeTextField.getText().isBlank() == false
 				&& employeeTable.getSelectionModel().getSelectedItem() != null) {
-			if (chequeE.isSelected() == true) {
-				if (employeeIDp.getText().isBlank() == false && employeeBank.getText().isBlank() == false
-						&& employeeADate.getValue() != null && employeeWDate.getValue() != null) {
+			if (chequeEmployeeCheckBox.isSelected() == true) {
+				if (employeeChequeIDTextField.getText().isBlank() == false && employeeBankNameTextField.getText().isBlank() == false
+						&& employeeAvailableUntilDatePicker.getValue() != null && employeeWritindDatePicker.getValue() != null) {
 					boolean flag = false;
-					if (employeeWDate.getValue().compareTo(employeeADate.getValue()) == 0
-							|| employeeWDate.getValue().compareTo(employeeADate.getValue()) > 0) {
-						employeeWarning.setText("set reasonable Date!");
+					if (employeeWritindDatePicker.getValue().compareTo(employeeAvailableUntilDatePicker.getValue()) == 0
+							|| employeeWritindDatePicker.getValue().compareTo(employeeAvailableUntilDatePicker.getValue()) > 0) {
+						Alert alert = new Alert(Alert.AlertType.ERROR);
+						alert.setTitle(null);
+						alert.setHeaderText(null);
+						alert.setContentText("set reasonable Date!");
+						alert.showAndWait();
 					} else {
 						ArrayList<Cheque> List2 = new ArrayList<>();
 						List2 = Cheque.getChequeData(Queries.queryResult("select * from cheque where cheque_ID = ? ;",
-								new ArrayList<>(Arrays.asList(employeeIDp.getText().toString()))));
+								new ArrayList<>(Arrays.asList(employeeChequeIDTextField.getText().toString()))));
 						if (List2.isEmpty() == true) {
 
 							try {
 
-								Double amount = Double.parseDouble(amountEmployee.getText());
+								Double amount = Double.parseDouble(amountEmployeeTextField.getText());
 								if (amount == 0) {
 									flag = true;
 								}
@@ -685,7 +693,7 @@ public class PaymentController implements Initializable {
 								flag = true;
 							}
 
-							String str = employeeBank.getText().replaceAll("\\s", "");
+							String str = employeeBankNameTextField.getText().replaceAll("\\s", "");
 							
 							if (str.matches("[a-zA-Z]+") == false) {
 								flag = true;
@@ -693,9 +701,9 @@ public class PaymentController implements Initializable {
 
 							if (flag == false) {
 								Payment.insertPayment(java.time.LocalDate.now(),
-										Double.parseDouble(amountEmployee.getText()), "Cheque");
-								Cheque.insertCheque(employeeIDp.getText(), employeeBank.getText(),
-										employeeWDate.getValue(), employeeADate.getValue(), Payment.getMaxID(),
+										Double.parseDouble(amountEmployeeTextField.getText()), "Cheque");
+								Cheque.insertCheque(employeeChequeIDTextField.getText(), employeeBankNameTextField.getText(),
+										employeeWritindDatePicker.getValue(), employeeAvailableUntilDatePicker.getValue(), Payment.getMaxID(),
 										Employee.getCurrentID());
 								Queries.queryUpdate(
 										"insert into E_salary " + " (manager_id, employee_id, payment_id) "
@@ -704,7 +712,7 @@ public class PaymentController implements Initializable {
 												employeeTable.getSelectionModel().getSelectedItem().getID() + "",
 												Payment.getMaxID() + "")));
 								try {
-									employeePayment.setItems(FXCollections.observableArrayList(Queries.queryResult(
+									employeePaymentTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
 											"select distinct e.employee_name,p.payment_date,p.payment_amount "
 													+ " from e_salary es,payment p, employee e "
 													+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.manager_Id",
@@ -712,28 +720,38 @@ public class PaymentController implements Initializable {
 								} catch (ClassNotFoundException | SQLException e) {
 									e.printStackTrace();
 								}
-                             employeeWarning.setText("");
 							}else {
-	                             employeeWarning.setText("Wrong Data Format!");
-
+								Alert alert = new Alert(Alert.AlertType.ERROR);
+								alert.setTitle(null);
+								alert.setHeaderText(null);
+								alert.setContentText("Wrong Data Format!");
+								alert.showAndWait();
 							}
-							amountEmployee.clear();
-							employeeBank.clear();
-							employeeIDp.clear();
-							chequeE.setSelected(false);
+							amountEmployeeTextField.clear();
+							employeeBankNameTextField.clear();
+							employeeChequeIDTextField.clear();
+							chequeEmployeeCheckBox.setSelected(false);
 
 						} else {
-							employeeWarning.setText("This Cheque ID Already Exists!");
+							Alert alert = new Alert(Alert.AlertType.ERROR);
+							alert.setTitle(null);
+							alert.setHeaderText(null);
+							alert.setContentText("This Cheque ID Already Exists!");
+							alert.showAndWait();
 						}
 					}
 				} else {
-					employeeWarning.setText("Fill The Cheque Fields");
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setTitle(null);
+					alert.setHeaderText(null);
+					alert.setContentText("Fill The Cheque Fields");
+					alert.showAndWait();
 				}
 			} else {
 
 				boolean flag = false;
 				try {
-					Double num = Double.parseDouble(amountEmployee.getText());
+					Double num = Double.parseDouble(amountEmployeeTextField.getText());
 					if (num == 0) {
 						flag = true;
 					}
@@ -741,14 +759,14 @@ public class PaymentController implements Initializable {
 					flag = true;
 				}
 				if (flag == false) {
-					Payment.insertPayment(java.time.LocalDate.now(), Double.parseDouble(amountEmployee.getText()),
+					Payment.insertPayment(java.time.LocalDate.now(), Double.parseDouble(amountEmployeeTextField.getText()),
 							"Cash");
 					Queries.queryUpdate("insert into E_salary (manager_id, employee_id, payment_id) Values (?, ?, ?) ;",
 							new ArrayList<>(Arrays.asList(Employee.getCurrentID() + "",
 									employeeTable.getSelectionModel().getSelectedItem().getID() + "",
 									Payment.getMaxID() + "")));
 					try {
-						employeePayment
+						employeePaymentTable
 								.setItems(FXCollections.observableArrayList(Queries.queryResult(
 										"select distinct e.employee_name,p.payment_date,p.payment_amount "
 												+ " from e_salary es,payment p, employee e "
@@ -757,15 +775,22 @@ public class PaymentController implements Initializable {
 					} catch (ClassNotFoundException | SQLException e) {
 						e.printStackTrace();
 					}
-					employeeWarning.setText("");
-					amountEmployee.clear();
+					amountEmployeeTextField.clear();
 				} else {
-					employeeWarning.setText("Wrong Information!");
-					amountEmployee.clear();
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setTitle(null);
+					alert.setHeaderText(null);
+					alert.setContentText("Wrong Information!");
+					alert.showAndWait();
+					amountEmployeeTextField.clear();
 				}
 			}
 		} else {
-			employeeWarning.setText("Fill The Required Fields And Select Employee");
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle(null);
+			alert.setHeaderText(null);
+			alert.setContentText("Fill The Required Fields And Select Employee");
+			alert.showAndWait();
 		}
 	}
 
@@ -775,10 +800,10 @@ public class PaymentController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// -----------------------------------------Disposal---------------------------------------------------------
-		disposalOP.setItems(Choices);
+		disposalOperationComboBox.setItems(Choices);
 
 		try {
-			disposal.setItems(FXCollections.observableArrayList(Queries.queryResult(
+			disposalTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
 					"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount\r\n"
 							+ "from product p, employee e, payment pay,drug_disposal d\r\n"
 							+ "where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id;",
@@ -787,7 +812,7 @@ public class PaymentController implements Initializable {
 			e1.printStackTrace();
 		}
 
-		disCost.setCellValueFactory(
+		disposalCostColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -800,7 +825,7 @@ public class PaymentController implements Initializable {
 					}
 				});
 
-		DateOfDis.setCellValueFactory(
+		dateOfDisposalColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -813,7 +838,7 @@ public class PaymentController implements Initializable {
 					}
 				});
 
-		disEN.setCellValueFactory(
+		disposalEmployeeNameColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -826,7 +851,7 @@ public class PaymentController implements Initializable {
 					}
 				});
 
-		disED.setCellValueFactory(
+		disposalExpiryDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -839,7 +864,7 @@ public class PaymentController implements Initializable {
 					}
 				});
 
-		disAmount.setCellValueFactory(
+		disposalAmountColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -852,7 +877,7 @@ public class PaymentController implements Initializable {
 					}
 				});
 
-		disName.setCellValueFactory(
+		disposalProductName.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -865,7 +890,7 @@ public class PaymentController implements Initializable {
 					}
 				});
 
-		disPD.setCellValueFactory(
+		disposalProductionDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -878,7 +903,7 @@ public class PaymentController implements Initializable {
 					}
 				});
 
-		searchDisposal.textProperty().addListener((observable, oldValue, newValue) -> {
+		searchDisposalTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 			ArrayList<ArrayList<String>> filteredList = new ArrayList<>();
 			if (newValue == null || newValue.isEmpty() || newValue.isBlank()) {
 				try {
@@ -891,7 +916,7 @@ public class PaymentController implements Initializable {
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
-			} else if (disposalOP.getSelectionModel().getSelectedItem() == "Product Name") {
+			} else if (disposalOperationComboBox.getSelectionModel().getSelectedItem() == "Product Name") {
 				try {
 					filteredList = Queries.queryResult(
 							"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount "
@@ -902,7 +927,7 @@ public class PaymentController implements Initializable {
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
-			} else if (disposalOP.getSelectionModel().getSelectedItem() == "Expired Month") {
+			} else if (disposalOperationComboBox.getSelectionModel().getSelectedItem() == "Expired Month") {
 				try {
 					filteredList = Queries.queryResult(
 							"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount "
@@ -914,7 +939,7 @@ public class PaymentController implements Initializable {
 					e.printStackTrace();
 				}
 
-			} else if (disposalOP.getSelectionModel().getSelectedItem() == "Expired Year") {
+			} else if (disposalOperationComboBox.getSelectionModel().getSelectedItem() == "Expired Year") {
 				try {
 					filteredList = Queries.queryResult(
 							"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount "
@@ -925,7 +950,7 @@ public class PaymentController implements Initializable {
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
-			} else if (disposalOP.getSelectionModel().getSelectedItem() == "Production Month") {
+			} else if (disposalOperationComboBox.getSelectionModel().getSelectedItem() == "Production Month") {
 				try {
 					filteredList = Queries.queryResult(
 							"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount "
@@ -937,7 +962,7 @@ public class PaymentController implements Initializable {
 					e.printStackTrace();
 				}
 
-			} else if (disposalOP.getSelectionModel().getSelectedItem() == "Production Year") {
+			} else if (disposalOperationComboBox.getSelectionModel().getSelectedItem() == "Production Year") {
 				try {
 					filteredList = Queries.queryResult(
 							"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount "
@@ -949,7 +974,7 @@ public class PaymentController implements Initializable {
 					e.printStackTrace();
 				}
 
-			} else if (disposalOP.getSelectionModel().getSelectedItem() == "Disposal Month") {
+			} else if (disposalOperationComboBox.getSelectionModel().getSelectedItem() == "Disposal Month") {
 				try {
 					filteredList = Queries.queryResult(
 							"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount "
@@ -961,7 +986,7 @@ public class PaymentController implements Initializable {
 					e.printStackTrace();
 				}
 
-			} else if (disposalOP.getSelectionModel().getSelectedItem() == "Disposal Year") {
+			} else if (disposalOperationComboBox.getSelectionModel().getSelectedItem() == "Disposal Year") {
 				try {
 					filteredList = Queries.queryResult(
 							"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount "
@@ -988,35 +1013,34 @@ public class PaymentController implements Initializable {
 					e.printStackTrace();
 				}
 			}
-			disposal.setItems(FXCollections.observableArrayList(filteredList));
+			disposalTable.setItems(FXCollections.observableArrayList(filteredList));
 
 		});
 
 		// ----------------------------------------Employee----------------------------------------------------------
 
-		employeeBank.setOpacity(0);
-		employeeWDate.setOpacity(0);
-		employeeADate.setOpacity(0);
-		employeeIDp.setOpacity(0);
-		bankemp.setOpacity(0);
-		uemp.setOpacity(0);
-		idemp.setOpacity(0);
-		wemp.setOpacity(0);
+		employeeBankNameTextField.setOpacity(0);
+		employeeWritindDatePicker.setOpacity(0);
+		employeeAvailableUntilDatePicker.setOpacity(0);
+		employeeChequeIDTextField.setOpacity(0);
+		bankNameLabel.setOpacity(0);
+		availableUntilDateEmployeeLabel.setOpacity(0);
+		chequeIDEmployeeLabel.setOpacity(0);
+		writingDateEmployeeLabel.setOpacity(0);
 
 		searchEmployeeOp.setValue("select");
 		searchEmployeeOp.setItems(EmployeeChoices);
-		employeeName.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
-		employeeID.setCellValueFactory(new PropertyValueFactory<Employee, String>("iD"));
+		employeeNameColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
+		employeeIDColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("iD"));
 
 		try {
 			employeeTable.setItems(FXCollections.observableArrayList(Employee
 					.getEmployeeData(Queries.queryResult("select * from Employee where employee_id <> -1 ;", null))));
 		} catch (ClassNotFoundException | SQLException | ParseException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
-		searchEmployee.textProperty().addListener((observable, oldValue, newValue) -> {
+		searchEmployeeTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 			ArrayList<Employee> filteredList = new ArrayList<>();
 			if (newValue == null || newValue.isEmpty() || newValue.isBlank()) {
 				try {
@@ -1043,7 +1067,7 @@ public class PaymentController implements Initializable {
 		});
 
 		try {
-			employeePayment
+			employeePaymentTable
 					.setItems(
 							FXCollections.observableArrayList(Queries.queryResult(
 									"select distinct e.employee_name,p.payment_date,p.payment_amount "
@@ -1051,11 +1075,10 @@ public class PaymentController implements Initializable {
 											+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.manager_Id;",
 									null)));
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		eName.setCellValueFactory(
+		employeePaymentNameColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -1067,7 +1090,7 @@ public class PaymentController implements Initializable {
 						}
 					}
 				});
-		pDate.setCellValueFactory(
+		employeePaymentDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -1080,7 +1103,7 @@ public class PaymentController implements Initializable {
 					}
 				});
 
-		amountep.setCellValueFactory(
+		employeePaymentAmountColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -1093,7 +1116,7 @@ public class PaymentController implements Initializable {
 					}
 				});
 
-		searchEmployeePayment.textProperty().addListener((observable, oldValue, newValue) -> {
+		searchEmployeePaymentTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 			ArrayList<ArrayList<String>> filteredList = new ArrayList<>();
 			if (newValue == null || newValue.isEmpty() || newValue.isBlank()) {
 				try {
@@ -1107,7 +1130,7 @@ public class PaymentController implements Initializable {
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
-			} else if (taxop.getSelectionModel().getSelectedItem() == "Employee Name") {
+			} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Employee Name") {
 				try {
 					filteredList = Queries.queryResult(
 							"select distinct e.employee_name,p.payment_date,p.payment_amount "
@@ -1117,7 +1140,7 @@ public class PaymentController implements Initializable {
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
-			} else if (taxop.getSelectionModel().getSelectedItem() == "Payment Month") {
+			} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Payment Month") {
 				try {
 					filteredList = Queries.queryResult(
 							"select distinct e.employee_name,p.payment_date,p.payment_amount "
@@ -1128,7 +1151,7 @@ public class PaymentController implements Initializable {
 					e.printStackTrace();
 				}
 
-			} else if (taxop.getSelectionModel().getSelectedItem() == "Payment Year") {
+			} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Payment Year") {
 				try {
 					filteredList = Queries.queryResult(
 							"select distinct e.employee_name,p.payment_date,p.payment_amount "
@@ -1156,40 +1179,38 @@ public class PaymentController implements Initializable {
 					e.printStackTrace();
 				}
 			}
-			employeePayment.setItems(FXCollections.observableArrayList(filteredList));
+			employeePaymentTable.setItems(FXCollections.observableArrayList(filteredList));
 		});
 
 		// ----------------------------------------supplier----------------------------------------------------------
 
-		supplierWarning.setText("");
-		searchSupplierOp.setValue("select");
-		searchSupplierOp.setItems(SupplierPaymentChoices);
+		searchSupplierOperationComboBox.setValue("select");
+		searchSupplierOperationComboBox.setItems(SupplierPaymentChoices);
 
-		bankSupplier.setOpacity(0);
-		wdateSupplier.setOpacity(0);
-		udateSupplier.setOpacity(0);
-		chequeidSupplier.setOpacity(0);
-		aulabel.setOpacity(0);
-		wdlabel.setOpacity(0);
-		blabel.setOpacity(0);
-		idlabel.setOpacity(0);
+		bankNameSupplierTextField.setOpacity(0);
+		writingDateSupplier.setOpacity(0);
+		availablUntilDateSupplier.setOpacity(0);
+		chequeIDSupplierTextField.setOpacity(0);
+		supplierAvailableUntilLabel.setOpacity(0);
+		supplierWritingDateLabel.setOpacity(0);
+		supplierBankNameLabel.setOpacity(0);
+		supplierChequeIDLabel.setOpacity(0);
 
-		sname.setCellValueFactory(new PropertyValueFactory<Supplier, String>("sname"));
-		sDues.setCellValueFactory(new PropertyValueFactory<Supplier, Double>("dues"));
-		supplierData.setItems(Supplier.getDataList());
+		supplierNameColumn.setCellValueFactory(new PropertyValueFactory<Supplier, String>("sname"));
+		supplierDuesColumn.setCellValueFactory(new PropertyValueFactory<Supplier, Double>("dues"));
+		supplierDataTable.setItems(Supplier.getDataList());
 
 		try {
-			supplierPayment.setItems(FXCollections.observableArrayList(Queries
+			supplierPaymentTable.setItems(FXCollections.observableArrayList(Queries
 					.queryResult("select distinct e.employee_name, s.supplier_name,p.payment_date,p.payment_amount "
 							+ " from employee e, supplier s, payment p, supplier_payment op, s_order so "
 							+ " where op.manager_ID=e.employee_ID and op.supplier_Id = so.supplier_id and p.payment_id= op.payment_id "
 							+ " and so.supplier_id=s.supplier_id;", null)));
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		supplierMName.setCellValueFactory(
+		supplierManagerNameColum.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -1201,7 +1222,7 @@ public class PaymentController implements Initializable {
 						}
 					}
 				});
-		supplierName.setCellValueFactory(
+		supplierPaymentNameColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -1214,7 +1235,7 @@ public class PaymentController implements Initializable {
 					}
 				});
 
-		paymentDate.setCellValueFactory(
+		supplierPaymentDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -1227,7 +1248,7 @@ public class PaymentController implements Initializable {
 					}
 				});
 
-		Amount.setCellValueFactory(
+		supplierAmountColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -1239,7 +1260,7 @@ public class PaymentController implements Initializable {
 						}
 					}
 				});
-		searchSupplierPayment.textProperty().addListener((observable, oldValue, newValue) -> {
+		searchSupplierPaymentTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 			ArrayList<ArrayList<String>> filteredList = new ArrayList<>();
 			if (newValue == null || newValue.isEmpty() || newValue.isBlank()) {
 				try {
@@ -1253,7 +1274,7 @@ public class PaymentController implements Initializable {
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
-			} else if (taxop.getSelectionModel().getSelectedItem() == "Supplier Name") {
+			} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Supplier Name") {
 				try {
 					filteredList = Queries.queryResult(
 							"select distinct e.employee_name, s.supplier_name,p.payment_date,p.payment_amount "
@@ -1264,7 +1285,7 @@ public class PaymentController implements Initializable {
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
-			} else if (taxop.getSelectionModel().getSelectedItem() == "Manager Name") {
+			} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Manager Name") {
 				try {
 					filteredList = Queries.queryResult(
 							"select distinct e.employee_name, s.supplier_name,p.payment_date,p.payment_amount "
@@ -1276,7 +1297,7 @@ public class PaymentController implements Initializable {
 					e.printStackTrace();
 				}
 
-			} else if (taxop.getSelectionModel().getSelectedItem() == "Payment Month") {
+			} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Payment Month") {
 				try {
 					filteredList = Queries.queryResult(
 							"select distinct e.employee_name, s.supplier_name,p.payment_date,p.payment_amount "
@@ -1288,7 +1309,7 @@ public class PaymentController implements Initializable {
 					e.printStackTrace();
 				}
 
-			} else if (taxop.getSelectionModel().getSelectedItem() == "Payment Year") {
+			} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Payment Year") {
 				try {
 					filteredList = Queries.queryResult(
 							"select distinct e.employee_name, s.supplier_name,p.payment_date,p.payment_amount "
@@ -1319,10 +1340,10 @@ public class PaymentController implements Initializable {
 					e.printStackTrace();
 				}
 			}
-			supplierPayment.setItems(FXCollections.observableArrayList(filteredList));
+			supplierPaymentTable.setItems(FXCollections.observableArrayList(filteredList));
 		});
 
-		searchSupplier.textProperty().addListener((observable, oldValue, newValue) -> {
+		searchSupplierTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 			ArrayList<Supplier> filteredList = new ArrayList<>();
 			if (newValue == null || newValue.isEmpty() || newValue.isBlank()) {
 				try {
@@ -1339,20 +1360,20 @@ public class PaymentController implements Initializable {
 					e.printStackTrace();
 				}
 			}
-			supplierData.setItems(FXCollections.observableArrayList(filteredList));
+			supplierDataTable.setItems(FXCollections.observableArrayList(filteredList));
 		});
 
 		// ------------------------------------------tax-----------------------------------------------------------------------
-		taxop.setValue("select");
-		taxop.setItems(TaxChoices);
+		taxOperationComboBox.setValue("select");
+		taxOperationComboBox.setItems(TaxChoices);
 
-		banktax.setOpacity(0);
-		udatetax.setOpacity(0);
-		wdatetax.setOpacity(0);
-		chequeidtax.setOpacity(0);
-		AUTaxLabel.setOpacity(0);
-		BankNameTaxLabel.setOpacity(0);
-		WDTaxLabel.setOpacity(0);
+		bankNameTaxTextField.setOpacity(0);
+		availableUntilDateTax.setOpacity(0);
+		writingDateTax.setOpacity(0);
+		chequeIDTaxTextField.setOpacity(0);
+		availableUnitlTaxLabel.setOpacity(0);
+		bankNameTaxLabel.setOpacity(0);
+		writindDateTaxLabel.setOpacity(0);
 		chequeTaxLabel.setOpacity(0);
 		try {
 			taxTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
@@ -1364,7 +1385,7 @@ public class PaymentController implements Initializable {
 			e.printStackTrace();
 		}
 
-		taxid.setCellValueFactory(
+		taxIDColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -1377,7 +1398,7 @@ public class PaymentController implements Initializable {
 					}
 				});
 
-		mnametax.setCellValueFactory(
+		managerNametaxColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -1390,7 +1411,7 @@ public class PaymentController implements Initializable {
 					}
 				});
 
-		dateofpaymenttax.setCellValueFactory(
+		dateOfPaymentTaxColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -1403,7 +1424,7 @@ public class PaymentController implements Initializable {
 					}
 				});
 
-		amounttax.setCellValueFactory(
+		amountaTaxColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -1416,7 +1437,7 @@ public class PaymentController implements Initializable {
 					}
 				});
 
-		searchtax.textProperty().addListener((observable, oldValue, newValue) -> {
+		searchTaxTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 			ArrayList<ArrayList<String>> filteredList = new ArrayList<>();
 			if (newValue == null || newValue.isEmpty() || newValue.isBlank()) {
 				try {
@@ -1429,7 +1450,7 @@ public class PaymentController implements Initializable {
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
-			} else if (taxop.getSelectionModel().getSelectedItem() == "Tax ID") {
+			} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Tax ID") {
 				try {
 					filteredList = Queries
 							.queryResult("select distinct t.tax_id,e.employee_name,t.tax_date,p.payment_amount "
@@ -1439,7 +1460,7 @@ public class PaymentController implements Initializable {
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
-			} else if (taxop.getSelectionModel().getSelectedItem() == "Manager Name") {
+			} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Manager Name") {
 				try {
 					filteredList = Queries.queryResult(
 							"select distinct t.tax_id,e.employee_name,t.tax_date,p.payment_amount "
@@ -1451,7 +1472,7 @@ public class PaymentController implements Initializable {
 					e.printStackTrace();
 				}
 
-			} else if (taxop.getSelectionModel().getSelectedItem() == "Payment Month") {
+			} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Payment Month") {
 				try {
 					filteredList = Queries.queryResult(
 							"select  distinct t.tax_id,e.employee_name,t.tax_date,p.payment_amount "
@@ -1463,7 +1484,7 @@ public class PaymentController implements Initializable {
 					e.printStackTrace();
 				}
 
-			} else if (taxop.getSelectionModel().getSelectedItem() == "Payment Year") {
+			} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Payment Year") {
 				try {
 					filteredList = Queries.queryResult(
 							"select distinct t.tax_id,e.employee_name,t.tax_date,p.payment_amount "

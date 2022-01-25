@@ -226,7 +226,7 @@ public class Supplier {
 	 * @throws ParseException         If any exception data type parsing occurred
 	 * @throws IOException
 	 */
-	public void report(String path) throws ClassNotFoundException, SQLException, IOException {
+	public static void report(String path) throws ClassNotFoundException, SQLException, IOException {
 		Queries.reportQuerey(" select * from supplier;", path);
 	}
 
