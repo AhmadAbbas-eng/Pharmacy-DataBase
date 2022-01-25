@@ -99,6 +99,9 @@ public class ReceiveOrdersController implements Initializable {
 
 	@FXML
 	private Label choosenProductLabel;
+	
+	@FXML
+	private Label quantityLabel;
 
 	@FXML
 	private ImageView saveIcon;
@@ -126,9 +129,11 @@ public class ReceiveOrdersController implements Initializable {
 	public void checkBoxOnAction(ActionEvent e) {
 		if (confirmQuantityCheckBox.isSelected() == true) {
 			quantityTextField.setOpacity(0);
+			quantityLabel.setOpacity(0);
 
 		} else {
 			quantityTextField.setOpacity(1);
+			quantityLabel.setOpacity(1);
 		}
 	}
 
@@ -332,6 +337,7 @@ public class ReceiveOrdersController implements Initializable {
 				ArrayList<String> productsEntered = new ArrayList<String>();
 				if (confirmQuantityCheckBox.isSelected() == true) {
 					quantityTextField.setOpacity(0);
+					quantityLabel.setOpacity(0);
 					productsEntered.add(ProductId);
 					productsEntered.add(ProductName);
 					productsEntered.add(
@@ -404,9 +410,11 @@ public class ReceiveOrdersController implements Initializable {
 		if (confirmQuantityCheckBox.isSelected() == true) {
 
 			quantityTextField.setOpacity(0);
+			quantityLabel.setOpacity(0);
 
 		} else {
 			quantityTextField.setOpacity(1);
+			quantityLabel.setOpacity(1);
 		}
 
 		batchProductionDateColumn.setCellValueFactory(new PropertyValueFactory<Batch, String>("productionDate"));

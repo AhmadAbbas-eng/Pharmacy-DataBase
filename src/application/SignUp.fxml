@@ -82,7 +82,7 @@
                         <TextField fx:id="nationalIDTextFeild" prefHeight="26.0" prefWidth="210.0" promptText="National ID(xxxxxxxxxx)" stylesheets="@../../CSS/textField.css" />
                         <TextField fx:id="employeeNameTextField" prefHeight="26.0" prefWidth="210.0" promptText="Name(only characters)" stylesheets="@../../CSS/textField.css" />
                         <TextField fx:id="hourlyPaidTextField" prefHeight="26.0" prefWidth="210.0" promptText="Hourly Paid(a number)" stylesheets="@../../CSS/textField.css" />
-                        <DatePicker fx:id="dateOfWorkPicker" prefHeight="26.0" prefWidth="286.0" promptText="Date" stylesheets="@../../CSS/textField.css" />
+                        <DatePicker fx:id="dateOfWorkPicker" prefHeight="26.0" prefWidth="286.0" promptText="Date" stylesheets="@../../CSS/datePicker.css" />
                         <HBox prefHeight="30.0" prefWidth="222.0">
                            <children>
                               <TextField fx:id="phoneTextField" prefHeight="26.0" prefWidth="198.0" promptText="Phone(xxxxxxxxxx)" stylesheets="@../../CSS/textField.css" />

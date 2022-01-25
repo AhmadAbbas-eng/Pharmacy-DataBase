@@ -60,13 +60,13 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <CheckBox fx:id="confirmQuantityCheckBox" layoutX="337.0" layoutY="92.0" mnemonicParsing="false" onAction="#checkBoxOnAction" text="Confirm Quantity" textFill="#1d6f84" AnchorPane.leftAnchor="337.0" AnchorPane.topAnchor="92.0">
+            <CheckBox fx:id="confirmQuantityCheckBox" layoutX="245.0" layoutY="92.0" mnemonicParsing="false" onAction="#checkBoxOnAction" text="Confirm Quantity" textFill="#1d6f84" AnchorPane.leftAnchor="245.0" AnchorPane.topAnchor="92.0">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font></CheckBox>
-            <TextField fx:id="quantityTextField" layoutX="228.0" layoutY="91.0" prefHeight="26.0" prefWidth="93.0" promptText="New Quantity" AnchorPane.leftAnchor="228.0" AnchorPane.topAnchor="91.0" />
+            <TextField fx:id="quantityTextField" layoutX="337.0" layoutY="137.0" prefHeight="26.0" prefWidth="93.0" promptText="New Quantity" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="337.0" AnchorPane.topAnchor="137.0" />
             <Button fx:id="confirmBatchButton" layoutX="45.0" layoutY="138.0" mnemonicParsing="false" onAction="#confirmBatchOnAction" prefHeight="26.0" prefWidth="80.0" stylesheets="@../../CSS/button.css" text="Confirm" AnchorPane.leftAnchor="45.0" AnchorPane.topAnchor="138.0" />
-            <DatePicker fx:id="receivedDatePicker" layoutX="263.0" layoutY="197.0" prefHeight="26.0" prefWidth="203.0" promptText="Received Date" AnchorPane.leftAnchor="263.0" AnchorPane.topAnchor="197.0" />
+            <DatePicker fx:id="receivedDatePicker" layoutX="469.0" layoutY="199.0" prefHeight="26.0" prefWidth="203.0" promptText="Received Date" stylesheets="@../../CSS/datePicker.css" AnchorPane.leftAnchor="469.0" AnchorPane.topAnchor="199.0" />
             <ImageView fx:id="saveIcon" fitHeight="26.0" fitWidth="26.0" layoutX="1369.0" layoutY="200.0" onMouseEntered="#saveOnMouseEntered" onMouseExited="#saveOnMouseExited" onMousePressed="#saveOnMousePressed" onMouseReleased="#saveOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="200.0">
                <image>
                   <Image url="@../../Icons/icons8-save-60.png" />
@@ -78,11 +78,31 @@
                   <Image url="@../../Icons/icons8-add-48.png" />
                </image>
             </ImageView>
-            <TextField fx:id="costTextField" layoutX="486.0" layoutY="197.0" prefHeight="26.0" prefWidth="94.0" promptText="New Total Cost" AnchorPane.leftAnchor="486.0" AnchorPane.topAnchor="197.0" />
-            <DatePicker fx:id="payDueDatePicker" layoutX="34.0" layoutY="197.0" prefHeight="26.0" prefWidth="203.0" promptText="Pay Due Date" AnchorPane.leftAnchor="34.0" AnchorPane.topAnchor="197.0" />
+            <TextField fx:id="costTextField" layoutX="808.0" layoutY="201.0" prefHeight="27.0" prefWidth="108.0" promptText="Optional" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="808.0" AnchorPane.topAnchor="201.0" />
+            <DatePicker fx:id="payDueDatePicker" layoutX="134.0" layoutY="199.0" prefHeight="26.0" prefWidth="203.0" promptText="Pay Due Date" stylesheets="@../../CSS/datePicker.css" AnchorPane.leftAnchor="134.0" AnchorPane.topAnchor="199.0" />
             <Label layoutX="119.0" layoutY="177.0" prefHeight="1.0" prefWidth="706.0" style="-fx-background-color: #1d6f84;" textFill="#1d6f84" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="177.0">
                <font>
                   <Font size="1.0" />
+               </font>
+            </Label>
+            <Label layoutX="34.0" layoutY="203.0" text="Pay Due Date" textFill="#1d6f84">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="360.0" layoutY="203.0" text="Received Date" textFill="#1d6f84">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="703.0" layoutY="205.0" text="New Total Cost" textFill="#1d6f84">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="quantityLabel" layoutX="245.0" layoutY="141.0" text="New Quantity" textFill="#1d6f84">
+               <font>
+                  <Font size="14.0" />
                </font>
             </Label>
          </children>
