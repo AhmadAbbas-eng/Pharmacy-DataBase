@@ -12,8 +12,8 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #1D6F84;" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="id" layoutX="151.0" layoutY="59.0" prefHeight="26.0" prefWidth="226.0" promptText="Work ID" stylesheets="@../../CSS/textField.css" />
-            <PasswordField fx:id="password" layoutX="151.0" layoutY="104.0" prefHeight="26.0" prefWidth="226.0" promptText="Password" stylesheets="@../../CSS/textField.css" />
+            <TextField fx:id="idTextField" layoutX="151.0" layoutY="59.0" prefHeight="26.0" prefWidth="226.0" promptText="Work ID" stylesheets="@../../CSS/textField.css" />
+            <PasswordField fx:id="passwordPasswordField" layoutX="151.0" layoutY="104.0" prefHeight="26.0" prefWidth="226.0" promptText="Password" stylesheets="@../../CSS/textField.css" />
             <Label layoutX="37.0" layoutY="57.0" text="Manager ID" textFill="WHITE">
                <font>
                   <Font size="18.0" />
@@ -29,11 +29,11 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button fx:id="confirm" layoutX="125.0" layoutY="145.0" mnemonicParsing="false" onAction="#confirm" style="-fx-background-color: #1496b7;" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Confirm">
+            <Button fx:id="confirmButton" layoutX="125.0" layoutY="145.0" mnemonicParsing="false" onAction="#confirm" style="-fx-background-color: #1496b7;" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Confirm">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
-            <Button fx:id="cancel" layoutX="238.0" layoutY="145.0" mnemonicParsing="false" onAction="#cancelButton" prefHeight="26.0" prefWidth="60.0" style="-fx-background-color: #1496b7;" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Cancel">
+            <Button fx:id="cancelButton" layoutX="238.0" layoutY="145.0" mnemonicParsing="false" onAction="#cancelButton" prefHeight="26.0" prefWidth="60.0" style="-fx-background-color: #1496b7;" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Cancel">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
