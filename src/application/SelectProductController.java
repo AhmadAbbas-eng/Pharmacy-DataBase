@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
+
 import Relations.Drug;
 import Relations.Product;
 import Relations.Queries;
@@ -22,7 +23,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -37,27 +37,27 @@ public class SelectProductController implements Initializable {
 	static double totalCost = 0.0;
 
     @FXML
-    private ImageView addProduct;
+    private ImageView addProductIcon;
 	
 	@FXML
-	private TableView<Drug> Table;
+	private TableView<Drug> scientificNameTable;
 
 	private SupplierOrderController caller;
 
 	@FXML
-	private TableView<Product> Table2;
+	private TableView<Product> commercialNameTable;
 
 	@FXML
-	private TableColumn<Product, String> cname;
+	private TableColumn<Product, String> commercialNameColumn;
 
 	@FXML
-	private Button confirm;
+	private Button confirmButton;
 
 	@FXML
-	private Button cancel;
+	private Button cancelButton;
 
 	@FXML
-	private TextField cost;
+	private TextField costTextField;
 
 	@FXML
 	private ListView<String> listOrder;
@@ -66,22 +66,22 @@ public class SelectProductController implements Initializable {
 	private DatePicker orderedDate;
 
 	@FXML
-	private TextField quantity;
+	private TextField quantityTextField;
 
 	@FXML
-	private TextField search;
+	private TextField searchTextField;
 
 	@FXML
-	private ComboBox<String> searchOP;
+	private ComboBox<String> searchOperationComboBox;
 
 	@FXML
-	private TableColumn<Drug, String> sname;
+	private TableColumn<Drug, String> scientificNameColumn;
 
 	@FXML
-	private ImageView addDrug;
+	private ImageView addDrugIcon;
 
 	@FXML
-	private ImageView delete;
+	private ImageView deleteIcon;
 
 	public void deleteOnMousePressed() {
 		ColorAdjust effect = new ColorAdjust();
@@ -92,14 +92,14 @@ public class SelectProductController implements Initializable {
 			String order = listOrder.getSelectionModel().getSelectedItem();
 			listOrder.getItems().remove(order);
 		}
-		delete.setEffect(effect);
+		deleteIcon.setEffect(effect);
 
 	}
 
 	public void deleteOnMouseReleased() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0);
-		delete.setEffect(effect);
+		deleteIcon.setEffect(effect);
 	}
 
 	public void deleteOnMouseEntered() {
@@ -108,19 +108,19 @@ public class SelectProductController implements Initializable {
 			effect.setBrightness(0);
 		} else
 			effect.setBrightness(0.4);
-		delete.setEffect(effect);
+		deleteIcon.setEffect(effect);
 	}
 
 	public void deleteOnMouseExited() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0);
-		delete.setEffect(effect);
+		deleteIcon.setEffect(effect);
 	}
 
 	public void addProductOnMousePressed() throws IOException {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
-		addDrug.setEffect(effect);
+		addDrugIcon.setEffect(effect);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("addProduct.fxml"));
 		Parent root1 = (Parent) loader.load();
 		Stage stage2 = new Stage();
@@ -131,13 +131,13 @@ public class SelectProductController implements Initializable {
 	public void addOnMousePressed() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
-		addDrug.setEffect(effect);
+		addDrugIcon.setEffect(effect);
 		try {
 			
-			double Cost = Double.parseDouble(cost.getText().toString());
-			int Quantity = Integer.parseInt(quantity.getText().toString());
+			double Cost = Double.parseDouble(costTextField.getText().toString());
+			int Quantity = Integer.parseInt(quantityTextField.getText().toString());
 			
-			if (Table2.getSelectionModel().getSelectedItem() != null) {
+			if (commercialNameTable.getSelectionModel().getSelectedItem() != null) {
 				if (Quantity > 0 && Cost > 0) {
 					
 				if(!listOrder.getItems().isEmpty()) {
@@ -147,8 +147,8 @@ public class SelectProductController implements Initializable {
 						String s = temp.get(i);
 						String[] data = s.split(",");
 						String[] idTemp = data[0].split("=");
-						System.out.println(idTemp[0] +Table2.getSelectionModel().getSelectedItem().getID() );
-						if(Table2.getSelectionModel().getSelectedItem().getID()+"".compareTo(idTemp[1]) == 0) {
+						System.out.println(idTemp[0] +commercialNameTable.getSelectionModel().getSelectedItem().getID() );
+						if(commercialNameTable.getSelectionModel().getSelectedItem().getID()+"".compareTo(idTemp[1]) == 0) {
 							String[] quantityTemp = data[2].split("=");
 							Quantity += Integer.parseInt(quantityTemp[1]);
 							listOrder.getSelectionModel().select(i);
@@ -160,16 +160,16 @@ public class SelectProductController implements Initializable {
 				}
 				
 					totalCost += Cost * Quantity;
-					listOrder.getItems().add("ID ="+Table2.getSelectionModel().getSelectedItem().getID() + ",Product Name ="+Table2.getSelectionModel().getSelectedItem().getName() + ", Quantity="
+					listOrder.getItems().add("ID ="+commercialNameTable.getSelectionModel().getSelectedItem().getID() + ",Product Name ="+commercialNameTable.getSelectionModel().getSelectedItem().getName() + ", Quantity="
 							+ Quantity + ", Cost/Peice=" + Cost);
-					cost.clear();
-					quantity.clear();
-					Table.getSelectionModel().clearSelection();
+					costTextField.clear();
+					quantityTextField.clear();
+					scientificNameTable.getSelectionModel().clearSelection();
 
 				} else {
-					cost.clear();
-					quantity.clear();
-					Table.getSelectionModel().clearSelection();
+					costTextField.clear();
+					quantityTextField.clear();
+					scientificNameTable.getSelectionModel().clearSelection();
 					Alert alert = new Alert(Alert.AlertType.ERROR);
 					alert.setTitle(null);
 					alert.setHeaderText(null);
@@ -185,9 +185,9 @@ public class SelectProductController implements Initializable {
 			}
 
 		} catch (NumberFormatException e1) {
-			cost.clear();
-			quantity.clear();
-			Table.getSelectionModel().clearSelection();
+			costTextField.clear();
+			quantityTextField.clear();
+			scientificNameTable.getSelectionModel().clearSelection();
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle(null);
 			alert.setHeaderText(null);
@@ -200,13 +200,13 @@ public class SelectProductController implements Initializable {
 	public void addOnMouseReleased() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0);
-		addDrug.setEffect(effect);
+		addDrugIcon.setEffect(effect);
 	}
 
 	public void addOnMouseEntered() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.4);
-		addDrug.setEffect(effect);
+		addDrugIcon.setEffect(effect);
 	}
 
 	public void getProductList(ArrayList<String> data, SupplierOrderController caller) {
@@ -221,7 +221,7 @@ public class SelectProductController implements Initializable {
 	public void addOnMouseExited() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0);
-		addDrug.setEffect(effect);
+		addDrugIcon.setEffect(effect);
 	}
 
 	public void addDrugList(ActionEvent event) {
@@ -233,7 +233,7 @@ public class SelectProductController implements Initializable {
 			alert.showAndWait();
 		} else {
 			sendProductList();
-			Stage stage = (Stage) cancel.getScene().getWindow();
+			Stage stage = (Stage) cancelButton.getScene().getWindow();
 			stage.close();
 		}
 	}
@@ -243,23 +243,23 @@ public class SelectProductController implements Initializable {
 	public void addProductOnMouseReleased() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0);
-		addDrug.setEffect(effect);
+		addDrugIcon.setEffect(effect);
 	}
 
 	public void addProductOnMouseEntered() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.4);
-		addDrug.setEffect(effect);
+		addDrugIcon.setEffect(effect);
 	}
 
 	public void addProductOnMouseExited() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0);
-		addDrug.setEffect(effect);
+		addDrugIcon.setEffect(effect);
 	}
 
 	public void cancelButton(ActionEvent e) {
-		Stage stage = (Stage) cancel.getScene().getWindow();
+		Stage stage = (Stage) cancelButton.getScene().getWindow();
 		stage.close();
 	}
 
@@ -267,15 +267,15 @@ public class SelectProductController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		searchOP.setValue("Select");
-		searchOP.setItems(Choices);
-		sname.setCellValueFactory(new PropertyValueFactory<Drug, String>("scientificName"));
-		cname.setCellValueFactory(new PropertyValueFactory<Product, String>("Name"));
+		searchOperationComboBox.setValue("Select");
+		searchOperationComboBox.setItems(Choices);
+		scientificNameColumn.setCellValueFactory(new PropertyValueFactory<Drug, String>("scientificName"));
+		commercialNameColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("Name"));
 		
-		Table.setItems(Drug.getDataListDrug());
-		Table2.setItems(Product.getDataList());
+		scientificNameTable.setItems(Drug.getDataListDrug());
+		commercialNameTable.setItems(Product.getDataList());
 
-		search.textProperty().addListener((observable, oldValue, newValue) -> {
+		searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 			ArrayList<Drug> filteredList = new ArrayList<>();
 			ArrayList<Product> filteredList2 = new ArrayList<>();
 
@@ -296,7 +296,7 @@ public class SelectProductController implements Initializable {
 				} catch (ClassNotFoundException | SQLException | ParseException e) {
 					e.printStackTrace();
 				}
-			} else if (searchOP.getSelectionModel().getSelectedItem() == "Commerical Name") {
+			} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Commerical Name") {
 				try {
 					
 					
@@ -315,7 +315,7 @@ public class SelectProductController implements Initializable {
 				} catch (ClassNotFoundException | SQLException | ParseException e) {
 					e.printStackTrace();
 				}
-			} else if (searchOP.getSelectionModel().getSelectedItem() == "Sientific Name") {
+			} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Sientific Name") {
 				try {
 					
 					filteredList2 = Product.getProductData(Queries.queryResult("select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer"
@@ -335,8 +335,8 @@ public class SelectProductController implements Initializable {
 
 			}
 
-			Table2.setItems(FXCollections.observableArrayList(filteredList2));
-			Table.setItems(FXCollections.observableArrayList(filteredList));
+			commercialNameTable.setItems(FXCollections.observableArrayList(filteredList2));
+			scientificNameTable.setItems(FXCollections.observableArrayList(filteredList));
 		});
 
 	}
