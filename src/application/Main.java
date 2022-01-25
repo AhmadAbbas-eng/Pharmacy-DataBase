@@ -1,8 +1,9 @@
 package application;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import 	java.security.SecureRandom;
+import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.io.IOException;
@@ -37,25 +38,15 @@ public class Main extends Application {
 		}
 	}
 
-	public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException, ParseException, NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
-
-	   // System.out.println(encryptPassword("Abedelkareem", "123456789123456789"));
+	public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException, ParseException,
+			NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
 		Main.readingData();
 		launch(args);
 	}
 
-	public static String encryptPassword(String name ,String password) {
-		StringBuilder hashed = new StringBuilder();
-			for(int j=0;j<password.length();j++) {
-				int temp= (name.charAt(0)+name.charAt(name.length()-1))*(j+1)+password.charAt(j);				
-				hashed.append(Integer.toHexString(temp));
-			}
-		return hashed.toString();
-	}
-	
 
 	public static void readingData() throws ClassNotFoundException, SQLException, ParseException, IOException {
-		long startTime = System.nanoTime();
+
 
 		Batch.getBatchData();
 		Cheque.getChequeData();
@@ -69,8 +60,6 @@ public class Main extends Application {
 		SupplierOrder.getSupplierOrderData();
 		Tax.getTaxData();
 
-		long stopTime = System.nanoTime();
-		System.out.println(stopTime - startTime);
 	}
 
 }

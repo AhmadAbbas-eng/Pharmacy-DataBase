@@ -217,14 +217,15 @@ public class Employee {
 	public static void getEmployeeData() throws ClassNotFoundException, SQLException, ParseException {
 
 		data.clear();
-		ArrayList<ArrayList<String>> table = Queries.queryResult("select * from Employee where Employee_ID<>-1;", null);
+		ArrayList<ArrayList<String>> table = Queries.queryResult("select * from Employee;", null);
 
 		for (int i = 0; i < table.size(); i++) {
 			LocalDate date = LocalDate.parse(table.get(i).get(3));
 
 			Employee temp = new Employee(Integer.parseInt(table.get(i).get(0)), table.get(i).get(1),
-					table.get(i).get(2), date, Double.parseDouble(table.get(i).get(4)), null, table.get(i).get(5),
-					table.get(i).get(6), table.get(i).get(7));
+					table.get(i).get(2), date, Double.parseDouble(table.get(i).get(4)), null,
+					decryptPassword(table.get(i).get(1), table.get(i).get(5)), table.get(i).get(6),
+					table.get(i).get(7));
 
 			getEmployeePhone(temp);
 			data.add(temp);
@@ -242,8 +243,9 @@ public class Employee {
 			LocalDate date = LocalDate.parse(table.get(i).get(3));
 
 			Employee temp = new Employee(Integer.parseInt(table.get(i).get(0)), table.get(i).get(1),
-					table.get(i).get(2), date, Double.parseDouble(table.get(i).get(4)), null, table.get(i).get(5),
-					table.get(i).get(6), table.get(i).get(7));
+					table.get(i).get(2), date, Double.parseDouble(table.get(i).get(4)), null,
+					decryptPassword(table.get(i).get(1), table.get(i).get(5)), table.get(i).get(6),
+					table.get(i).get(7));
 			getEmployeePhone(temp);
 			tempData.add(temp);
 		}
@@ -296,7 +298,7 @@ public class Employee {
 		try {
 			Queries.queryUpdate("insert into Employee values (?, ?, ?, ?, ?, ?, ?, ?);",
 					new ArrayList<>(Arrays.asList((++maxID) + "", name, nID, dateOfWork.toString(), hourlyPaid + "",
-							password, isManager, isActive)));
+							encryptPassword(name,password), isManager, isActive)));
 			if (phones != null) {
 				insertEmployeePhone(phones, maxID);
 			}
@@ -304,6 +306,32 @@ public class Employee {
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static String encryptPassword(String name, String password) {
+		StringBuilder hashed = new StringBuilder();
+		for (int j = 0; j < password.length(); j++) {
+			int temp = (name.charAt(0) + name.charAt(name.length() - 1)) * (j + 1) + password.charAt(j);
+			StringBuilder tempString = new StringBuilder(Integer.toHexString(temp));
+			while (tempString.length() < 3) {
+				tempString.insert(0, '0');
+			}
+			hashed.append(tempString.toString());
+		}
+		return hashed.toString();
+	}
+
+	public static String decryptPassword(String name, String hashed) {
+		StringBuilder password = new StringBuilder();
+		int i = 0;
+		for (int j = 0; j < hashed.length(); j += 3) {
+			int temp = Integer.parseInt(hashed.substring(j, j + 3), 16)
+					- (name.charAt(0) + name.charAt(name.length() - 1)) * (i + 1);
+			i++;
+			password.append((char) temp);
+		}
+
+		return password.toString();
 	}
 
 	/**
