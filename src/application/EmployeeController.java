@@ -201,41 +201,51 @@ public class EmployeeController implements Initializable {
 		parameters.add("%" + stringToSearch + "%");
 		if (stringToSearch == null || stringToSearch.isEmpty() || stringToSearch.isBlank()) {
 			try {
-				filteredList = Employee.getEmployeeData(Queries.queryResult("select * from Employee where true "
-						+ isActiveCondition + isManagerCondition + " order by Employee_ID;", null));
+				filteredList = Employee
+						.getEmployeeData(Queries.queryResult("select * from Employee where Employee_ID<>-1 "
+								+ isActiveCondition + isManagerCondition + " order by Employee_ID;", null));
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
 				e.printStackTrace();
 			}
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "National ID") {
 			try {
 				filteredList = Employee
-						.getEmployeeData(Queries.queryResult("select * from Employee where Employee_National_ID like ? "
-								+ isActiveCondition + isManagerCondition + " order by Employee_ID;", null));
+						.getEmployeeData(
+								Queries.queryResult(
+										"select * from Employee where Employee_ID<>-1 and Employee_National_ID like ? "
+												+ isActiveCondition + isManagerCondition + " order by Employee_ID;",
+										null));
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
 				e.printStackTrace();
 			}
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Name") {
 			try {
 				filteredList = Employee
-						.getEmployeeData(Queries.queryResult("select * from Employee  where Employee_Name like ? "
-								+ isActiveCondition + isManagerCondition + " order by Employee_ID;", parameters));
+						.getEmployeeData(Queries.queryResult(
+								"select * from Employee where Employee_ID<>-1 and Employee_Name like ? "
+										+ isActiveCondition + isManagerCondition + " order by Employee_ID;",
+								parameters));
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
 				e.printStackTrace();
 			}
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "ID") {
 			try {
 				filteredList = Employee
-						.getEmployeeData(Queries.queryResult("select * from Employee where Employee_ID like ? "
-								+ isActiveCondition + isManagerCondition + " order by Employee_ID;", parameters));
+						.getEmployeeData(Queries.queryResult(
+								"select * from Employee where Employee_ID<>-1 and Employee_ID like ? "
+										+ isActiveCondition + isManagerCondition + " order by Employee_ID;",
+								parameters));
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
 				e.printStackTrace();
 			}
 
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Date of Work") {
 			try {
-				filteredList = Employee.getEmployeeData(
-						Queries.queryResult("select * from Employee where Employee_Date_Of_Work like ? "
-								+ isActiveCondition + isManagerCondition + " order by Employee_ID;", parameters));
+				filteredList = Employee
+						.getEmployeeData(Queries.queryResult(
+								"select * from Employee where Employee_ID<>-1 and Employee_Date_Of_Work like ? "
+										+ isActiveCondition + isManagerCondition + " order by Employee_ID;",
+								parameters));
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
 				e.printStackTrace();
 			}
