@@ -172,7 +172,7 @@ public class Cheque {
 	 * @throws ParseException         If any exception data type parsing occurred
 	 * @throws IOException
 	 */
-	public void report(String path) throws ClassNotFoundException, SQLException, IOException {
+	public static void report(String path) throws ClassNotFoundException, SQLException, IOException {
 		Queries.reportQuerey("select c.cheque_ID,e.employee_name,c.due_date_of_cashing,p.payment_amount\r\n"
 				+ "from employee e , cheque c, payment p\r\n"
 				+ "where  c.manager_ID=e.employee_ID and c.payment_ID=p.payment_ID ;", path);

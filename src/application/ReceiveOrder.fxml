@@ -43,7 +43,7 @@
                   <Font name="System Bold" size="29.0" />
                </font>
             </Label>
-            <TableView fx:id="productsBatchColumn" editable="true" layoutX="534.0" layoutY="5.0" prefHeight="160.0" prefWidth="856.0" style="-fx-background-color: transparent;" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="541.0" AnchorPane.leftAnchor="534.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="5.0">
+            <TableView fx:id="productsBatchColumn" editable="true" layoutX="534.0" layoutY="5.0" prefHeight="155.0" prefWidth="509.0" style="-fx-background-color: transparent;" stylesheets="@../../CSS/table.css" AnchorPane.leftAnchor="534.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="5.0">
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
