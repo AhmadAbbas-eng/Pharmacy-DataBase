@@ -161,20 +161,18 @@ public class Supplier {
 	}
 
 	public static void getSupplierPhone(Supplier supplier) throws SQLException, ClassNotFoundException {
-		Connection getPhoneConnection = Queries.dataBaseConnection();
-		String query = "select Supplier_Phone from Supplier_Phone where Supplier_ID=" + supplier.getID() + ";";
-		Statement getPhoneStmt = getPhoneConnection.createStatement();
-		ResultSet getPhoneSet = getPhoneStmt.executeQuery(query);
-		ArrayList<String> phones = new ArrayList<String>();
+			ArrayList<ArrayList<String>> phonesSet = Queries.queryResult(
+					"select Supplier_Phone from Supplier_Phone where Supplier_ID=? ;",
+					new ArrayList<>(Arrays.asList(supplier.getID()+"")));
 
-		while (getPhoneSet.next())
-			phones.add(getPhoneSet.getString(1));
+			ArrayList<String> phones = new ArrayList<String>();
 
-		getPhoneStmt.close();
-		getPhoneSet.close();
-		supplier.setPhones(phones);
+			for (int i = 0; i < phonesSet.size(); i++) {
+				phones.add(phonesSet.get(i).get(0));
+			}
 
-	}
+			supplier.setPhones(phones);
+		}
 
 	public void clearSupplierPhones() {
 		for (int i = 0; i < getPhones().size(); i++) {
