@@ -135,20 +135,17 @@ public class Customer {
 	}
 
 	public static void getCustomerPhone(Customer customer) throws SQLException, ClassNotFoundException {
-		Connection getPhoneConnection = Queries.dataBaseConnection();
-		String query = "select Phone from Customer_Phone where Customer_NID=" + customer.getNID() + ";";
-		Statement getPhoneStmt = getPhoneConnection.createStatement();
-		ResultSet getPhoneSet = getPhoneStmt.executeQuery(query);
+		ArrayList<ArrayList<String>> phonesSet = Queries.queryResult(
+				"select Phone from Customer_Phone where Customer_NID=? ;",
+				new ArrayList<>(Arrays.asList(customer.getNID())));
+
 		ArrayList<String> phones = new ArrayList<String>();
 
-		while (getPhoneSet.next())
-			phones.add(getPhoneSet.getString(1));
+		for (int i = 0; i < phonesSet.size(); i++) {
+			phones.add(phonesSet.get(i).get(0));
+		}
 
-		getPhoneConnection.close();
-		getPhoneStmt.close();
-		getPhoneSet.close();
 		customer.setPhones(phones);
-
 	}
 
 	public static void insertCustomerPhone(String phone, String customerNID) {
