@@ -44,7 +44,7 @@
       <Button fx:id="showWorkButton" layoutX="162.0" layoutY="395.0" mnemonicParsing="false" onAction="#showWorkOnAction" onMouseEntered="#showWorkOnMouseEntered" onMouseExited="#showWorkOnMouseExited" onMousePressed="#showWorkOnMousePressed" onMouseReleased="#showWorkOnMouseReleased" prefWidth="130.0" stylesheets="@../../CSS/button.css" text="Show Worked Hours" AnchorPane.bottomAnchor="32.66666666666667" AnchorPane.leftAnchor="162.0" />
       <HBox alignment="CENTER_LEFT" layoutX="372.0" layoutY="20.0" prefHeight="28.0" prefWidth="189.0" spacing="20.0">
          <children>
-            <CheckBox fx:id="isActive" lineSpacing="100.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#filterList" stylesheets="@../../CSS/checkBox.css" text="Active" textFill="#1d6f84">
+            <CheckBox fx:id="isActive" lineSpacing="100.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#filterList" text="Active" textFill="#1d6f84">
                <font>
                   <Font size="14.0" />
                </font>
