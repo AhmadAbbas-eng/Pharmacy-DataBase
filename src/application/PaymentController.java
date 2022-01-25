@@ -715,7 +715,7 @@ public class PaymentController implements Initializable {
 									employeePaymentTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
 											"select distinct e.employee_name,p.payment_date,p.payment_amount "
 													+ " from e_salary es,payment p, employee e "
-													+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.manager_Id",
+													+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.Employee_ID",
 											null)));
 								} catch (ClassNotFoundException | SQLException e) {
 									e.printStackTrace();
@@ -770,7 +770,7 @@ public class PaymentController implements Initializable {
 								.setItems(FXCollections.observableArrayList(Queries.queryResult(
 										"select distinct e.employee_name,p.payment_date,p.payment_amount "
 												+ " from e_salary es,payment p, employee e "
-												+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.manager_Id;",
+												+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.Employee_ID;",
 										null)));
 					} catch (ClassNotFoundException | SQLException e) {
 						e.printStackTrace();
@@ -1072,7 +1072,7 @@ public class PaymentController implements Initializable {
 							FXCollections.observableArrayList(Queries.queryResult(
 									"select distinct e.employee_name,p.payment_date,p.payment_amount "
 											+ " from e_salary es,payment p, employee e "
-											+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.manager_Id;",
+											+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.Employee_ID;",
 									null)));
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
