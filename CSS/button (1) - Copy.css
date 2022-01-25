@@ -1,7 +1,7 @@
 
 .button{
   -fx-background-color:    #1d6f84;
-  -fx-background-radius: 10;
+  -fx-background-radius: 0;
 }
 
 .button .text{

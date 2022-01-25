@@ -41,7 +41,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Button fx:id="chooseCustomerButton" layoutX="142.0" layoutY="259.0" mnemonicParsing="false" onAction="#chooseCustomerOnAction" onMouseEntered="#chooseCustomerOnMouseEntered" onMouseExited="#chooseCustomerOnMouseExited" onMousePressed="#chooseCustomerOnMousePressed" onMouseReleased="#chooseCustomerOnMouseReleased" prefWidth="130.0" stylesheets="@../../CSS/button.css" text="Choose Customer" AnchorPane.bottomAnchor="259.6666666666667" AnchorPane.leftAnchor="142.0" />
+      <Button fx:id="chooseCustomerButton" layoutX="142.0" layoutY="259.0" mnemonicParsing="false" onAction="#chooseCustomerOnAction" prefWidth="130.0" stylesheets="@../../CSS/button.css" text="Choose Customer" AnchorPane.bottomAnchor="259.6666666666667" AnchorPane.leftAnchor="142.0" />
       <Label layoutX="22.0" layoutY="223.0" prefHeight="1.0" prefWidth="706.0" style="-fx-background-color: #1d6f84;" textFill="#1d6f84" AnchorPane.bottomAnchor="317.6666666666667" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0">
          <font>
             <Font size="1.0" />
@@ -94,7 +94,7 @@
             </HBox>
          </children>
       </VBox>
-      <Button fx:id="approveSellButton" layoutX="25.0" layoutY="487.6666666666667" mnemonicParsing="false" onAction="#approveOnAction" onMouseEntered="#approveOnMouseEntered" onMouseExited="#approveOnMouseExited" onMousePressed="#approveOnMousePressed" onMouseReleased="#approveOnMouseReleased" stylesheets="@../../CSS/button.css" text="Approve Selling" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="25.0" />
+      <Button fx:id="approveSellButton" layoutX="25.0" layoutY="487.6666666666667" mnemonicParsing="false" onAction="#approveOnAction" stylesheets="@../../CSS/button.css" text="Approve Selling" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="25.0" />
       <VBox layoutX="246.0" layoutY="355.0" prefHeight="85.0" prefWidth="265.0" AnchorPane.bottomAnchor="103.66666666666667" AnchorPane.leftAnchor="300.0">
          <children>
             <HBox prefHeight="100.0" prefWidth="296.0" spacing="3.0">
@@ -123,20 +123,17 @@
             </HBox>
          </children>
       </VBox>
-      <Button fx:id="chooseProductButton" layoutX="142.0" layoutY="21.0" mnemonicParsing="false" onAction="#chooseProductOnAction" onMouseEntered="#chooseProductOnMouseEntered" onMouseExited="#chooseProductOnMouseExited" onMousePressed="#chooseProductOnMousePressed" onMouseReleased="#chooseProductOnMouseReleased" prefWidth="130.0" stylesheets="@../../CSS/button.css" text="Add Product" AnchorPane.leftAnchor="142.0" AnchorPane.topAnchor="21.0" />
+      <Button fx:id="chooseProductButton" layoutX="142.0" layoutY="21.0" mnemonicParsing="false" onAction="#chooseProductOnAction" prefWidth="130.0" stylesheets="@../../CSS/button.css" text="Add Product" AnchorPane.leftAnchor="142.0" AnchorPane.topAnchor="21.0" />
       <ImageView fx:id="deleteProductButton" fitHeight="20.0" fitWidth="20.0" layoutX="688.0" layoutY="63.0" onMouseEntered="#deleteProductOnMouseEntered" onMouseExited="#deleteProductOnMouseExited" onMousePressed="#deleteProductOnMousePressed" onMouseReleased="#deleteProductOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="22.0">
          <image>
             <Image url="@../../Icons/icons8-delete-60.png" />
          </image>
       </ImageView>
-      <Label fx:id="amountErrorLabel" layoutX="300.0" layoutY="21.0" prefHeight="25.0" prefWidth="243.0" textFill="RED" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="21.0" />
       <ImageView fx:id="deleteCustomerButton" fitHeight="20.0" fitWidth="20.0" layoutX="290.0" layoutY="262.0" onMouseEntered="#deleteCustomerOnMouseEntered" onMouseExited="#deleteCustomerOnMouseExited" onMousePressed="#deleteCustomerOnMousePressed" onMouseReleased="#deleteCustomerOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="262.0" AnchorPane.leftAnchor="290.0">
          <image>
             <Image url="@../../Icons/icons8-delete-60.png" />
          </image>
       </ImageView>
-      <Label fx:id="approveErrorLabel" contentDisplay="CENTER" layoutX="150.0" layoutY="487.0" prefHeight="28.0" prefWidth="243.0" textFill="RED" AnchorPane.bottomAnchor="29.0" AnchorPane.leftAnchor="150.0" />
-      <Label fx:id="customerErrorLabel" layoutX="321.0" layoutY="258.0" prefHeight="28.0" prefWidth="349.0" textFill="RED" AnchorPane.leftAnchor="321.0" AnchorPane.topAnchor="258.0" />
       <Label fx:id="soldLabel" layoutX="142.0" layoutY="492.0" prefHeight="17.0" prefWidth="100.0" text="Selling Approved" AnchorPane.bottomAnchor="34.66666666666667" AnchorPane.leftAnchor="142.0" />
       <ImageView fx:id="soldIcon" fitHeight="15.0" fitWidth="15.0" layoutX="240.0" layoutY="493.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="240.0">
          <image>

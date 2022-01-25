@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -91,6 +92,10 @@ public class ProductController implements Initializable {
 
 	public void showSoldOnAction() {
 		if (productTable.getSelectionModel().getSelectedItem() == null) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setHeaderText("Product Must Be Chosen First");
+			alert.setContentText("Choose A Product From The Table");
+			alert.showAndWait();
 			return;
 		}
 		try {
@@ -112,28 +117,12 @@ public class ProductController implements Initializable {
 		}
 	}
 
-	public void showSoldOnMousePressed() {
-		if (productTable.getSelectionModel().getSelectedItem() != null) {
-			showSoldButton.setStyle("-fx-background-color: #1A6477");
-		}
-	}
-
-	public void showSoldOnMouseReleased() {
-		showSoldButton.setStyle("-fx-background-color: #1D6F84; ");
-	}
-
-	public void showSoldOnMouseEntered() {
-		if (productTable.getSelectionModel().getSelectedItem() != null) {
-			showSoldButton.setStyle("-fx-background-color: #278FAA; ");
-		}
-	}
-
-	public void showSoldOnMouseExited() {
-		showSoldButton.setStyle("-fx-background-color: #1D6F84; ");
-	}
-
 	public void showOnAction() {
 		if (productTable.getSelectionModel().getSelectedItem() == null) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setHeaderText("Product Must Be Chosen First");
+			alert.setContentText("Choose A Product From The Table");
+			alert.showAndWait();
 			return;
 		}
 		try {
@@ -152,26 +141,6 @@ public class ProductController implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	public void showOnMousePressed() {
-		if (productTable.getSelectionModel().getSelectedItem() != null) {
-			showBatchButton.setStyle("-fx-background-color: #1A6477");
-		}
-	}
-
-	public void showOnMouseReleased() {
-		showBatchButton.setStyle("-fx-background-color: #1D6F84; ");
-	}
-
-	public void showOnMouseEntered() {
-		if (productTable.getSelectionModel().getSelectedItem() != null) {
-			showBatchButton.setStyle("-fx-background-color: #278FAA; ");
-		}
-	}
-
-	public void showOnMouseExited() {
-		showBatchButton.setStyle("-fx-background-color: #1D6F84; ");
 	}
 
 	public void dangerSelection() {
@@ -205,6 +174,10 @@ public class ProductController implements Initializable {
 
 	public void editOnMousePressed() {
 		if (!Employee.hasAccess()) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Access Denied");
+			alert.setContentText("You Do Not Have Access To Edit This Table");
+			alert.showAndWait();
 			return;
 		}
 		try {
