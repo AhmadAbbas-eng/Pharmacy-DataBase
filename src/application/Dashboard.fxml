@@ -16,9 +16,9 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="1163.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.DashboardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1335.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.DashboardController">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="795.8" layoutY="5.0" prefHeight="314.0" prefWidth="258.0" spacing="5.0" style="-fx-background-color: #f9f9f9;" AnchorPane.bottomAnchor="329.6" AnchorPane.leftAnchor="899.6" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+      <VBox alignment="TOP_CENTER" layoutX="1072.0" layoutY="5.0" prefHeight="290.0" prefWidth="258.0" spacing="5.0" style="-fx-background-color: #f9f9f9;" AnchorPane.bottomAnchor="330.0" AnchorPane.leftAnchor="1072.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <effect>
             <DropShadow>
                <color>
@@ -27,9 +27,9 @@
             </DropShadow>
          </effect>
          <children>
-            <Label alignment="CENTER" prefHeight="27.0" prefWidth="210.0" text="Out Of Stock Soon" textAlignment="JUSTIFY" textFill="#1d6f84">
+            <Label alignment="CENTER" prefHeight="26.0" prefWidth="162.0" text="Out Of Stock Soon" textAlignment="JUSTIFY" textFill="#1d6f84">
                <font>
-                  <Font name="System Bold Italic" size="18.0" />
+                  <Font name="System Bold Italic" size="16.0" />
                </font>
             </Label>
             <TableView fx:id="outOfStockSoonTable" prefHeight="283.0" prefWidth="462.0" stylesheets="@../../CSS/table.css">
@@ -43,7 +43,7 @@
             </TableView>
          </children>
       </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="837.0000000000001" layoutY="356.0" prefHeight="316.0" prefWidth="258.0" spacing="5.0" style="-fx-background-color: #f9f9f9;" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="898.6" AnchorPane.rightAnchor="6.0">
+      <VBox alignment="TOP_CENTER" layoutX="1072.0" layoutY="356.0" prefHeight="316.0" prefWidth="257.0" spacing="5.0" style="-fx-background-color: #f9f9f9;" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="1072.0" AnchorPane.rightAnchor="6.0">
          <effect>
             <DropShadow>
                <color>
@@ -52,9 +52,9 @@
             </DropShadow>
          </effect>
          <children>
-            <Label prefHeight="27.0" prefWidth="290.0" text="Orders to be paid whithin 30 days" textAlignment="JUSTIFY" textFill="#1d6f84">
+            <Label alignment="CENTER" prefHeight="26.0" prefWidth="319.0" text="Orders to be paid whithin 30 days" textAlignment="JUSTIFY" textFill="#1d6f84">
                <font>
-                  <Font name="System Bold Italic" size="18.0" />
+                  <Font name="System Bold Italic" size="16.0" />
                </font>
             </Label>
             <TableView fx:id="toBePaidTable" prefHeight="310.0" prefWidth="332.0" stylesheets="@../../CSS/table.css">
@@ -67,7 +67,7 @@
             </TableView>
          </children>
       </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="6.0" layoutY="406.0" prefHeight="238.0" prefWidth="887.0" style="-fx-background-color: #f1f1f1;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="406.0">
+      <VBox alignment="TOP_CENTER" layoutX="6.0" layoutY="469.0" prefHeight="151.0" prefWidth="1058.0" style="-fx-background-color: #f1f1f1;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="469.0">
          <effect>
             <DropShadow>
                <color>
@@ -84,12 +84,12 @@
             </HBox>
          </children>
       </VBox>
-      <Label layoutX="28.0" layoutY="108.0" prefHeight="0.0" prefWidth="887.0" style="-fx-background-color: #000000; -fx-opacity: 0.1;" textFill="#c1d7dc" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="108.0">
+      <Label layoutX="28.0" layoutY="108.0" prefHeight="4.0" prefWidth="1058.0" style="-fx-background-color: #000000; -fx-opacity: 0.1;" textFill="#c1d7dc" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="108.0">
          <font>
             <Font size="1.0" />
          </font>
       </Label>
-      <VBox layoutX="256.0" layoutY="119.0" prefHeight="278.0" prefWidth="258.0" style="-fx-background-color: #f9f9f9;" AnchorPane.leftAnchor="256.0" AnchorPane.topAnchor="119.0">
+      <VBox layoutX="256.0" layoutY="119.0" prefHeight="338.0" prefWidth="296.0" style="-fx-background-color: #f9f9f9;" AnchorPane.leftAnchor="256.0" AnchorPane.topAnchor="119.0">
          <effect>
             <DropShadow>
                <color>
@@ -102,7 +102,7 @@
                <children>
                   <Label alignment="CENTER" layoutX="70.0" layoutY="3.0" prefHeight="27.0" prefWidth="118.0" text="Out Of Stock" textAlignment="JUSTIFY" textFill="#1d6f84" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <font>
-                        <Font name="System Bold Italic" size="18.0" />
+                        <Font name="System Bold Italic" size="16.0" />
                      </font>
                   </Label>
                </children>
@@ -117,7 +117,7 @@
             </TableView>
          </children>
       </VBox>
-      <VBox layoutX="520.0" layoutY="120.0" prefHeight="278.0" prefWidth="372.0" style="-fx-background-color: #f9f9f9;" AnchorPane.leftAnchor="520.0" AnchorPane.topAnchor="120.0">
+      <VBox layoutX="558.0" layoutY="120.0" prefHeight="338.0" prefWidth="504.0" style="-fx-background-color: #f9f9f9;" AnchorPane.leftAnchor="558.0" AnchorPane.topAnchor="120.0">
          <effect>
             <DropShadow>
                <color>
@@ -126,16 +126,16 @@
             </DropShadow>
          </effect>
          <children>
-            <AnchorPane prefHeight="21.0" prefWidth="372.0">
+            <AnchorPane prefHeight="72.0" prefWidth="363.0">
                <children>
-                  <Label alignment="CENTER" layoutX="65.0" layoutY="5.0" prefHeight="27.0" prefWidth="372.0" text="Expires within 30 days  " textAlignment="JUSTIFY" textFill="#1d6f84" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label alignment="CENTER" layoutX="65.0" layoutY="5.0" prefHeight="48.0" prefWidth="363.0" text="Expires within 30 days  " textAlignment="JUSTIFY" textFill="#1d6f84" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <font>
-                        <Font name="System Bold Italic" size="18.0" />
+                        <Font name="System Bold Italic" size="16.0" />
                      </font>
                   </Label>
                </children>
             </AnchorPane>
-            <TableView fx:id="expiresTabel" prefHeight="225.0" prefWidth="366.0" stylesheets="@../../CSS/table.css">
+            <TableView fx:id="expiresTabel" prefHeight="323.0" prefWidth="363.0" stylesheets="@../../CSS/table.css">
                <columns>
                   <TableColumn fx:id="expiresProductIDColumn" prefWidth="75.0" text="Product ID" />
                   <TableColumn fx:id="expiresProductNameColumn" prefWidth="103.4666976928711" text="Product Name" />
@@ -149,7 +149,7 @@
             </TableView>
          </children>
       </VBox>
-      <VBox layoutX="6.0" layoutY="120.0" prefHeight="278.0" prefWidth="240.0" style="-fx-background-color: #f9f9f9;" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="120.0">
+      <VBox alignment="CENTER" layoutX="6.0" layoutY="120.0" prefHeight="338.0" prefWidth="240.0" spacing="10.0" style="-fx-background-color: #f9f9f9;" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="120.0">
          <effect>
             <DropShadow>
                <color>
@@ -158,12 +158,12 @@
             </DropShadow>
          </effect>
          <children>
-            <Label alignment="CENTER" prefHeight="27.0" prefWidth="251.0" text="Today's Report" textFill="#1d6f84">
+            <Label alignment="CENTER" prefHeight="33.0" prefWidth="240.0" text="Today's Report" textFill="#1d6f84">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Label prefHeight="0.0" prefWidth="218.0" style="-fx-opacity: 0.1;" text="---------------------------------------------" />
+            <Label prefHeight="18.0" prefWidth="242.0" style="-fx-opacity: 0.1;" text="---------------------------------------------" />
             <HBox prefHeight="231.0" prefWidth="218.0">
                <children>
                   <VBox prefHeight="231.0" prefWidth="156.0">
@@ -174,7 +174,7 @@
                         <Label alignment="CENTER" layoutX="10.0" layoutY="111.0" prefHeight="50.0" prefWidth="144.0" style="-fx-background-color: #e8f0f3; -fx-border-color: #bbd3db;" text="Total Income" />
                      </children>
                   </VBox>
-                  <VBox prefHeight="231.0" prefWidth="116.0">
+                  <VBox prefHeight="210.0" prefWidth="110.0">
                      <children>
                         <Label alignment="CENTER" prefHeight="50.0" prefWidth="124.0" style="-fx-background-color: #d1e2e7; -fx-border-color: #bbd3db;" text="Amount" />
                         <Label fx:id="totalSaleLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="50.0" prefWidth="124.0" style="-fx-background-color: #e8f0f3; -fx-border-color: #bbd3db;" text="0.0" />
@@ -186,123 +186,9 @@
             </HBox>
          </children>
       </VBox>
-      <AnchorPane layoutX="54.0" layoutY="5.0" prefHeight="90.0" prefWidth="90.0" style="-fx-background-color: #a47bd9; -fx-background-radius: 25;" AnchorPane.leftAnchor="54.0" AnchorPane.topAnchor="5.0">
+      <AnchorPane layoutX="3.0" layoutY="505.0" prefHeight="77.0" prefWidth="1030.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="505.0">
          <children>
-            <ImageView fitHeight="65.0" fitWidth="72.0" layoutX="14.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-               <image>
-                  <Image url="@../../Icons/icons8-pharmacist-64.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="numberOfEmployeesLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="24.0" prefHeight="36.0" prefWidth="86.0" text="1" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="24.0">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="3.0" layoutY="54.0" prefHeight="36.0" prefWidth="86.0" text="Total Employees" textFill="WHITE" AnchorPane.bottomAnchor="-3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="54.0">
-               <font>
-                  <Font name="System Bold" size="11.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutX="193.0" layoutY="5.0" prefHeight="90.0" prefWidth="90.0" style="-fx-background-color: #5a9fd0; -fx-background-radius: 25;" AnchorPane.leftAnchor="193.0" AnchorPane.topAnchor="5.0">
-         <children>
-            <ImageView fitHeight="64.0" fitWidth="76.0" layoutX="7.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;">
-               <image>
-                  <Image url="@../../Icons/icons8-branch-64.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="numberOfSupplierLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="12.0" layoutY="23.0" prefHeight="35.0" prefWidth="78.0" text="2" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="27.39999999999999" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="1.0" layoutY="55.0" prefHeight="18.0" prefWidth="77.0" text="Total Suppliers" textFill="WHITE" AnchorPane.bottomAnchor="-4.6000000000000085" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="55.0">
-               <font>
-                  <Font name="System Bold" size="11.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutX="332.0" layoutY="5.0" prefHeight="90.0" prefWidth="90.0" style="-fx-background-color: #62ad89; -fx-background-radius: 25;" AnchorPane.leftAnchor="332.0" AnchorPane.topAnchor="5.0">
-         <children>
-            <ImageView fitHeight="83.0" fitWidth="77.0" layoutX="7.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;" AnchorPane.bottomAnchor="9.400000000000006" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="6.400000000000006" AnchorPane.topAnchor="4.0">
-               <image>
-                  <Image url="@../../Icons/icons8-business-building-80.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="numberOfCustomerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="8.0" layoutY="24.0" prefHeight="35.0" prefWidth="78.0" text="3" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="26.39999999999999" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <Label layoutY="56.0" prefHeight="27.0" prefWidth="86.0" text="Total Customers" textFill="WHITE" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
-               <font>
-                  <Font name="System Bold" size="11.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutX="608.0" layoutY="5.0" prefHeight="90.0" prefWidth="90.0" style="-fx-background-color: #f5c95e; -fx-background-radius: 25;" AnchorPane.leftAnchor="608.0" AnchorPane.topAnchor="5.0">
-         <children>
-            <ImageView fitHeight="67.0" fitWidth="95.0" layoutX="8.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;" AnchorPane.bottomAnchor="10.599999999999994" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="10.599999999999994" AnchorPane.topAnchor="8.0">
-               <image>
-                  <Image url="@../../Icons/icons8-out-of-stock-50.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="outOfStockLabel" alignment="CENTER" layoutX="-1.0" layoutY="21.0" prefHeight="37.0" prefWidth="86.0" text="5" textFill="WHITE" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="21.0">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="9.0" layoutY="59.0" prefHeight="19.0" prefWidth="76.0" text="Out Of Stock" textFill="WHITE" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="59.0">
-               <font>
-                  <Font name="System Bold" size="11.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutX="745.0" layoutY="5.0" prefHeight="90.0" prefWidth="90.0" style="-fx-background-color: #f16333; -fx-background-radius: 25;" AnchorPane.leftAnchor="745.0" AnchorPane.topAnchor="5.0">
-         <children>
-            <ImageView fitHeight="67.0" fitWidth="95.0" layoutX="10.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;" AnchorPane.bottomAnchor="11.400000000000006" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="8.599999999999994" AnchorPane.topAnchor="8.0">
-               <image>
-                  <Image url="@../../Icons/icons8-schedule-50.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="numberOfExpiredProductsLabel" alignment="CENTER" layoutX="24.0" layoutY="23.0" prefHeight="35.0" prefWidth="56.0" text="6" textFill="WHITE" AnchorPane.bottomAnchor="27.39999999999999" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="25.0" layoutY="65.0" prefHeight="16.0" prefWidth="43.0" text="Expired" textFill="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="65.0">
-               <font>
-                  <Font name="System Bold" size="11.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutX="471.0" layoutY="5.0" prefHeight="90.0" prefWidth="90.0" style="-fx-background-color: #278FAA; -fx-background-radius: 25;" AnchorPane.leftAnchor="471.0" AnchorPane.topAnchor="5.0">
-         <children>
-            <ImageView fitHeight="77.0" fitWidth="77.0" layoutX="7.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;">
-               <image>
-                  <Image url="@../../Icons/icons8-medicine-64.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="numberOfProductLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="8.0" layoutY="24.0" prefHeight="35.0" prefWidth="78.0" text="3" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="26.39999999999999" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <Label alignment="CENTER" layoutY="56.0" prefHeight="27.0" prefWidth="86.0" text="Total Products" textFill="WHITE" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
-               <font>
-                  <Font name="System Bold" size="11.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutX="3.0" layoutY="443.0" prefHeight="200.0" prefWidth="887.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="443.0">
-         <children>
-            <LineChart fx:id="monthlySellChart" prefHeight="261.0" prefWidth="904.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <LineChart fx:id="monthlySellChart" prefHeight="52.0" prefWidth="1030.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <xAxis>
                   <CategoryAxis side="BOTTOM" />
                </xAxis>
@@ -312,5 +198,123 @@
             </LineChart>
          </children>
       </AnchorPane>
+      <HBox layoutX="6.0" layoutY="3.0" prefHeight="100.0" prefWidth="1058.0" spacing="90.0" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="3.0">
+         <children>
+            <AnchorPane prefHeight="100.0" prefWidth="108.0" style="-fx-background-color: #a47bd9; -fx-background-radius: 25;">
+               <children>
+                  <ImageView fitHeight="65.0" fitWidth="72.0" layoutX="21.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="19.599999999999994" AnchorPane.topAnchor="10.0">
+                     <image>
+                        <Image url="@../../Icons/icons8-pharmacist-64.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="numberOfEmployeesLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="24.0" prefHeight="36.0" prefWidth="86.0" text="1" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="24.0">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="3.0" layoutY="54.0" prefHeight="36.0" prefWidth="86.0" text="Total Employees" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="54.0">
+                     <font>
+                        <Font name="System Bold" size="11.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="100.0" prefWidth="106.0" style="-fx-background-color: #5a9fd0; -fx-background-radius: 25;">
+               <children>
+                  <ImageView fitHeight="77.0" fitWidth="90.0" layoutX="14.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="15.400000000000006" AnchorPane.topAnchor="5.0">
+                     <image>
+                        <Image url="@../../Icons/icons8-branch-64.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="numberOfSupplierLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="25.0" prefHeight="35.0" prefWidth="78.0" text="2" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="25.39999999999999" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="25.0">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="1.0" layoutY="55.0" prefHeight="18.0" prefWidth="77.0" text="Total Suppliers" textFill="WHITE" AnchorPane.bottomAnchor="-0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="55.0">
+                     <font>
+                        <Font name="System Bold" size="11.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="100.0" prefWidth="105.0" style="-fx-background-color: #62ad89; -fx-background-radius: 25;">
+               <children>
+                  <ImageView fitHeight="83.0" fitWidth="77.0" layoutX="11.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="17.599999999999994" AnchorPane.topAnchor="4.0">
+                     <image>
+                        <Image url="@../../Icons/icons8-business-building-80.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="numberOfCustomerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="8.0" layoutY="24.0" prefHeight="35.0" prefWidth="78.0" text="3" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="26.39999999999999" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutY="56.0" prefHeight="27.0" prefWidth="86.0" text="Total Customers" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
+                     <font>
+                        <Font name="System Bold" size="11.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="100.0" prefWidth="102.0" style="-fx-background-color: #278FAA; -fx-background-radius: 25;">
+               <children>
+                  <ImageView fitHeight="77.0" fitWidth="77.0" layoutX="11.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;">
+                     <image>
+                        <Image url="@../../Icons/icons8-medicine-64.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="numberOfProductLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="8.0" layoutY="24.0" prefHeight="35.0" prefWidth="78.0" text="3" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="26.39999999999999" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutY="56.0" prefHeight="27.0" prefWidth="86.0" text="Total Products" textFill="WHITE" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
+                     <font>
+                        <Font name="System Bold" size="11.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="100.0" prefWidth="98.0" style="-fx-background-color: #f5c95e; -fx-background-radius: 25;">
+               <children>
+                  <ImageView fitHeight="67.0" fitWidth="95.0" layoutX="18.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="13.400000000000006" AnchorPane.topAnchor="8.0">
+                     <image>
+                        <Image url="@../../Icons/icons8-out-of-stock-50.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="outOfStockLabel" alignment="CENTER" layoutY="21.0" prefHeight="37.0" prefWidth="86.0" text="5" textFill="WHITE" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="21.0">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="9.0" layoutY="59.0" prefHeight="19.0" prefWidth="76.0" text="Out Of Stock" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="59.0">
+                     <font>
+                        <Font name="System Bold" size="11.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="100.0" prefWidth="102.0" style="-fx-background-color: #f16333; -fx-background-radius: 25;">
+               <children>
+                  <ImageView fitHeight="67.0" fitWidth="95.0" layoutX="18.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="17.400000000000006" AnchorPane.topAnchor="8.0">
+                     <image>
+                        <Image url="@../../Icons/icons8-schedule-50.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="numberOfExpiredProductsLabel" alignment="CENTER" layoutX="24.0" layoutY="23.0" prefHeight="35.0" prefWidth="56.0" text="6" textFill="WHITE" AnchorPane.bottomAnchor="27.39999999999999" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="25.0" layoutY="65.0" prefHeight="16.0" prefWidth="43.0" text="Expired" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="65.0">
+                     <font>
+                        <Font name="System Bold" size="11.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>
