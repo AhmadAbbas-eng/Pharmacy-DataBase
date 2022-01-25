@@ -131,26 +131,12 @@ public class PayingOffController implements Initializable {
 		if (customerTable.getSelectionModel().getSelectedItem() != null) {
 			customerNIDLabel.setText(customerTable.getSelectionModel().getSelectedItem().getNID());
 		}
-	}
-
-	public void selectCustomerOnMousePressed() {
-		if (customerTable.getSelectionModel().getSelectedItem() != null) {
-			selectCustomerButton.setStyle("-fx-background-color: #1A6477");
+		else {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setHeaderText("Customer Must Be Chosen First");
+			alert.setContentText("Choose A Customer From The Table");
+			alert.showAndWait();
 		}
-	}
-
-	public void selectCustomerOnMouseReleased() {
-		selectCustomerButton.setStyle("-fx-background-color: #1D6F84; ");
-	}
-
-	public void selectCustomerOnMouseEntered() {
-		if (customerTable.getSelectionModel().getSelectedItem() != null) {
-			selectCustomerButton.setStyle("-fx-background-color: #278FAA; ");
-		}
-	}
-
-	public void selectCustomerOnMouseExited() {
-		selectCustomerButton.setStyle("-fx-background-color: #1D6F84; ");
 	}
 
 	public void approveOnAction() {
@@ -204,23 +190,6 @@ public class PayingOffController implements Initializable {
 			filterList();
 		}
 
-	}
-
-	public void approveOnMousePressed() {
-		approvePaymentButton.setStyle("-fx-background-color: #1A6477");
-
-	}
-
-	public void approveOnMouseReleased() {
-		approvePaymentButton.setStyle("-fx-background-color: #1D6F84; ");
-	}
-
-	public void approveOnMouseEntered() {
-		approvePaymentButton.setStyle("-fx-background-color: #278FAA; ");
-	}
-
-	public void approveOnMouseExited() {
-		approvePaymentButton.setStyle("-fx-background-color: #1D6F84; ");
 	}
 
 	@Override

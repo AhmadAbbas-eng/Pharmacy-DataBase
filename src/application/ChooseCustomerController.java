@@ -96,27 +96,12 @@ public class ChooseCustomerController implements Initializable {
 			caller.setCustomerNID(customerTable.getSelectionModel().getSelectedItem().getNID());
 			showAndFade(addedIcon);
 			showAndFade(addedLabel);
+		}else {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setHeaderText(null);
+			alert.setContentText("Customer Must Be Chosen First");
+			alert.showAndWait();
 		}
-	}
-
-	public void selectCustomerOnMousePressed() {
-		if (customerTable.getSelectionModel().getSelectedItem() != null) {
-			selectButton.setStyle("-fx-background-color: #1A6477");
-		}
-	}
-
-	public void selectCustomerOnMouseReleased() {
-		selectButton.setStyle("-fx-background-color: #1D6F84; ");
-	}
-
-	public void selectCustomerOnMouseEntered() {
-		if (customerTable.getSelectionModel().getSelectedItem() != null) {
-			selectButton.setStyle("-fx-background-color: #278FAA; ");
-		}
-	}
-
-	public void selectCustomerOnMouseExited() {
-		selectButton.setStyle("-fx-background-color: #1D6F84; ");
 	}
 
 	public void phoneTextOnEnter(KeyEvent e) {

@@ -8,8 +8,6 @@
   -fx-fill:  white;
 }
 
-
-/*
 .button:hover {
   -fx-background-color: #278FAA;
 }
@@ -17,5 +15,5 @@
 .button:pressed {
   -fx-background-color: #1A6477;
 }
-*/
+
 

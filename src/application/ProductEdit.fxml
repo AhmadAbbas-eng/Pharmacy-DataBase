@@ -52,8 +52,6 @@
             <Image url="@../../Icons/icons8-save-60.png" />
          </image>
       </ImageView>
-      <Label fx:id="addErrorLabel" alignment="TOP_LEFT" layoutX="224.0" layoutY="184.0" prefHeight="25.0" prefWidth="313.0" textFill="RED" wrapText="true" />
-      <Label fx:id="editErrorLabel" alignment="TOP_LEFT" layoutX="210.0" layoutY="14.0" prefHeight="25.0" prefWidth="313.0" textFill="RED" wrapText="true" />
       <VBox layoutX="38.0" layoutY="280.0" prefHeight="190.0" prefWidth="296.0">
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="3.0">

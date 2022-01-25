@@ -90,7 +90,6 @@ public class SellController implements Initializable {
 	@FXML
 	private ImageView deleteCustomerButton;
 
-
 	@FXML
 	private TextField paidTextField;
 
@@ -140,22 +139,6 @@ public class SellController implements Initializable {
 		}
 	}
 
-	public void chooseCustomerOnMousePressed() {
-		chooseCustomerButton.setStyle("-fx-background-color: #1A6477");
-	}
-
-	public void chooseCustomerOnMouseReleased() {
-		chooseCustomerButton.setStyle("-fx-background-color: #1D6F84; ");
-	}
-
-	public void chooseCustomerOnMouseEntered() {
-		chooseCustomerButton.setStyle("-fx-background-color: #278FAA; ");
-	}
-
-	public void chooseCustomerOnMouseExited() {
-		chooseCustomerButton.setStyle("-fx-background-color: #1D6F84; ");
-	}
-
 	public void chooseProductOnAction() {
 		try {
 			chosenProducts = productTable.getItems();
@@ -174,22 +157,6 @@ public class SellController implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	public void chooseProductOnMousePressed() {
-		chooseProductButton.setStyle("-fx-background-color: #1A6477");
-	}
-
-	public void chooseProductOnMouseReleased() {
-		chooseProductButton.setStyle("-fx-background-color: #1D6F84; ");
-	}
-
-	public void chooseProductOnMouseEntered() {
-		chooseProductButton.setStyle("-fx-background-color: #278FAA; ");
-	}
-
-	public void chooseProductOnMouseExited() {
-		chooseProductButton.setStyle("-fx-background-color: #1D6F84; ");
 	}
 
 	public void approveOnAction() {
@@ -254,43 +221,6 @@ public class SellController implements Initializable {
 
 		}
 
-	}
-
-	public void approveOnMousePressed() {
-		String paidStr = paidTextField.getText();
-		boolean checkPaid = true;
-		try {
-			Double.parseDouble(paidStr);
-		} catch (NumberFormatException e) {
-			checkPaid = false;
-		}
-		if (chosenProducts.size() > 0 && Double.parseDouble(costAfterDiscountLabel.getText()) >= 0 && paidStr != null
-				&& !paidStr.isBlank() && !paidStr.isEmpty() && checkPaid) {
-			approveSellButton.setStyle("-fx-background-color: #1A6477");
-		}
-	}
-
-	public void approveOnMouseReleased() {
-		approveSellButton.setStyle("-fx-background-color: #1D6F84; ");
-	}
-
-	public void approveOnMouseEntered() {
-		String paidStr = paidTextField.getText();
-		boolean checkPaid = true;
-		try {
-			Double.parseDouble(paidStr);
-		} catch (NumberFormatException e) {
-			checkPaid = false;
-		}
-		if (chosenProducts != null && chosenProducts.size() > 0
-				&& Double.parseDouble(costAfterDiscountLabel.getText()) >= 0 && paidStr != null && !paidStr.isBlank()
-				&& !paidStr.isEmpty() && checkPaid) {
-			approveSellButton.setStyle("-fx-background-color: #278FAA; ");
-		}
-	}
-
-	public void approveOnMouseExited() {
-		approveSellButton.setStyle("-fx-background-color: #1D6F84; ");
 	}
 
 	public void deleteCustomerOnMousePressed() {

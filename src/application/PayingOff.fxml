@@ -21,7 +21,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Button fx:id="selectCustomerButton" layoutX="232.0" layoutY="258.0" mnemonicParsing="false" onAction="#selectCustomerOnAction" onMouseEntered="#selectCustomerOnMouseEntered" onMouseExited="#selectCustomerOnMouseExited" onMousePressed="#selectCustomerOnMousePressed" onMouseReleased="#selectCustomerOnMouseReleased" prefWidth="130.0" stylesheets="@../../CSS/button.css" text="Select Customer" AnchorPane.bottomAnchor="260.4" AnchorPane.leftAnchor="232.0" />
+      <Button fx:id="selectCustomerButton" layoutX="232.0" layoutY="258.0" mnemonicParsing="false" onAction="#selectCustomerOnAction" prefWidth="130.0" stylesheets="@../../CSS/button.css" text="Select Customer" AnchorPane.bottomAnchor="260.4" AnchorPane.leftAnchor="232.0" />
       <Label layoutX="22.0" layoutY="319.0" prefHeight="1.0" prefWidth="706.0" style="-fx-background-color: #1d6f84;" textFill="#1d6f84" AnchorPane.bottomAnchor="221.66666666666666" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0">
          <font>
             <Font size="1.0" />
@@ -55,8 +55,7 @@
             </HBox>
          </children>
       </VBox>
-      <Button fx:id="approvePaymentButton" layoutX="25.0" layoutY="487.6666666666667" mnemonicParsing="false" onAction="#approveOnAction" onMouseEntered="#approveOnMouseEntered" onMouseExited="#approveOnMouseExited" onMousePressed="#approveOnMousePressed" onMouseReleased="#approveOnMouseReleased" stylesheets="@../../CSS/button.css" text="Approve Payment" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="25.0" />
-      <Label fx:id="approveErrorLabel" contentDisplay="CENTER" layoutX="149.0" layoutY="485.0" prefHeight="28.0" prefWidth="243.0" textFill="RED" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="149.0" />
+      <Button fx:id="approvePaymentButton" layoutX="25.0" layoutY="487.6666666666667" mnemonicParsing="false" onAction="#approveOnAction" stylesheets="@../../CSS/button.css" text="Approve Payment" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="25.0" />
       <Label fx:id="paidLabel" layoutX="151.0" layoutY="491.0" prefHeight="17.0" prefWidth="106.0" text="Payment Approved" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="151.0" />
       <ImageView fx:id="paidIcon" fitHeight="15.0" fitWidth="15.0" layoutX="256.0" layoutY="493.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="256.0">
          <image>

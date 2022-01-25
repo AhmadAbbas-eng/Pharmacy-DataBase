@@ -70,8 +70,6 @@
                   <Image url="@../../Icons/icons8-done-24.png" />
                </image>
             </ImageView>
-            <Label fx:id="errorLabel" layoutX="167.0" layoutY="340.0" prefHeight="28.0" prefWidth="232.0" textFill="RED" />
-            <Label fx:id="editErrorLabel" layoutX="319.0" layoutY="20.0" prefHeight="28.0" prefWidth="232.0" textFill="RED" />
             <ImageView fx:id="saveButton" fitHeight="23.0" fitWidth="21.0" layoutX="593.0" layoutY="70.0" onMouseEntered="#saveOnMouseEntered" onMouseExited="#saveOnMouseExited" onMousePressed="#saveOnMousePressed" onMouseReleased="#saveOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="70.0">
                <image>
                   <Image url="@../../Icons/icons8-save-60.png" />

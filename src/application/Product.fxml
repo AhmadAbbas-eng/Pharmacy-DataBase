@@ -67,7 +67,7 @@
             </CheckBox>
          </children>
       </HBox>
-      <Button fx:id="showBatchButton" layoutX="42.0" layoutY="405.0" mnemonicParsing="false" onAction="#showOnAction" onMouseEntered="#showOnMouseEntered" onMouseExited="#showOnMouseExited" onMousePressed="#showOnMousePressed" onMouseReleased="#showOnMouseReleased" prefHeight="25.0" prefWidth="91.0" stylesheets="@../../CSS/button.css" text="Show Stock" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="42.0" />
-      <Button fx:id="showSoldButton" layoutX="142.0" layoutY="404.0" mnemonicParsing="false" onAction="#showSoldOnAction" onMouseEntered="#showSoldOnMouseEntered" onMouseExited="#showSoldOnMouseExited" onMousePressed="#showSoldOnMousePressed" onMouseReleased="#showSoldOnMouseReleased" prefHeight="25.0" prefWidth="91.0" stylesheets="@../../CSS/button.css" text="Show Sold" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="142.0" />
+      <Button fx:id="showBatchButton" layoutX="42.0" layoutY="405.0" mnemonicParsing="false" onAction="#showOnAction" prefHeight="25.0" prefWidth="91.0" stylesheets="@../../CSS/button.css" text="Show Stock" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="42.0" />
+      <Button fx:id="showSoldButton" layoutX="142.0" layoutY="404.0" mnemonicParsing="false" onAction="#showSoldOnAction" prefHeight="25.0" prefWidth="91.0" stylesheets="@../../CSS/button.css" text="Show Sold" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="142.0" />
    </children>
 </AnchorPane>

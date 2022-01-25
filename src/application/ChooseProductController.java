@@ -196,22 +196,6 @@ public class ChooseProductController implements Initializable {
 		}
 	}
 
-	public void addProductOnMousePressed() {
-		addButton.setStyle("-fx-background-color: #1A6477");
-	}
-
-	public void addProductOnMouseReleased() {
-		addButton.setStyle("-fx-background-color: #1D6F84; ");
-	}
-
-	public void addProductOnMouseEntered() {
-		addButton.setStyle("-fx-background-color: #278FAA; ");
-	}
-
-	public void addProductOnMouseExited() {
-		addButton.setStyle("-fx-background-color: #1D6F84; ");
-	}
-
 	public void showAndFade(Node node) {
 
 		Timeline show = new Timeline(
