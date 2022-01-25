@@ -170,6 +170,7 @@ public class Supplier {
 		while (getPhoneSet.next())
 			phones.add(getPhoneSet.getString(1));
 
+		getPhoneConnection.close();
 		getPhoneStmt.close();
 		getPhoneSet.close();
 		supplier.setPhones(phones);

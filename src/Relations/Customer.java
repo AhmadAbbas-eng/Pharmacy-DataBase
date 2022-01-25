@@ -144,6 +144,7 @@ public class Customer {
 		while (getPhoneSet.next())
 			phones.add(getPhoneSet.getString(1));
 
+		getPhoneConnection.close();
 		getPhoneStmt.close();
 		getPhoneSet.close();
 		customer.setPhones(phones);
