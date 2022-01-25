@@ -217,7 +217,7 @@ public class Employee {
 	public static void getEmployeeData() throws ClassNotFoundException, SQLException, ParseException {
 
 		data.clear();
-		ArrayList<ArrayList<String>> table = Queries.queryResult("select * from Employee;", null);
+		ArrayList<ArrayList<String>> table = Queries.queryResult("select * from Employee where Employee_ID<>-1;", null);
 
 		for (int i = 0; i < table.size(); i++) {
 			LocalDate date = LocalDate.parse(table.get(i).get(3));
@@ -298,7 +298,7 @@ public class Employee {
 		try {
 			Queries.queryUpdate("insert into Employee values (?, ?, ?, ?, ?, ?, ?, ?);",
 					new ArrayList<>(Arrays.asList((++maxID) + "", name, nID, dateOfWork.toString(), hourlyPaid + "",
-							encryptPassword(name,password), isManager, isActive)));
+							encryptPassword(name, password), isManager, isActive)));
 			if (phones != null) {
 				insertEmployeePhone(phones, maxID);
 			}
