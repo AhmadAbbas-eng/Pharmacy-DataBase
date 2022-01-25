@@ -15,27 +15,26 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class ConfirmNewUserController {
 	@FXML
-	private Button cancel;
+	private Button cancelButton;
 
 	@FXML
-	private Button confirm;
+	private Button confirmButton;
 
 	@FXML
-	private TextField id;
+	private TextField idTextField;
 
 	@FXML
-	private PasswordField password;
+	private PasswordField passwordPasswordField;
 
 	public void cancelButton(ActionEvent e) throws IOException {
 
-		Stage stage = (Stage) cancel.getScene().getWindow();
+		Stage stage = (Stage) cancelButton.getScene().getWindow();
 		stage.close();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("LogIn.fxml"));
 		Parent root1 = (Parent) loader.load();
@@ -48,12 +47,12 @@ public class ConfirmNewUserController {
 	public void confirm(ActionEvent event) throws IOException, ClassNotFoundException, SQLException, ParseException {
 
 		ArrayList<Employee> filteredList = new ArrayList<>();
-		if (id.getText().isBlank() == false && password.getText().isBlank() == false) {
+		if (idTextField.getText().isBlank() == false && passwordPasswordField.getText().isBlank() == false) {
 			try {
-			Integer.parseInt(id.getText());
+			Integer.parseInt(idTextField.getText());
 			filteredList = Employee.getEmployeeData(
 					Queries.queryResult("select * from Employee where Employee_ID = ? order by Employee_ID;",
-							new ArrayList<>(Arrays.asList(id.getText()))));
+							new ArrayList<>(Arrays.asList(idTextField.getText()))));
 			if (filteredList.isEmpty() == true) {
 
 				Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -66,7 +65,7 @@ public class ConfirmNewUserController {
 				filteredList = Employee.getEmployeeData(Queries.queryResult(
 						"select * from Employee where Employee_ID = ? "
 								+ " and Employee_password = ? order by Employee_ID;",
-						new ArrayList<>(Arrays.asList(id.getText(), password.getText()))));
+						new ArrayList<>(Arrays.asList(idTextField.getText(), passwordPasswordField.getText()))));
 				if (filteredList.isEmpty() == true) {
 					Alert alert = new Alert(Alert.AlertType.ERROR);
 					alert.setTitle(null);
@@ -77,7 +76,7 @@ public class ConfirmNewUserController {
 					filteredList = Employee.getEmployeeData(Queries.queryResult(
 							"select * from Employee where Employee_ID = ? and isManager = "
 									+ "'true' and Employee_password = ? order by Employee_ID;",
-							new ArrayList<>(Arrays.asList(id.getText(), password.getText()))));
+							new ArrayList<>(Arrays.asList(idTextField.getText(), passwordPasswordField.getText()))));
 					if (filteredList.isEmpty() == true) {
 						Alert alert = new Alert(Alert.AlertType.ERROR);
 						alert.setTitle(null);
@@ -85,9 +84,9 @@ public class ConfirmNewUserController {
 						alert.setContentText("You Have To Be The Manager To Add Users!!");
 						alert.showAndWait();
 					} else {
-						Stage stage1 = (Stage) confirm.getScene().getWindow();
+						Stage stage1 = (Stage) confirmButton.getScene().getWindow();
 						stage1.close();
-						Stage stage = (Stage) confirm.getScene().getWindow();
+						Stage stage = (Stage) confirmButton.getScene().getWindow();
 						stage.close();
 						FXMLLoader loader = new FXMLLoader(getClass().getResource("SignUp.fxml"));
 						Parent root1 = (Parent) loader.load();
@@ -101,21 +100,21 @@ public class ConfirmNewUserController {
 			
 
 			}
-			id.clear();
-			password.clear();
+			idTextField.clear();
+			passwordPasswordField.clear();
 			} catch (NumberFormatException e1) {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle(null);
 				alert.setHeaderText(null);
 				alert.setContentText("Employee ID Consist Of Numbers Only! ");
 				alert.showAndWait();
-				id.clear();
-				password.clear();
+				idTextField.clear();
+				passwordPasswordField.clear();
 			}
-		} else if (filteredList.isEmpty() == true || password.getText().isBlank() == true) {
+		} else if (filteredList.isEmpty() == true || passwordPasswordField.getText().isBlank() == true) {
 
-			id.clear();
-			password.clear();
+			idTextField.clear();
+			passwordPasswordField.clear();
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle(null);
 			alert.setHeaderText(null);

@@ -22,23 +22,23 @@ import javafx.stage.Stage;
 public class AddBatchController implements Initializable {
 
 	@FXML
-	private Button add;
+	private Button addButton;
 
 	@FXML
-	private Button cancel;
+	private Button cancelButton;
 
 	@FXML
-	private DatePicker edate;
+	private DatePicker expiryDateDatePicker;
 
 	@FXML
-	private DatePicker pdate;
+	private DatePicker productionDateDatePicker;
 
 	@FXML
-	private Label pname;
+	private Label productNameLabel;
 
 	private String product;
 
-	private int pid=1;
+	private int productID=1;
 
 	ListView<Batch> batchlist;
 
@@ -51,14 +51,14 @@ public class AddBatchController implements Initializable {
 	}
 
 	public void cancelButton(ActionEvent event) {
-		Stage stage = (Stage) cancel.getScene().getWindow();
+		Stage stage = (Stage) cancelButton.getScene().getWindow();
 		stage.close();
 	}
 
 	public void addBatch(ActionEvent event) throws ClassNotFoundException, SQLException, ParseException {
-		if (pdate.getValue() != null && edate.getValue() != null) {
-			if (pdate.getValue().compareTo(edate.getValue()) > 0 || pdate.getValue().compareTo(edate.getValue()) == 0
-					|| pdate.getValue().compareTo(LocalDate.now()) > 0) {
+		if (productionDateDatePicker.getValue() != null && expiryDateDatePicker.getValue() != null) {
+			if (productionDateDatePicker.getValue().compareTo(expiryDateDatePicker.getValue()) > 0 || productionDateDatePicker.getValue().compareTo(expiryDateDatePicker.getValue()) == 0
+					|| productionDateDatePicker.getValue().compareTo(LocalDate.now()) > 0) {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle("Wrong Input Format");
 				alert.setHeaderText(null);
@@ -69,11 +69,11 @@ public class AddBatchController implements Initializable {
 						"select * from Batch " + " where Product_ID = ? " + " and batch_production_date = ? "
 								+ " and batch_expiry_date = ? ;",
 						new ArrayList<>(
-								Arrays.asList(pid + "", pdate.getValue().toString(), edate.getValue().toString()))));
+								Arrays.asList(productID + "", productionDateDatePicker.getValue().toString(), expiryDateDatePicker.getValue().toString()))));
 
 				if (batch.isEmpty()) {
-					Batch.insertBatch(pid, pdate.getValue(), edate.getValue(), 0);
-					Stage stage = (Stage) add.getScene().getWindow();
+					Batch.insertBatch(productID, productionDateDatePicker.getValue(), expiryDateDatePicker.getValue(), 0);
+					Stage stage = (Stage) addButton.getScene().getWindow();
 					stage.close();
 					caller.saveUpdates();
 					// -----------------------------
@@ -95,19 +95,19 @@ public class AddBatchController implements Initializable {
 	}
 
 	public int getPid() {
-		return pid;
+		return productID;
 	}
 
 	public void setPid(int pid) {
-		this.pid = pid;
+		this.productID = pid;
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		if (product == null) {
-			pname.setText("");
+			productNameLabel.setText("");
 		} else {
-			pname.setText(product);
+			productNameLabel.setText(product);
 		}
 
 	}
