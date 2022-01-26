@@ -206,17 +206,17 @@ public class Test2Controller implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		rightPane.prefHeightProperty().bind(mainPane.heightProperty());
-		dashboardButton.prefHeightProperty().bind(vbox.heightProperty().divide(11));
-		paymentButton.prefHeightProperty().bind(vbox.heightProperty().divide(11));
-		sellButton.prefHeightProperty().bind(vbox.heightProperty().divide(11));
-		payingOffButton.prefHeightProperty().bind(vbox.heightProperty().divide(11));
-		ordersButton.prefHeightProperty().bind(vbox.heightProperty().divide(11));
-		customersButton.prefHeightProperty().bind(vbox.heightProperty().divide(11));
-		productsButton.prefHeightProperty().bind(vbox.heightProperty().divide(11));
-		employeesButton.prefHeightProperty().bind(vbox.heightProperty().divide(11));
-		supplierButton.prefHeightProperty().bind(vbox.heightProperty().divide(11));
-		disposeButton.prefHeightProperty().bind(vbox.heightProperty().divide(11));
-		reportButton.prefHeightProperty().bind(vbox.heightProperty().divide(11));
+		dashboardButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));
+		paymentButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));
+		sellButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));
+		payingOffButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));
+		ordersButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));
+		customersButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));
+		productsButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));
+		employeesButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));
+		supplierButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));
+		disposeButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));
+		reportButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));
 		
 		if (Employee.getCurrentID() != 0) {
 			userNameLabel.setText(Employee.getEmployeeName());
