@@ -1,20 +1,16 @@
 package Relations;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.ParseException;
 import java.util.*;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- * Customer class where Customer' operations are occurred
+ * Customer class where Customer's operations are occurred
  * 
- * @version 12 January 2022
+ * @version 26 January 2022
  * @author Aseel Sabri
  *
  */
@@ -22,22 +18,23 @@ public class Customer {
 
 	private static ArrayList<Customer> data = new ArrayList<Customer>();
 	private static ObservableList<Customer> dataList;
-	private String NID;
+	private String nationalID;
 	private String name;
 	private double debt;
 	private ArrayList<String> phones;
 
 	/**
-	 * Customer Constructor
+	 * Allocates a {@code Customer} object and initializes it to represent the
+	 * specified parameters.
 	 * 
-	 * @param nID
-	 * @param name
-	 * @param debt
-	 * @param phones
+	 * @param nationalID The national ID of the Customer.
+	 * @param name       Customer name.
+	 * @param debt       Customer debts to the Pharmacy.
+	 * @param phones     The list of Customer's phones.
 	 */
-	public Customer(String nID, String name, double debt, ArrayList<String> phones) {
+	public Customer(String nationalID, String name, double debt, ArrayList<String> phones) {
 		super();
-		NID = nID;
+		this.nationalID = nationalID;
 		this.name = name;
 		this.debt = debt;
 		this.phones = phones;
@@ -45,17 +42,25 @@ public class Customer {
 
 	public Customer(String nID, String name, double debt) {
 		super();
-		NID = nID;
+		nationalID = nID;
 		this.name = name;
 		this.debt = debt;
 	}
 
 	public String getNID() {
-		return NID;
+		return getNationalID();
+	}
+
+	public String getNationalID() {
+		return nationalID;
 	}
 
 	public void setNID(String nID) {
-		NID = nID;
+		setNationalID(nID);
+	}
+
+	public void setNationalID(String nID) {
+		nationalID = nID;
 	}
 
 	public String getName() {
@@ -120,6 +125,15 @@ public class Customer {
 		dataList = FXCollections.observableArrayList(data);
 	}
 
+	/**
+	 * Fill the an ArrayList from specific ArrayList<ArrayList<String>> entry
+	 * 
+	 * @param table ArrayList<ArrayList<String>> to fill data with
+	 * @return ArrayList<Customer> of data
+	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
+	 * @throws SQLException           If any connection exceptions occurred
+	 * @throws ParseException         If any exception data type parsing occurred
+	 */
 	public static ArrayList<Customer> getCustomerData(ArrayList<ArrayList<String>> table)
 			throws ClassNotFoundException, SQLException {
 
@@ -137,7 +151,7 @@ public class Customer {
 	public static void getCustomerPhone(Customer customer) throws SQLException, ClassNotFoundException {
 		ArrayList<ArrayList<String>> phonesSet = Queries.queryResult(
 				"select Phone from Customer_Phone where Customer_NID=? ;",
-				new ArrayList<>(Arrays.asList(customer.getNID())));
+				new ArrayList<>(Arrays.asList(customer.getNationalID())));
 
 		ArrayList<String> phones = new ArrayList<String>();
 
@@ -168,7 +182,7 @@ public class Customer {
 		for (int i = 0; i < getPhones().size(); i++) {
 			try {
 				Queries.queryUpdate("delete from Customer_Phone where Customer_NID=? ;",
-						new ArrayList<>(Arrays.asList(getNID())));
+						new ArrayList<>(Arrays.asList(getNationalID())));
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}

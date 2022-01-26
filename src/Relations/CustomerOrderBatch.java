@@ -13,51 +13,68 @@ import javafx.collections.ObservableList;
 /**
  * CustomerOrderBatch represents the details of each customer's order
  * 
- * @version 12 January 2022
+ * @version 26 January 2022
  * @author Aseel Sabri
  *
  */
 public class CustomerOrderBatch {
 	private static ArrayList<CustomerOrderBatch> data = new ArrayList<CustomerOrderBatch>();
 	private static ObservableList<CustomerOrderBatch> dataList;
-	private int OID;
-	private int PID;
+	private int orderID;
+	private int productID;
 	private LocalDate productionDate;
 	private LocalDate expiryDate;
 	private int amount;
 
 	/**
-	 * CustomerOrderBatch Constructor
+	 * Allocates a {@code CustomerOrderBatch} object and initializes it to represent
+	 * the specified parameters.
 	 * 
-	 * @param oID
-	 * @param pID
-	 * @param productionDate
-	 * @param expiryDate
-	 * @param amount
+	 * @param orderID        The ID of Customer order.
+	 * @param productID      The ID of the product.
+	 * @param productionDate The batch production date.
+	 * @param expiryDate     The Batch expire date.
+	 * @param amount         The amount of the order for this product.
 	 */
-	public CustomerOrderBatch(int oID, int pID, LocalDate productionDate, LocalDate expiryDate, int amount) {
+	public CustomerOrderBatch(int orderID, int productID, LocalDate productionDate, LocalDate expiryDate, int amount) {
 		super();
-		OID = oID;
-		PID = pID;
+		this.orderID = orderID;
+		this.productID = productID;
 		this.productionDate = productionDate;
 		this.expiryDate = expiryDate;
 		this.amount = amount;
 	}
 
 	public int getOID() {
-		return OID;
+		return getOrderID();
+	}
+
+	public int getOrderID() {
+		return orderID;
 	}
 
 	public void setOID(int oID) {
-		OID = oID;
+		setOrderID(oID);
+	}
+
+	public void setOrderID(int oID) {
+		orderID = oID;
 	}
 
 	public int getPID() {
-		return PID;
+		return getProductID();
+	}
+
+	public int getProductID() {
+		return productID;
 	}
 
 	public void setPID(int pID) {
-		PID = pID;
+		setProductID(pID);
+	}
+
+	public void setProductID(int pID) {
+		productID = pID;
 	}
 
 	public LocalDate getProductionDate() {
@@ -126,6 +143,15 @@ public class CustomerOrderBatch {
 		dataList = FXCollections.observableArrayList(data);
 	}
 
+	/**
+	 * Fill the an ArrayList from specific ArrayList<ArrayList<String>> entry
+	 * 
+	 * @param table ArrayList<ArrayList<String>> to fill data with
+	 * @return ArrayList<CustomerOrderBatch> of data
+	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
+	 * @throws SQLException           If any connection exceptions occurred
+	 * @throws ParseException         If any exception data type parsing occurred
+	 */
 	public static ArrayList<CustomerOrderBatch> getSupplierOrderBatchData(ArrayList<ArrayList<String>> table)
 			throws ClassNotFoundException, SQLException, ParseException {
 

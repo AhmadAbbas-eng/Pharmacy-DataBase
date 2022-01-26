@@ -19,6 +19,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
+/**
+ * 
+ * @version 26 January 2022
+ * @author Aseel Sabri
+ */
 public class AddBatchController implements Initializable {
 
 	@FXML
@@ -44,6 +49,13 @@ public class AddBatchController implements Initializable {
 
 	private ReceiveOrdersController caller;
 
+
+	/**
+	 * 
+	 * @param id
+	 * @param name
+	 * @param caller
+	 */
 	public void setProduct(int id, String name, ReceiveOrdersController caller) {
 		setPid(id);
 		this.product = name;

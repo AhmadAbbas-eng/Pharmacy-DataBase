@@ -168,7 +168,7 @@ public class CustomerEditController implements Initializable {
 			saveCustomer.setEffect(effect);
 			try {
 				ArrayList<String> parameters = new ArrayList<>();
-				parameters.add(customerTable.getItems().get(0).getNID());
+				parameters.add(customerTable.getItems().get(0).getNationalID());
 				parameters.add(customerTable.getItems().get(0).getName());
 				parameters.add("" + customerTable.getItems().get(0).getDebt());
 				parameters.add(customerNID);
@@ -176,7 +176,7 @@ public class CustomerEditController implements Initializable {
 						+ " where Customer_NID=? ;", parameters);
 				Customer.getCustomerData();
 				caller.saveEdits();// ------------------------------------------
-				customerNID = customer.getNID();
+				customerNID = customer.getNationalID();
 
 			} catch (ClassNotFoundException | SQLException e) {
 				// TODO Auto-generated catch block
@@ -311,7 +311,7 @@ public class CustomerEditController implements Initializable {
 		this.caller = caller;
 		this.customer = customer;
 		if (customer != null) {
-			customerNID = customer.getNID();
+			customerNID = customer.getNationalID();
 		}
 		customerTable.setItems(FXCollections.observableArrayList(customer));
 
@@ -346,9 +346,9 @@ public class CustomerEditController implements Initializable {
 					alert.setContentText("Custemer with this National ID already exists");
 					alert.showAndWait();
 
-					((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNID(t.getOldValue());
+					((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNationalID(t.getOldValue());
 				} else if (t.getNewValue().matches("[0-9]{9}") || t.getNewValue().equals("0")) {
-					((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNID(t.getNewValue());
+					((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNationalID(t.getNewValue());
 				} else {
 					Alert alert = new Alert(Alert.AlertType.ERROR);
 					alert.setTitle("Wrong Input Format");
@@ -356,7 +356,7 @@ public class CustomerEditController implements Initializable {
 					alert.setContentText("National ID Must Be 9 Digits");
 					alert.showAndWait();
 
-					((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNID(t.getOldValue());
+					((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNationalID(t.getOldValue());
 				}
 			} catch (ClassNotFoundException | SQLException e) {
 				// TODO Auto-generated catch block

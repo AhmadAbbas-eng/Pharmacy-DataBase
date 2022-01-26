@@ -111,7 +111,7 @@ public class CustomerPhoneController implements Initializable {
 		effect.setBrightness(0.8);
 		savePhone.setEffect(effect);
 		customer.clearCustomerPhones();
-		Customer.insertCustomerPhone(new ArrayList<>(phoneList.getItems()), customer.getNID());
+		Customer.insertCustomerPhone(new ArrayList<>(phoneList.getItems()), customer.getNationalID());
 		try {
 			Customer.getCustomerPhone(customer);
 		} catch (ClassNotFoundException | SQLException e) {

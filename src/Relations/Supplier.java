@@ -1,10 +1,7 @@
 package Relations;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +12,7 @@ import javafx.collections.ObservableList;
 /**
  * Supplier class here where all Suppliers' operations are occurred
  * 
- * @version 12 January 2022
+ * @version 26 January 2022
  * @author Loor Sawalhi
  *
  */
@@ -32,14 +29,15 @@ public class Supplier {
 	private ArrayList<String> phones;
 
 	/**
-	 * Supplier constructor
+	 * Allocates a {@code Supplier} object and initializes it to represent the
+	 * specified parameters.
 	 * 
-	 * @param sid
-	 * @param sname
-	 * @param address
-	 * @param email
-	 * @param dues
-	 * @param phones
+	 * @param sid     The ID of the supplier.
+	 * @param sname   The name of the supplier.
+	 * @param address The address of the supplier.
+	 * @param email   The email of the supplier.
+	 * @param dues    The dues of the supplier.
+	 * @param phones  The list of supplier's phones.
 	 */
 	public Supplier(int sid, String sname, String address, String email, double dues, ArrayList<String> phones) {
 		super();
@@ -123,10 +121,25 @@ public class Supplier {
 		return dataList;
 	}
 
+	public static int getMaxID() {
+		return maxID;
+	}
+
+	public static void setMaxID(int maxID) {
+		Supplier.maxID = maxID;
+	}
+	
 	public static void setDataList(ObservableList<Supplier> dataList) {
 		Supplier.dataList = dataList;
 	}
 
+	/**
+	 * Read from data base and fill the ArrayList
+	 * 
+	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
+	 * @throws SQLException           If any connection exceptions occurred
+	 * @throws ParseException         If any exception data type parsing occurred
+	 */
 	public static void getSupplierData() throws ClassNotFoundException, SQLException {
 
 		data.clear();
@@ -144,6 +157,15 @@ public class Supplier {
 		dataList = FXCollections.observableArrayList(data);
 	}
 
+	/**
+	 * Fill the an ArrayList from specific ArrayList<ArrayList<String>> entry
+	 * 
+	 * @param table ArrayList<ArrayList<String>> to fill data with
+	 * @return ArrayList<Supplier> of data
+	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
+	 * @throws SQLException           If any connection exceptions occurred
+	 * @throws ParseException         If any exception data type parsing occurred
+	 */
 	public static ArrayList<Supplier> getSupplierData(ArrayList<ArrayList<String>> table)
 			throws ClassNotFoundException, SQLException {
 
@@ -161,24 +183,24 @@ public class Supplier {
 	}
 
 	public static void getSupplierPhone(Supplier supplier) throws SQLException, ClassNotFoundException {
-			ArrayList<ArrayList<String>> phonesSet = Queries.queryResult(
-					"select Supplier_Phone from Supplier_Phone where Supplier_ID=? ;",
-					new ArrayList<>(Arrays.asList(supplier.getID()+"")));
+		ArrayList<ArrayList<String>> phonesSet = Queries.queryResult(
+				"select Supplier_Phone from Supplier_Phone where Supplier_ID=? ;",
+				new ArrayList<>(Arrays.asList(supplier.getID() + "")));
 
-			ArrayList<String> phones = new ArrayList<String>();
+		ArrayList<String> phones = new ArrayList<String>();
 
-			for (int i = 0; i < phonesSet.size(); i++) {
-				phones.add(phonesSet.get(i).get(0));
-			}
-
-			supplier.setPhones(phones);
+		for (int i = 0; i < phonesSet.size(); i++) {
+			phones.add(phonesSet.get(i).get(0));
 		}
+
+		supplier.setPhones(phones);
+	}
 
 	public void clearSupplierPhones() {
 		for (int i = 0; i < getPhones().size(); i++) {
 			try {
 				Queries.queryResult("delete from Supplier_Phone where Supplier_ID=? ;",
-						new ArrayList<>(Arrays.asList(getID()+"")));
+						new ArrayList<>(Arrays.asList(getID() + "")));
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
@@ -189,7 +211,7 @@ public class Supplier {
 
 		try {
 			Queries.queryUpdate("Insert into Supplier_Phone (Supplier_ID, Supplier_Phone) values(?, ?);",
-					new ArrayList<>(Arrays.asList(sID+"", phone)));
+					new ArrayList<>(Arrays.asList(sID + "", phone)));
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
@@ -227,13 +249,4 @@ public class Supplier {
 	public static void report(String path) throws ClassNotFoundException, SQLException, IOException {
 		Queries.reportQuerey(" select * from supplier;", path);
 	}
-
-	public static int getMaxID() {
-		return maxID;
-	}
-
-	public static void setMaxID(int maxID) {
-		Supplier.maxID = maxID;
-	}
-
 }

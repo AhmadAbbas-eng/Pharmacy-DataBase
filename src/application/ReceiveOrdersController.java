@@ -244,7 +244,7 @@ public class ReceiveOrdersController implements Initializable {
 		Parent root1 = (Parent) loader.load();
 		AddBatchController addBatchController = loader.getController();
 		
-		addBatchController.setProduct(orderedProducts.get(counter).getPID(), ProductName, this);
+		addBatchController.setProduct(orderedProducts.get(counter).getProductID(), ProductName, this);
 		
 		Stage stage2 = new Stage();
 		stage2.setScene(new Scene(root1));
@@ -273,7 +273,7 @@ public class ReceiveOrdersController implements Initializable {
 	public void saveUpdates() throws ClassNotFoundException, SQLException, ParseException {
 		productsBatchColumn.setItems(FXCollections.observableArrayList(Batch.getBatchData(Queries.queryResult(
 				"select * from Batch where product_id =? and batch_production_date <> '1111-01-01';",
-				new ArrayList<>(Arrays.asList(orderedProducts.get(counter).getPID() + ""))))));
+				new ArrayList<>(Arrays.asList(orderedProducts.get(counter).getProductID() + ""))))));
 		productsBatchColumn.refresh();
 
 	}
@@ -284,17 +284,17 @@ public class ReceiveOrdersController implements Initializable {
 
 		productsBatchColumn.setItems(FXCollections.observableArrayList(Batch.getBatchData(Queries.queryResult(
 				"select * from Batch where product_id =? and batch_production_date <> '1111-01-01';",
-				new ArrayList<>(Arrays.asList(orderedProducts.get(counter).getPID() + ""))))));
+				new ArrayList<>(Arrays.asList(orderedProducts.get(counter).getProductID() + ""))))));
 		// set order number
 		orderNumberLabel.setText("Order NO." + supplierOrder.getID());
 
 		// get products ids
 		ArrayList<Product> productName = Product
 				.getProductData(Queries.queryResult("select * from Product where product_id =?;",
-						new ArrayList<>(Arrays.asList(orderedProducts.get(counter).getPID() + ""))));
+						new ArrayList<>(Arrays.asList(orderedProducts.get(counter).getProductID() + ""))));
 
 		ProductName = productName.get(0).getName();
-		ProductId = orderedProducts.get(counter).getPID() + "";
+		ProductId = orderedProducts.get(counter).getProductID() + "";
 		QuantityStored = orderedProducts.get(counter).getAmount() + "";
 
 		choosenProductLabel.setText(productName.get(0).getName());
@@ -314,19 +314,19 @@ public class ReceiveOrdersController implements Initializable {
 		// upload first product batches
 		productsBatchColumn.setItems(FXCollections.observableArrayList(Batch.getBatchData(Queries.queryResult(
 				"select * from batch where product_id =? and Batch_Production_Date <> '1111-01-01';",
-				new ArrayList<>(Arrays.asList(orderedProducts.get(0).getPID() + ""))))));
+				new ArrayList<>(Arrays.asList(orderedProducts.get(0).getProductID() + ""))))));
 
 		orderNumberLabel.setText("Order NO." + supplierOrder.getID());
 
 		ArrayList<Product> productName = Product.getProductData(Queries.queryResult(
 				"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer "
 						+ " from product p,Name_manu m where P.product_name=m.product_name and Product_ID =?;",
-				new ArrayList<>(Arrays.asList(orderedProducts.get(0).getPID() + ""))));
+				new ArrayList<>(Arrays.asList(orderedProducts.get(0).getProductID() + ""))));
 
 		choosenProductLabel.setText(productName.get(0).getName());
 		savedQuantityLabel.setText("Quantity = " + orderedProducts.get(0).getAmount() + "");
 		ProductName = productName.get(0).getName();
-		ProductId = orderedProducts.get(0).getPID() + "";
+		ProductId = orderedProducts.get(0).getProductID() + "";
 		QuantityStored = orderedProducts.get(0).getAmount() + "";
 
 	}

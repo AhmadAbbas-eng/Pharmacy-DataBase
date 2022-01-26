@@ -15,7 +15,7 @@ import javafx.collections.ObservableList;
  * CustomerOrder class represents the relation between the customers' and their
  * orders
  * 
- * @version 12 January 2022
+ * @version 26 January 2022
  * @author Aseel Sabri
  *
  */
@@ -31,13 +31,14 @@ public class CustomerOrder {
 	private int employeeID;
 
 	/**
-	 * Customer Constructor
+	 * Allocates a {@code CustomerOrder} object and initializes it to represent the
+	 * specified parameters.
 	 * 
-	 * @param iD
-	 * @param date
-	 * @param price
-	 * @param discount
-	 * @param employeeID
+	 * @param iD         The ID of the order.
+	 * @param date       The date of the order.
+	 * @param price      The price of orders' drugs.
+	 * @param discount   The discount of the order.
+	 * @param employeeID The employee who sold the order.
 	 */
 	public CustomerOrder(int iD, LocalDate date, double price, double discount, int employeeID) {
 		super();
@@ -46,7 +47,6 @@ public class CustomerOrder {
 		this.price = price;
 		this.discount = discount;
 		this.employeeID = employeeID;
-
 	}
 
 	public int getID() {
@@ -80,7 +80,6 @@ public class CustomerOrder {
 	public void setDiscount(double discount) {
 		this.discount = discount;
 	}
-
 
 	public static ArrayList<CustomerOrder> getData() {
 		return CustomerOrder.data;
@@ -127,7 +126,7 @@ public class CustomerOrder {
 		ArrayList<ArrayList<String>> table = Queries.queryResult("select * from C_Order;", null);
 
 		for (int i = 0; i < table.size(); i++) {
-			
+
 			LocalDate orderDate = LocalDate.parse(table.get(i).get(1));
 			CustomerOrder temp = new CustomerOrder(Integer.parseInt(table.get(i).get(0)), orderDate,
 					Double.parseDouble(table.get(i).get(2)), Double.parseDouble(table.get(i).get(3)),
@@ -136,11 +135,19 @@ public class CustomerOrder {
 			data.add(temp);
 		}
 		System.out.println(maxID);
-		maxID=Integer.parseInt(Queries.queryResult("select max(order_ID) from c_order;", null).get(0).get(0));
+		maxID = Integer.parseInt(Queries.queryResult("select max(order_ID) from c_order;", null).get(0).get(0));
 		dataList = FXCollections.observableArrayList(data);
-
 	}
 
+	/**
+	 * Fill the an ArrayList from specific ArrayList<ArrayList<String>> entry
+	 * 
+	 * @param table ArrayList<ArrayList<String>> to fill data with
+	 * @return ArrayList<CustomerOrder> of data
+	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
+	 * @throws SQLException           If any connection exceptions occurred
+	 * @throws ParseException         If any exception data type parsing occurred
+	 */
 	public static ArrayList<CustomerOrder> getCustomerOrderData(ArrayList<ArrayList<String>> table)
 			throws ClassNotFoundException, SQLException, ParseException {
 
@@ -158,14 +165,13 @@ public class CustomerOrder {
 
 		getPhoneConnection.close();
 		return tempData;
-
 	}
 
 	public static void insertCustomerOrder(String date, double price, double discount, double paid, int employeeID,
 			String customerNID) {
 		try {
 			Queries.queryUpdate("Insert into C_order values (? ,?, ?, ?, ?); ",
-					new ArrayList<>(Arrays.asList((++maxID) + "", date, price + "", discount + "", employeeID+"")));
+					new ArrayList<>(Arrays.asList((++maxID) + "", date, price + "", discount + "", employeeID + "")));
 
 			Queries.queryUpdate("Insert into customer2order values(?, ?);",
 					new ArrayList<>(Arrays.asList(customerNID, maxID + "")));
