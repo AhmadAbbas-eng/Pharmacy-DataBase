@@ -75,7 +75,7 @@ public class loginController {
 							Employee.setEmployeeName(filteredList.get(0).getName());
 							Stage stage = (Stage) logInButton.getScene().getWindow();
 							stage.close();
-							FXMLLoader loader = new FXMLLoader(getClass().getResource("Test2.fxml"));
+							FXMLLoader loader = new FXMLLoader(getClass().getResource("MainPage.fxml"));
 							Parent root1 = (Parent) loader.load();
 							Stage stage2 = new Stage();
 							stage2.setScene(new Scene(root1, 500, 500));
