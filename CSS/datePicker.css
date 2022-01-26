@@ -3,7 +3,6 @@
     -fx-border-width:0;
 }
 
-
 .date-picker .date-picker-display-node{
     -fx-border-color: #E6E6E6;
     -fx-border-style:solid;
@@ -11,6 +10,9 @@
 }
 
 .date-picker .arrow-button{
+	-fx-border-color: #E6E6E6;
+    -fx-border-style: solid;
+    -fx-border-width: 1;
 	-fx-background-color: #1D6F84;
 }
 
