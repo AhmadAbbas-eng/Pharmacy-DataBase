@@ -2,6 +2,7 @@ package Relations;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -14,7 +15,7 @@ import javafx.collections.ObservableList;
 /**
  * Batch class where Batch table data have been read and manipulated
  * 
- * @version 12 January 2022
+ * @version 26 January 2022
  * @author Aseel Sabri
  */
 public class Batch {
@@ -24,14 +25,16 @@ public class Batch {
 	private LocalDate productionDate;
 	private LocalDate expiryDate;
 	private int amount;
+	Date a;
 
 	/**
-	 * Class constructor
+	 * Allocates a {@code Batch} object and initializes it to represent the
+	 * specified parameters.
 	 * 
-	 * @param iD
-	 * @param productionDate
-	 * @param expiryDate
-	 * @param amount
+	 * @param iD             The ID of the batch.
+	 * @param productionDate The date of production of the batch.
+	 * @param expiryDate     The expire date of the batch.
+	 * @param amount         The amount of the batch.
 	 */
 	public Batch(int iD, LocalDate productionDate, LocalDate expiryDate, int amount) {
 		super();
@@ -151,7 +154,7 @@ public class Batch {
 	public static void insertBatch(int ID, LocalDate productionDate, LocalDate expiryDate, int amount) {
 		try {
 			Queries.queryUpdate("Insert into Batch values (? ,? ,? ,?);",
-					new ArrayList<>(Arrays.asList(ID+"", "" + productionDate, "" + expiryDate, "" + amount)));
+					new ArrayList<>(Arrays.asList(ID + "", "" + productionDate, "" + expiryDate, "" + amount)));
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
@@ -167,7 +170,9 @@ public class Batch {
 	 * @throws IOException
 	 */
 	public static void report(String path) throws ClassNotFoundException, SQLException, IOException {
-		Queries.reportQuerey("select p.product_name,b.batch_production_date,b.batch_expiry_date\r\n"
-				+ "from product p,batch b\r\n" + "where p.product_ID=b.product_Id and b.batch_production_date <> '1111-01-01';", path);
+		Queries.reportQuerey(
+				"select p.product_name,b.batch_production_date,b.batch_expiry_date\r\n" + "from product p,batch b\r\n"
+						+ "where p.product_ID=b.product_Id and b.batch_production_date <> '1111-01-01';",
+				path);
 	}
 }

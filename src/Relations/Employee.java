@@ -1,10 +1,7 @@
 package Relations;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,7 +13,7 @@ import javafx.collections.ObservableList;
 /**
  * Employee class here where all Drugs' operations are occurred
  * 
- * @version 12 January 2022
+ * @version 26 January 2022
  * @author Ahmad Abbas
  *
  */
@@ -30,7 +27,7 @@ public class Employee {
 	private static String EmployeeName;
 	private int ID;
 	private String name;
-	private String NID;
+	private String nationalID;
 	private LocalDate dateOfWork;
 	private double hourlyPaid;
 	private double paid;
@@ -40,24 +37,25 @@ public class Employee {
 	private String isActive;
 
 	/**
-	 * Employee constructor
+	 * Allocates a {@code Employee} object and initializes it to represent the
+	 * specified parameters.
 	 * 
-	 * @param iD
-	 * @param name
-	 * @param nID
-	 * @param dateOfWork
-	 * @param hourlyPaid
-	 * @param phones
-	 * @param password
-	 * @param isManager
-	 * @param isActive
+	 * @param iD         The id of the employee.
+	 * @param name       The name of the employee.
+	 * @param nationalID The national id ID of the employee.
+	 * @param dateOfWork The date of work of the employee.
+	 * @param hourlyPaid The hour wage of the employee.
+	 * @param phones     The list of phones of the employee.
+	 * @param password   The password of the employee.
+	 * @param isManager  The condition of being manager or not.
+	 * @param isActive   The condition of being an active employee.
 	 */
-	public Employee(int iD, String name, String nID, LocalDate dateOfWork, double hourlyPaid, ArrayList<String> phones,
-			String password, String isManager, String isActive) {
+	public Employee(int iD, String name, String nationalID, LocalDate dateOfWork, double hourlyPaid,
+			ArrayList<String> phones, String password, String isManager, String isActive) {
 		super();
 		ID = iD;
 		this.name = name;
-		NID = nID;
+		this.nationalID = nationalID;
 		this.dateOfWork = dateOfWork;
 		this.hourlyPaid = hourlyPaid;
 		this.phones = phones;
@@ -83,11 +81,19 @@ public class Employee {
 	}
 
 	public String getNID() {
-		return NID;
+		return getNationalID();
+	}
+
+	public String getNationalID() {
+		return nationalID;
 	}
 
 	public void setNID(String nID) {
-		NID = nID;
+		setNationalID(nID);
+	}
+
+	public void setNationalID(String nID) {
+		nationalID = nID;
 	}
 
 	public LocalDate getDateOfWork() {
@@ -214,6 +220,13 @@ public class Employee {
 		EmployeeName = employeeName;
 	}
 
+	/**
+	 * Read from data base and fill the ArrayList
+	 * 
+	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
+	 * @throws SQLException           If any connection exceptions occurred
+	 * @throws ParseException         If any exception data type parsing occurred
+	 */
 	public static void getEmployeeData() throws ClassNotFoundException, SQLException, ParseException {
 
 		data.clear();
@@ -221,7 +234,6 @@ public class Employee {
 
 		for (int i = 0; i < table.size(); i++) {
 			LocalDate date = LocalDate.parse(table.get(i).get(3));
-
 			Employee temp = new Employee(Integer.parseInt(table.get(i).get(0)), table.get(i).get(1),
 					table.get(i).get(2), date, Double.parseDouble(table.get(i).get(4)), null,
 					decryptPassword(table.get(i).get(1), table.get(i).get(5)), table.get(i).get(6),
@@ -234,6 +246,15 @@ public class Employee {
 		dataList = FXCollections.observableArrayList(data);
 	}
 
+	/**
+	 * Fill the an ArrayList from specific ArrayList<ArrayList<String>> entry
+	 * 
+	 * @param table ArrayList<ArrayList<String>> to fill data with
+	 * @return ArrayList<Employee> of data
+	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
+	 * @throws SQLException           If any connection exceptions occurred
+	 * @throws ParseException         If any exception data type parsing occurred
+	 */
 	public static ArrayList<Employee> getEmployeeData(ArrayList<ArrayList<String>> table)
 			throws ClassNotFoundException, SQLException, ParseException {
 

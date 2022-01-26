@@ -14,7 +14,7 @@ import javafx.collections.ObservableList;
 /**
  * Payment class here where all Payments' operations are occurred
  * 
- * @version 12 January 2022
+ * @version 26 January 2022
  * @author Loor Sawalhi
  *
  */
@@ -29,12 +29,13 @@ public class Payment {
 	private String method;
 
 	/**
-	 * Payment constructor
+	 * Allocates a {@code Payment} object and initializes it to represent the
+	 * specified parameters.
 	 * 
-	 * @param iD
-	 * @param date
-	 * @param amount
-	 * @param method
+	 * @param iD     The ID of the payment.
+	 * @param date   The date of payment.
+	 * @param amount The value paid on the payment.
+	 * @param method The method of payment ( Cash or Cheque).
 	 */
 	public Payment(int iD, LocalDate date, double amount, String method) {
 		super();
@@ -88,6 +89,13 @@ public class Payment {
 		Payment.maxID = maxID;
 	}
 
+	/**
+	 * Read from data base and fill the ArrayList
+	 * 
+	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
+	 * @throws SQLException           If any connection exceptions occurred
+	 * @throws ParseException         If any exception data type parsing occurred
+	 */
 	public static void getPaymentData() throws ClassNotFoundException, SQLException, ParseException {
 
 		data.clear();
@@ -105,6 +113,15 @@ public class Payment {
 		dataList = FXCollections.observableArrayList(data);
 	}
 
+	/**
+	 * Fill the an ArrayList from specific ArrayList<ArrayList<String>> entry
+	 * 
+	 * @param table ArrayList<ArrayList<String>> to fill data with
+	 * @return ArrayList<Payment> of data
+	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
+	 * @throws SQLException           If any connection exceptions occurred
+	 * @throws ParseException         If any exception data type parsing occurred
+	 */
 	public static ArrayList<Payment> getPaymentData(ArrayList<ArrayList<String>> table)
 			throws ClassNotFoundException, SQLException, ParseException {
 
@@ -117,10 +134,8 @@ public class Payment {
 
 			Payment temp = new Payment(Integer.parseInt(table.get(i).get(0)), paymentDate,
 					Double.parseDouble(table.get(i).get(2)), table.get(i).get(3));
-
 			tempData.add(temp);
 		}
-
 		getPhoneConnection.close();
 		return tempData;
 	}

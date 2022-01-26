@@ -13,7 +13,7 @@ import javafx.collections.ObservableList;
  * Drug class inherits Product Class and here where all Drugs' operations are
  * occurred
  * 
- * @version 12 January 2022
+ * @version 26 January 2022
  * @author Aseel Sabri
  *
  */
@@ -21,35 +21,39 @@ public class Drug extends Product {
 	private static ArrayList<Drug> data = new ArrayList<Drug>();
 	private static ObservableList<Drug> dataList;
 	private String scientificName;
-	private String riskPregnency;
+	private String riskPregnancy;
 	private String dosage;
 	private String category;
 	private String dosageForm;
-	private String pharmaceticalCategory;
+	private String pharmaceuticalCategory;
 
 	/**
-	 * Drug constructor
+	 * Allocates a {@code Drug} object and initializes it to represent the specified
+	 * parameters.
 	 * 
-	 * @param iD
-	 * @param name
-	 * @param price
-	 * @param manufacturer
-	 * @param scientificName
-	 * @param riskPregnency
-	 * @param dosage
-	 * @param category
-	 * @param dosageForm
-	 * @param pharmaceticalCategory
+	 * @param iD                     The product ID of the drug.
+	 * @param name                   The commercial name of the drug.
+	 * @param price                  The price of the drug.
+	 * @param manufacturer           The manufacturer of the drug.
+	 * @param scientificName         The scientific name of the drug.
+	 * @param riskPregnancy          The risk pregnancy of the drug.
+	 * @param dosage                 The dosage in mg for the drug.
+	 * @param category               The category of the drug (
+	 *                               Antibiotics,Antacids,...).
+	 * @param dosageForm             The dosage category of the drug (
+	 *                               Tablet,Cream,Spray,...).
+	 * @param pharmaceuticalCategory The dosage pharmaceutical category of the drug
+	 *                               ( Tablet,Cream,Spray,...).
 	 */
 	public Drug(int iD, String name, double price, String manufacturer, String scientificName, String riskPregnency,
 			String dosage, String category, String dosageForm, String pharmaceticalCategory) {
 		super(iD, name, price, manufacturer);
 		this.scientificName = scientificName;
-		this.riskPregnency = riskPregnency;
+		this.riskPregnancy = riskPregnency;
 		this.dosage = dosage;
 		this.category = category;
 		this.dosageForm = dosageForm;
-		this.pharmaceticalCategory = pharmaceticalCategory;
+		this.pharmaceuticalCategory = pharmaceticalCategory;
 	}
 
 	public String getScientificName() {
@@ -61,11 +65,19 @@ public class Drug extends Product {
 	}
 
 	public String getRiskPregnency() {
-		return riskPregnency;
+		return getRiskPregnancy();
+	}
+
+	public String getRiskPregnancy() {
+		return riskPregnancy;
 	}
 
 	public void setRiskPregnency(String riskPregnency) {
-		this.riskPregnency = riskPregnency;
+		setRiskPregnancy(riskPregnency);
+	}
+
+	public void setRiskPregnancy(String riskPregnency) {
+		this.riskPregnancy = riskPregnency;
 	}
 
 	public String getDosage() {
@@ -93,11 +105,19 @@ public class Drug extends Product {
 	}
 
 	public String getPharmaceticalCategory() {
-		return pharmaceticalCategory;
+		return getPharmaceuticalCategory();
+	}
+
+	public String getPharmaceuticalCategory() {
+		return pharmaceuticalCategory;
 	}
 
 	public void setPharmaceticalCategory(String pharmaceticalCategory) {
-		this.pharmaceticalCategory = pharmaceticalCategory;
+		setPharmaceuticalCategory(pharmaceticalCategory);
+	}
+
+	public void setPharmaceuticalCategory(String pharmaceticalCategory) {
+		this.pharmaceuticalCategory = pharmaceticalCategory;
 	}
 
 	public static ArrayList<Drug> getDataDrug() {
@@ -132,9 +152,17 @@ public class Drug extends Product {
 			data.add(temp);
 		}
 		dataList = FXCollections.observableArrayList(data);
-
 	}
 
+	/**
+	 * Fill the an ArrayList from specific ArrayList<ArrayList<String>> entry
+	 * 
+	 * @param table ArrayList<ArrayList<String>> to fill data with
+	 * @return ArrayList<Drug> of data
+	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
+	 * @throws SQLException           If any connection exceptions occurred
+	 * @throws ParseException         If any exception data type parsing occurred
+	 */
 	public static ArrayList<Drug> getDrugData(ArrayList<ArrayList<String>> table)
 			throws ClassNotFoundException, SQLException, ParseException {
 
@@ -176,5 +204,4 @@ public class Drug extends Product {
 			e.printStackTrace();
 		}
 	}
-
 }

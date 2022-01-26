@@ -13,7 +13,7 @@ import javafx.collections.ObservableList;
 /**
  * Product class here where all Products' operations are occurred
  * 
- * @version 12 January 2022
+ * @version 26 January 2022
  * @author Aseel Sabri
  *
  */
@@ -28,12 +28,13 @@ public class Product {
 	private String manufacturer;
 
 	/**
-	 * Product constructor
+	 * Allocates a {@code Product} object and initializes it to represent the
+	 * specified parameters.
 	 * 
-	 * @param iD
-	 * @param name
-	 * @param price
-	 * @param manufacturer
+	 * @param iD The product ID.
+	 * @param name The commercial name of the product.
+	 * @param price The price of the Product.
+	 * @param manufacturer The manufacturer of the product. 
 	 */
 	public Product(int iD, String name, double price, String manufacturer) {
 		super();
@@ -99,6 +100,13 @@ public class Product {
 		this.manufacturer = manufacturer;
 	}
 
+	/**
+	 * Read from data base and fill the ArrayList
+	 * 
+	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
+	 * @throws SQLException           If any connection exceptions occurred
+	 * @throws ParseException         If any exception data type parsing occurred
+	 */
 	public static void getProductData() throws ClassNotFoundException, SQLException, ParseException {
 
 		data.clear();
@@ -118,6 +126,15 @@ public class Product {
 
 	}
 
+	/**
+	 * Fill the an ArrayList from specific ArrayList<ArrayList<String>> entry
+	 * 
+	 * @param table ArrayList<ArrayList<String>> to fill data with
+	 * @return ArrayList<Product> of data
+	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
+	 * @throws SQLException           If any connection exceptions occurred
+	 * @throws ParseException         If any exception data type parsing occurred
+	 */
 	public static ArrayList<Product> getProductData(ArrayList<ArrayList<String>> table)
 			throws ClassNotFoundException, SQLException, ParseException {
 

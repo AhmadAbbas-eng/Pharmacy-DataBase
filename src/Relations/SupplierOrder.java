@@ -15,7 +15,7 @@ import javafx.collections.ObservableList;
  * SupplierOrder class represents the relation between the suppliers' and their
  * orders
  * 
- * @version 12 January 2022
+ * @version 26 January 2022
  * @author Loor Sawalhi
  *
  */
@@ -35,22 +35,23 @@ public class SupplierOrder {
 	private LocalDate recDate;
 
 	/**
-	 * SupplierOrder Constructor
+	 * Allocates a {@code SupplierOrder} object and initializes it to represent the
+	 * specified parameters.
 	 * 
-	 * @param iD
-	 * @param dateOfOrder
-	 * @param cost
-	 * @param discount
-	 * @param dueDateOfPayment
-	 * @param supplierID
-	 * @param managerID
-	 * @param recievedBy
-	 * @param recDate
+	 * @param iD               The id of the order.
+	 * @param dateOfOrder      The date of the order.
+	 * @param cost             The full cost of the order.
+	 * @param discount         The discount of the order.
+	 * @param dueDateOfPayment The date of paying the dues.
+	 * @param supplierID       The supplier ID.
+	 * @param managerID        The manager ID who asked for the order.
+	 * @param recievedBy       The employee relieved the order.
+	 * @param recDate          The date of receive.
 	 */
 	public SupplierOrder(int iD, LocalDate dateOfOrder, double cost, double discount, LocalDate dueDateOfPayment,
 			int supplierID, int managerID, int recievedBy, LocalDate recDate) {
 		super();
-		ID = iD;
+		this.ID = iD;
 		this.dateOfOrder = dateOfOrder;
 		this.cost = cost;
 		this.discount = discount;
@@ -144,6 +145,7 @@ public class SupplierOrder {
 	public static ArrayList<SupplierOrder> getData() {
 		return SupplierOrder.data;
 	}
+
 	public static int getMaxID() {
 		return maxID;
 	}
@@ -152,6 +154,14 @@ public class SupplierOrder {
 		SupplierOrder.maxID = maxID;
 		return maxID;
 	}
+
+	/**
+	 * Read from data base and fill the ArrayList
+	 * 
+	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
+	 * @throws SQLException           If any connection exceptions occurred
+	 * @throws ParseException         If any exception data type parsing occurred
+	 */
 	public static void getSupplierOrderData() throws ClassNotFoundException, SQLException, ParseException {
 
 		data.clear();
@@ -173,6 +183,15 @@ public class SupplierOrder {
 		dataList = FXCollections.observableArrayList(data);
 	}
 
+	/**
+	 * Fill the an ArrayList from specific ArrayList<ArrayList<String>> entry
+	 * 
+	 * @param table ArrayList<ArrayList<String>> to fill data with
+	 * @return ArrayList<SupplierOrder> of data
+	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
+	 * @throws SQLException           If any connection exceptions occurred
+	 * @throws ParseException         If any exception data type parsing occurred
+	 */
 	public static ArrayList<SupplierOrder> getSupplierOrderData(ArrayList<ArrayList<String>> table)
 			throws ClassNotFoundException, SQLException, ParseException {
 
@@ -187,7 +206,6 @@ public class SupplierOrder {
 					Double.parseDouble(table.get(i).get(2)), Double.parseDouble(table.get(i).get(3)), paymentDate,
 					Integer.parseInt(table.get(i).get(5)), Integer.parseInt(table.get(i).get(6)),
 					Integer.parseInt(table.get(i).get(7)), recDate);
-
 			tempData.add(temp);
 		}
 
@@ -208,8 +226,8 @@ public class SupplierOrder {
 		try {
 			Queries.queryUpdate("Insert into s_order values(?, ?, ?, ?, ?, ?, ?, ?, ?);",
 					new ArrayList<>(Arrays.asList((setMaxID(getMaxID() + 1)) + "", dateOfOrder.toString(), cost + "",
-							discount + "", dueDateOfPayment.toString(), supplierID+"", managerID+"", recievedBy+"",
-							recDate.toString())));
+							discount + "", dueDateOfPayment.toString(), supplierID + "", managerID + "",
+							recievedBy + "", recDate.toString())));
 
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
@@ -232,5 +250,4 @@ public class SupplierOrder {
 				path);
 	}
 
-	
 }

@@ -1,20 +1,11 @@
 package application;
 
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.Base64;
-
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-
 import Relations.*;
 import javafx.application.Application;
 import javafx.stage.Stage;

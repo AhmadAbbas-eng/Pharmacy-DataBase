@@ -13,8 +13,8 @@ import javafx.collections.ObservableList;
 /**
  * Tax class where all Tax' operations are occurred
  * 
- * @version 12 January 2022
- * @author Ahmad Abbas
+ * @version 26 January 2022
+ * @author Loor Sawalhi
  */
 public class Tax {
 
@@ -25,11 +25,12 @@ public class Tax {
 	private double value;
 
 	/**
-	 * Tax Constructor
+	 * Allocates a {@code Tax} object and initializes it to represent the specified
+	 * parameters.
 	 * 
-	 * @param iD
-	 * @param date
-	 * @param value
+	 * @param iD    The ID of the Tax.
+	 * @param date  The date of the Tax.
+	 * @param value The value of the Tax.
 	 */
 	public Tax(String iD, LocalDate date, double value) {
 		super();
@@ -66,6 +67,13 @@ public class Tax {
 		return Tax.data;
 	}
 
+	/**
+	 * Read from data base and fill the ArrayList
+	 * 
+	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
+	 * @throws SQLException           If any connection exceptions occurred
+	 * @throws ParseException         If any exception data type parsing occurred
+	 */
 	public static void getTaxData() throws ClassNotFoundException, SQLException, ParseException {
 
 		data.clear();
@@ -82,6 +90,15 @@ public class Tax {
 		dataList = FXCollections.observableArrayList(data);
 	}
 
+	/**
+	 * Fill the an ArrayList from specific ArrayList<ArrayList<String>> entry
+	 * 
+	 * @param table ArrayList<ArrayList<String>> to fill data with
+	 * @return ArrayList<Tax> of data
+	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
+	 * @throws SQLException           If any connection exceptions occurred
+	 * @throws ParseException         If any exception data type parsing occurred
+	 */
 	public static ArrayList<Tax> getTaxData(ArrayList<ArrayList<String>> table)
 			throws ClassNotFoundException, SQLException, ParseException {
 
@@ -105,7 +122,7 @@ public class Tax {
 		Tax.dataList = dataList;
 	}
 
-	public static void insertTax(String ID,LocalDate date, double value) {
+	public static void insertTax(String ID, LocalDate date, double value) {
 		try {
 			Queries.queryUpdate("Insert into Tax values (?, ?, ?);",
 					new ArrayList<>(Arrays.asList(ID, date.toString(), value + "")));

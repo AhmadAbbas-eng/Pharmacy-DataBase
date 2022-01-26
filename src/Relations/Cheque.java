@@ -12,9 +12,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- * Cheque class where all Cheques' operations are occurred
+ * Cheque class represents all Cheques' operations
  * 
- * @version 12 January 2022
+ * @version 26 January 2022
  * @author Ahmad Abbas
  *
  */
@@ -29,14 +29,15 @@ public class Cheque {
 	private int managerID;
 
 	/**
-	 * Cheque Constructor
+	 * Allocates a {@code Cheque} object and initializes it to represent the
+	 * specified parameters.
 	 * 
-	 * @param iD
-	 * @param name
-	 * @param dateOFWriting
-	 * @param dateOfCashing
-	 * @param paymentID
-	 * @param managerID
+	 * @param iD            The ID of The cheque.
+	 * @param name      The name of the bank of the Cheque.
+	 * @param dateOFWriting The writing date of the Cheque.
+	 * @param dateOfCashing The cashing date of the Cheque.
+	 * @param paymentID     The ID of the Payment operation.
+	 * @param managerID     The ID of the manager wrote the Cheque.
 	 */
 	public Cheque(String iD, String name, LocalDate dateOFWriting, LocalDate dateOfCashing, int paymentID,
 			int managerID) {
@@ -57,8 +58,16 @@ public class Cheque {
 		ID = iD;
 	}
 
+	public String getBankName() {
+		return getName();
+	}
+
 	public String getName() {
 		return name;
+	}
+
+	public void setBankName(String name) {
+		setName(name);
 	}
 
 	public void setName(String name) {
@@ -122,7 +131,7 @@ public class Cheque {
 		ArrayList<ArrayList<String>> table = Queries.queryResult("select * from Cheque;", null);
 
 		for (int i = 0; i < table.size(); i++) {
-			
+
 			LocalDate writingDate = LocalDate.parse(table.get(i).get(2));
 			LocalDate cashingDate = LocalDate.parse(table.get(i).get(3));
 			Cheque temp = new Cheque(table.get(i).get(0), table.get(i).get(1), writingDate, cashingDate,
@@ -134,6 +143,15 @@ public class Cheque {
 		dataList = FXCollections.observableArrayList(data);
 	}
 
+	/**
+	 * Fill the an ArrayList from specific ArrayList<ArrayList<String>> entry
+	 * 
+	 * @param table ArrayList<ArrayList<String>> to fill data with
+	 * @return ArrayList<Cheque> of data
+	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
+	 * @throws SQLException           If any connection exceptions occurred
+	 * @throws ParseException         If any exception data type parsing occurred
+	 */
 	public static ArrayList<Cheque> getChequeData(ArrayList<ArrayList<String>> table)
 			throws ClassNotFoundException, SQLException, ParseException {
 

@@ -13,50 +13,51 @@ import javafx.collections.ObservableList;
 /**
  * SupplierOrderBatch represents the details of each supplier's order
  * 
- * @version 12 January 2022
+ * @version 26 January 2022
  * @author Loor Sawalhi
  */
 public class SupplierOrderBatch {
 	private static ArrayList<SupplierOrderBatch> data = new ArrayList<SupplierOrderBatch>();
 	private static ObservableList<SupplierOrderBatch> dataList;
-	private int OID;
-	private int PID;
+	private int orderID;
+	private int productID;
 	private LocalDate productionDate;
 	private LocalDate expiryDate;
 	private int amount;
 
 	/**
-	 * SupplierOrderBatch Constructor
+	 * Allocates a {@code SupplierOrderBatch} object and initializes it to represent
+	 * the specified parameters.
 	 * 
-	 * @param oID
-	 * @param pID
-	 * @param productionDate
-	 * @param expiryDate
-	 * @param amount
+	 * @param orderID        The order ID.
+	 * @param productID      The product ID.
+	 * @param productionDate The batch production Date.
+	 * @param expiryDate     The batch expire date.
+	 * @param amount         The amount of the product on the order.
 	 */
-	public SupplierOrderBatch(int oID, int pID, LocalDate productionDate, LocalDate expiryDate, int amount) {
+	public SupplierOrderBatch(int orderID, int productID, LocalDate productionDate, LocalDate expiryDate, int amount) {
 		super();
-		OID = oID;
-		PID = pID;
+		this.orderID = orderID;
+		this.productID = productID;
 		this.productionDate = productionDate;
 		this.expiryDate = expiryDate;
 		this.amount = amount;
 	}
 
-	public int getOID() {
-		return OID;
+	public int getOrderID() {
+		return orderID;
 	}
 
-	public void setOID(int oID) {
-		OID = oID;
+	public void setOrderID(int oID) {
+		orderID = oID;
 	}
 
-	public int getPID() {
-		return PID;
+	public int getProductID() {
+		return productID;
 	}
 
-	public void setPID(int pID) {
-		PID = pID;
+	public void setProductID(int pID) {
+		productID = pID;
 	}
 
 	public LocalDate getProductionDate() {
@@ -99,6 +100,13 @@ public class SupplierOrderBatch {
 		SupplierOrderBatch.data = data;
 	}
 
+	/**
+	 * Read from data base and fill the ArrayList
+	 * 
+	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
+	 * @throws SQLException           If any connection exceptions occurred
+	 * @throws ParseException         If any exception data type parsing occurred
+	 */
 	public static void getSupplierOrderBatchData() throws ClassNotFoundException, SQLException, ParseException {
 
 		data.clear();
@@ -108,10 +116,10 @@ public class SupplierOrderBatch {
 
 			LocalDate writingDate = LocalDate.parse(table.get(i).get(2));
 			LocalDate cashingDate = LocalDate.parse(table.get(i).get(3));
-			
-			SupplierOrderBatch temp = new SupplierOrderBatch(Integer.parseInt(table.get(i).get(0)), 
-					Integer.parseInt(table.get(i).get(1)), writingDate,
-					cashingDate, Integer.parseInt(table.get(i).get(4)));
+
+			SupplierOrderBatch temp = new SupplierOrderBatch(Integer.parseInt(table.get(i).get(0)),
+					Integer.parseInt(table.get(i).get(1)), writingDate, cashingDate,
+					Integer.parseInt(table.get(i).get(4)));
 
 			data.add(temp);
 		}
@@ -119,6 +127,15 @@ public class SupplierOrderBatch {
 		dataList = FXCollections.observableArrayList(data);
 	}
 
+	/**
+	 * Fill the an ArrayList from specific ArrayList<ArrayList<String>> entry
+	 * 
+	 * @param table ArrayList<ArrayList<String>> to fill data with
+	 * @return ArrayList<SupplierOrderBatch> of data
+	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
+	 * @throws SQLException           If any connection exceptions occurred
+	 * @throws ParseException         If any exception data type parsing occurred
+	 */
 	public static ArrayList<SupplierOrderBatch> getSupplierOrderBatchData(ArrayList<ArrayList<String>> table)
 			throws ClassNotFoundException, SQLException, ParseException {
 
@@ -128,9 +145,9 @@ public class SupplierOrderBatch {
 		for (int i = 0; i < table.size(); i++) {
 			LocalDate writingDate = LocalDate.parse(table.get(i).get(2));
 			LocalDate cashingDate = LocalDate.parse(table.get(i).get(3));
-			SupplierOrderBatch temp = new SupplierOrderBatch(Integer.parseInt(table.get(i).get(0)), 
-					Integer.parseInt(table.get(i).get(1)), writingDate,
-					cashingDate, Integer.parseInt(table.get(i).get(4)));
+			SupplierOrderBatch temp = new SupplierOrderBatch(Integer.parseInt(table.get(i).get(0)),
+					Integer.parseInt(table.get(i).get(1)), writingDate, cashingDate,
+					Integer.parseInt(table.get(i).get(4)));
 
 			tempData.add(temp);
 		}
