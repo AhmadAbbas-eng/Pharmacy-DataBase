@@ -5,7 +5,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import Relations.Employee;
-import javafx.beans.property.Property;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +19,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.beans.binding.Bindings;
 
 public class Test2Controller implements Initializable {
 
@@ -136,7 +134,7 @@ public class Test2Controller implements Initializable {
 	public void DashboardOnAction(ActionEvent e) throws IOException {
 		choosenButtonLabel.setText("Dashboard");
 
-		Region page = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
+		Region page = FXMLLoader.load(getClass().getResource("Test.fxml"));
 		contentArea.getChildren().removeAll();
 		contentArea.getChildren().setAll(page);
 		page.prefWidthProperty().bind(contentArea.widthProperty());
@@ -228,7 +226,7 @@ public class Test2Controller implements Initializable {
 		try {
 
 			choosenButtonLabel.setText("Dashboard");
-			page = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
+			page = FXMLLoader.load(getClass().getResource("Test.fxml"));
 			page.prefWidthProperty().bind(contentArea.widthProperty());
 			page.prefHeightProperty().bind(contentArea.heightProperty());
 			contentArea.getChildren().setAll(page);
