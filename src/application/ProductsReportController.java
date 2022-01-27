@@ -15,6 +15,11 @@ import java.util.ResourceBundle;
 
 import Relations.Queries;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Aseel Sabri
+ */
 public class ProductsReportController implements Initializable {
 	@FXML
 	private TableColumn<ArrayList<String>, String> productIdColumn;

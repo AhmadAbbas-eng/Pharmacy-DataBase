@@ -32,17 +32,19 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Aseel Sabri
+ *
+ */
 public class SelectProductController implements Initializable {
-
-	static double totalCost = 0.0;
 
     @FXML
     private ImageView addProductIcon;
 	
 	@FXML
 	private TableView<Drug> scientificNameTable;
-
-	private SupplierOrderController caller;
 
 	@FXML
 	private TableView<Product> commercialNameTable;
@@ -83,6 +85,9 @@ public class SelectProductController implements Initializable {
 	@FXML
 	private ImageView deleteIcon;
 
+	static double totalCost = 0.0;
+	private SupplierOrderController caller;
+	
 	public void deleteOnMousePressed() {
 		ColorAdjust effect = new ColorAdjust();
 		if (listOrder.getItems().isEmpty()) {
@@ -93,7 +98,6 @@ public class SelectProductController implements Initializable {
 			listOrder.getItems().remove(order);
 		}
 		deleteIcon.setEffect(effect);
-
 	}
 
 	public void deleteOnMouseReleased() {
@@ -162,6 +166,7 @@ public class SelectProductController implements Initializable {
 					totalCost += Cost * Quantity;
 					listOrder.getItems().add("ID ="+commercialNameTable.getSelectionModel().getSelectedItem().getID() + ",Product Name ="+commercialNameTable.getSelectionModel().getSelectedItem().getName() + ", Quantity="
 							+ Quantity + ", Cost/Peice=" + Cost);
+					
 					costTextField.clear();
 					quantityTextField.clear();
 					scientificNameTable.getSelectionModel().clearSelection();
@@ -194,7 +199,6 @@ public class SelectProductController implements Initializable {
 			alert.setContentText("Fill the cost and quantity fields");
 			alert.showAndWait();
 		}
-
 	}
 
 	public void addOnMouseReleased() {
@@ -238,8 +242,6 @@ public class SelectProductController implements Initializable {
 		}
 	}
 	
-	
-
 	public void addProductOnMouseReleased() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0);
@@ -334,11 +336,9 @@ public class SelectProductController implements Initializable {
 				}
 
 			}
-
 			commercialNameTable.setItems(FXCollections.observableArrayList(filteredList2));
 			scientificNameTable.setItems(FXCollections.observableArrayList(filteredList));
 		});
 
 	}
-
 }

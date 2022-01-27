@@ -27,9 +27,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import Relations.*;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Aseel Sabri
+ *
+ */
 public class ChooseProductController implements Initializable {
-
-	private ObservableList<ArrayList<String>> chosenProducts;
 
 	@FXML
 	private TableColumn<ArrayList<String>, String> idColumn;
@@ -82,8 +86,6 @@ public class ChooseProductController implements Initializable {
 	@FXML
 	private CheckBox isDrug;
 
-	private String stringToSearch = "";
-
 	@FXML
 	private Button showBatchButton;
 
@@ -124,10 +126,13 @@ public class ChooseProductController implements Initializable {
 	private TextField amountTextField;
 
 	SellController caller;
+	private String stringToSearch = "";
+	private ObservableList<ArrayList<String>> chosenProducts;
 
 	public void addProductOnAction() {
 		int numOfChosenProducts = (chosenProducts == null ? 0 : chosenProducts.size());
 		String amountStr = amountTextField.getText();
+
 		if (batchTable.getSelectionModel().getSelectedItem() == null) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Missing Info");
@@ -148,7 +153,6 @@ public class ChooseProductController implements Initializable {
 			alert.showAndWait();
 		} else if (Integer.parseInt(amountStr) > batchTable.getSelectionModel().getSelectedItem().getAmount()) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
-			// alert.setTitle("Wrong Input Format");
 			alert.setHeaderText(null);
 			alert.setContentText("There Isn't Enough Amount");
 			alert.showAndWait();
@@ -159,16 +163,19 @@ public class ChooseProductController implements Initializable {
 							batchTable.getSelectionModel().getSelectedItem().getProductionDate().toString(),
 							batchTable.getSelectionModel().getSelectedItem().getExpiryDate().toString(),
 							productTable.getSelectionModel().getSelectedItem().get(2), amountStr));
-			boolean flag = true;
 
+			boolean flag = true;
 			Batch batch = batchTable.getSelectionModel().getSelectedItem();
+
 			for (int j = 0; chosenProducts != null && j < chosenProducts.size(); j++) {
 				if (chosenProducts.get(j).get(0).equals(batch.getID() + "")
 						&& LocalDate.parse(chosenProducts.get(j).get(2)).compareTo(batch.getProductionDate()) == 0
 						&& LocalDate.parse(chosenProducts.get(j).get(3)).compareTo(batch.getExpiryDate()) == 0) {
+
 					flag = false;
 					chosenProducts.get(j).set(5,
 							"" + (Integer.parseInt(chosenProducts.get(j).get(5)) + Integer.parseInt(amountStr)));
+
 					break;
 				}
 			}
@@ -181,7 +188,6 @@ public class ChooseProductController implements Initializable {
 			try {
 				filterBatchList();
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			showAndFade(addedIcon);
@@ -197,18 +203,16 @@ public class ChooseProductController implements Initializable {
 	}
 
 	public void showAndFade(Node node) {
-
 		Timeline show = new Timeline(
 				new KeyFrame(Duration.seconds(0), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)),
 				new KeyFrame(Duration.seconds(0.5), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)),
 				new KeyFrame(Duration.seconds(1), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)));
+
 		FadeTransition fade = new FadeTransition(Duration.seconds(0.5), node);
 		fade.setFromValue(1);
 		fade.setToValue(0);
-
 		SequentialTransition blinkFade = new SequentialTransition(node, show, fade);
 		blinkFade.play();
-
 	}
 
 	public void filterBatchList() throws ClassNotFoundException, SQLException, ParseException {
@@ -224,6 +228,7 @@ public class ChooseProductController implements Initializable {
 								"select * from Batch where Product_ID=? and Batch_Amount>0 "
 										+ " and Batch_Production_Date<>'1111-01-01' order by Batch_Expiry_Date;",
 								parameters));
+
 			} else {
 				String date = datePicker.getValue().toString();
 				parameters.add(date);
@@ -294,7 +299,6 @@ public class ChooseProductController implements Initializable {
 			try {
 				filterBatchList();
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -311,6 +315,7 @@ public class ChooseProductController implements Initializable {
 							.queryResult("select P.Product_ID, P.Product_Name, P.Product_Price, NM.Product_Manufactrer"
 									+ " from product P, Name_Manu NM" + " where P.Product_Name = NM.Product_Name"
 									+ " and P.Product_ID not in (select D.Product_ID from Drug D);", null));
+
 				}
 				if (!isDanger.isSelected() && !isControlled.isSelected()) { // All Drugs
 					filteredList.addAll(Queries.queryResult(
@@ -319,6 +324,7 @@ public class ChooseProductController implements Initializable {
 									+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
 									+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name;",
 							null));
+
 				} else if (isDanger.isSelected()) { // Danger Drugs
 					filteredList = Queries.queryResult(
 							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
@@ -339,7 +345,6 @@ public class ChooseProductController implements Initializable {
 
 				}
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Product ID") {
@@ -350,6 +355,7 @@ public class ChooseProductController implements Initializable {
 									+ " from product P, Name_Manu NM" + " where P.Product_Name = NM.Product_Name"
 									+ " and P.Product_ID not in (select D.Product_ID from Drug D)"
 									+ " and P.Product_ID like ?;", parameters));
+
 				}
 				if (!isDanger.isSelected() && !isControlled.isSelected()) { // All Drugs
 					filteredList.addAll(Queries.queryResult(
@@ -359,6 +365,7 @@ public class ChooseProductController implements Initializable {
 									+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
 									+ " and P.Product_ID like ?;",
 							parameters));
+
 				} else if (isDanger.isSelected()) { // Danger Drugs
 					filteredList = Queries.queryResult(
 							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
@@ -379,7 +386,6 @@ public class ChooseProductController implements Initializable {
 
 				}
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Product Name") {
@@ -390,6 +396,7 @@ public class ChooseProductController implements Initializable {
 									+ " from product P, Name_Manu NM" + " where P.Product_Name = NM.Product_Name"
 									+ " and P.Product_ID not in (select D.Product_ID from Drug D)"
 									+ " and P.Product_Name like ?;", parameters));
+
 				}
 				if (!isDanger.isSelected() && !isControlled.isSelected()) { // All Drugs
 					filteredList.addAll(Queries.queryResult(
@@ -399,6 +406,7 @@ public class ChooseProductController implements Initializable {
 									+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
 									+ " and P.Product_Name like ?;",
 							parameters));
+
 				} else if (isDanger.isSelected()) { // Danger Drugs
 					filteredList = Queries.queryResult(
 							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
@@ -419,7 +427,6 @@ public class ChooseProductController implements Initializable {
 
 				}
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -431,6 +438,7 @@ public class ChooseProductController implements Initializable {
 									+ " from product P, Name_Manu NM" + " where P.Product_Name = NM.Product_Name"
 									+ " and P.Product_ID not in (select D.Product_ID from Drug D)"
 									+ " and NM.Product_Manufactrer like ?;", parameters));
+					
 				}
 				if (!isDanger.isSelected() && !isControlled.isSelected()) { // All Drugs
 					filteredList.addAll(Queries.queryResult(
@@ -440,6 +448,7 @@ public class ChooseProductController implements Initializable {
 									+ " where D.Product_ID=P.Product_ID and P.product_name=NM.product_name"
 									+ " and NM.Product_Manufactrer like ?;",
 							parameters));
+					
 				} else if (isDanger.isSelected()) { // Danger Drugs
 					filteredList = Queries.queryResult(
 							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
@@ -459,10 +468,9 @@ public class ChooseProductController implements Initializable {
 									+ " and D.Drug_Pharmacetical_Category='Controlled'"
 									+ " and NM.Product_Manufactrer like ?;",
 							parameters);
-
+					
 				}
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -477,6 +485,7 @@ public class ChooseProductController implements Initializable {
 									+ " where D.Product_ID=P.Product_ID and P.product_name=NM.product_name"
 									+ " and D.Drug_Scientific_Name like ?;",
 							parameters));
+					
 				} else if (isDanger.isSelected()) { // Danger Drugs
 					filteredList = Queries.queryResult(
 							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
@@ -496,10 +505,9 @@ public class ChooseProductController implements Initializable {
 									+ " and D.Drug_Pharmacetical_Category='Controlled'"
 									+ " and D.Drug_Scientific_Name like ?;",
 							parameters);
-
+					
 				}
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Risk Pregnency Category") {
@@ -513,6 +521,7 @@ public class ChooseProductController implements Initializable {
 									+ " where D.Product_ID=P.Product_ID and P.product_name=NM.product_name"
 									+ " and D.Drug_Risk_Pregnency_Category like ?;",
 							parameters));
+					
 				} else if (isDanger.isSelected()) { // Danger Drugs
 					filteredList = Queries.queryResult(
 							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
@@ -535,7 +544,6 @@ public class ChooseProductController implements Initializable {
 
 				}
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Drug Category") {
@@ -549,6 +557,7 @@ public class ChooseProductController implements Initializable {
 									+ " where D.Product_ID=P.Product_ID and P.product_name=NM.product_name"
 									+ " and D.Drug_Category like ?;",
 							parameters));
+					
 				} else if (isDanger.isSelected()) { // Danger Drugs
 					filteredList = Queries.queryResult(
 							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
@@ -566,10 +575,9 @@ public class ChooseProductController implements Initializable {
 									+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
 									+ " and D.Drug_Pharmacetical_Category='Controlled' and D.Drug_Category like ?;",
 							parameters);
-
+					
 				}
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else {
@@ -583,6 +591,7 @@ public class ChooseProductController implements Initializable {
 									+ " and P.Product_ID not in (select D.Product_ID from Drug D)"
 									+ " and (P.Product_ID like ? or" + " P.Product_Name like ? or"
 									+ " NM.Product_Manufactrer like ?);", parameters));
+					
 				}
 				if (!isDanger.isSelected() && !isControlled.isSelected()) { // All Drugs
 					while (parameters.size() < 6) {
@@ -597,6 +606,7 @@ public class ChooseProductController implements Initializable {
 									+ " or NM.Product_Manufactrer like ? " + " or D.Drug_Scientific_Name like ? or "
 									+ " D.Drug_Risk_Pregnency_Category like ? or " + " D.Drug_Category like ? );",
 							parameters));
+					
 				} else if (isDanger.isSelected()) { // Danger Drugs
 					while (parameters.size() < 6) {
 						parameters.add("%" + stringToSearch + "%");
@@ -611,7 +621,7 @@ public class ChooseProductController implements Initializable {
 									+ " D.Drug_Scientific_Name like ? or" + " D.Drug_Risk_Pregnency_Category like ? or"
 									+ " D.Drug_Category like ?);",
 							parameters);
-
+					
 				} else { // Controlled Drugs
 					while (parameters.size() < 6) {
 						parameters.add("%" + stringToSearch + "%");
@@ -629,13 +639,11 @@ public class ChooseProductController implements Initializable {
 
 				}
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		productTable.getItems().clear();
 		productTable.setItems(FXCollections.observableArrayList(filteredList));
-
 	}
 
 	public void getChosenProducts(ObservableList<ArrayList<String>> chosenProducts, SellController caller) {
@@ -649,7 +657,6 @@ public class ChooseProductController implements Initializable {
 		addedLabel.setOpacity(0);
 		fieldSelector.setItems(FXCollections.observableArrayList("-Specify Field-", "Product ID", "Product Name",
 				"Manufacturer", "Scientific Name", "Risk Pregnency Category", "Drug Category"));
-
 		idColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
@@ -814,5 +821,4 @@ public class ChooseProductController implements Initializable {
 		});
 
 	}
-
 }

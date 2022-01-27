@@ -40,6 +40,12 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 import Relations.*;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Loor Sawalhi
+ *
+ */
 public class SellController implements Initializable {
 	private boolean isCustomerSelected = false;
 	@FXML
@@ -111,13 +117,12 @@ public class SellController implements Initializable {
 				new KeyFrame(Duration.seconds(0), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)),
 				new KeyFrame(Duration.seconds(0.5), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)),
 				new KeyFrame(Duration.seconds(1), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)));
+		
 		FadeTransition fade = new FadeTransition(Duration.seconds(0.5), node);
 		fade.setFromValue(1);
 		fade.setToValue(0);
-
 		SequentialTransition blinkFade = new SequentialTransition(node, show, fade);
 		blinkFade.play();
-
 	}
 
 	public void chooseCustomerOnAction() {
@@ -125,16 +130,12 @@ public class SellController implements Initializable {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("ChooseCustomer.fxml"));
 			Parent chooseCustomer = (Parent) loader.load();
 			ChooseCustomerController chooseCustomerController = loader.getController();
-
 			chooseCustomerController.setCaller(this);
-
 			Stage chooseCustomerStage = new Stage();
 			Scene scene = new Scene(chooseCustomer);
 			chooseCustomerStage.setScene(scene);
 			chooseCustomerStage.show();
-
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -145,16 +146,12 @@ public class SellController implements Initializable {
 			productLoader = new FXMLLoader(getClass().getResource("ChooseProduct.fxml"));
 			Parent chooseProduct = (Parent) productLoader.load();
 			ChooseProductController chooseProductController = productLoader.getController();
-
 			chooseProductController.getChosenProducts(chosenProducts, this);
-
 			Stage chooseCustomerStage = new Stage();
 			Scene scene = new Scene(chooseProduct);
 			chooseCustomerStage.setScene(scene);
 			chooseCustomerStage.show();
-
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -193,6 +190,7 @@ public class SellController implements Initializable {
 						: chooseCustomerButton.getText();
 				CustomerOrder.insertCustomerOrder(dateLabel.getText(), Double.parseDouble(totalCostLabel.getText()),
 						discount, paidAmount, Employee.getCurrentID(), customerNID);
+				
 				for (ArrayList<String> row : chosenProducts) {
 					CustomerOrderBatch.insertCustomerOrderBatch("" + CustomerOrder.getMaxID(), row.get(0), row.get(2),
 							row.get(3), Integer.parseInt(row.get(5)));
@@ -204,7 +202,6 @@ public class SellController implements Initializable {
 							new ArrayList<>(Arrays.asList(paidAmount + "", dateLabel.getText(),
 									Employee.getCurrentID() + "", customerNID)));
 				} catch (ClassNotFoundException | SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				showAndFade(soldIcon);
@@ -218,9 +215,7 @@ public class SellController implements Initializable {
 				chooseCustomerButton.setText("Choose Customer");
 				isCustomerSelected = false;
 			}
-
 		}
-
 	}
 
 	public void deleteCustomerOnMousePressed() {
@@ -265,11 +260,9 @@ public class SellController implements Initializable {
 			try {
 				productController.filterBatchList();
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 	public void deleteProductOnMouseReleased() {
@@ -358,7 +351,6 @@ public class SellController implements Initializable {
 			costAfterDiscount -= discount;
 		}
 		costAfterDiscountLabel.setText("" + costAfterDiscount);
-
 	}
 
 	public void setCustomerNID(String NID) {
@@ -373,7 +365,6 @@ public class SellController implements Initializable {
 		try {
 			CustomerOrder.getCustomerOrderData();
 		} catch (ClassNotFoundException | SQLException | ParseException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		dateLabel.setText(LocalDate.now().toString());
@@ -467,7 +458,6 @@ public class SellController implements Initializable {
 				amount = Queries.queryResult("Select Batch_Amount from Batch where Product_ID=?"
 						+ " and Batch_Production_Date=? and Batch_Expiry_Date=? ;", parameters);
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			boolean checkAmount = true;
@@ -496,5 +486,4 @@ public class SellController implements Initializable {
 		});
 
 	}
-
 }

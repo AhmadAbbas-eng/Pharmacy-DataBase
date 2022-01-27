@@ -14,8 +14,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Ahmad Abbas
+ */
 public class disposalReportController implements Initializable {
-
 
 	@FXML
 	private TableColumn<ArrayList<String>, String> disposalAmountColumn;
@@ -41,16 +45,15 @@ public class disposalReportController implements Initializable {
 	@FXML
 	private TableColumn<ArrayList<String>, String> disposalDateColumn;
 
-
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
 		try {
 			disposal.setItems(FXCollections.observableArrayList(Queries.queryResult(
 					"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount\r\n"
 							+ "from product p, employee e, payment pay,drug_disposal d\r\n"
 							+ "where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id;",
 					null)));
+			
 		} catch (ClassNotFoundException | SQLException e1) {
 			e1.printStackTrace();
 		}

@@ -26,7 +26,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Loor Sawalhi
+ */
 public class PaymentController implements Initializable {
+	
 	// --------------------------------------Disposal-----------------------------------------------
 	@FXML
 	private TextField searchDisposalTextField;
@@ -159,13 +165,13 @@ public class PaymentController implements Initializable {
 					ArrayList<Tax> List = new ArrayList<>();
 					List = Tax.getTaxData(Queries.queryResult("select * from Tax where tax_ID = ? ;",
 							new ArrayList<>(Arrays.asList(taxIDTextField.getText().toString()))));
+					
 					if (List.isEmpty() == true) {
 						ArrayList<Cheque> List2 = new ArrayList<>();
 						List2 = Cheque.getChequeData(Queries.queryResult("select * from cheque where cheque_ID = ? ;",
 								new ArrayList<>(Arrays.asList(chequeIDTaxTextField.getText().toString()))));
 						if (List2.isEmpty() == true) {
 							try {
-
 								Double num = Double.parseDouble(amountTaxTextField.getText());
 								if (num == 0) {
 									flag = true;
@@ -173,7 +179,6 @@ public class PaymentController implements Initializable {
 							} catch (NumberFormatException e1) {
 								flag = true;
 							}
-
 							String str = bankNameTaxTextField.getText().replaceAll("\\s", "");
 							if (str.matches("[a-zA-Z]+") == false) {
 								flag = true;
@@ -181,10 +186,13 @@ public class PaymentController implements Initializable {
 							if (flag == false) {
 								Payment.insertPayment(java.time.LocalDate.now(),
 										Double.parseDouble(amountTaxTextField.getText()), "Cheque");
+								
 								Cheque.insertCheque(chequeIDTaxTextField.getText(), bankNameTaxTextField.getText(), writingDateTax.getValue(),
 										availableUntilDateTax.getValue(), Payment.getMaxID(), Employee.getCurrentID());
+								
 								Tax.insertTax(taxIDTextField.getText().toString(), java.time.LocalDate.now(),
 										Double.parseDouble(amountTaxTextField.getText()));
+								
 								Queries.queryUpdate(
 										"insert into taxes_payment (payment_id, tax_id, manager_id) "
 												+ "values (?, ?, ?) ;",
@@ -197,6 +205,7 @@ public class PaymentController implements Initializable {
 													+ " from  employee e , tax t, payment p, taxes_payment tp "
 													+ " where  tp.manager_ID=e.employee_ID and tp.payment_ID=p.payment_ID and t.tax_id=tp.tax_id;",
 											null)));
+									
 								} catch (ClassNotFoundException | SQLException e) {
 									e.printStackTrace();
 								}
@@ -245,8 +254,10 @@ public class PaymentController implements Initializable {
 					if (!flag) {
 						Payment.insertPayment(java.time.LocalDate.now(), Double.parseDouble(amountTaxTextField.getText()),
 								"Cash");
+						
 						Tax.insertTax(taxIDTextField.getText().toString(), java.time.LocalDate.now(),
 								Double.parseDouble(amountTaxTextField.getText()));
+						
 						Queries.queryUpdate(
 								"insert into taxes_payment " + " (payment_id, tax_id, manager_id)"
 										+ "Values (?, ?, ?) ;",
@@ -270,7 +281,6 @@ public class PaymentController implements Initializable {
 						alert.setContentText("Wrong Information!");
 						alert.showAndWait();
 					}
-					// add payment
 				} else {
 					Alert alert = new Alert(Alert.AlertType.ERROR);
 					alert.setTitle(null);
@@ -444,7 +454,6 @@ public class PaymentController implements Initializable {
 							} catch (NumberFormatException e1) {
 								flag = true;
 							}
-
 							String str = bankNameSupplierTextField.getText().replaceAll("\\s", "");
 							if (str.matches("[a-zA-Z]+") == false) {
 								flag = true;
@@ -475,6 +484,7 @@ public class PaymentController implements Initializable {
 													+ " where op.manager_ID=e.employee_ID and op.supplier_Id = so.supplier_id and p.payment_id= op.payment_id "
 													+ " and so.supplier_id=s.supplier_id;",
 											null)));
+									
 									supplierDataTable.setItems(FXCollections.observableArrayList(Supplier
 											.getSupplierData(Queries.queryResult("select * from Supplier;", null))));
 
@@ -512,7 +522,6 @@ public class PaymentController implements Initializable {
 
 				boolean flag = false;
 				try {
-
 					Double num = Double.parseDouble(amountSupplierTextField.getText());
 					if (num == 0) {
 						flag = true;
@@ -523,11 +532,13 @@ public class PaymentController implements Initializable {
 				if (!flag) {
 					Payment.insertPayment(java.time.LocalDate.now(), Double.parseDouble(amountSupplierTextField.getText()),
 							"Cash");
+					
 					Queries.queryUpdate(
 							"insert into supplier_payment (supplier_id, manager_id, payment_id) Values (?, ?, ?) ;",
 							new ArrayList<>(
 									Arrays.asList(supplierDataTable.getSelectionModel().getSelectedItem().getID() + "",
 											Employee.getCurrentID() + "", Payment.getMaxID() + "")));
+					
 					Queries.queryUpdate("update Supplier set supplier_dues = supplier_dues -? where Supplier_ID =?;",
 							new ArrayList<>(Arrays.asList(amountSupplierTextField.getText(),
 									supplierDataTable.getSelectionModel().getSelectedItem().getID() + "")));
@@ -539,13 +550,14 @@ public class PaymentController implements Initializable {
 										+ " where op.manager_ID=e.employee_ID and op.supplier_Id = so.supplier_id and p.payment_id= op.payment_id "
 										+ " and so.supplier_id=s.supplier_id;",
 								null)));
+						
 						supplierDataTable.setItems(FXCollections.observableArrayList(
 								Supplier.getSupplierData(Queries.queryResult("select * from Supplier;", null))));
+				
 					} catch (ClassNotFoundException | SQLException e) {
 						e.printStackTrace();
 					}
 					amountSupplierTextField.clear();
-
 				}
 
 			}
@@ -576,8 +588,10 @@ public class PaymentController implements Initializable {
 
 	@FXML
 	private TableView<Employee> employeeTable;
+	
 	@FXML
 	private TableColumn<ArrayList<String>, String> employeePaymentDateColumn;
+	
 	@FXML
 	private Button clearEmployeeFieldsButton;
 
@@ -681,10 +695,9 @@ public class PaymentController implements Initializable {
 						ArrayList<Cheque> List2 = new ArrayList<>();
 						List2 = Cheque.getChequeData(Queries.queryResult("select * from cheque where cheque_ID = ? ;",
 								new ArrayList<>(Arrays.asList(employeeChequeIDTextField.getText().toString()))));
+						
 						if (List2.isEmpty() == true) {
-
 							try {
-
 								Double amount = Double.parseDouble(amountEmployeeTextField.getText());
 								if (amount == 0) {
 									flag = true;
@@ -692,19 +705,18 @@ public class PaymentController implements Initializable {
 							} catch (NumberFormatException e1) {
 								flag = true;
 							}
-
-							String str = employeeBankNameTextField.getText().replaceAll("\\s", "");
-							
+							String str = employeeBankNameTextField.getText().replaceAll("\\s", "");						
 							if (str.matches("[a-zA-Z]+") == false) {
 								flag = true;
 							}
-
 							if (flag == false) {
 								Payment.insertPayment(java.time.LocalDate.now(),
 										Double.parseDouble(amountEmployeeTextField.getText()), "Cheque");
+								
 								Cheque.insertCheque(employeeChequeIDTextField.getText(), employeeBankNameTextField.getText(),
 										employeeWritindDatePicker.getValue(), employeeAvailableUntilDatePicker.getValue(), Payment.getMaxID(),
 										Employee.getCurrentID());
+								
 								Queries.queryUpdate(
 										"insert into E_salary " + " (manager_id, employee_id, payment_id) "
 												+ " Values(?, ?, ?) ;",
@@ -717,6 +729,7 @@ public class PaymentController implements Initializable {
 													+ " from e_salary es,payment p, employee e "
 													+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.Employee_ID",
 											null)));
+									
 								} catch (ClassNotFoundException | SQLException e) {
 									e.printStackTrace();
 								}
@@ -731,7 +744,6 @@ public class PaymentController implements Initializable {
 							employeeBankNameTextField.clear();
 							employeeChequeIDTextField.clear();
 							chequeEmployeeCheckBox.setSelected(false);
-
 						} else {
 							Alert alert = new Alert(Alert.AlertType.ERROR);
 							alert.setTitle(null);
@@ -761,10 +773,12 @@ public class PaymentController implements Initializable {
 				if (flag == false) {
 					Payment.insertPayment(java.time.LocalDate.now(), Double.parseDouble(amountEmployeeTextField.getText()),
 							"Cash");
+					
 					Queries.queryUpdate("insert into E_salary (manager_id, employee_id, payment_id) Values (?, ?, ?) ;",
 							new ArrayList<>(Arrays.asList(Employee.getCurrentID() + "",
 									employeeTable.getSelectionModel().getSelectedItem().getID() + "",
 									Payment.getMaxID() + "")));
+					
 					try {
 						employeePaymentTable
 								.setItems(FXCollections.observableArrayList(Queries.queryResult(
@@ -772,6 +786,7 @@ public class PaymentController implements Initializable {
 												+ " from e_salary es,payment p, employee e "
 												+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.Employee_ID;",
 										null)));
+						
 					} catch (ClassNotFoundException | SQLException e) {
 						e.printStackTrace();
 					}
@@ -797,9 +812,10 @@ public class PaymentController implements Initializable {
 	ObservableList<String> Choices = FXCollections.observableArrayList("Product Name", "Expired Month", "Expired Year",
 			"Production Month", "Production Year", "Disposal Month", "Disposal Year");
 
+	// -----------------------------------------Disposal---------------------------------------------------------
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// -----------------------------------------Disposal---------------------------------------------------------
 		disposalOperationComboBox.setItems(Choices);
 
 		try {
@@ -808,6 +824,7 @@ public class PaymentController implements Initializable {
 							+ "from product p, employee e, payment pay,drug_disposal d\r\n"
 							+ "where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id;",
 					null)));
+			
 		} catch (ClassNotFoundException | SQLException e1) {
 			e1.printStackTrace();
 		}
@@ -924,6 +941,7 @@ public class PaymentController implements Initializable {
 									+ " where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id"
 									+ " and p.product_name like ? ;",
 							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
+					
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
@@ -935,6 +953,7 @@ public class PaymentController implements Initializable {
 									+ " where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id"
 									+ " and  month(d.batch_expiry_date) like ? ;",
 							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
+					
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
@@ -947,6 +966,7 @@ public class PaymentController implements Initializable {
 									+ " where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id"
 									+ " and  year(d.batch_expiry_date) like ? ;",
 							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
+					
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
@@ -958,6 +978,7 @@ public class PaymentController implements Initializable {
 									+ " where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id"
 									+ " and  month(d.batch_production_date) like ? ;",
 							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
+					
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
@@ -970,6 +991,7 @@ public class PaymentController implements Initializable {
 									+ " where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id"
 									+ " and  year(d.batch_production_date) like ? ;",
 							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
+					
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
@@ -982,6 +1004,7 @@ public class PaymentController implements Initializable {
 									+ " where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id"
 									+ " and  month(d.Disposal_date) like ? ;",
 							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
+					
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
@@ -994,6 +1017,7 @@ public class PaymentController implements Initializable {
 									+ " where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id"
 									+ " and  year(d.Disposal_date) like ? ;",
 							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
+					
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
@@ -1009,6 +1033,7 @@ public class PaymentController implements Initializable {
 							new ArrayList<>(Arrays.asList("%" + newValue + "%", "%" + newValue + "%",
 									"%" + newValue + "%", "%" + newValue + "%", "%" + newValue + "%",
 									"%" + newValue + "%", "%" + newValue + "%")));
+					
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
@@ -1018,7 +1043,6 @@ public class PaymentController implements Initializable {
 		});
 
 		// ----------------------------------------Employee----------------------------------------------------------
-
 		employeeBankNameTextField.setOpacity(0);
 		employeeWritindDatePicker.setOpacity(0);
 		employeeAvailableUntilDatePicker.setOpacity(0);
@@ -1027,15 +1051,14 @@ public class PaymentController implements Initializable {
 		availableUntilDateEmployeeLabel.setOpacity(0);
 		chequeIDEmployeeLabel.setOpacity(0);
 		writingDateEmployeeLabel.setOpacity(0);
-
 		searchEmployeeOp.setValue("select");
 		searchEmployeeOp.setItems(EmployeeChoices);
 		employeeNameColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
 		employeeIDColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("iD"));
-
 		try {
 			employeeTable.setItems(FXCollections.observableArrayList(Employee
 					.getEmployeeData(Queries.queryResult("select * from Employee where employee_id <> -1 ;", null))));
+		
 		} catch (ClassNotFoundException | SQLException | ParseException e1) {
 			e1.printStackTrace();
 		}
@@ -1074,12 +1097,14 @@ public class PaymentController implements Initializable {
 											+ " from e_salary es,payment p, employee e "
 											+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.Employee_ID;",
 									null)));
+			
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
 
 		employeePaymentNameColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
+					
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
 						ArrayList<String> x = p.getValue();
@@ -1090,6 +1115,7 @@ public class PaymentController implements Initializable {
 						}
 					}
 				});
+		
 		employeePaymentDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
@@ -1137,6 +1163,7 @@ public class PaymentController implements Initializable {
 									+ " from e_salary es,payment p, employee e "
 									+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.manager_Id and  e.employee_name like ? ;",
 							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
+					
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
@@ -1147,10 +1174,10 @@ public class PaymentController implements Initializable {
 									+ " from e_salary es,payment p, employee e "
 									+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.manager_Id and  month(p.payment_date) like ? ;",
 							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
+					
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
-
 			} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Payment Year") {
 				try {
 					filteredList = Queries.queryResult(
@@ -1175,6 +1202,7 @@ public class PaymentController implements Initializable {
 									+ " where  (p.payment_Id=es.payment_Id and e.employee_Id=es.manager_Id) and  (year(p.payment_date) like ? "
 									+ " or month(p.payment_date) like ? " + " or  e.employee_name like ?) ;",
 							parameters);
+					
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
@@ -1183,10 +1211,8 @@ public class PaymentController implements Initializable {
 		});
 
 		// ----------------------------------------supplier----------------------------------------------------------
-
 		searchSupplierOperationComboBox.setValue("select");
 		searchSupplierOperationComboBox.setItems(SupplierPaymentChoices);
-
 		bankNameSupplierTextField.setOpacity(0);
 		writingDateSupplier.setOpacity(0);
 		availablUntilDateSupplier.setOpacity(0);
@@ -1195,7 +1221,6 @@ public class PaymentController implements Initializable {
 		supplierWritingDateLabel.setOpacity(0);
 		supplierBankNameLabel.setOpacity(0);
 		supplierChequeIDLabel.setOpacity(0);
-
 		supplierNameColumn.setCellValueFactory(new PropertyValueFactory<Supplier, String>("sname"));
 		supplierDuesColumn.setCellValueFactory(new PropertyValueFactory<Supplier, Double>("dues"));
 		supplierDataTable.setItems(Supplier.getDataList());
@@ -1206,12 +1231,14 @@ public class PaymentController implements Initializable {
 							+ " from employee e, supplier s, payment p, supplier_payment op, s_order so "
 							+ " where op.manager_ID=e.employee_ID and op.supplier_Id = so.supplier_id and p.payment_id= op.payment_id "
 							+ " and so.supplier_id=s.supplier_id;", null)));
+			
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
 
 		supplierManagerNameColum.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
+					
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
 						ArrayList<String> x = p.getValue();
@@ -1222,6 +1249,7 @@ public class PaymentController implements Initializable {
 						}
 					}
 				});
+		
 		supplierPaymentNameColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
@@ -1282,6 +1310,7 @@ public class PaymentController implements Initializable {
 									+ " where  op.manager_ID=e.employee_ID and op.supplier_Id = so.supplier_id and p.payment_id= op.payment_id "
 									+ " and so.supplier_id=s.supplier_id and  s.supplier_name like ? ;",
 							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
+					
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
@@ -1293,6 +1322,7 @@ public class PaymentController implements Initializable {
 									+ " where  op.manager_ID=e.employee_ID and op.supplier_Id = so.supplier_id and p.payment_id= op.payment_id "
 									+ " and so.supplier_id=s.supplier_id and  e.employee_name like ? ;",
 							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
+					
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
@@ -1305,6 +1335,7 @@ public class PaymentController implements Initializable {
 									+ " where  op.manager_ID=e.employee_ID and op.supplier_Id = so.supplier_id and p.payment_id= op.payment_id "
 									+ " and so.supplier_id=s.supplier_id and  month(p.payment_date) like ? ;",
 							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
+					
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
@@ -1321,7 +1352,6 @@ public class PaymentController implements Initializable {
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
-
 			} else {
 				try {
 					ArrayList<String> parameters = new ArrayList<>();
@@ -1336,6 +1366,7 @@ public class PaymentController implements Initializable {
 									+ " or month(p.payment_date) like ? " + " or  e.employee_name like ? "
 									+ " or s.supplier_name like ? );",
 							parameters);
+					
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
@@ -1366,7 +1397,6 @@ public class PaymentController implements Initializable {
 		// ------------------------------------------tax-----------------------------------------------------------------------
 		taxOperationComboBox.setValue("select");
 		taxOperationComboBox.setItems(TaxChoices);
-
 		bankNameTaxTextField.setOpacity(0);
 		availableUntilDateTax.setOpacity(0);
 		writingDateTax.setOpacity(0);
@@ -1381,6 +1411,7 @@ public class PaymentController implements Initializable {
 							+ " from employee e , tax t, payment p, taxes_payment tp "
 							+ " where  tp.manager_ID=e.employee_ID and tp.payment_ID=p.payment_ID and t.tax_id=tp.tax_id;",
 					null)));
+			
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
@@ -1457,6 +1488,7 @@ public class PaymentController implements Initializable {
 									+ " from employee e , tax t, payment p, taxes_payment tp "
 									+ " where  tp.manager_ID=e.employee_ID and tp.payment_ID=p.payment_ID and t.tax_id=tp.tax_id"
 									+ " and t.tax_id like ? ;", new ArrayList<>(Arrays.asList("%" + newValue + "%")));
+			
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
@@ -1468,6 +1500,7 @@ public class PaymentController implements Initializable {
 									+ " where  tp.manager_ID=e.employee_ID and tp.payment_ID=p.payment_ID and t.tax_id=tp.tax_id"
 									+ " and  e.employee_name like ? ;",
 							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
+					
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
@@ -1480,6 +1513,7 @@ public class PaymentController implements Initializable {
 									+ " where  tp.manager_ID=e.employee_ID and tp.payment_ID=p.payment_ID and t.tax_id=tp.tax_id "
 									+ " and  month(t.tax_date) like ? ;",
 							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
+					
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
@@ -1492,6 +1526,7 @@ public class PaymentController implements Initializable {
 									+ " where  tp.manager_ID=e.employee_ID and tp.payment_ID=p.payment_ID and t.tax_id=tp.tax_id "
 									+ "and  year(t.tax_date) like ? ;",
 							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
+					
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
@@ -1508,15 +1543,14 @@ public class PaymentController implements Initializable {
 									+ " where ( tp.manager_ID=e.employee_ID and tp.payment_ID=p.payment_ID and t.tax_id=tp.tax_id )"
 									+ "and  (year(t.tax_date) like ? " + " or month(t.tax_date) like ? "
 									+ " or  e.employee_name like ? " + " or t.tax_id like ?) ;", parameters);
+					
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
 			}
 			taxTable.setItems(FXCollections.observableArrayList(filteredList));
 		});
-
-		// ---------------------------------------------------------------------------------------------------------------------
-
+		
 	}
 
 }

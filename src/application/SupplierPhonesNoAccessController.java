@@ -9,6 +9,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import Relations.*;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Ahmad Abbas
+ *
+ */
 public class SupplierPhonesNoAccessController implements Initializable {
 
 	@FXML
@@ -17,7 +23,6 @@ public class SupplierPhonesNoAccessController implements Initializable {
 	@FXML
 	private Label title;
 
-	@SuppressWarnings("exports")
 	public void setPhoneNumbers(Supplier supplier) {
 		title.setText("Supplier With ID " + supplier.getID() + " Phones");
 		phoneList.setItems(FXCollections.observableArrayList(supplier.getPhones()));

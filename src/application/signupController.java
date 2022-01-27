@@ -19,7 +19,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -30,6 +29,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Loor Sawalhi
+ *
+ */
 public class signupController implements Initializable {
 
 	int flag = 0;
@@ -104,7 +109,6 @@ public class signupController implements Initializable {
 		deletePhone.setEffect(effect);
 		String phone = phoneList.getSelectionModel().getSelectedItem();
 		phoneList.getItems().remove(phone);
-
 	}
 
 	public void deleteOnMouseReleased() {
@@ -169,13 +173,11 @@ public class signupController implements Initializable {
 		Stage stage2 = new Stage();
 		stage2.setScene(new Scene(root1));
 		stage2.show();
-
 	}
 
 	public void addUser(ActionEvent e) throws IOException, ClassNotFoundException, SQLException, ParseException {
-
+		
 		boolean flag = false;
-
 		if (employeeNameTextField.getText().isBlank() == false && nationalIDTextField.getText().isBlank() == false
 				&& dateOfWorkPicker.getValue().toString().isBlank() == false
 				&& hourlyPaidTextField.getText().isBlank() == false && passwordTextField.getText().isBlank() == false) {
@@ -203,7 +205,7 @@ public class signupController implements Initializable {
 					if (str.matches("[a-zA-Z]+") == false) {
 						flag = true;
 					}
-
+					
 					if (flag) {
 						Alert alert = new Alert(Alert.AlertType.ERROR);
 						alert.setTitle("Wrong Input");
@@ -222,8 +224,8 @@ public class signupController implements Initializable {
 								nationalIDTextField.getText(), dateOfWorkPicker.getValue(),
 								Double.parseDouble(hourlyPaidTextField.getText()), phones, passwordTextField.getText(),
 								ismanager, "true");
+						
 						Employee.getData().add(temp);
-
 						Employee.insertEmployee(employeeNameTextField.getText(), nationalIDTextField.getText(),
 								dateOfWorkPicker.getValue(), Double.parseDouble(hourlyPaidTextField.getText()), phones,
 								passwordTextField.getText(), ismanager, "true");
@@ -252,7 +254,6 @@ public class signupController implements Initializable {
 			alert.setContentText("Fields Need To BE Full!!");
 			alert.showAndWait();
 		}
-
 	}
 
 	@Override
@@ -260,5 +261,4 @@ public class signupController implements Initializable {
 		phoneList.setEditable(true);
 		phoneList.setCellFactory(TextFieldListCell.forListView());
 	}
-
 }

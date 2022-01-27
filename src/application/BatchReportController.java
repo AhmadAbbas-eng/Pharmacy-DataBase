@@ -1,5 +1,5 @@
 package application;
- 
+
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,31 +15,39 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Aseel Sabri
+ *
+ */
 public class BatchReportController implements Initializable {
-	
-    @FXML
-    private TableView<ArrayList<String>> batch;
 
-    @FXML
-    private TableColumn<ArrayList<String>, String> expiryDateColumn;
+	@FXML
+	private TableView<ArrayList<String>> batch;
 
-    @FXML
-    private TableColumn<ArrayList<String>, String> productNameColumn;
+	@FXML
+	private TableColumn<ArrayList<String>, String> expiryDateColumn;
 
-    @FXML
-    private TableColumn<ArrayList<String>, String> productionDateColumn;
+	@FXML
+	private TableColumn<ArrayList<String>, String> productNameColumn;
+
+	@FXML
+	private TableColumn<ArrayList<String>, String> productionDateColumn;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
 		try {
-			batch.setItems(FXCollections.observableArrayList(Queries.queryResult("select p.product_name,b.batch_production_date,b.batch_expiry_date\r\n"
-					+ "from product p,batch b\r\n" + "where p.product_ID=b.product_Id and b.batch_production_date <> '1111-01-01';",
-					null)));
+			batch.setItems(
+					FXCollections.observableArrayList(Queries.queryResult(
+							"select p.product_name,b.batch_production_date,b.batch_expiry_date\r\n"
+									+ "from product p,batch b\r\n"
+									+ "where p.product_ID=b.product_Id and b.batch_production_date <> '1111-01-01';",
+							null)));
+
 		} catch (ClassNotFoundException | SQLException e1) {
 			e1.printStackTrace();
 		}
-
 		productNameColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
@@ -52,6 +60,7 @@ public class BatchReportController implements Initializable {
 						}
 					}
 				});
+
 		productionDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override

@@ -15,6 +15,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Loor Sawalhi
+ *
+ */
 public class ChequesReportController implements Initializable {
 
 	@FXML
@@ -42,6 +48,7 @@ public class ChequesReportController implements Initializable {
 											+ "from employee e , cheque c, payment p\r\n"
 											+ "where  c.manager_ID=e.employee_ID and c.payment_ID=p.payment_ID ;",
 									null)));
+			
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}

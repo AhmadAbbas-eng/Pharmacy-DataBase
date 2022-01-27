@@ -9,6 +9,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import Relations.Customer;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Aseel Sabri
+ *
+ */
 public class CustomersReportController implements Initializable {
 
 	@FXML
@@ -28,8 +34,6 @@ public class CustomersReportController implements Initializable {
 		nationalIDColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("nationalIDColumn"));
 		customerNameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
 		customerDebtColumn.setCellValueFactory(new PropertyValueFactory<Customer, Double>("debt"));
-
 		CustomerTable.setItems(Customer.getDataList());
 	}
-
 }

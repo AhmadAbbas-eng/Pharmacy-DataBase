@@ -19,9 +19,12 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import Relations.*;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Aseel Sabri
+ */
 public class BatchController implements Initializable {
-
-	String productID;
 
 	@FXML
 	private TableView<Batch> batchTable;
@@ -47,6 +50,8 @@ public class BatchController implements Initializable {
 	@FXML
 	private Label totalQuantityLable;
 
+	String productID;
+
 	public void setProductID(String productID) {
 		this.productID = productID;
 		title.setText("Batch For Product " + productID);
@@ -56,18 +61,24 @@ public class BatchController implements Initializable {
 			parameters.add(productID);
 			ArrayList<ArrayList<String>> totalAmount = Queries.queryResult(
 					"select sum(Batch_Amount) from Batch where Product_ID=? group by(Product_ID) ;", parameters);
+
 			if (totalAmount.size() > 0 && totalAmount.get(0).size() > 0) {
 				totalQuantityLable.setText(totalAmount.get(0).get(0));
 			} else {
 				totalQuantityLable.setText("0");
 			}
 		} catch (ClassNotFoundException | SQLException | ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
+	/**
+	 * Filtering the data to show depending on search text field
+	 * 
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 * @throws ParseException
+	 */
 	public void filterData() throws ClassNotFoundException, SQLException, ParseException {
 		ArrayList<String> parameters = new ArrayList<>();
 		parameters.add(productID);
@@ -78,9 +89,10 @@ public class BatchController implements Initializable {
 							"select * from Batch where Product_ID=? and Batch_Amount>0"
 									+ " and Batch_Production_Date<>'1111-01-01' order by Batch_Expiry_Date;",
 							parameters))));
+
 		} else {
 			String date = datePicker.getValue().toString();
-			if (dateSelector.getSelectionModel().getSelectedItem().equals("Expires On")) {// -----
+			if (dateSelector.getSelectionModel().getSelectedItem().equals("Expires On")) {
 				parameters.add(date);
 				batchTable.setItems(FXCollections.observableArrayList(Batch.getBatchData(Queries.queryResult(
 						"select * from Batch where Product_ID=? and Batch_Production_Date<>'1111-01-01' "
@@ -100,6 +112,7 @@ public class BatchController implements Initializable {
 						"select * from Batch where Product_ID=? and Batch_Production_Date<>'1111-01-01' "
 								+ " and Batch_Expiry_Date>? and Batch_Amount>0 order by Batch_Expiry_Date;",
 						parameters))));
+
 			}
 		}
 	}
@@ -112,7 +125,6 @@ public class BatchController implements Initializable {
 		productionDateColumn.setCellValueFactory(new PropertyValueFactory<Batch, LocalDate>("productionDate"));
 		expiryDateColumn.setCellValueFactory(new PropertyValueFactory<Batch, LocalDate>("expiryDate"));
 		amountColumn.setCellValueFactory(new PropertyValueFactory<Batch, LocalDate>("amount"));
-
 		datePicker.setConverter(new StringConverter<LocalDate>() {
 			private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 
@@ -131,7 +143,5 @@ public class BatchController implements Initializable {
 				return LocalDate.parse(dateString, dateTimeFormatter);
 			}
 		});
-
 	}
-
 }

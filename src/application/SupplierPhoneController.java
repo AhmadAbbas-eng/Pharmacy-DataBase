@@ -26,9 +26,13 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import Relations.*;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Ahmad Abbas
+ *
+ */
 public class SupplierPhoneController implements Initializable {
-
-	private Supplier supplier;
 
 	@FXML
 	private ListView<String> phoneList;
@@ -50,11 +54,13 @@ public class SupplierPhoneController implements Initializable {
 
 	@FXML
 	private Label savedLabel;
+	
 	@FXML
 	private ImageView savedIcon;
+	
+	private Supplier supplier;
 
 	public void showAndFade(Node node) {
-
 		Timeline show = new Timeline(
 				new KeyFrame(Duration.seconds(0), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)),
 				new KeyFrame(Duration.seconds(0.5), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)),
@@ -62,10 +68,8 @@ public class SupplierPhoneController implements Initializable {
 		FadeTransition fade = new FadeTransition(Duration.seconds(0.5), node);
 		fade.setFromValue(1);
 		fade.setToValue(0);
-
 		SequentialTransition blinkFade = new SequentialTransition(node, show, fade);
 		blinkFade.play();
-
 	}
 
 	public void listOnEditCommit(ListView.EditEvent<String> editedPhone) {
@@ -89,7 +93,6 @@ public class SupplierPhoneController implements Initializable {
 	public void textOnEnter(KeyEvent e) {
 		if (e.getCode() == KeyCode.ENTER) {
 			String phone = phoneTextField.getText();
-
 			if (phoneList.getItems().contains(phone.replaceAll("-", ""))) {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setHeaderText(null);
@@ -117,12 +120,10 @@ public class SupplierPhoneController implements Initializable {
 		try {
 			Supplier.getSupplierPhone(supplier);
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		showAndFade(savedLabel);
 		showAndFade(savedIcon);
-
 	}
 
 	public void saveOnMouseReleased() {
@@ -149,7 +150,6 @@ public class SupplierPhoneController implements Initializable {
 		deletePhone.setEffect(effect);
 		String phone = phoneList.getSelectionModel().getSelectedItem();
 		phoneList.getItems().remove(phone);
-
 	}
 
 	public void deleteOnMouseReleased() {
@@ -178,7 +178,6 @@ public class SupplierPhoneController implements Initializable {
 
 		if (phoneList.getItems().contains(phone.replaceAll("-", ""))) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
-			// alert.setTitle("Missing Info");
 			alert.setHeaderText(null);
 			alert.setContentText("Phone Number Already Exists");
 			alert.showAndWait();
@@ -192,7 +191,6 @@ public class SupplierPhoneController implements Initializable {
 			alert.setContentText("Phone Number Must Contain 10 Digits");
 			alert.showAndWait();
 		}
-
 	}
 
 	public void addOnMouseReleased() {
@@ -213,7 +211,6 @@ public class SupplierPhoneController implements Initializable {
 		addPhone.setEffect(effect);
 	}
 
-	@SuppressWarnings("exports")
 	public void setPhoneNumbers(Supplier supplier) {
 		this.supplier = supplier;
 		title.setText("Supplier With ID " + supplier.getID() + " Phones");
@@ -224,9 +221,7 @@ public class SupplierPhoneController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 		savedLabel.setOpacity(0);
 		savedIcon.setOpacity(0);
-
 		phoneList.setEditable(true);
 		phoneList.setCellFactory(TextFieldListCell.forListView());
 	}
-
 }

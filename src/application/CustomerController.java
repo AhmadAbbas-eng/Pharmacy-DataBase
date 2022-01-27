@@ -19,6 +19,12 @@ import java.util.ResourceBundle;
 import Relations.Customer;
 import Relations.Queries;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Aseel Sabri
+ *
+ */
 public class CustomerController implements Initializable {
 
 	@FXML
@@ -68,7 +74,6 @@ public class CustomerController implements Initializable {
 				filteredList = Customer.getCustomerData(Queries.queryResult(
 						"select * from Customer where true " + debtCondition + " order by Customer_name;", null));
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "National ID") {
@@ -76,7 +81,6 @@ public class CustomerController implements Initializable {
 				filteredList = Customer.getCustomerData(Queries.queryResult("select * from Customer "
 						+ " where Customer_NID like ? " + debtCondition + " order by Customer_name;", parameters));
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Name") {
@@ -84,7 +88,6 @@ public class CustomerController implements Initializable {
 				filteredList = Customer.getCustomerData(Queries.queryResult("select * from Customer "
 						+ " where Customer_Name like ? " + debtCondition + " order by Customer_name;", parameters));
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -94,12 +97,11 @@ public class CustomerController implements Initializable {
 				filteredList = Customer.getCustomerData(Queries
 						.queryResult("select * from Customer where (Customer_Name like ? " + " or Customer_NID like ? )"
 								+ debtCondition + " order by Customer_name;", parameters));
+				
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-
 		customerTable.setItems(FXCollections.observableArrayList(filteredList));
 	}
 
@@ -115,16 +117,12 @@ public class CustomerController implements Initializable {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("CustomerProducts.fxml"));
 			Parent products = (Parent) loader.load();
 			CustomerProductsController show = loader.getController();
-
 			show.setCustomer(customerTable.getSelectionModel().getSelectedItem());
-
 			Stage productsStage = new Stage();
 			Scene scene = new Scene(products);
 			productsStage.setScene(scene);
 			productsStage.show();
-
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -141,16 +139,13 @@ public class CustomerController implements Initializable {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("CustomerPhones.fxml"));
 			Parent contactInfo = (Parent) loader.load();
 			CustomerPhoneController show = loader.getController();
-
 			show.setPhoneNumbers(customerTable.getSelectionModel().getSelectedItem());
-
 			Stage contactInfoStage = new Stage();
 			Scene scene = new Scene(contactInfo, 500, 500);
 			contactInfoStage.setScene(scene);
 			contactInfoStage.show();
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -160,13 +155,10 @@ public class CustomerController implements Initializable {
 		effect.setBrightness(0.8);
 		editButton.setEffect(effect);
 		try {
-
 			editLoader = new FXMLLoader(getClass().getResource("CustomerEdit.fxml"));
 			Parent editPane = (Parent) editLoader.load();
 			CustomerEditController edit = editLoader.getController();
-
 			edit.setRow(customerTable.getSelectionModel().getSelectedItem(), this);
-
 			Scene scene = new Scene(editPane);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Stage editStage = new Stage();
@@ -174,10 +166,8 @@ public class CustomerController implements Initializable {
 			editStage.setScene(scene);
 			editStage.show();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	public void editOnMouseReleased() {
@@ -201,7 +191,6 @@ public class CustomerController implements Initializable {
 	public void tableOnMousePressed() {
 		if (editLoader != null && customerTable.getSelectionModel().getSelectedItem() != null) {
 			CustomerEditController edit = editLoader.getController();
-
 			edit.setRow(customerTable.getSelectionModel().getSelectedItem(), this);
 		}
 	}
@@ -218,7 +207,6 @@ public class CustomerController implements Initializable {
 		nidColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("NID"));
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
 		debtColumn.setCellValueFactory(new PropertyValueFactory<Customer, Double>("debt"));
-
 		try {
 			Customer.getCustomerData();
 		} catch (ClassNotFoundException | SQLException e1) {
@@ -226,12 +214,11 @@ public class CustomerController implements Initializable {
 			e1.printStackTrace();
 		}
 		customerTable.setItems(Customer.getDataList());
-
+		
 		searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
 			stringToSearch = newValue;
 			filterList();
 		});
 
 	}
-
 }

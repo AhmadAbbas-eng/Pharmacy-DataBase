@@ -23,6 +23,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Ahmad Abbas
+ */
 public class PayingOffController implements Initializable {
 
 	@FXML
@@ -63,10 +68,10 @@ public class PayingOffController implements Initializable {
 
 	@FXML
 	private Button selectCustomerButton;
+	
 	String stringToSearch = "";
 
 	public void showAndFade(Node node) {
-
 		Timeline show = new Timeline(
 				new KeyFrame(Duration.seconds(0), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)),
 				new KeyFrame(Duration.seconds(0.5), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)),
@@ -74,10 +79,8 @@ public class PayingOffController implements Initializable {
 		FadeTransition fade = new FadeTransition(Duration.seconds(0.5), node);
 		fade.setFromValue(1);
 		fade.setToValue(0);
-
 		SequentialTransition blinkFade = new SequentialTransition(node, show, fade);
 		blinkFade.play();
-
 	}
 
 	public void filterList() {
@@ -88,8 +91,8 @@ public class PayingOffController implements Initializable {
 			try {
 				filteredList = Customer.getCustomerData(Queries
 						.queryResult("select * from Customer where Customer_Debt>0 order by Customer_name;", null));
+		
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "National ID") {
@@ -97,32 +100,30 @@ public class PayingOffController implements Initializable {
 				filteredList = Customer
 						.getCustomerData(Queries.queryResult("select * from Customer " + " where Customer_NID like ?"
 								+ " and Customer_Debt>0 " + " order by Customer_name;", parameters));
+			
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Name") {
 			try {
 				filteredList = Customer
 						.getCustomerData(Queries.queryResult("select * from Customer " + " where Customer_Name like ? "
-								+ " and Customer_Debt>0 " + " order by Customer_name;", parameters));
+							+ " and Customer_Debt>0 " + " order by Customer_name;", parameters));
+			
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		} else {
 			try {
 				parameters.add("%" + stringToSearch + "%");
 				filteredList = Customer.getCustomerData(Queries
 						.queryResult("select * from Customer where Customer_Name like ? " + " or Customer_NID like ? "
 								+ " and Customer_Debt>0 " + " order by Customer_name;", parameters));
+			
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-
 		customerTable.setItems(FXCollections.observableArrayList(filteredList));
 		customerTable.refresh();
 	}
@@ -160,36 +161,32 @@ public class PayingOffController implements Initializable {
 			alert.setHeaderText(null);
 			alert.setContentText("Paid Amount Must Be Entered");
 			alert.showAndWait();
-
 		} else if (!checkPaid || paidAmount <= 0) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Wrong Input Format");
 			alert.setHeaderText(null);
 			alert.setContentText("Paid Amount Must Be A Positive Real Number");
 			alert.showAndWait();
-
 		} else {
-
 			try {
 				Queries.queryUpdate(
 						"Insert into Income"
 								+ " (Income_amount, Income_Date, Employee_ID, Customer_NID) Values(?, ?, ?, ?);",
 						new ArrayList<>(Arrays.asList(paidAmount + "", dateLabel.getText(),
 								Employee.getCurrentID() + "", customerNIDLabel.getText())));
+				
 				Queries.queryUpdate("Update Customer set Customer_Debt=Customer_Debt-? where Customer_NID=? ;",
 						new ArrayList<>(Arrays.asList(paidStr, customerNIDLabel.getText())));
+				
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 			showAndFade(paidIcon);
 			showAndFade(paidLabel);
 			customerNIDLabel.setText("-");
 			paidTextField.setText("");
 			filterList();
 		}
-
 	}
 
 	@Override
@@ -197,19 +194,16 @@ public class PayingOffController implements Initializable {
 		paidIcon.setOpacity(0);
 		paidLabel.setOpacity(0);
 		dateLabel.setText(LocalDate.now().toString());
-
 		fieldSelector.setItems(FXCollections.observableArrayList("-Specify Field-", "National ID", "Name"));
 		nidColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("NID"));
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
 		debtColumn.setCellValueFactory(new PropertyValueFactory<Customer, Double>("debt"));
-
 		filterList();
-
+		
 		searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
 			stringToSearch = newValue;
 			filterList();
 		});
 
 	}
-
 }

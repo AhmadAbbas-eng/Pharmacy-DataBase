@@ -35,6 +35,12 @@ import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 import javafx.util.Duration;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Ahmad Abbas
+ *
+ */
 public class DisposalController implements Initializable {
 
 	@FXML
@@ -71,37 +77,33 @@ public class DisposalController implements Initializable {
 	private ComboBox<String> searchOperationComboBox;
 
 	@FXML
-	private CheckBox expiredSelectionCheckBox;	
-	
+	private CheckBox expiredSelectionCheckBox;
+
 	@FXML
 	private Label success;
 
-	private String stringToSearch="";
-	
+	private String stringToSearch = "";
+
 	@FXML
 	private ImageView successIcon;
 	ObservableList<String> searchChoices = FXCollections.observableArrayList("Name", "Expired Month", "Expired Year",
 			"Production Month", "Production Year");
 
 	public void showAndFade(Node node) {
-
 		Timeline show = new Timeline(
 				new KeyFrame(Duration.seconds(0), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)),
 				new KeyFrame(Duration.seconds(0.5), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)),
 				new KeyFrame(Duration.seconds(1), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)));
+
 		FadeTransition fade = new FadeTransition(Duration.seconds(0.5), node);
 		fade.setFromValue(1);
 		fade.setToValue(0);
-
 		SequentialTransition blinkFade = new SequentialTransition(node, show, fade);
 		blinkFade.play();
-
 	}
 
-
-
 	public void selectionOnAction(ActionEvent e) {
-		
+
 		if (expiredSelectionCheckBox.isSelected()) {
 			try {
 				toBeDisposedTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
@@ -110,6 +112,7 @@ public class DisposalController implements Initializable {
 								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW()) \r\n"
 								+ "order by b.batch_expiry_date;",
 						null)));
+
 			} catch (ClassNotFoundException | SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -123,13 +126,12 @@ public class DisposalController implements Initializable {
 								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' \r\n"
 								+ "order by b.batch_expiry_date;",
 						null)));
+
 			} catch (ClassNotFoundException | SQLException e1) {
 				e1.printStackTrace();
 			}
 			amountToBeDisposed.setOpacity(1);
-
 		}
-
 	}
 
 	public void disposeOnAction(ActionEvent e) throws ClassNotFoundException, SQLException {
@@ -163,27 +165,28 @@ public class DisposalController implements Initializable {
 						flag = true;
 					}
 					if (flag == false) {
-						Payment.insertPayment(java.time.LocalDate.now(), Double.parseDouble(disposalCostTextField.getText()), "Cash");
+						Payment.insertPayment(java.time.LocalDate.now(),
+								Double.parseDouble(disposalCostTextField.getText()), "Cash");
 						Queries.queryUpdate(
 								"insert into drug_disposal (Disposal_amount,Disposal_date,Employee_ID,Payment_ID,Product_ID ,Batch_Production_Date"
 										+ ",Batch_Expiry_Date) values(?,?,?,?,?,?,?)",
-								new ArrayList<String>(
-										Arrays.asList(toBeDisposedTable.getSelectionModel().getSelectedItem().get(4).toString(),
-												java.time.LocalDate.now().toString(), Employee.getCurrentID()+"",
-												Payment.getMaxID() + "",
-												toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString(),
-												toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString(),
-												toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString())));
+								new ArrayList<String>(Arrays.asList(
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(4).toString(),
+										java.time.LocalDate.now().toString(), Employee.getCurrentID() + "",
+										Payment.getMaxID() + "",
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString())));
 
 						Queries.queryUpdate(
 								"update batch set batch_amount = 0 where Batch_Production_Date=? and Batch_Expiry_Date=? and Product_ID=?",
-								new ArrayList<String>(
-										Arrays.asList(toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString(),
-												toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString(),
-												toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString())));
+								new ArrayList<String>(Arrays.asList(
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString())));
+
 						showAndFade(success);
 						showAndFade(successIcon);
-
 						try {
 							toBeDisposedTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
 									"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
@@ -191,21 +194,22 @@ public class DisposalController implements Initializable {
 											+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' \r\n"
 											+ "order by b.batch_expiry_date;",
 									null)));
+
 						} catch (ClassNotFoundException | SQLException e1) {
 							e1.printStackTrace();
-						}					}
+						}
+					}
 				}
 			} else {
-				if (disposalCostTextField.getText().isBlank() == true || amountToBeDisposed.getText().isBlank() == true) {
+				if (disposalCostTextField.getText().isBlank() == true
+						|| amountToBeDisposed.getText().isBlank() == true) {
 					Alert alert = new Alert(Alert.AlertType.ERROR);
 					alert.setTitle(null);
 					alert.setHeaderText(null);
 					alert.setContentText("Fill The Required Fields!");
 					alert.showAndWait();
 				} else {
-
 					boolean flag = false;
-
 					try {
 						int num2 = Integer.parseInt(amountToBeDisposed.getText());
 						if (num2 < 0) {
@@ -215,7 +219,6 @@ public class DisposalController implements Initializable {
 							alert.setHeaderText(null);
 							alert.setContentText("The Amount Can't Be Negative!");
 							alert.showAndWait();
-
 						} else {
 							try {
 								Double num = Double.parseDouble(disposalCostTextField.getText());
@@ -226,7 +229,6 @@ public class DisposalController implements Initializable {
 									alert.setHeaderText(null);
 									alert.setContentText("The Cost Can't Be Negative!");
 									alert.showAndWait();
-
 								}
 							} catch (NumberFormatException e1) {
 								Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -248,16 +250,17 @@ public class DisposalController implements Initializable {
 					}
 
 					if (flag == false) {
-						Payment.insertPayment(java.time.LocalDate.now(), Double.parseDouble(disposalCostTextField.getText()), "Cash");
+						Payment.insertPayment(java.time.LocalDate.now(),
+								Double.parseDouble(disposalCostTextField.getText()), "Cash");
 						Queries.queryUpdate(
 								"insert into drug_disposal (Disposal_amount,Disposal_date,Employee_ID,Payment_ID,Product_ID ,Batch_Production_Date"
 										+ ",Batch_Expiry_Date) values(?,?,?,?,?,?,?)",
-								new ArrayList<String>(
-										Arrays.asList(amountToBeDisposed.getText(), java.time.LocalDate.now().toString(),
-												Employee.getCurrentID()+"", Payment.getMaxID() + "",
-												toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString(),
-												toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString(),
-												toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString())));
+								new ArrayList<String>(Arrays.asList(amountToBeDisposed.getText(),
+										java.time.LocalDate.now().toString(), Employee.getCurrentID() + "",
+										Payment.getMaxID() + "",
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString())));
 
 						Queries.queryUpdate(
 								"update batch set batch_amount = batch_amount - ? where Batch_Production_Date=? and Batch_Expiry_Date=? and Product_ID=?",
@@ -275,11 +278,12 @@ public class DisposalController implements Initializable {
 											+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' \r\n"
 											+ "order by b.batch_expiry_date;",
 									null)));
+							
 						} catch (ClassNotFoundException | SQLException e1) {
 							e1.printStackTrace();
 						}
 					}
-					
+
 				}
 			}
 
@@ -293,12 +297,12 @@ public class DisposalController implements Initializable {
 		amountToBeDisposed.clear();
 		disposalCostTextField.clear();
 		toBeDisposedTable.getSelectionModel().clearSelection();
-
 	}
-	
+
 	public void filterList() {
 		ArrayList<ArrayList<String>> filteredList = new ArrayList<>();
-		if (stringToSearch == null || stringToSearch.isEmpty() || stringToSearch.isBlank() && expiredSelectionCheckBox.isSelected() == false) {
+		if (stringToSearch == null || stringToSearch.isEmpty()
+				|| stringToSearch.isBlank() && expiredSelectionCheckBox.isSelected() == false) {
 			try {
 				filteredList = Queries.queryResult(
 						"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
@@ -310,7 +314,8 @@ public class DisposalController implements Initializable {
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
-		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Name" && expiredSelectionCheckBox.isSelected() == false) {
+		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Name"
+				&& expiredSelectionCheckBox.isSelected() == false) {
 			try {
 				filteredList = Queries.queryResult(
 						"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
@@ -318,6 +323,7 @@ public class DisposalController implements Initializable {
 								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' "
 								+ " and p.product_name like ? ;",
 						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
+				
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
@@ -330,6 +336,7 @@ public class DisposalController implements Initializable {
 								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' "
 								+ " and  month(b.batch_expiry_date) like ? ;",
 						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
+				
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
@@ -343,6 +350,7 @@ public class DisposalController implements Initializable {
 								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' "
 								+ " and  year(b.batch_expiry_date) like ? ;",
 						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
+				
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
@@ -355,6 +363,7 @@ public class DisposalController implements Initializable {
 								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' "
 								+ " and  month(b.batch_production_date) like ? ;",
 						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
+				
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
@@ -368,6 +377,7 @@ public class DisposalController implements Initializable {
 								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' "
 								+ " and  year(b.batch_production_date) like ? ;",
 						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
+				
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
@@ -387,10 +397,12 @@ public class DisposalController implements Initializable {
 								+ " or  year(b.batch_expiry_date) like ? " + " or  p.product_name like ? "
 								+ " or month(b.batch_expiry_date) like ? ) ;",
 						parameters);
+				
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
-		} else if (stringToSearch == null || stringToSearch.isEmpty() || stringToSearch.isBlank() && expiredSelectionCheckBox.isSelected() == true) {
+		} else if (stringToSearch == null || stringToSearch.isEmpty()
+				|| stringToSearch.isBlank() && expiredSelectionCheckBox.isSelected() == true) {
 			try {
 				filteredList = Queries.queryResult(
 						"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
@@ -402,7 +414,8 @@ public class DisposalController implements Initializable {
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
-		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Name" && expiredSelectionCheckBox.isSelected() == true) {
+		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Name"
+				&& expiredSelectionCheckBox.isSelected() == true) {
 			try {
 				filteredList = Queries.queryResult(
 						"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
@@ -410,6 +423,7 @@ public class DisposalController implements Initializable {
 								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW())"
 								+ " and p.product_name like ? ;",
 						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
+				
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
@@ -422,6 +436,7 @@ public class DisposalController implements Initializable {
 								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW())"
 								+ " and  month(b.batch_expiry_date) like ? ;",
 						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
+				
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
@@ -435,6 +450,7 @@ public class DisposalController implements Initializable {
 								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW())"
 								+ " and  year(b.batch_expiry_date) like ? ;",
 						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
+				
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
@@ -447,6 +463,7 @@ public class DisposalController implements Initializable {
 								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW())"
 								+ " and  month(b.batch_production_date) like ? ;",
 						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
+				
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
@@ -460,6 +477,7 @@ public class DisposalController implements Initializable {
 								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW())"
 								+ " and  year(b.batch_production_date) like ? ;",
 						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
+				
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
@@ -489,7 +507,6 @@ public class DisposalController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		searchOperationComboBox.setItems(searchChoices);
-
 		try {
 			toBeDisposedTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
 					"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
@@ -497,6 +514,7 @@ public class DisposalController implements Initializable {
 							+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' \r\n"
 							+ "order by b.batch_expiry_date;",
 					null)));
+			
 		} catch (ClassNotFoundException | SQLException e1) {
 			e1.printStackTrace();
 		}
@@ -563,7 +581,7 @@ public class DisposalController implements Initializable {
 				});
 
 		searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			stringToSearch=newValue;
+			stringToSearch = newValue;
 			filterList();
 		});
 
