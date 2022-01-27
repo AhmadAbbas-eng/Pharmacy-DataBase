@@ -82,15 +82,15 @@
             </DropShadow>
          </effect>
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="904.0" spacing="20.0">
+            <HBox alignment="CENTER_LEFT" minHeight="10.0" minWidth="10.0" prefHeight="42.0" prefWidth="904.0" spacing="20.0">
                <children>
-                  <ComboBox fx:id="monthBox" prefWidth="150.0" promptText="- Month -" stylesheets="@../../CSS/combobox.css" />
-                  <ComboBox fx:id="yearBox" layoutX="10.0" layoutY="10.0" prefWidth="150.0" promptText="- Year -" stylesheets="@../../CSS/combobox.css" />
+                  <ComboBox fx:id="monthBox" minHeight="10.0" minWidth="10.0" prefWidth="150.0" promptText="- Month -" stylesheets="@../../CSS/combobox.css" />
+                  <ComboBox fx:id="yearBox" layoutX="10.0" layoutY="10.0" minHeight="10.0" minWidth="10.0" prefWidth="150.0" promptText="- Year -" stylesheets="@../../CSS/combobox.css" />
                </children>
             </HBox>
          </children>
       </VBox>
-      <Label layoutX="4.0" layoutY="110.0" prefHeight="1.0" prefWidth="1126.0" style="-fx-background-color: #000000; -fx-opacity: 0.1;" textFill="#c1d7dc" AnchorPane.leftAnchor="4.0" AnchorPane.topAnchor="110.0">
+      <Label layoutX="4.0" layoutY="107.0" minWidth="10.0" prefHeight="1.0" prefWidth="1071.0" style="-fx-background-color: #000000; -fx-opacity: 0.1;" textFill="#c1d7dc" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="425.66666666666674" AnchorPane.topAnchor="110.0">
          <font>
             <Font size="1.0" />
          </font>
@@ -194,7 +194,7 @@
       </VBox>
       <AnchorPane layoutX="3.0" layoutY="505.0" prefHeight="314.0" prefWidth="1137.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="505.0">
          <children>
-            <LineChart fx:id="monthlySellChart" prefHeight="369.0" prefWidth="1294.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <LineChart fx:id="monthlySellChart" minHeight="10.0" minWidth="10.0" prefHeight="369.0" prefWidth="1294.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <xAxis>
                   <CategoryAxis side="BOTTOM" />
                </xAxis>
@@ -204,120 +204,167 @@
             </LineChart>
          </children>
       </AnchorPane>
-      <HBox fx:id="iconsHBox" layoutX="73.0" layoutY="5.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="982.0" spacing="70.0" AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="446.0" AnchorPane.topAnchor="5.0">
+      <HBox fx:id="iconsHBox" layoutX="73.0" layoutY="5.0" maxHeight="2000.0" maxWidth="2000.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="982.0" spacing="70.0" AnchorPane.leftAnchor="73.0" AnchorPane.topAnchor="5.0">
          <children>
-            <AnchorPane fx:id="employeePane" maxHeight="1000.0" maxWidth="1000.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #a47bd9; -fx-background-radius: 25;">
+            <AnchorPane fx:id="employeePane" maxHeight="300.0" maxWidth="300.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #a47bd9; -fx-background-radius: 25;">
                <children>
-                  <ImageView fx:id="employeeImage" fitHeight="65.0" fitWidth="72.0" layoutX="21.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="19.599999999999994" AnchorPane.topAnchor="10.0">
-                     <image>
-                        <Image url="@../../Icons/icons8-pharmacist-64.png" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="numberOfEmployeesLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="24.0" prefHeight="36.0" prefWidth="86.0" text="1" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="24.0">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="totalEmployeesLabel" alignment="CENTER" layoutX="3.0" layoutY="54.0" prefHeight="36.0" prefWidth="86.0" text="Total Employees" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="54.0">
-                     <font>
-                        <Font name="System Bold" size="11.0" />
-                     </font>
-                  </Label>
+                  <HBox alignment="CENTER" layoutX="-14.0" maxHeight="300.0" maxWidth="300.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="100.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <ImageView fx:id="employeeImage" fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;">
+                           <image>
+                              <Image url="@../../Icons/icons8-pharmacist-64.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  <VBox alignment="BOTTOM_CENTER" layoutX="-14.0" layoutY="-10.0" maxHeight="300.0" maxWidth="300.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label fx:id="numberOfEmployeesLabel" alignment="CENTER" contentDisplay="CENTER" minHeight="5.0" minWidth="10.0" prefHeight="35.0" prefWidth="86.0" text="1" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="totalEmployeesLabel" alignment="TOP_CENTER" contentDisplay="CENTER" minHeight="5.0" minWidth="10.0" prefHeight="28.0" prefWidth="86.0" text="Total Employees" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="11.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane maxHeight="120.0" maxWidth="120.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #5a9fd0; -fx-background-radius: 25;">
+            <AnchorPane maxHeight="300.0" maxWidth="300.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #5a9fd0; -fx-background-radius: 25;">
                <children>
-                  <ImageView fitHeight="77.0" fitWidth="90.0" layoutX="14.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="15.400000000000006" AnchorPane.topAnchor="5.0">
-                     <image>
-                        <Image url="@../../Icons/icons8-branch-64.png" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="numberOfSupplierLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="25.0" prefHeight="35.0" prefWidth="78.0" text="2" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="25.39999999999999" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="25.0">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER" layoutX="1.0" layoutY="55.0" prefHeight="18.0" prefWidth="77.0" text="Total Suppliers" textFill="WHITE" AnchorPane.bottomAnchor="-0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="55.0">
-                     <font>
-                        <Font name="System Bold" size="11.0" />
-                     </font>
-                  </Label>
+                  <HBox alignment="CENTER" maxHeight="300.0" maxWidth="300.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="100.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <ImageView fx:id="supplierImage" fitHeight="77.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;">
+                           <image>
+                              <Image url="@../../Icons/icons8-branch-64.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  <VBox alignment="BOTTOM_CENTER" layoutX="-14.0" layoutY="-74.0" maxHeight="300.0" maxWidth="300.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label fx:id="numberOfSupplierLabel" alignment="CENTER" contentDisplay="CENTER" minHeight="5.0" minWidth="10.0" prefHeight="35.0" prefWidth="100.0" text="2" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="totalSuppliersLabel" alignment="TOP_CENTER" contentDisplay="CENTER" minHeight="5.0" minWidth="10.0" prefHeight="28.0" prefWidth="100.0" text="Total Suppliers" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="11.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane maxHeight="120.0" maxWidth="120.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #62ad89; -fx-background-radius: 25;">
+            <AnchorPane maxHeight="300.0" maxWidth="300.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #62ad89; -fx-background-radius: 25;">
                <children>
-                  <ImageView fitHeight="83.0" fitWidth="77.0" layoutX="11.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="17.599999999999994" AnchorPane.topAnchor="4.0">
-                     <image>
-                        <Image url="@../../Icons/icons8-business-building-80.png" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="numberOfCustomerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="8.0" layoutY="24.0" prefHeight="35.0" prefWidth="78.0" text="3" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="26.39999999999999" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER" layoutY="56.0" prefHeight="27.0" prefWidth="86.0" text="Total Customers" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
-                     <font>
-                        <Font name="System Bold" size="11.0" />
-                     </font>
-                  </Label>
+                  <HBox alignment="CENTER" layoutX="-35.0" layoutY="-19.0" maxHeight="300.0" maxWidth="300.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="100.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <ImageView fx:id="customerImage" fitHeight="83.0" fitWidth="77.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;">
+                           <image>
+                              <Image url="@../../Icons/icons8-business-building-80.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  <VBox alignment="BOTTOM_CENTER" layoutX="-1.0" layoutY="-18.0" maxHeight="300.0" maxWidth="300.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label fx:id="numberOfCustomerLabel" alignment="CENTER" contentDisplay="CENTER" minHeight="5.0" minWidth="10.0" prefHeight="35.0" prefWidth="100.0" text="3" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="totalCustomersLabel" alignment="TOP_CENTER" contentDisplay="CENTER" minHeight="5.0" minWidth="10.0" prefHeight="28.0" prefWidth="100.0" text="Total Customers" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="11.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane maxHeight="120.0" maxWidth="120.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #278FAA; -fx-background-radius: 25;">
+            <AnchorPane maxHeight="300.0" maxWidth="300.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #278FAA; -fx-background-radius: 25;">
                <children>
-                  <ImageView fitHeight="77.0" fitWidth="77.0" layoutX="11.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;">
-                     <image>
-                        <Image url="@../../Icons/icons8-medicine-64.png" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="numberOfProductLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="8.0" layoutY="24.0" prefHeight="35.0" prefWidth="78.0" text="3" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="26.39999999999999" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER" layoutY="56.0" prefHeight="27.0" prefWidth="86.0" text="Total Products" textFill="WHITE" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
-                     <font>
-                        <Font name="System Bold" size="11.0" />
-                     </font>
-                  </Label>
+                  <HBox alignment="CENTER" maxHeight="300.0" maxWidth="300.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="100.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <ImageView fx:id="productImage" fitHeight="77.0" fitWidth="77.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;">
+                           <image>
+                              <Image url="@../../Icons/icons8-medicine-64.png" />
+                           </image>
+                        </ImageView>
+                     </children></HBox>
+                  <VBox alignment="BOTTOM_CENTER" maxHeight="300.0" maxWidth="300.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label fx:id="numberOfProductLabel" alignment="CENTER" contentDisplay="CENTER" minHeight="5.0" minWidth="10.0" prefHeight="35.0" prefWidth="100.0" text="3" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="totalProductsLabel" alignment="TOP_CENTER" contentDisplay="CENTER" minHeight="5.0" minWidth="10.0" prefHeight="28.0" prefWidth="100.0" text="Total Products" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="11.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane maxHeight="120.0" maxWidth="120.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #f5c95e; -fx-background-radius: 25;">
+            <AnchorPane maxHeight="300.0" maxWidth="300.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #f5c95e; -fx-background-radius: 25;">
                <children>
-                  <ImageView fitHeight="67.0" fitWidth="95.0" layoutX="18.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="13.400000000000006" AnchorPane.topAnchor="8.0">
-                     <image>
-                        <Image url="@../../Icons/icons8-out-of-stock-50.png" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="outOfStockLabel" alignment="CENTER" layoutY="21.0" prefHeight="37.0" prefWidth="86.0" text="5" textFill="WHITE" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="21.0">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER" layoutX="9.0" layoutY="59.0" prefHeight="19.0" prefWidth="76.0" text="Out Of Stock" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="59.0">
-                     <font>
-                        <Font name="System Bold" size="11.0" />
-                     </font>
-                  </Label>
+                  <HBox alignment="CENTER" maxHeight="300.0" maxWidth="300.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="100.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <ImageView fx:id="stockImage" fitHeight="67.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;">
+                           <image>
+                              <Image url="@../../Icons/icons8-out-of-stock-50.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  <VBox alignment="BOTTOM_CENTER" maxHeight="300.0" maxWidth="300.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label fx:id="outOfStockLabel" alignment="CENTER" minHeight="5.0" minWidth="10.0" prefHeight="35.0" prefWidth="100.0" text="5" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="stockLabel" alignment="TOP_CENTER" contentDisplay="CENTER" minHeight="5.0" minWidth="10.0" prefHeight="28.0" prefWidth="100.0" text="Out Of Stock" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="11.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane maxHeight="120.0" maxWidth="120.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #f16333; -fx-background-radius: 25;">
+            <AnchorPane maxHeight="300.0" maxWidth="300.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #f16333; -fx-background-radius: 25;">
                <children>
-                  <ImageView fitHeight="67.0" fitWidth="95.0" layoutX="18.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="17.400000000000006" AnchorPane.topAnchor="8.0">
-                     <image>
-                        <Image url="@../../Icons/icons8-schedule-50.png" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="numberOfExpiredProductsLabel" alignment="CENTER" layoutX="24.0" layoutY="23.0" prefHeight="35.0" prefWidth="56.0" text="6" textFill="WHITE" AnchorPane.bottomAnchor="27.39999999999999" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER" layoutX="25.0" layoutY="65.0" prefHeight="16.0" prefWidth="43.0" text="Expired" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="65.0">
-                     <font>
-                        <Font name="System Bold" size="11.0" />
-                     </font>
-                  </Label>
+                  <HBox alignment="CENTER" maxHeight="300.0" maxWidth="300.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="100.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <ImageView fx:id="expiredImage" fitHeight="67.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.4;">
+                           <image>
+                              <Image url="@../../Icons/icons8-schedule-50.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  <VBox alignment="BOTTOM_CENTER" maxHeight="300.0" maxWidth="300.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label fx:id="numberOfExpiredProductsLabel" alignment="CENTER" minHeight="5.0" minWidth="10.0" prefHeight="35.0" prefWidth="100.0" text="6" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="expiredLabel" alignment="TOP_CENTER" contentDisplay="CENTER" minHeight="5.0" minWidth="10.0" prefHeight="28.0" prefWidth="100.0" text="Expired" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="11.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                </children>
             </AnchorPane>
          </children>
