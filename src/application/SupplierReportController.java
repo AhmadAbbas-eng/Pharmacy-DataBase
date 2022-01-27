@@ -9,6 +9,12 @@ import java.util.ResourceBundle;
 
 import Relations.*;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Ahmad Abbas
+ *
+ */
 public class SupplierReportController implements Initializable {
 
 	@FXML
@@ -37,7 +43,5 @@ public class SupplierReportController implements Initializable {
 		supplierEmaiColumn.setCellValueFactory(new PropertyValueFactory<Supplier, String>("email"));
 		supplierDuesColumn.setCellValueFactory(new PropertyValueFactory<Supplier, Double>("dues"));
 		supplierTable.setItems(Supplier.getDataList());
-
 	}
-
 }

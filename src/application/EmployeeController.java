@@ -27,6 +27,11 @@ import java.util.ResourceBundle;
 
 import Relations.*;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Ahmad Abbas
+ */
 public class EmployeeController implements Initializable {
 
 	@FXML
@@ -78,7 +83,6 @@ public class EmployeeController implements Initializable {
 	private CheckBox isManager;
 
 	private FXMLLoader editLoader;
-
 	private String stringToSearch = "";
 
 	public void showWorkOnAction() {
@@ -93,16 +97,12 @@ public class EmployeeController implements Initializable {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("EmployeeWorkedHours.fxml"));
 			Parent workedHours = (Parent) loader.load();
 			EmployeeWorkedHoursController show = loader.getController();
-
 			show.setEmployee(employeeTable.getSelectionModel().getSelectedItem());
-
 			Stage workedHoursStage = new Stage();
 			Scene scene = new Scene(workedHours);
 			workedHoursStage.setScene(scene);
 			workedHoursStage.show();
-
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -119,16 +119,12 @@ public class EmployeeController implements Initializable {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("EmployeePhone.fxml"));
 			Parent contactInfo = (Parent) loader.load();
 			EmployeePhoneController show = loader.getController();
-
 			show.setPhoneNumbers(employeeTable.getSelectionModel().getSelectedItem());
-
 			Stage contactInfoStage = new Stage();
 			Scene scene = new Scene(contactInfo, 500, 500);
 			contactInfoStage.setScene(scene);
 			contactInfoStage.show();
-
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -138,13 +134,10 @@ public class EmployeeController implements Initializable {
 		effect.setBrightness(0.8);
 		editButton.setEffect(effect);
 		try {
-
 			editLoader = new FXMLLoader(getClass().getResource("EmployeeEdit.fxml"));
 			Parent editPane = (Parent) editLoader.load();
 			EmployeeEditController edit = editLoader.getController();
-
 			edit.setRow(employeeTable.getSelectionModel().getSelectedItem(), this);
-
 			Scene scene = new Scene(editPane);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Stage editStage = new Stage();
@@ -152,10 +145,8 @@ public class EmployeeController implements Initializable {
 			editStage.setScene(scene);
 			editStage.show();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	public void editOnMouseReleased() {
@@ -204,6 +195,7 @@ public class EmployeeController implements Initializable {
 				filteredList = Employee
 						.getEmployeeData(Queries.queryResult("select * from Employee where Employee_ID<>-1 "
 								+ isActiveCondition + isManagerCondition + " order by Employee_ID;", null));
+			
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
 				e.printStackTrace();
 			}
@@ -215,6 +207,7 @@ public class EmployeeController implements Initializable {
 										"select * from Employee where Employee_ID<>-1 and Employee_National_ID like ? "
 												+ isActiveCondition + isManagerCondition + " order by Employee_ID;",
 										null));
+				
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
 				e.printStackTrace();
 			}
@@ -225,6 +218,7 @@ public class EmployeeController implements Initializable {
 								"select * from Employee where Employee_ID<>-1 and Employee_Name like ? "
 										+ isActiveCondition + isManagerCondition + " order by Employee_ID;",
 								parameters));
+				
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
 				e.printStackTrace();
 			}
@@ -235,6 +229,7 @@ public class EmployeeController implements Initializable {
 								"select * from Employee where Employee_ID<>-1 and Employee_ID like ? "
 										+ isActiveCondition + isManagerCondition + " order by Employee_ID;",
 								parameters));
+				
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
 				e.printStackTrace();
 			}
@@ -246,6 +241,7 @@ public class EmployeeController implements Initializable {
 								"select * from Employee where Employee_ID<>-1 and Employee_Date_Of_Work like ? "
 										+ isActiveCondition + isManagerCondition + " order by Employee_ID;",
 								parameters));
+				
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
 				e.printStackTrace();
 			}
@@ -259,21 +255,20 @@ public class EmployeeController implements Initializable {
 						+ " where (Employee_Name like ? or Employee_National_ID  like ? or Employee_ID like ? "
 						+ " or Employee_Date_Of_Work like ? ) " + isActiveCondition + isManagerCondition
 						+ " order by Employee_ID;", parameters));
+				
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-
 		employeeTable.setItems(FXCollections.observableArrayList(filteredList));
 		employeeTable.refresh();
-
 	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		fieldSelector.setItems(
 				FXCollections.observableArrayList("-Specify Field-", "National ID", "Name", "ID", "Date of Work"));
+		
 		idColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("ID"));
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
 		nidColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("NID"));
@@ -282,21 +277,16 @@ public class EmployeeController implements Initializable {
 		passwordColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("password"));
 		isManagerColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("isManager"));
 		isActiveColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("isActive"));
-
 		try {
 			Employee.getEmployeeData();
 		} catch (ClassNotFoundException | SQLException | ParseException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-
 		employeeTable.setItems(Employee.getDataList());
-
 		searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
 			stringToSearch = newValue;
 			filterList();
 		});
 
 	}
-
 }

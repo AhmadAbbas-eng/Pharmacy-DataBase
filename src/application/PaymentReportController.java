@@ -15,6 +15,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Loor Sawalhi
+ */
 public class PaymentReportController  implements Initializable{
 
 	@FXML
@@ -34,7 +39,6 @@ public class PaymentReportController  implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
 		try {
 			paymentTable.setItems(
 					FXCollections.observableArrayList(Queries.queryResult(
@@ -94,8 +98,6 @@ public class PaymentReportController  implements Initializable{
 							return new SimpleStringProperty("-");
 						}
 					}
-				});
-
-		
+				});		
 	}
 }

@@ -25,6 +25,12 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import Relations.*;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Ahmad Abbas
+ *
+ */
 public class SupplierController implements Initializable {
 
 	@FXML
@@ -72,14 +78,11 @@ public class SupplierController implements Initializable {
 					parameters.add(supplierTable.getItems().get(i).getID() + "");
 					Queries.queryUpdate("update Supplier set Supplier_Email=? where Supplier_ID=? ;", parameters);
 					Supplier.getData().get(i).setAddress(supplierTable.getItems().get(i).getEmail());
-					// saveEdits();
 				} catch (ClassNotFoundException | SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		}
-
 	}
 
 	public void saveOnMouseReleased() {
@@ -114,43 +117,34 @@ public class SupplierController implements Initializable {
 			alert.showAndWait();
 			return;
 		}
-
 		if (Employee.hasAccess()) {
 			try {
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("SupplierPhones.fxml"));
 				Parent contactInfo = (Parent) loader.load();
 				SupplierPhoneController show = loader.getController();
 				show.setPhoneNumbers(supplierTable.getSelectionModel().getSelectedItem());
-
 				Stage contactInfoStage = new Stage();
 				Scene scene = new Scene(contactInfo, 500, 500);
 				contactInfoStage.setScene(scene);
 				contactInfoStage.show();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else {
 			try {
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("SupplierPhonesNoAccess.fxml"));
 				Parent contactInfo;
-
 				contactInfo = (Parent) loader.load();
-
 				SupplierPhonesNoAccessController show = loader.getController();
 				show.setPhoneNumbers(supplierTable.getSelectionModel().getSelectedItem());
-
 				Stage contactInfoStage = new Stage();
 				Scene scene = new Scene(contactInfo, 500, 500);
 				contactInfoStage.setScene(scene);
 				contactInfoStage.show();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		}
-
 	}
 
 	public void showOnMousePressed() {
@@ -178,7 +172,6 @@ public class SupplierController implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public void addOnMouseReleased() {
@@ -216,12 +209,10 @@ public class SupplierController implements Initializable {
 		addressColumn.setCellValueFactory(new PropertyValueFactory<Supplier, String>("address"));
 		emailColumn.setCellValueFactory(new PropertyValueFactory<Supplier, String>("email"));
 		duesColumn.setCellValueFactory(new PropertyValueFactory<Supplier, Double>("dues"));
-
 		if (Employee.hasAccess()) {
 			emailColumn.setEditable(true);
 			supplierTable.setEditable(true);
 			emailColumn.setCellFactory(TextFieldTableCell.<Supplier>forTableColumn());
-
 		}
 		emailColumn.setOnEditCommit((CellEditEvent<Supplier, String> t) -> {
 			((Supplier) t.getTableView().getItems().get(t.getTablePosition().getRow())).setEmail(t.getNewValue());
@@ -230,7 +221,6 @@ public class SupplierController implements Initializable {
 		try {
 			Supplier.getSupplierData();
 		} catch (ClassNotFoundException | SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		supplierTable.setItems(Supplier.getDataList());
@@ -244,34 +234,32 @@ public class SupplierController implements Initializable {
 					filteredList = Supplier
 							.getSupplierData(Queries.queryResult("select * from Supplier order by Supplier_ID;", null));
 				} catch (ClassNotFoundException | SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} else if (fieldSelector.getSelectionModel().getSelectedItem() == "ID") {
 				try {
 					filteredList = Supplier.getSupplierData(Queries.queryResult(
 							"select * fromSupplier where Supplier_ID like ? order by Supplier_ID;", parameters));
+					
 				} catch (ClassNotFoundException | SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Name") {
 				try {
 					filteredList = Supplier.getSupplierData(Queries.queryResult(
 							"select * from Supplier where Supplier_Name like ? order by Supplier_ID;", parameters));
+			
 				} catch (ClassNotFoundException | SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Address") {
 				try {
 					filteredList = Supplier.getSupplierData(Queries.queryResult(
 							"select * from Supplier where Supplier_Address like ? order by Supplier_ID;", parameters));
+			
 				} catch (ClassNotFoundException | SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
 			} else {
 				try {
 					while (parameters.size() < 3) {
@@ -281,14 +269,12 @@ public class SupplierController implements Initializable {
 							"select * from Supplier where Supplier_Name like ? " + " or Supplier_ID like ? "
 									+ " or Supplier_Address like ? " + " order by Supplier_ID;",
 							parameters));
+					
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
 			}
-
 			supplierTable.setItems(FXCollections.observableArrayList(filteredList));
 		});
-
 	}
-
 }

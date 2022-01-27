@@ -7,7 +7,8 @@ module Database {
 	requires java.management;
 	requires javafx.graphics;
 	exports application;
-	
+	exports Relations;
+
 	opens Relations to javafx.graphics, javafx.fxml,javafx.base;
 	opens application to javafx.graphics, javafx.fxml;
 }

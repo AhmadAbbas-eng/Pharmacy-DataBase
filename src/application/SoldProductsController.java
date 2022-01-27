@@ -13,9 +13,13 @@ import java.net.URL;
 import java.sql.SQLException;
 import Relations.*;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Aseel Sabri
+ *
+ */
 public class SoldProductsController implements Initializable {
-
-	private String productID;
 
 	@FXML
 	private TableView<ArrayList<String>> soldProductsTable;
@@ -57,6 +61,7 @@ public class SoldProductsController implements Initializable {
 	private Label title;
 
 	private String stringToSearch = "";
+	private String productID;
 
 	public void setProduct(String productID, String productName) {
 		this.productID = productID;
@@ -64,7 +69,6 @@ public class SoldProductsController implements Initializable {
 		try {
 			filterList();
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -89,15 +93,12 @@ public class SoldProductsController implements Initializable {
 			} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Production Date") {
 				searchCondition = " and COB.Batch_Production_Date like ? ";
 			}
-
 			else if (fieldSelector.getSelectionModel().getSelectedItem() == "Expiry Date") {
 				searchCondition = " and COB.Batch_Expiry_Date like ? ";
 			}
-
 			else if (fieldSelector.getSelectionModel().getSelectedItem() == "Sale Date") {
 				searchCondition = " and CO.Order_Date like ? ";
 			}
-
 			else if (fieldSelector.getSelectionModel().getSelectedItem() == "Sold By") {
 				searchCondition = " and E.Employee_Name like ? ";
 			} else {
@@ -108,12 +109,9 @@ public class SoldProductsController implements Initializable {
 						+ " or COB.Batch_Expiry_Date like ? " + " or CO.Order_Date like ? "
 						+ " or E.Employee_Name like ? ) ";
 			}
-
 		}
-
 		filteredList = (Queries.queryResult(query + searchCondition + ";", parameters));
 		soldProductsTable.setItems(FXCollections.observableArrayList(filteredList));
-
 	}
 
 	@Override
@@ -205,12 +203,9 @@ public class SoldProductsController implements Initializable {
 			try {
 				filterList();
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		});
 
 	}
-
 }

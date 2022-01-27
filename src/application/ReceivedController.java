@@ -14,8 +14,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -25,6 +23,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Loor Sawalhi
+ */
 public class ReceivedController implements Initializable {
 	@FXML
 	private TableColumn<SupplierOrder, Double> costColumn;
@@ -88,6 +91,7 @@ public class ReceivedController implements Initializable {
 			try {
 				filteredList = SupplierOrder.getSupplierOrderData(Queries
 						.queryResult("select * from S_Order where Recieved_By <> '-1' order by Order_ID;", null));
+				
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
 				e.printStackTrace();
 			}
@@ -98,6 +102,7 @@ public class ReceivedController implements Initializable {
 								"select * from S_Order " + " where Recieved_By <> '-1' and Order_ID like ? "
 										+ "order by Order_ID;",
 								new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
+				
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
 				e.printStackTrace();
 			}
@@ -108,6 +113,7 @@ public class ReceivedController implements Initializable {
 								"select * from S_Order " + " where Recieved_By <> '-1' and Supplier_ID like ? "
 										+ " order by Order_ID;",
 								new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
+				
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
 				e.printStackTrace();
 			}
@@ -119,6 +125,7 @@ public class ReceivedController implements Initializable {
 								"select * from S_Order " + " where Recieved_By <> '-1' and Manager_id like ? "
 										+ " order by Order_ID;",
 								new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
+				
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
 				e.printStackTrace();
 			}
@@ -128,6 +135,7 @@ public class ReceivedController implements Initializable {
 				filteredList = SupplierOrder.getSupplierOrderData(Queries.queryResult("select * from S_Order "
 						+ " where Recieved_By <> '-1' and month(Recieved_Date) like ? " + " order by Order_ID;",
 						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
+				
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
 				e.printStackTrace();
 			}
@@ -137,10 +145,10 @@ public class ReceivedController implements Initializable {
 				filteredList = SupplierOrder.getSupplierOrderData(Queries.queryResult("select * from S_Order "
 						+ " where Recieved_By <> '-1' and year(Recieved_Date) like ? " + " order by Order_ID;",
 						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
+				
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
 				e.printStackTrace();
 			}
-
 		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Recieved By") {
 			try {
 				filteredList = SupplierOrder
@@ -160,7 +168,6 @@ public class ReceivedController implements Initializable {
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
 				e.printStackTrace();
 			}
-
 		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Order Year") {
 			try {
 				filteredList = SupplierOrder.getSupplierOrderData(Queries.queryResult("select * from S_Order "
@@ -199,7 +206,6 @@ public class ReceivedController implements Initializable {
 		recivedByIDColumn.setCellValueFactory(new PropertyValueFactory<SupplierOrder, String>("recievedBy"));
 		recivedDateColumn.setCellValueFactory(new PropertyValueFactory<SupplierOrder, String>("recDate"));
 		payDueDateColumn.setCellValueFactory(new PropertyValueFactory<SupplierOrder, String>("dueDateOfPayment"));
-
 		try {
 			recievedOrdersTable.setItems(FXCollections.observableArrayList(SupplierOrder.getSupplierOrderData(
 					Queries.queryResult("select * from S_Order where Recieved_By <> '-1' order by Order_ID;", null))));
@@ -212,7 +218,5 @@ public class ReceivedController implements Initializable {
 			filterList();
 			
 		});
-
 	}
-
 }

@@ -19,6 +19,12 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Loor Sawalhi
+ *
+ */
 public class ConfirmNewUserController {
 	@FXML
 	private Button cancelButton;
@@ -53,19 +59,19 @@ public class ConfirmNewUserController {
 			filteredList = Employee.getEmployeeData(
 					Queries.queryResult("select * from Employee where Employee_ID = ? order by Employee_ID;",
 							new ArrayList<>(Arrays.asList(idTextField.getText()))));
+			
 			if (filteredList.isEmpty() == true) {
-
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle(null);
 				alert.setHeaderText(null);
 				alert.setContentText("This User ID is Not Available!!");
 				alert.showAndWait();
-
 			} else {
 				filteredList = Employee.getEmployeeData(Queries.queryResult(
 						"select * from Employee where Employee_ID = ? "
 								+ " and Employee_password = ? order by Employee_ID;",
 						new ArrayList<>(Arrays.asList(idTextField.getText(), passwordPasswordField.getText()))));
+				
 				if (filteredList.isEmpty() == true) {
 					Alert alert = new Alert(Alert.AlertType.ERROR);
 					alert.setTitle(null);
@@ -77,6 +83,7 @@ public class ConfirmNewUserController {
 							"select * from Employee where Employee_ID = ? and isManager = "
 									+ "'true' and Employee_password = ? order by Employee_ID;",
 							new ArrayList<>(Arrays.asList(idTextField.getText(), passwordPasswordField.getText()))));
+				
 					if (filteredList.isEmpty() == true) {
 						Alert alert = new Alert(Alert.AlertType.ERROR);
 						alert.setTitle(null);
@@ -93,7 +100,6 @@ public class ConfirmNewUserController {
 						Stage stage2 = new Stage();
 						stage2.setScene(new Scene(root1));
 						stage2.setResizable(false);
-
 						stage2.show();
 					}
 				}
@@ -112,7 +118,6 @@ public class ConfirmNewUserController {
 				passwordPasswordField.clear();
 			}
 		} else if (filteredList.isEmpty() == true || passwordPasswordField.getText().isBlank() == true) {
-
 			idTextField.clear();
 			passwordPasswordField.clear();
 			Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -121,7 +126,5 @@ public class ConfirmNewUserController {
 			alert.setContentText("Please Enter Your ID & Password");
 			alert.showAndWait();
 		}
-
 	}
-
 }

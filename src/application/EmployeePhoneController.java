@@ -26,6 +26,11 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import Relations.*;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Ahmad Abbas
+ */
 public class EmployeePhoneController implements Initializable {
 
 	private Employee employee;
@@ -62,10 +67,8 @@ public class EmployeePhoneController implements Initializable {
 		FadeTransition fade = new FadeTransition(Duration.seconds(0.5), node);
 		fade.setFromValue(1);
 		fade.setToValue(0);
-
 		SequentialTransition blinkFade = new SequentialTransition(node, show, fade);
 		blinkFade.play();
-
 	}
 
 	public void listOnEditCommit(ListView.EditEvent<String> editedPhone) {
@@ -116,12 +119,10 @@ public class EmployeePhoneController implements Initializable {
 		try {
 			Employee.getEmployeePhone(employee);
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		showAndFade(savedLabel);
 		showAndFade(savedIcon);
-
 	}
 
 	public void saveOnMouseReleased() {
@@ -208,7 +209,6 @@ public class EmployeePhoneController implements Initializable {
 		addPhone.setEffect(effect);
 	}
 
-	@SuppressWarnings("exports")
 	public void setPhoneNumbers(Employee employee) {
 		this.employee = employee;
 		title.setText(employee.getName() + " Phones");
@@ -223,5 +223,4 @@ public class EmployeePhoneController implements Initializable {
 		phoneList.setEditable(true);
 		phoneList.setCellFactory(TextFieldListCell.forListView());
 	}
-
 }

@@ -13,6 +13,12 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import Relations.*;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Ahmad Abbas
+ *
+ */
 public class AddSupplierController implements Initializable {
 
 	SupplierController caller;
@@ -45,9 +51,12 @@ public class AddSupplierController implements Initializable {
 	private ImageView deletePhone;
 
 	public void phoneTextOnEnter(KeyEvent e) {
+		
+		// When the use press ENTER
 		if (e.getCode() == KeyCode.ENTER) {
 			String phone = phoneTextField.getText();
 
+			// Check the existence of the number
 			if (phoneList.getItems().contains(phone.replaceAll("-", ""))) {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setHeaderText(null);
@@ -115,7 +124,6 @@ public class AddSupplierController implements Initializable {
 		String name = nameTextField.getText();
 		String address = addressTextField.getText();
 		String email = emailTextField.getText();
-
 		Boolean checkDues = true;
 		try {
 			dues = Double.parseDouble(duesTextField.getText());
@@ -130,8 +138,8 @@ public class AddSupplierController implements Initializable {
 			alert.setHeaderText("Wrong Input Format");
 			alert.setContentText("Name Must Consist of Alphabetical Characters\n" + "Dues Must Be A Real Number \n"
 					+ "All Fields Must Be Filled");
+			
 			alert.showAndWait();
-
 		} else if (phoneList.getItems().size() == 0) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Missing Info");
@@ -142,8 +150,10 @@ public class AddSupplierController implements Initializable {
 			Supplier.insertSupplier(name, address, email, dues, new ArrayList<>(phoneList.getItems()));
 			Supplier.getData().add(new Supplier(Supplier.getMaxID(), name, address, email, dues,
 					new ArrayList<>(phoneList.getItems())));
+			
 			Supplier.getDataList().add(new Supplier(Supplier.getMaxID(), name, address, email, dues,
 					new ArrayList<>(phoneList.getItems())));
+			
 			nameTextField.setText("");
 			addressTextField.setText("");
 			duesTextField.setText("");

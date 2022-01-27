@@ -42,19 +42,16 @@ public class AddBatchController implements Initializable {
 	private Label productNameLabel;
 
 	private String product;
-
-	private int productID=1;
-
+	private int productID = 1;
 	ListView<Batch> batchlist;
-
 	private ReceiveOrdersController caller;
 
-
 	/**
+	 * Set the product for the batch
 	 * 
-	 * @param id
-	 * @param name
-	 * @param caller
+	 * @param id     The ID of the product
+	 * @param name   The name of the product
+	 * @param caller The controller which receives orders
 	 */
 	public void setProduct(int id, String name, ReceiveOrdersController caller) {
 		setPid(id);
@@ -68,8 +65,11 @@ public class AddBatchController implements Initializable {
 	}
 
 	public void addBatch(ActionEvent event) throws ClassNotFoundException, SQLException, ParseException {
+
+		// Check the values of text fields and assign entered data
 		if (productionDateDatePicker.getValue() != null && expiryDateDatePicker.getValue() != null) {
-			if (productionDateDatePicker.getValue().compareTo(expiryDateDatePicker.getValue()) > 0 || productionDateDatePicker.getValue().compareTo(expiryDateDatePicker.getValue()) == 0
+			if (productionDateDatePicker.getValue().compareTo(expiryDateDatePicker.getValue()) > 0
+					|| productionDateDatePicker.getValue().compareTo(expiryDateDatePicker.getValue()) == 0
 					|| productionDateDatePicker.getValue().compareTo(LocalDate.now()) > 0) {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle("Wrong Input Format");
@@ -77,19 +77,22 @@ public class AddBatchController implements Initializable {
 				alert.setContentText("Choose Reasonable Dates");
 				alert.showAndWait();
 			} else {
+
+				// Check if the batch is already exists
 				ArrayList<Batch> batch = Batch.getBatchData(Queries.queryResult(
 						"select * from Batch " + " where Product_ID = ? " + " and batch_production_date = ? "
 								+ " and batch_expiry_date = ? ;",
-						new ArrayList<>(
-								Arrays.asList(productID + "", productionDateDatePicker.getValue().toString(), expiryDateDatePicker.getValue().toString()))));
+						new ArrayList<>(Arrays.asList(productID + "", productionDateDatePicker.getValue().toString(),
+								expiryDateDatePicker.getValue().toString()))));
 
+				// Insert data into the table
 				if (batch.isEmpty()) {
-					Batch.insertBatch(productID, productionDateDatePicker.getValue(), expiryDateDatePicker.getValue(), 0);
+					Batch.insertBatch(productID, productionDateDatePicker.getValue(), expiryDateDatePicker.getValue(),
+							0);
+					
 					Stage stage = (Stage) addButton.getScene().getWindow();
 					stage.close();
 					caller.saveUpdates();
-					// -----------------------------
-
 				} else {
 					Alert alert = new Alert(Alert.AlertType.ERROR);
 					alert.setHeaderText(null);
@@ -123,5 +126,4 @@ public class AddBatchController implements Initializable {
 		}
 
 	}
-
 }

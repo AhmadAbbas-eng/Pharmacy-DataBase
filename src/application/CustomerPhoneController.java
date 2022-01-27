@@ -23,9 +23,14 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import Relations.*;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Aseel Sabri
+ *
+ */
 public class CustomerPhoneController implements Initializable {
 
-	private Customer customer;
 
 	@FXML
 	private ListView<String> phoneList;
@@ -50,20 +55,21 @@ public class CustomerPhoneController implements Initializable {
 
 	@FXML
 	private ImageView savedIcon;
-
+	
+	private Customer customer;
+	
 	public void showAndFade(Node node) {
 
 		Timeline show = new Timeline(
 				new KeyFrame(Duration.seconds(0), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)),
 				new KeyFrame(Duration.seconds(0.5), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)),
 				new KeyFrame(Duration.seconds(1), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)));
-		FadeTransition fade = new FadeTransition(Duration.seconds(0.5), node);
+		
+		FadeTransition fade = new FadeTransition(Duration.seconds(0.5), node);		
 		fade.setFromValue(1);
 		fade.setToValue(0);
-
 		SequentialTransition blinkFade = new SequentialTransition(node, show, fade);
 		blinkFade.play();
-
 	}
 
 	public void listOnEditCommit(ListView.EditEvent<String> editedPhone) {
@@ -115,12 +121,10 @@ public class CustomerPhoneController implements Initializable {
 		try {
 			Customer.getCustomerPhone(customer);
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		showAndFade(savedLabel);
 		showAndFade(savedIcon);
-
 	}
 
 	public void saveOnMouseReleased() {
@@ -210,7 +214,6 @@ public class CustomerPhoneController implements Initializable {
 		addPhone.setEffect(effect);
 	}
 
-	@SuppressWarnings("exports")
 	public void setPhoneNumbers(Customer customer) {
 		this.customer = customer;
 		title.setText(customer.getName() + " Phones");
@@ -221,9 +224,7 @@ public class CustomerPhoneController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 		savedLabel.setOpacity(0);
 		savedIcon.setOpacity(0);
-
 		phoneList.setEditable(true);
 		phoneList.setCellFactory(TextFieldListCell.forListView());
 	}
-
 }

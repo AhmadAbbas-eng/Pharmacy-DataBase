@@ -35,6 +35,11 @@ import java.util.*;
 import java.text.DateFormatSymbols;
 import Relations.*;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Ahmad Abbas
+ */
 public class EmployeeWorkedHoursController implements Initializable {
 
 	@FXML
@@ -86,15 +91,11 @@ public class EmployeeWorkedHoursController implements Initializable {
 	private ImageView saveButton;
 
 	private Employee employee;
-
 	private boolean editedFlag = false;
-
 	private String prevSelectedMonth = "All Months";
-
 	private String prevSelectedYear = "All Years";
 
 	public void showAndFade(Node node) {
-
 		Timeline show = new Timeline(
 				new KeyFrame(Duration.seconds(0), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)),
 				new KeyFrame(Duration.seconds(0.5), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)),
@@ -102,7 +103,6 @@ public class EmployeeWorkedHoursController implements Initializable {
 		FadeTransition fade = new FadeTransition(Duration.seconds(0.5), node);
 		fade.setFromValue(1);
 		fade.setToValue(0);
-
 		SequentialTransition blinkFade = new SequentialTransition(node, show, fade);
 		blinkFade.play();
 	}
@@ -164,13 +164,10 @@ public class EmployeeWorkedHoursController implements Initializable {
 			alert.setHeaderText(null);
 			alert.setContentText("Record For This Date Already Exists");
 			alert.showAndWait();
-
 		}
 
 		else if (numOfHoursStr == null || numOfHoursStr.isEmpty() || numOfHoursStr.isBlank() || !checkNumOfHours
 				|| numOfHours < 0) {
-			// ---------------------------------------------------------------------------------
-
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Wrong Input Format");
 			alert.setHeaderText(null);
@@ -183,14 +180,11 @@ public class EmployeeWorkedHoursController implements Initializable {
 			parameters.add(year + "");
 			parameters.add(numOfHoursStr);
 			Queries.queryUpdate("Insert into Work_Hours Values(?, ?, ?, ?) ;", parameters);
-
 			filterData();
-
 			numOfHoursTextField.setText("");
 			showAndFade(addedIcon);
 			showAndFade(addedLabel);
 		}
-
 	}
 
 	public void addOnMouseReleased() {
@@ -211,14 +205,12 @@ public class EmployeeWorkedHoursController implements Initializable {
 		addButton.setEffect(effect);
 	}
 
-	@SuppressWarnings("exports")
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 		title.setText(employee.getName() + " Worked Hours");
 		try {
 			filterData();
 		} catch (ClassNotFoundException | SQLException | ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -244,6 +236,7 @@ public class EmployeeWorkedHoursController implements Initializable {
 				+ "W.Employee_Worked_Hours, (E.Employee_Hourly_Paid*W.Employee_Worked_Hours) "
 				+ "from Work_hours W, Employee E " + "where E.Employee_ID=W.Employee_ID and E.Employee_ID= ? "
 				+ dateCondition + ";", parameters);
+		
 		workedHoursTable.setItems(FXCollections.observableArrayList(filteredList));
 		prevSelectedMonth = monthSearchSelector.getSelectionModel().getSelectedItem();
 		prevSelectedYear = yearSearchSelector.getSelectionModel().getSelectedItem();
@@ -268,7 +261,6 @@ public class EmployeeWorkedHoursController implements Initializable {
 					editedFlag = false;
 					filterData();
 				} catch (ParseException | ClassNotFoundException | SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} else if (result.get() == continueButtonType) {
@@ -276,7 +268,6 @@ public class EmployeeWorkedHoursController implements Initializable {
 					filterData();
 					editedFlag = false;
 				} catch (ClassNotFoundException | SQLException | ParseException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} else {
@@ -287,7 +278,6 @@ public class EmployeeWorkedHoursController implements Initializable {
 			try {
 				filterData();
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -310,17 +300,15 @@ public class EmployeeWorkedHoursController implements Initializable {
 		}
 
 		yearAddSelector.setItems(FXCollections.observableArrayList(years));
-
 		yearSearchSelector.setItems(FXCollections.observableArrayList(yearsStr));
 		yearSearchSelector.setValue("All Years");
 		monthAddSelector.setItems(FXCollections.observableArrayList(months.subList(1, 13)));
 		monthSearchSelector.setItems(FXCollections.observableArrayList(months));
 		monthSearchSelector.setValue("All Months");
-
 		yearAddSelector.setValue(currentYear);
 		String currentMonth = LocalDate.now().getMonth().toString();
 		monthAddSelector.setValue(currentMonth.charAt(0) + currentMonth.substring(1).toLowerCase());
-
+		
 		monthColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override

@@ -23,8 +23,13 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Aseel Sabri
+ *
+ */
 public class ChooseCustomerController implements Initializable {
-	private String stringToSearch;
 
 	@FXML
 	private TableView<Customer> customerTable;
@@ -75,20 +80,19 @@ public class ChooseCustomerController implements Initializable {
 	private Label addedLabel;
 
 	private SellController caller;
+	private String stringToSearch;
 
 	public void showAndFade(Node node) {
-
 		Timeline show = new Timeline(
 				new KeyFrame(Duration.seconds(0), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)),
 				new KeyFrame(Duration.seconds(0.5), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)),
 				new KeyFrame(Duration.seconds(1), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)));
+		
 		FadeTransition fade = new FadeTransition(Duration.seconds(0.5), node);
 		fade.setFromValue(1);
 		fade.setToValue(0);
-
 		SequentialTransition blinkFade = new SequentialTransition(node, show, fade);
 		blinkFade.play();
-
 	}
 
 	public void selectCustomerOnAction() {
@@ -183,14 +187,12 @@ public class ChooseCustomerController implements Initializable {
 			alert.setContentText("Custemer With This National ID Already Exists");
 			alert.showAndWait();
 		}
-
 		else if (!NID.matches("[0-9]{9}") || !name.matches("[a-z[A-Z]\\s]+")) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Wrong Input Format");
 			alert.setHeaderText("Wrong Input Format");
 			alert.setContentText("National ID Must Be 9 Digits \n" + "Name Must Consist of Alphabetical Characters");//
 			alert.showAndWait();
-
 		} else {
 			Customer.insertCustomer(NID, name, debt, new ArrayList<>(phoneList.getItems()));
 			filterList();
@@ -263,6 +265,9 @@ public class ChooseCustomerController implements Initializable {
 		deletePhone.setEffect(effect);
 	}
 
+	/**
+	 * Filter the data shown on screen in terms of search test field 
+	 */
 	public void filterList() {
 		ArrayList<Customer> filteredList = new ArrayList<>();
 		ArrayList<String> parameters = new ArrayList<>();
@@ -271,8 +276,8 @@ public class ChooseCustomerController implements Initializable {
 			try {
 				filteredList = Customer.getCustomerData(Queries
 						.queryResult("select * from Customer where Customer_NID<>'0' order by Customer_name;", null));
+				
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "National ID") {
@@ -280,8 +285,8 @@ public class ChooseCustomerController implements Initializable {
 				filteredList = Customer.getCustomerData(Queries.queryResult("select * from Customer"
 						+ " where Customer_NID<>'0' and Customer_NID like ? " + " order by Customer_name;",
 						parameters));
+				
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Name") {
@@ -289,8 +294,8 @@ public class ChooseCustomerController implements Initializable {
 				filteredList = Customer.getCustomerData(Queries.queryResult("select * from Customer"
 						+ " where Customer_NID<>'0' and Customer_Name like ? " + " order by Customer_name;",
 						parameters));
+				
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -300,27 +305,24 @@ public class ChooseCustomerController implements Initializable {
 				filteredList = Customer.getCustomerData(Queries
 						.queryResult("select * from Customer " + " where Customer_NID<>'0' and Customer_Name like ? "
 								+ " or Customer_NID like ? " + " order by Customer_name;", parameters));
+			
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-
 		customerTable.setItems(FXCollections.observableArrayList(filteredList));
 	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		
 		addedIcon.setOpacity(0);
 		addedLabel.setOpacity(0);
-
 		fieldSelector.setItems(FXCollections.observableArrayList("-Specify Field-", "National ID", "Name"));
 		nidColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("NID"));
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
 		debtColumn.setCellValueFactory(new PropertyValueFactory<Customer, Double>("debt"));
-
 		filterList();
-
 		searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
 			stringToSearch = newValue;
 			filterList();
@@ -330,7 +332,5 @@ public class ChooseCustomerController implements Initializable {
 
 	public void setCaller(SellController caller) {
 		this.caller = caller;
-
 	}
-
 }

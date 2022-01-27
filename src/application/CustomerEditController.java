@@ -33,11 +33,13 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 import Relations.*;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Aseel Sabri
+ *
+ */
 public class CustomerEditController implements Initializable {
-
-	private Customer customer;
-
-	private String customerNID = "";
 
 	private CustomerController caller;
 
@@ -83,6 +85,9 @@ public class CustomerEditController implements Initializable {
 	@FXML
 	private Label addedLabel;
 
+	private Customer customer;
+	private String customerNID = "";
+	
 	public void showAndFade(Node node) {
 
 		Timeline show = new Timeline(
@@ -92,10 +97,8 @@ public class CustomerEditController implements Initializable {
 		FadeTransition fade = new FadeTransition(Duration.seconds(0.5), node);
 		fade.setFromValue(1);
 		fade.setToValue(0);
-
 		SequentialTransition blinkFade = new SequentialTransition(node, show, fade);
 		blinkFade.play();
-
 	}
 
 	public void phoneTextOnEnter(KeyEvent e) {
@@ -174,10 +177,10 @@ public class CustomerEditController implements Initializable {
 				parameters.add(customerNID);
 				Queries.queryUpdate("update Customer set Customer_NID=? , Customer_Name=? , Customer_debt=? "
 						+ " where Customer_NID=? ;", parameters);
+				
 				Customer.getCustomerData();
-				caller.saveEdits();// ------------------------------------------
+				caller.saveEdits();
 				customerNID = customer.getNationalID();
-
 			} catch (ClassNotFoundException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -223,7 +226,6 @@ public class CustomerEditController implements Initializable {
 			alert.setContentText("Custemer With This National ID Already Exists");
 			alert.showAndWait();
 		}
-
 		else if (!NID.matches("[0-9]{9}") || !name.matches("[a-z[A-Z]\\s]+")) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Wrong Input Format");
@@ -285,7 +287,6 @@ public class CustomerEditController implements Initializable {
 		deletePhone.setEffect(effect);
 		String phone = phoneList.getSelectionModel().getSelectedItem();
 		phoneList.getItems().remove(phone);
-
 	}
 
 	public void deletePhoneOnMouseReleased() {
@@ -306,7 +307,6 @@ public class CustomerEditController implements Initializable {
 		deletePhone.setEffect(effect);
 	}
 
-	@SuppressWarnings("exports")
 	public void setRow(Customer customer, CustomerController caller) {
 		this.caller = caller;
 		this.customer = customer;
@@ -328,14 +328,11 @@ public class CustomerEditController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 		addedIcon.setOpacity(0);
 		addedLabel.setOpacity(0);
-
 		phoneList.setEditable(true);
 		phoneList.setCellFactory(TextFieldListCell.forListView());
-
 		nidColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("NID"));
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
 		debtColumn.setCellValueFactory(new PropertyValueFactory<Customer, Double>("debt"));
-
 		nidColumn.setOnEditCommit((CellEditEvent<Customer, String> t) -> {
 			try {
 				if ((Queries.queryResult("select * from Customer where Customer_NID=? ;",
@@ -345,7 +342,6 @@ public class CustomerEditController implements Initializable {
 					alert.setHeaderText(null);
 					alert.setContentText("Custemer with this National ID already exists");
 					alert.showAndWait();
-
 					((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNationalID(t.getOldValue());
 				} else if (t.getNewValue().matches("[0-9]{9}") || t.getNewValue().equals("0")) {
 					((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNationalID(t.getNewValue());
@@ -359,7 +355,6 @@ public class CustomerEditController implements Initializable {
 					((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNationalID(t.getOldValue());
 				}
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			customerTable.refresh();
@@ -378,7 +373,5 @@ public class CustomerEditController implements Initializable {
 			}
 			customerTable.refresh();
 		});
-
 	}
-
 }

@@ -39,6 +39,11 @@ import Relations.Queries;
 import Relations.SupplierOrder;
 import Relations.SupplierOrderBatch;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Loor Sawalhi
+ */
 public class ReceiveOrdersController implements Initializable {
 
 	private int counter = 0;
@@ -149,7 +154,6 @@ public class ReceiveOrdersController implements Initializable {
 				alert.setHeaderText(null);
 				alert.setContentText("Set A Reasonable Date");
 				alert.showAndWait();
-
 			} else if (orderedProducts.size() == counter && receivedDatePicker.getValue() != null
 					&& payDueDatePicker.getValue() != null) {
 				ColorAdjust effect = new ColorAdjust();
@@ -163,6 +167,7 @@ public class ReceiveOrdersController implements Initializable {
 							new ArrayList<>(Arrays.asList(Employee.getCurrentID() + "",
 									receivedDatePicker.getValue().toString(), costTextField.getText(),
 									supplierOrder.getID() + "")));
+					
 					Queries.queryUpdate("update Supplier set supplier_dues =? where Supplier_ID =?;", new ArrayList<>(
 							Arrays.asList(costTextField.getText(), supplierOrder.getSupplierID() + "")));
 
@@ -176,7 +181,6 @@ public class ReceiveOrdersController implements Initializable {
 
 					String pID = data.get(counter).get(0);
 					String Amount = data.get(counter).get(4);
-
 					Queries.queryUpdate(
 							"update S_Order_Batch set batch_amount = batch_amount - ?"
 									+ " where product_id = ? and Batch_Production_Date = '1111-01-01';",
@@ -193,9 +197,9 @@ public class ReceiveOrdersController implements Initializable {
 									+ " values(?,?,?,?,?);",
 							new ArrayList<>(Arrays.asList(supplierOrder.getID() + "", pID, data.get(counter).get(2),
 									data.get(counter).get(3), Amount)));
+					
 					++counter;
 				}
-
 				Region page = FXMLLoader.load(getClass().getResource("UnReceivedOrders.fxml"));
 				mainPane.getChildren().removeAll();
 				mainPane.getChildren().setAll(page);
@@ -209,7 +213,6 @@ public class ReceiveOrdersController implements Initializable {
 			alert.setContentText("Set A Date And Fill All Fields");
 			alert.showAndWait();
 		}
-
 	}
 
 	public void saveOnMouseReleased() {
@@ -232,24 +235,19 @@ public class ReceiveOrdersController implements Initializable {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0);
 		saveIcon.setEffect(effect);
-
 	}
 
 	public void addOnMousePressed() throws IOException {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
-		addBatchIcon.setEffect(effect);
-		
+		addBatchIcon.setEffect(effect);		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("AddBatch.fxml"));
 		Parent root1 = (Parent) loader.load();
 		AddBatchController addBatchController = loader.getController();
-		
-		addBatchController.setProduct(orderedProducts.get(counter).getProductID(), ProductName, this);
-		
+		addBatchController.setProduct(orderedProducts.get(counter).getProductID(), ProductName, this);		
 		Stage stage2 = new Stage();
 		stage2.setScene(new Scene(root1));
 		stage2.show();
-
 	}
 
 	public void addOnMouseReleased() {
@@ -274,20 +272,20 @@ public class ReceiveOrdersController implements Initializable {
 		productsBatchColumn.setItems(FXCollections.observableArrayList(Batch.getBatchData(Queries.queryResult(
 				"select * from Batch where product_id =? and batch_production_date <> '1111-01-01';",
 				new ArrayList<>(Arrays.asList(orderedProducts.get(counter).getProductID() + ""))))));
+		
 		productsBatchColumn.refresh();
-
 	}
 
 	public void updateTable() throws ClassNotFoundException, SQLException, ParseException {
 
 		// upload batches to the listview
-
 		productsBatchColumn.setItems(FXCollections.observableArrayList(Batch.getBatchData(Queries.queryResult(
 				"select * from Batch where product_id =? and batch_production_date <> '1111-01-01';",
 				new ArrayList<>(Arrays.asList(orderedProducts.get(counter).getProductID() + ""))))));
+		
 		// set order number
 		orderNumberLabel.setText("Order NO." + supplierOrder.getID());
-
+		
 		// get products ids
 		ArrayList<Product> productName = Product
 				.getProductData(Queries.queryResult("select * from Product where product_id =?;",
@@ -296,28 +294,25 @@ public class ReceiveOrdersController implements Initializable {
 		ProductName = productName.get(0).getName();
 		ProductId = orderedProducts.get(counter).getProductID() + "";
 		QuantityStored = orderedProducts.get(counter).getAmount() + "";
-
 		choosenProductLabel.setText(productName.get(0).getName());
 		savedQuantityLabel.setText("Quantity = " + orderedProducts.get(counter).getAmount() + "");
-
 	}
 
-	@SuppressWarnings("exports")
 	public void setRow(SupplierOrder supplierOrder) throws ClassNotFoundException, SQLException, ParseException {
 		// this.caller = caller;
 		this.supplierOrder = supplierOrder; // order id
+		
 		// get products
-
 		orderedProducts = SupplierOrderBatch
 				.getSupplierOrderBatchData(Queries.queryResult("select * from s_order_batch where order_id =?;",
 						new ArrayList<>(Arrays.asList(supplierOrder.getID() + ""))));
+		
 		// upload first product batches
 		productsBatchColumn.setItems(FXCollections.observableArrayList(Batch.getBatchData(Queries.queryResult(
 				"select * from batch where product_id =? and Batch_Production_Date <> '1111-01-01';",
 				new ArrayList<>(Arrays.asList(orderedProducts.get(0).getProductID() + ""))))));
 
 		orderNumberLabel.setText("Order NO." + supplierOrder.getID());
-
 		ArrayList<Product> productName = Product.getProductData(Queries.queryResult(
 				"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer "
 						+ " from product p,Name_manu m where P.product_name=m.product_name and Product_ID =?;",
@@ -325,10 +320,10 @@ public class ReceiveOrdersController implements Initializable {
 
 		choosenProductLabel.setText(productName.get(0).getName());
 		savedQuantityLabel.setText("Quantity = " + orderedProducts.get(0).getAmount() + "");
+		
 		ProductName = productName.get(0).getName();
 		ProductId = orderedProducts.get(0).getProductID() + "";
 		QuantityStored = orderedProducts.get(0).getAmount() + "";
-
 	}
 
 	public void confirmBatchOnAction(ActionEvent event) throws ClassNotFoundException, SQLException, ParseException {
@@ -342,8 +337,10 @@ public class ReceiveOrdersController implements Initializable {
 					productsEntered.add(ProductName);
 					productsEntered.add(
 							productsBatchColumn.getSelectionModel().getSelectedItem().getProductionDate().toString());
+					
 					productsEntered
 							.add(productsBatchColumn.getSelectionModel().getSelectedItem().getExpiryDate().toString());
+					
 					productsEntered.add(QuantityStored);
 
 					if (orderedProducts.size() > counter && productsEntered.isEmpty() == false) {
@@ -352,7 +349,6 @@ public class ReceiveOrdersController implements Initializable {
 						++counter;
 						if (orderedProducts.size() > counter)
 							updateTable();
-
 					}
 					confirmQuantityCheckBox.setSelected(false);
 				} else {
@@ -378,7 +374,6 @@ public class ReceiveOrdersController implements Initializable {
 							++counter;
 							if (orderedProducts.size() > counter)
 								updateTable();
-
 						}
 					}
 				}
@@ -408,10 +403,8 @@ public class ReceiveOrdersController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 
 		if (confirmQuantityCheckBox.isSelected() == true) {
-
 			quantityTextField.setOpacity(0);
 			quantityLabel.setOpacity(0);
-
 		} else {
 			quantityTextField.setOpacity(1);
 			quantityLabel.setOpacity(1);
@@ -432,6 +425,7 @@ public class ReceiveOrdersController implements Initializable {
 						}
 					}
 				});
+		
 		productNameColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override

@@ -13,9 +13,13 @@ import java.net.URL;
 import java.sql.SQLException;
 import Relations.*;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Aseel Sabri
+ *
+ */
 public class CustomerProductsController implements Initializable {
-
-	private Customer customer;
 
 	@FXML
 	private TableView<ArrayList<String>> customerProductsTable;
@@ -60,15 +64,14 @@ public class CustomerProductsController implements Initializable {
 	private Label title;
 
 	private String stringToSearch = "";
+	private Customer customer;
 
-	@SuppressWarnings("exports")
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 		title.setText(customer.getName() + " Bought Products");
 		try {
 			filterList();
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -81,7 +84,6 @@ public class CustomerProductsController implements Initializable {
 		try {
 			filterList();
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -94,7 +96,6 @@ public class CustomerProductsController implements Initializable {
 		try {
 			filterList();
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -108,17 +109,14 @@ public class CustomerProductsController implements Initializable {
 				fieldSelector.setValue("-Specify Field-");
 			}
 		}
-
 		try {
 			filterList();
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	public void filterList() throws ClassNotFoundException, SQLException {
-
 		String drugCondition = "";
 		String searchCondition = "";
 		ArrayList<ArrayList<String>> filteredList = new ArrayList<>();
@@ -138,7 +136,6 @@ public class CustomerProductsController implements Initializable {
 		} else if (isControlled.isSelected()) {
 			drugCondition = " and D.Drug_Pharmacetical_Category='Controlled'";
 		}
-
 		String drugsQuery = "select P.Product_Name, COB.Batch_Production_Date, COB.Batch_Expiry_Date,\r\n"
 				+ "CO.Order_Date, E.Employee_Name, COB.Order_amount, D.Drug_Pharmacetical_Category\r\n"
 				+ "from Product P, Batch B, C_Order_Batch COB, C_Order CO, Customer2Order C2O, Employee E, Drug D\r\n"
@@ -156,15 +153,12 @@ public class CustomerProductsController implements Initializable {
 			} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Production Date") {
 				searchCondition = " and COB.Batch_Production_Date like ? ";
 			}
-
 			else if (fieldSelector.getSelectionModel().getSelectedItem() == "Expiry Date") {
 				searchCondition = " and COB.Batch_Expiry_Date like ? ";
 			}
-
 			else if (fieldSelector.getSelectionModel().getSelectedItem() == "Sale Date") {
 				searchCondition = " and CO.Order_Date like ? ";
 			}
-
 			else if (fieldSelector.getSelectionModel().getSelectedItem() == "Sold By") {
 				searchCondition = " and E.Employee_Name like ? ";
 			} else {
@@ -175,25 +169,22 @@ public class CustomerProductsController implements Initializable {
 						+ " or COB.Batch_Expiry_Date like ? " + " or CO.Order_Date like ? "
 						+ " or E.Employee_Name like ? ) ";
 			}
-
 		}
 		if (!isDrug.isSelected()) {
 			filteredList.addAll(Queries.queryResult(nonDrugsQuery + searchCondition + ";", parameters));
 		}
-
 		filteredList.addAll(Queries.queryResult(drugsQuery + drugCondition + searchCondition + ";", parameters));
 		customerProductsTable.setItems(FXCollections.observableArrayList(filteredList));
-
 	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-
 		fieldSelector.setItems(FXCollections.observableArrayList("-Specify Field-", "Product Name", "Production Date",
 				"Expiry Date", "Sale Date", "Sold By"));
 
 		productNameColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
+				
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
 						ArrayList<String> x = p.getValue();
@@ -207,6 +198,7 @@ public class CustomerProductsController implements Initializable {
 
 		productionDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
+					
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
 						ArrayList<String> x = p.getValue();
@@ -220,6 +212,7 @@ public class CustomerProductsController implements Initializable {
 
 		expiryDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
+					
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
 						ArrayList<String> x = p.getValue();
@@ -233,6 +226,7 @@ public class CustomerProductsController implements Initializable {
 
 		saleDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
+					
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
 						ArrayList<String> x = p.getValue();
@@ -246,6 +240,7 @@ public class CustomerProductsController implements Initializable {
 
 		soldByColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
+					
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
 						ArrayList<String> x = p.getValue();
@@ -259,6 +254,7 @@ public class CustomerProductsController implements Initializable {
 
 		amountColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
+					
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
 						ArrayList<String> x = p.getValue();
@@ -272,6 +268,7 @@ public class CustomerProductsController implements Initializable {
 
 		pharmaceticalCategoryColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
+					
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
 						ArrayList<String> x = p.getValue();
@@ -288,12 +285,9 @@ public class CustomerProductsController implements Initializable {
 			try {
 				filterList();
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		});
 
 	}
-
 }

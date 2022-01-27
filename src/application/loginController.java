@@ -18,6 +18,11 @@ import java.util.Arrays;
 import Relations.Employee;
 import Relations.Queries;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Loor Sawalhi
+ */
 public class loginController {
 
 	@FXML
@@ -44,6 +49,7 @@ public class loginController {
 					filteredList = Employee.getEmployeeData(
 							Queries.queryResult("select * from Employee where Employee_ID = ? and isActive = 'true';",
 									new ArrayList<>(Arrays.asList(employeeIDTextField.getText()))));
+					
 					if (filteredList.isEmpty() == true) {
 						Alert alert = new Alert(Alert.AlertType.ERROR);
 						alert.setTitle("Wrong Input");
@@ -62,6 +68,7 @@ public class loginController {
 																		new ArrayList<>(Arrays
 																				.asList(employeeIDTextField.getText())))
 																.get(0).get(0), passwordTextField.getText())))));
+					
 						if (filteredList.isEmpty() == true) {
 							Alert alert = new Alert(Alert.AlertType.ERROR);
 							alert.setTitle("Wrong Input");
@@ -129,5 +136,4 @@ public class loginController {
 		Stage stage = (Stage) cancelButton.getScene().getWindow();
 		stage.close();
 	}
-
 }

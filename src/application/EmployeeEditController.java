@@ -26,11 +26,12 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 import Relations.*;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Ahmad Abbas
+ */
 public class EmployeeEditController implements Initializable {
-
-	Employee employee;
-
-	EmployeeController caller;
 
 	@FXML
 	private TableView<Employee> employeeTable;
@@ -91,6 +92,9 @@ public class EmployeeEditController implements Initializable {
 
 	@FXML
 	private CheckBox isManager;
+
+	Employee employee;
+	EmployeeController caller;
 
 	public void phoneTextOnEnter(KeyEvent e) {
 		if (e.getCode() == KeyCode.ENTER) {
@@ -153,8 +157,6 @@ public class EmployeeEditController implements Initializable {
 		addPhone.setEffect(effect);
 	}
 
-	// ------------------------------------------------------------------
-
 	public void saveOnMousePressed() throws ParseException {
 		if (employee != null) {
 			ColorAdjust effect = new ColorAdjust();
@@ -176,7 +178,6 @@ public class EmployeeEditController implements Initializable {
 				Employee.getEmployeeData();
 				caller.saveEdits();
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -233,15 +234,15 @@ public class EmployeeEditController implements Initializable {
 
 		else if (!checkHourlyPaid || hourlyPaid <= 0 || !NID.matches("[0-9]{9}") || !name.matches("[a-z[A-Z]\\s]+")
 				|| passwordTextField.getText().isBlank() || passwordTextField.getText().isEmpty()
-				|| !date.matches("[0-9]{4}-(0[1-9]|1[02])-(0[1-9]|[1-3][0-9])")) { // check*******----------------------
+				|| !date.matches("[0-9]{4}-(0[1-9]|1[02])-(0[1-9]|[1-3][0-9])")) { 
 
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Wrong Input Format");
 			alert.setHeaderText("Wrong Input Format");
 			alert.setContentText("National ID Must Be 9 Digits \n" + "Name Must Consist of Alphabetical Characters\n"
 					+ "Hourly Paid Must Be A Positive Real Number \n" + "All Fields Must Be Filled");
+			
 			alert.showAndWait();
-
 		} else if (phoneList.getItems().size() == 0) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Missing Info");
@@ -251,14 +252,17 @@ public class EmployeeEditController implements Initializable {
 		} else {
 			Employee.insertEmployee(name, NID, dateOfWork.getValue(), hourlyPaid, new ArrayList<>(phoneList.getItems()),
 					password, isManager.isSelected() ? "true" : "false", "true");
+			
 			Employee.getData()
 					.add(new Employee(Employee.getMaxID(), name, NID, dateOfWork.getValue(), hourlyPaid,
 							new ArrayList<>(phoneList.getItems()), password, isManager.isSelected() ? "true" : "false",
 							"true"));
+			
 			Employee.getDataList()
 					.add(new Employee(Employee.getMaxID(), name, NID, dateOfWork.getValue(), hourlyPaid,
 							new ArrayList<>(phoneList.getItems()), password, isManager.isSelected() ? "true" : "false",
 							"true"));
+			
 			nidTextField.setText("");
 			nameTextField.setText("");
 			hourlyPaidTextField.setText("");
@@ -312,7 +316,6 @@ public class EmployeeEditController implements Initializable {
 		deletePhone.setEffect(effect);
 		String phone = phoneList.getSelectionModel().getSelectedItem();
 		phoneList.getItems().remove(phone);
-
 	}
 
 	public void deletePhoneOnMouseReleased() {
@@ -333,7 +336,6 @@ public class EmployeeEditController implements Initializable {
 		deletePhone.setEffect(effect);
 	}
 
-	@SuppressWarnings("exports")
 	public void setRow(Employee employee, EmployeeController caller) {
 		this.caller = caller;
 		this.employee = employee;
@@ -349,7 +351,6 @@ public class EmployeeEditController implements Initializable {
 		isManagerColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("isManager"));
 		isActiveColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("isActive"));
 		passwordColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("password"));
-
 		nidColumn.setEditable(true);
 		nameColumn.setEditable(true);
 		hourlyPaidColumn.setEditable(true);
@@ -357,15 +358,14 @@ public class EmployeeEditController implements Initializable {
 		isActiveColumn.setEditable(true);
 		passwordColumn.setEditable(true);
 		employeeTable.setEditable(true);
-
 		nidColumn.setCellFactory(TextFieldTableCell.<Employee>forTableColumn());
 		nameColumn.setCellFactory(TextFieldTableCell.<Employee>forTableColumn());
 		hourlyPaidColumn
 				.setCellFactory(TextFieldTableCell.<Employee, Double>forTableColumn(new DoubleStringConverter()));
+		
 		isManagerColumn.setCellFactory(TextFieldTableCell.<Employee>forTableColumn());
 		isActiveColumn.setCellFactory(TextFieldTableCell.<Employee>forTableColumn());
 		passwordColumn.setCellFactory(TextFieldTableCell.<Employee>forTableColumn());
-
 		nidColumn.setOnEditCommit((CellEditEvent<Employee, String> t) -> {
 			try {
 				if ((Queries.queryResult("select * from Customer where Employee_NID=? ;",
@@ -387,7 +387,6 @@ public class EmployeeEditController implements Initializable {
 					((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNationalID(t.getOldValue());
 				}
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			employeeTable.refresh();
@@ -411,6 +410,7 @@ public class EmployeeEditController implements Initializable {
 			if (t.getNewValue().toLowerCase().equals("true") || t.getNewValue().toLowerCase().equals("false")) {
 				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
 						.setIsManager(t.getNewValue());
+				
 			} else {
 				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
 						.setIsManager(t.getOldValue());
@@ -427,9 +427,11 @@ public class EmployeeEditController implements Initializable {
 			if (t.getNewValue().toLowerCase().equals("true") || t.getNewValue().toLowerCase().equals("false")) {
 				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
 						.setIsActive(t.getNewValue());
+				
 			} else {
 				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
 						.setIsActive(t.getOldValue());
+				
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle("Wrong Input Format");
 				alert.setHeaderText(null);
@@ -439,10 +441,9 @@ public class EmployeeEditController implements Initializable {
 			employeeTable.refresh();
 		});
 
-		hourlyPaidColumn.setOnEditCommit((CellEditEvent<Employee, Double> t) -> {// weee
+		hourlyPaidColumn.setOnEditCommit((CellEditEvent<Employee, Double> t) -> {
 			((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow())).setHourlyPaid(t.getNewValue());
 		});
 		employeeTable.refresh();
 	}
-
 }

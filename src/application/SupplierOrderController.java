@@ -39,6 +39,12 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Loor Sawalhi
+ *
+ */
 public class SupplierOrderController implements Initializable {
 	@FXML
 	private TableView<Supplier> supplierTable;
@@ -57,8 +63,6 @@ public class SupplierOrderController implements Initializable {
 
 	@FXML
 	private Label costLabel;
-
-	private double costValue;
 
 	@FXML
 	private ListView<String> orderdProductsList;
@@ -95,7 +99,8 @@ public class SupplierOrderController implements Initializable {
 
 	@FXML
 	private StackPane mainPane;
-
+	
+	private double costValue;
 	private String stringToSearch = "";
 
 	ObservableList<String> Choices = FXCollections.observableArrayList("Select", "Supplier", "Manager");
@@ -104,7 +109,6 @@ public class SupplierOrderController implements Initializable {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
 		addProductIcon.setEffect(effect);
-
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("SelectProduct.fxml"));
 		Parent root1 = (Parent) loader.load();
 		SelectProductController temp = loader.getController();
@@ -112,20 +116,17 @@ public class SupplierOrderController implements Initializable {
 		Stage stage2 = new Stage();
 		stage2.setScene(new Scene(root1));
 		stage2.show();
-
 	}
 
 	public void addSupplierOnMousePressed() throws IOException {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
 		addProductIcon.setEffect(effect);
-
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("AddSupplier.fxml"));
 		Parent root1 = (Parent) loader.load();
 		Stage stage2 = new Stage();
 		stage2.setScene(new Scene(root1));
 		stage2.show();
-
 	}
 
 	public void setProductList(ArrayList<String> data, double costValue) {
@@ -224,7 +225,6 @@ public class SupplierOrderController implements Initializable {
 					String[] data = s.split(",");
 					String[] ProductIdTemp = data[0].split("=");
 					String[] quantityTemp = data[2].split("=");
-
 					ArrayList<Batch> filteredList = Batch.getBatchData(Queries.queryResult(
 							"select * from batch where Product_ID = ? and"
 									+ " Batch_Production_Date = '1111-01-01' and Batch_Expiry_Date = '1111-01-01';",
@@ -239,9 +239,7 @@ public class SupplierOrderController implements Initializable {
 								"update Batch set Batch_Amount = Batch_Amount + ? where Product_ID = ? and "
 										+ "Batch_Production_Date = '1111-01-01' and Batch_Expiry_Date = '1111-01-01';",
 								new ArrayList<>(Arrays.asList(quantityTemp[1], ProductIdTemp[1])));
-
 					}
-
 					SupplierOrderBatch.insertSupplierOrderBatch(SupplierOrder.getMaxID() + "", ProductIdTemp[1],
 							LocalDate.parse("1111-01-01"), LocalDate.parse("1111-01-01"),
 							Integer.parseInt(quantityTemp[1]));
@@ -250,7 +248,6 @@ public class SupplierOrderController implements Initializable {
 							Integer.parseInt(ProductIdTemp[1]), LocalDate.parse("1111-01-01"),
 							LocalDate.parse("1111-01-01"), Integer.parseInt(quantityTemp[1]));
 					SupplierOrderBatch.getData().add(insertBatch);
-
 				}
 
 				Region page = FXMLLoader.load(getClass().getResource("SupplierReceivedOrder.fxml"));
@@ -258,8 +255,6 @@ public class SupplierOrderController implements Initializable {
 				mainPane.getChildren().setAll(page);
 				page.prefWidthProperty().bind(mainPane.widthProperty());
 				page.prefHeightProperty().bind(mainPane.heightProperty());
-
-
 			}
 
 		} else {
@@ -269,7 +264,6 @@ public class SupplierOrderController implements Initializable {
 			alert.setContentText("You Have To Fill Order Fields !!");
 			alert.showAndWait();
 		}
-
 	}
 
 	public void filterList() throws ParseException {
@@ -329,11 +323,11 @@ public class SupplierOrderController implements Initializable {
 				employeeFilteredList = Employee.getEmployeeData(Queries.queryResult(
 						"select * from Employee where isManager = 'true' and isActive = 'true' and  Employee_name like ?;",
 						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
+			
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
 		}
-
 		managerTable.setItems(FXCollections.observableArrayList(employeeFilteredList));
 		supplierTable.setItems(FXCollections.observableArrayList(supplierFilteredList));
 	}
@@ -347,7 +341,6 @@ public class SupplierOrderController implements Initializable {
 		nationalIDColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("NID"));
 		int max = SupplierOrder.getMaxID() + 1;
 		orderNOLabel.setText("Order NO." + max);
-
 		supplierTable.setItems(Supplier.getDataList());
 		try {
 			managerTable.setItems(FXCollections.observableArrayList(Employee.getEmployeeData(Queries

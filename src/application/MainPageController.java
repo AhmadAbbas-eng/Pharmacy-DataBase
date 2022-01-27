@@ -17,6 +17,11 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Ahmad Abbas
+ */
 public class MainPageController implements Initializable {
     
 	@FXML

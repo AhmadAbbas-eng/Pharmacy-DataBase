@@ -29,6 +29,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
+/**
+ * 
+ * @version 27 January 2022
+ * @author Loor Sawalhi
+ */
 public class ReceivedOrderController implements Initializable {
 
 	@FXML
