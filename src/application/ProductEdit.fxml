@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -91,7 +92,11 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="manufaturerTextField" promptText="Manufaturer" stylesheets="@../../CSS/textField.css" />
+                  <ComboBox fx:id="maufacturerComboBox" prefWidth="150.0" promptText="- Select -" stylesheets="@../../CSS/combobox.css">
+                     <tooltip>
+                        <Tooltip fx:id="manufacturerToolTip" anchorLocation="WINDOW_BOTTOM_LEFT" contentDisplay="GRAPHIC_ONLY" />
+                     </tooltip>
+                  </ComboBox>
                   <Label text="  *" textFill="RED">
                      <font>
                         <Font name="System Bold" size="12.0" />

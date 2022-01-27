@@ -7,26 +7,43 @@ import javafx.animation.KeyValue;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.util.*;
 import javafx.scene.control.TableView;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
+import javafx.geometry.Pos;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
+
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 import Relations.*;
 
@@ -34,7 +51,11 @@ public class addProductController implements Initializable {
 
 	ArrayList<ArrayList<String>> product;
 
-	ProductController caller;
+    @FXML
+	private Tooltip manufacturerToolTip ;
+	
+    @FXML
+    private ComboBox<String> maufacturerComboBox;
 
 	@FXML
 	private TableView<ArrayList<String>> productTable;
@@ -57,7 +78,6 @@ public class addProductController implements Initializable {
 	@FXML
 	private ImageView saveProduct;
 
-
 	@FXML
 	private TextField dosageTextField;
 
@@ -75,9 +95,6 @@ public class addProductController implements Initializable {
 
 	@FXML
 	private CheckBox isDrug;
-
-	@FXML
-	private TextField manufaturerTextField;
 
 	@FXML
 	private TextField nameTextField;
@@ -105,6 +122,14 @@ public class addProductController implements Initializable {
 
 	@FXML
 	private Label addedLabel;
+	
+	static boolean answer = false;
+
+	String filter = "";
+
+	ArrayList<ArrayList<String>> manufacturerName = null;
+
+	static ObservableList<String> manufacturerObservableList = FXCollections.observableArrayList();
 
 	public void addProductOnMousePressed() throws ClassNotFoundException, SQLException {
 		ColorAdjust effect = new ColorAdjust();
@@ -112,7 +137,6 @@ public class addProductController implements Initializable {
 		addProduct.setEffect(effect);
 		Double price = 0.0;
 		String name = nameTextField.getText();
-		String manufaturer = manufaturerTextField.getText();
 		String scientificName = scientificNameTextField.getText();
 		String pregnencyCategory = pregnencyCategorySelector.getSelectionModel().getSelectedItem();
 		String pharmaceticalCategory = pharmaceticalCategorySelector.getSelectionModel().getSelectedItem();
@@ -137,21 +161,21 @@ public class addProductController implements Initializable {
 			alert.showAndWait();
 		}
 
-		else if (checkPrice && price > 0 && !name.isBlank() && !name.isBlank() && !manufaturer.isEmpty()
-				&& !manufaturer.isBlank()) {
+		else if (checkPrice && price > 0 && !name.isBlank() && !name.isBlank() && maufacturerComboBox.getSelectionModel().getSelectedItem() != null) {
 			if (isDrug.isSelected()) {
 				if (!scientificName.isBlank() && !scientificName.isEmpty() && pregnencyCategory != null
 						&& !drugCategory.isBlank() && !drugCategory.isEmpty() && !dosage.isBlank() && !dosage.isEmpty()
 						&& !dosageForm.isBlank() && !dosageForm.isEmpty()) {
 					Queries.queryUpdate("Insert into Name_Manu values(?, ?);",
-							new ArrayList<>(Arrays.asList(name, manufaturer)));
+							new ArrayList<>(Arrays.asList(name,maufacturerComboBox.getSelectionModel().getSelectedItem())));
 					Drug.insertDrug(name, price, scientificName, pregnencyCategory, dosage, drugCategory, dosageForm,
 							pharmaceticalCategory);
-					caller.saveEdits();					
 					showAndFade(addedLabel);
 					showAndFade(addedIcon);
+					setManufacturerNames();
+					maufacturerComboBox.setItems(manufacturerObservableList); 
 					nameTextField.setText("");
-					manufaturerTextField.setText("");
+					maufacturerComboBox.getSelectionModel().clearSelection();
 					scientificNameTextField.setText("");
 					drugCategoryTextField.setText("");
 					dosageTextField.setText("");
@@ -166,13 +190,13 @@ public class addProductController implements Initializable {
 				}
 			} else {
 				Queries.queryUpdate("Insert into Name_Manu values(?, ?);",
-						new ArrayList<>(Arrays.asList(name, manufaturer)));
+						new ArrayList<>(Arrays.asList(name,maufacturerComboBox.getSelectionModel().getSelectedItem())));
 				Product.insertProduct(name, price);
-				caller.saveEdits();
 				showAndFade(addedLabel);
-				showAndFade(addedIcon);
+				showAndFade(addedIcon);setManufacturerNames();
+				maufacturerComboBox.setItems(manufacturerObservableList); 
 				nameTextField.setText("");
-				manufaturerTextField.setText("");
+				maufacturerComboBox.getSelectionModel().clearSelection();
 				scientificNameTextField.setText("");
 				drugCategoryTextField.setText("");
 				dosageTextField.setText("");
@@ -232,13 +256,33 @@ public class addProductController implements Initializable {
 			drugInfoVBox.setOpacity(0);
 		}
 	}
+	
+	public void setManufacturerNames() {
+		for(int i=0; i< manufacturerName.size();++i) {
+			if (manufacturerObservableList.indexOf(manufacturerName.get(i).get(0)) == -1) {
+			manufacturerObservableList.add(manufacturerName.get(i).get(0));
+		}
+		}
+	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		try {
+			manufacturerName = Queries.queryResult("select distinct product_manufactrer\n"
+					+ "from name_manu;", null);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		setManufacturerNames();
+		maufacturerComboBox.setTooltip(manufacturerToolTip);
+		maufacturerComboBox.setItems(manufacturerObservableList); 
+		new ComboBoxAutoComplete<String>(maufacturerComboBox,this);
+
 		addedIcon.setOpacity(0);
 		addedLabel.setOpacity(0);
 		drugInfoHBox.setOpacity(0);
 		drugInfoVBox.setOpacity(0);
+		
 		pharmaceticalCategorySelector.setItems(FXCollections.observableArrayList("non", "Controlled", "Danger"));
 		pregnencyCategorySelector.setItems(FXCollections.observableArrayList("A", "B", "C"));
 
