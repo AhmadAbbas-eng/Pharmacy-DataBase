@@ -49,7 +49,7 @@ public class loginController {
 					filteredList = Employee.getEmployeeData(
 							Queries.queryResult("select * from Employee where Employee_ID = ? and isActive = 'true';",
 									new ArrayList<>(Arrays.asList(employeeIDTextField.getText()))));
-					
+
 					if (filteredList.isEmpty() == true) {
 						Alert alert = new Alert(Alert.AlertType.ERROR);
 						alert.setTitle("Wrong Input");
@@ -60,15 +60,12 @@ public class loginController {
 					} else {
 						filteredList = Employee.getEmployeeData(Queries
 								.queryResult("select * from Employee where Employee_ID = ? and Employee_Password= ?;",
-										new ArrayList<>(
-												Arrays.asList(employeeIDTextField.getText(),
-														Employee.encryptPassword(Queries
-																.queryResult(
-																		"select employee_name from Employee where Employee_ID = ?;",
-																		new ArrayList<>(Arrays
-																				.asList(employeeIDTextField.getText())))
-																.get(0).get(0), passwordTextField.getText())))));
-					
+										new ArrayList<>(Arrays.asList(employeeIDTextField.getText(),
+												Employee.encryptPassword(Queries.queryResult(
+														"select employee_name from Employee where Employee_ID = ?;",
+														new ArrayList<>(Arrays.asList(employeeIDTextField.getText())))
+														.get(0).get(0), passwordTextField.getText())))));
+
 						if (filteredList.isEmpty() == true) {
 							Alert alert = new Alert(Alert.AlertType.ERROR);
 							alert.setTitle("Wrong Input");
@@ -85,7 +82,9 @@ public class loginController {
 							FXMLLoader loader = new FXMLLoader(getClass().getResource("MainPage.fxml"));
 							Parent root1 = (Parent) loader.load();
 							Stage stage2 = new Stage();
-							stage2.setScene(new Scene(root1, 500, 500));
+							stage2.setScene(new Scene(root1, 1100, 620));
+							stage2.setMinWidth(1100);
+							stage2.setMinHeight(620);
 							stage2.show();
 						}
 
