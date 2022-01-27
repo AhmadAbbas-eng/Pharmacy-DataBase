@@ -16,18 +16,28 @@ import Relations.Payment;
 import Relations.Product;
 import Relations.Queries;
 import Relations.Supplier;
+import javafx.animation.FadeTransition;
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.SequentialTransition;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
+import javafx.util.Duration;
 
 public class ReportController implements Initializable {
 
@@ -39,6 +49,27 @@ public class ReportController implements Initializable {
 
 	@FXML
 	private Button saveReportButton;
+	
+    @FXML
+    private Label savedLabel;
+
+    @FXML
+    private ImageView saveIcon;
+    
+    public void showAndFade(Node node) {
+
+		Timeline show = new Timeline(
+				new KeyFrame(Duration.seconds(0), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)),
+				new KeyFrame(Duration.seconds(0.5), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)),
+				new KeyFrame(Duration.seconds(1), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)));
+		FadeTransition fade = new FadeTransition(Duration.seconds(0.5), node);
+		fade.setFromValue(1);
+		fade.setToValue(0);
+
+		SequentialTransition blinkFade = new SequentialTransition(node, show, fade);
+		blinkFade.play();
+
+	}
 
 	public void saveOnAction(ActionEvent e) {
 		if (reportType.getSelectionModel().getSelectedItem() == "-Select-") {
@@ -67,12 +98,16 @@ public class ReportController implements Initializable {
 		if (reportType.getSelectionModel().getSelectedItem() == "Payment") {
 			try {
 				Payment.report(selectedDirectory.toString() + "/Payment");
+				showAndFade(saveIcon);
+				showAndFade(savedLabel);
 			} catch (ClassNotFoundException | SQLException | IOException e1) {
 				e1.printStackTrace();
 			}
 		} else if (reportType.getSelectionModel().getSelectedItem() == "Suppliers") {
 			try {
 				Supplier.report(selectedDirectory.toString() + "/Suppliers");
+				showAndFade(saveIcon);
+				showAndFade(savedLabel);
 			} catch (ClassNotFoundException | SQLException | IOException e1) {
 				e1.printStackTrace();
 			}
@@ -80,13 +115,13 @@ public class ReportController implements Initializable {
 		} else if (reportType.getSelectionModel().getSelectedItem() == "Cheques") {
 			try {
 				Cheque.report(selectedDirectory.toString() + "/Cheques");
+				showAndFade(saveIcon);
+				showAndFade(savedLabel);
 			} catch (ClassNotFoundException | SQLException | IOException e1) {
 				e1.printStackTrace();
 			}
 
 		} else if (reportType.getSelectionModel().getSelectedItem() == "Disposal") {
-			// TODO
-			// ----------------------------------------------------------------------------
 			try {
 				Queries.reportQuerey(
 						"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
@@ -94,14 +129,17 @@ public class ReportController implements Initializable {
 								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW()) \r\n"
 								+ "order by b.batch_expiry_date;",
 						selectedDirectory.toString() + "/Disposal");
+				showAndFade(saveIcon);
+				showAndFade(savedLabel);
 			} catch (ClassNotFoundException | SQLException | IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 
 		} else if (reportType.getSelectionModel().getSelectedItem() == "Customers") {
 			try {
 				Customer.report(selectedDirectory.toString() + "/Customers");
+				showAndFade(saveIcon);
+				showAndFade(savedLabel);
 			} catch (ClassNotFoundException | SQLException | IOException e1) {
 				e1.printStackTrace();
 			}
@@ -109,6 +147,8 @@ public class ReportController implements Initializable {
 		} else if (reportType.getSelectionModel().getSelectedItem() == "Products Information") {
 			try {
 				Product.report(selectedDirectory.toString() + "/Products Information");
+				showAndFade(saveIcon);
+				showAndFade(savedLabel);
 			} catch (ClassNotFoundException | SQLException | IOException e1) {
 				e1.printStackTrace();
 			}
@@ -116,6 +156,8 @@ public class ReportController implements Initializable {
 		} else if (reportType.getSelectionModel().getSelectedItem() == "Product Batches") {
 			try {
 				Batch.report(selectedDirectory.toString() + "/Product Batches");
+				showAndFade(saveIcon);
+				showAndFade(savedLabel);
 			} catch (ClassNotFoundException | SQLException | IOException e1) {
 				e1.printStackTrace();
 			}
@@ -128,6 +170,8 @@ public class ReportController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		saveIcon.setOpacity(0);
+		savedLabel.setOpacity(0);
 		reportType.setItems(reports);
 		reportType.setValue("-Select-");
 
