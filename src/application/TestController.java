@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.ResourceBundle;
 import Relations.Queries;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -134,7 +135,37 @@ public class TestController implements Initializable {
 	private ImageView employeeImage;
 
 	@FXML
+	private ImageView customerImage;
+
+	@FXML
+	private ImageView supplierImage;
+
+	@FXML
+	private ImageView productImage;
+
+	@FXML
+	private ImageView stockImage;
+
+	@FXML
+	private ImageView expiredImage;
+
+	@FXML
 	private Label totalEmployeesLabel;
+
+	@FXML
+	private Label totalProductsLabel;
+
+	@FXML
+	private Label stockLabel;
+
+	@FXML
+	private Label totalSuppliersLabel;
+
+	@FXML
+	private Label totalCustomersLabel;
+
+	@FXML
+	private Label expiredLabel;
 
 	@FXML
 	private AnchorPane mainPane;
@@ -149,12 +180,93 @@ public class TestController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		iconsHBox.prefWidthProperty().bind(mainPane.widthProperty().multiply(3.0 / 4));
+
+		iconsHBox.prefWidthProperty().bind(mainPane.widthProperty().multiply(0.55));
 		iconsHBox.spacingProperty().bind(iconsHBox.widthProperty().divide(20.0));
 		iconsHBox.prefHeightProperty().bind(employeePane.widthProperty());
+		employeeImage.fitWidthProperty().bind(employeePane.widthProperty().multiply(0.65));
 		totalEmployeesLabel.prefWidthProperty().bind(employeePane.widthProperty().multiply(0.86));
-		outOfStockLabel.fontProperty().bind(
-				Bindings.createObjectBinding(() -> new Font((int)employeePane.widthProperty().get()),employeePane.widthProperty()));
+		totalEmployeesLabel.prefHeightProperty().bind(employeePane.widthProperty().multiply(0.3));
+		numberOfEmployeesLabel.prefHeightProperty().bind(employeePane.widthProperty().multiply(0.35));
+
+		totalEmployeesLabel.styleProperty()
+				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
+						totalEmployeesLabel.widthProperty().divide(12)));
+
+		numberOfEmployeesLabel.styleProperty()
+				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
+						totalEmployeesLabel.widthProperty().divide(5)));
+
+		supplierImage.fitWidthProperty().bind(employeePane.widthProperty().multiply(0.65));
+		totalSuppliersLabel.prefWidthProperty().bind(employeePane.widthProperty().multiply(0.86));
+		totalSuppliersLabel.prefHeightProperty().bind(employeePane.widthProperty().multiply(0.3));
+		numberOfSupplierLabel.prefHeightProperty().bind(employeePane.widthProperty().multiply(0.35));
+
+		totalSuppliersLabel.styleProperty()
+				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
+						totalSuppliersLabel.widthProperty().divide(12)));
+
+		numberOfSupplierLabel.styleProperty()
+				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
+						totalSuppliersLabel.widthProperty().divide(5)));
+
+		customerImage.fitWidthProperty().bind(employeePane.widthProperty().multiply(0.65));
+		totalCustomersLabel.prefWidthProperty().bind(employeePane.widthProperty().multiply(0.86));
+		totalCustomersLabel.prefHeightProperty().bind(employeePane.widthProperty().multiply(0.3));
+		numberOfCustomerLabel.prefHeightProperty().bind(employeePane.widthProperty().multiply(0.35));
+
+		totalCustomersLabel.styleProperty()
+				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
+						totalCustomersLabel.widthProperty().divide(12)));
+
+		numberOfCustomerLabel.styleProperty()
+				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
+						totalCustomersLabel.widthProperty().divide(5)));
+
+		productImage.fitWidthProperty().bind(employeePane.widthProperty().multiply(0.65));
+		totalProductsLabel.prefWidthProperty().bind(employeePane.widthProperty().multiply(0.86));
+		totalProductsLabel.prefHeightProperty().bind(employeePane.widthProperty().multiply(0.3));
+		numberOfProductLabel.prefHeightProperty().bind(employeePane.widthProperty().multiply(0.35));
+
+		totalProductsLabel.styleProperty()
+				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
+						totalProductsLabel.widthProperty().divide(12)));
+
+		numberOfProductLabel.styleProperty()
+				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
+						totalProductsLabel.widthProperty().divide(5)));
+
+		stockImage.fitWidthProperty().bind(employeePane.widthProperty().multiply(0.65));
+		stockLabel.prefWidthProperty().bind(employeePane.widthProperty().multiply(0.86));
+		stockLabel.prefHeightProperty().bind(employeePane.widthProperty().multiply(0.3));
+		outOfStockLabel.prefHeightProperty().bind(employeePane.widthProperty().multiply(0.35));
+
+		stockLabel.styleProperty()
+				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
+						stockLabel.widthProperty().divide(12)));
+
+		outOfStockLabel.styleProperty()
+				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
+						stockLabel.widthProperty().divide(5)));
+
+		expiredImage.fitWidthProperty().bind(employeePane.widthProperty().multiply(0.65));
+		expiredLabel.prefWidthProperty().bind(employeePane.widthProperty().multiply(0.86));
+		expiredLabel.prefHeightProperty().bind(employeePane.widthProperty().multiply(0.3));
+		numberOfExpiredProductsLabel.prefHeightProperty().bind(employeePane.widthProperty().multiply(0.35));
+
+		expiredLabel.styleProperty()
+				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
+						expiredLabel.widthProperty().divide(12)));
+
+		numberOfExpiredProductsLabel.styleProperty()
+				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
+						expiredLabel.widthProperty().divide(5)));
+		
+		//--------------------------------------------------------------------------------------------------------------
+
+//		outOfStockLabel.fontProperty().bind(Bindings.createObjectBinding(
+//				() -> new Font((int) employeePane.widthProperty().get()), employeePane.widthProperty()));
+
 		// employeePane.prefHeightProperty().bind(employeePane.prefWidthProperty());
 		// employeePane.prefWidthProperty().bind(iconsHBox.widthProperty().multiply(4.0/30));
 		// employeeImage.fitHeightProperty().bind(iconsHBox.heightProperty());
