@@ -253,19 +253,19 @@ public class ReceiveOrdersController implements Initializable {
 	public void addOnMouseReleased() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0);
-		saveIcon.setEffect(effect);
+		addBatchIcon.setEffect(effect);
 	}
 
 	public void addOnMouseEntered() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.4);
-		saveIcon.setEffect(effect);
+		addBatchIcon.setEffect(effect);
 	}
 
 	public void addOnMouseExited() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0);
-		saveIcon.setEffect(effect);
+		addBatchIcon.setEffect(effect);
 	}
 
 	public void saveUpdates() throws ClassNotFoundException, SQLException, ParseException {
