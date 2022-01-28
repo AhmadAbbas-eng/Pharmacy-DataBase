@@ -35,14 +35,16 @@ import javafx.stage.Stage;
 /**
  * 
  * @version 27 January 2022
- * @author Aseel Sabri
+ * @author Loor Sawalhi
  *
  */
 public class SelectProductController implements Initializable {
 
-    @FXML
-    private ImageView addProductIcon;
-	
+	private String stringToSearch = "";
+
+	@FXML
+	private ImageView addProductIcon;
+
 	@FXML
 	private TableView<Drug> scientificNameTable;
 
@@ -87,7 +89,7 @@ public class SelectProductController implements Initializable {
 
 	static double totalCost = 0.0;
 	private SupplierOrderController caller;
-	
+
 	public void deleteOnMousePressed() {
 		ColorAdjust effect = new ColorAdjust();
 		if (listOrder.getItems().isEmpty()) {
@@ -131,50 +133,55 @@ public class SelectProductController implements Initializable {
 		stage2.setScene(new Scene(root1));
 		stage2.show();
 	}
-	
+
 	public void addOnMousePressed() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
 		addDrugIcon.setEffect(effect);
 		try {
-			
+
 			double Cost = Double.parseDouble(costTextField.getText().toString());
 			int Quantity = Integer.parseInt(quantityTextField.getText().toString());
-			
+
 			if (commercialNameTable.getSelectionModel().getSelectedItem() != null) {
 				if (Quantity > 0 && Cost > 0) {
-					
-				if(!listOrder.getItems().isEmpty()) {
-					ArrayList<String> temp = new ArrayList<String>(listOrder.getItems());
-					
-					for(int i=0; i< temp.size();++i) {
-						String s = temp.get(i);
-						String[] data = s.split(",");
-						String[] idTemp = data[0].split("=");
-						System.out.println(idTemp[0] +commercialNameTable.getSelectionModel().getSelectedItem().getID() );
-						if(commercialNameTable.getSelectionModel().getSelectedItem().getID()+"".compareTo(idTemp[1]) == 0) {
-							String[] quantityTemp = data[2].split("=");
-							Quantity += Integer.parseInt(quantityTemp[1]);
-							listOrder.getSelectionModel().select(i);
-							String toDelete = listOrder.getSelectionModel().getSelectedItem();
-							listOrder.getItems().remove(toDelete);
-							break;
+
+					if (!listOrder.getItems().isEmpty()) {
+						ArrayList<String> temp = new ArrayList<String>(listOrder.getItems());
+
+						for (int i = 0; i < temp.size(); ++i) {
+							String s = temp.get(i);
+							String[] data = s.split(",");
+							String[] idTemp = data[0].split("=");
+							System.out.println(
+									idTemp[0] + commercialNameTable.getSelectionModel().getSelectedItem().getID());
+							if (commercialNameTable.getSelectionModel().getSelectedItem().getID()
+									+ "".compareTo(idTemp[1]) == 0) {
+								String[] quantityTemp = data[2].split("=");
+								Quantity += Integer.parseInt(quantityTemp[1]);
+								listOrder.getSelectionModel().select(i);
+								String toDelete = listOrder.getSelectionModel().getSelectedItem();
+								listOrder.getItems().remove(toDelete);
+								break;
+							}
 						}
 					}
-				}
-				
+
 					totalCost += Cost * Quantity;
-					listOrder.getItems().add("ID ="+commercialNameTable.getSelectionModel().getSelectedItem().getID() + ",Product Name ="+commercialNameTable.getSelectionModel().getSelectedItem().getName() + ", Quantity="
-							+ Quantity + ", Cost/Peice=" + Cost);
-					
+					listOrder.getItems().add("ID =" + commercialNameTable.getSelectionModel().getSelectedItem().getID()
+							+ ",Product Name =" + commercialNameTable.getSelectionModel().getSelectedItem().getName()
+							+ ", Quantity=" + Quantity + ", Cost/Peice=" + Cost);
+
 					costTextField.clear();
 					quantityTextField.clear();
 					scientificNameTable.getSelectionModel().clearSelection();
+					commercialNameTable.getSelectionModel().clearSelection();
 
 				} else {
 					costTextField.clear();
 					quantityTextField.clear();
 					scientificNameTable.getSelectionModel().clearSelection();
+					commercialNameTable.getSelectionModel().clearSelection();
 					Alert alert = new Alert(Alert.AlertType.ERROR);
 					alert.setTitle(null);
 					alert.setHeaderText(null);
@@ -193,6 +200,7 @@ public class SelectProductController implements Initializable {
 			costTextField.clear();
 			quantityTextField.clear();
 			scientificNameTable.getSelectionModel().clearSelection();
+			commercialNameTable.getSelectionModel().clearSelection();
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle(null);
 			alert.setHeaderText(null);
@@ -241,7 +249,7 @@ public class SelectProductController implements Initializable {
 			stage.close();
 		}
 	}
-	
+
 	public void addProductOnMouseReleased() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0);
@@ -265,6 +273,105 @@ public class SelectProductController implements Initializable {
 		stage.close();
 	}
 
+	public void filterList() {
+		ArrayList<Drug> scientificNameArrayList = new ArrayList<>();
+		ArrayList<Product> commertialNameArrayList = new ArrayList<>();
+
+		if (stringToSearch == null || stringToSearch.isEmpty() || stringToSearch.isBlank()) {
+			try {
+
+				scientificNameArrayList = Drug.getDrugData(Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,D.Drug_Pharmacetical_Category"
+								+ " from Drug D,Product P,Name_manu m "
+								+ "where D.Product_ID=P.Product_ID and P.product_name=m.product_name;",
+						null));
+
+				commertialNameArrayList = Product
+						.getProductData(Queries.queryResult(
+								"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer"
+										+ " from product p,Name_manu m" + " where P.product_name=m.product_name;",
+								null));
+
+			} catch (ClassNotFoundException | SQLException | ParseException e) {
+				e.printStackTrace();
+			}
+		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Commerical Name") {
+			try {
+
+				scientificNameArrayList = Drug.getDrugData(Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,D.Drug_Pharmacetical_Category"
+								+ " from Drug D,Product P,Name_manu m "
+								+ "where D.Product_ID=P.Product_ID and P.product_name=m.product_name and P.product_name like ? ;",
+						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
+
+				commertialNameArrayList = Product.getProductData(Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer"
+								+ " from product p,Name_manu m"
+								+ " where P.product_name=m.product_name and p.product_name like ? ;",
+						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
+
+			} catch (ClassNotFoundException | SQLException | ParseException e) {
+				e.printStackTrace();
+			}
+		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Sientific Name") {
+			try {
+
+				commertialNameArrayList = Product.getProductData(Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer"
+								+ " from  drug d,product p,Name_manu m"
+								+ " where P.product_name=m.product_name and D.Product_ID=P.Product_ID and D.Drug_Scientific_Name like ? ;",
+						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
+
+				scientificNameArrayList = Drug.getDrugData(Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,D.Drug_Pharmacetical_Category"
+								+ " from Drug D,Product P,Name_manu m "
+								+ "where D.Product_ID=P.Product_ID and P.product_name=m.product_name and D.Drug_Scientific_Name like ? ;",
+						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
+
+			} catch (ClassNotFoundException | SQLException | ParseException e) {
+				e.printStackTrace();
+			}
+
+		} else {
+
+			try {
+				
+				commertialNameArrayList = Product.getProductData(Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer"
+								+ " from product p,Name_manu m"
+								+ " where P.product_name=m.product_name and p.product_name like ? ;",
+						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
+				
+				scientificNameArrayList = Drug.getDrugData(Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,D.Drug_Pharmacetical_Category"
+								+ " from Drug D,Product P,Name_manu m "
+								+ "where D.Product_ID=P.Product_ID and P.product_name=m.product_name and D.Drug_Scientific_Name like ? ;",
+						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
+
+			} catch (ClassNotFoundException | SQLException | ParseException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		commercialNameTable.setItems(FXCollections.observableArrayList(commertialNameArrayList));
+		scientificNameTable.setItems(FXCollections.observableArrayList(scientificNameArrayList));
+	}
+	
+	public void scientificNameTableOnSelected() throws ClassNotFoundException, SQLException, ParseException {
+		if(scientificNameTable.getSelectionModel().getSelectedIndex() !=-1) {
+			String scientificName = scientificNameTable.getSelectionModel().getSelectedItem().getScientificName();
+			commercialNameTable.setItems(FXCollections.observableArrayList(Product.getProductData(Queries.queryResult(
+					"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer"
+							+ " from  drug d,product p,Name_manu m"
+							+ " where P.product_name=m.product_name and D.Product_ID=P.Product_ID and D.Drug_Scientific_Name = ? ;",
+					new ArrayList<>(Arrays.asList(scientificName))))));
+		}
+	}
+
 	ObservableList<String> Choices = FXCollections.observableArrayList("Sientific Name", "Commerical Name");
 
 	@Override
@@ -273,71 +380,13 @@ public class SelectProductController implements Initializable {
 		searchOperationComboBox.setItems(Choices);
 		scientificNameColumn.setCellValueFactory(new PropertyValueFactory<Drug, String>("scientificName"));
 		commercialNameColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("Name"));
-		
 		scientificNameTable.setItems(Drug.getDataListDrug());
 		commercialNameTable.setItems(Product.getDataList());
-
+		
 		searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			ArrayList<Drug> filteredList = new ArrayList<>();
-			ArrayList<Product> filteredList2 = new ArrayList<>();
+			stringToSearch = newValue;
+			filterList();
 
-			if (newValue == null || newValue.isEmpty() || newValue.isBlank()) {
-				try {
-					
-					filteredList = Drug.getDrugData(Queries.queryResult("select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
-							+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,D.Drug_Pharmacetical_Category"
-							+ " from Drug D,Product P,Name_manu m "
-							+ "where D.Product_ID=P.Product_ID and P.product_name=m.product_name;"
-							,null));
-					
-					filteredList2 = Product.getProductData( Queries.queryResult("select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer"
-							+ " from product p,Name_manu m"
-							+ " where P.product_name=m.product_name;"
-							,null));
-
-				} catch (ClassNotFoundException | SQLException | ParseException e) {
-					e.printStackTrace();
-				}
-			} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Commerical Name") {
-				try {
-					
-					
-					filteredList = Drug.getDrugData(Queries.queryResult("select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
-							+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,D.Drug_Pharmacetical_Category"
-							+ " from Drug D,Product P,Name_manu m "
-							+ "where D.Product_ID=P.Product_ID and P.product_name=m.product_name and P.product_name like ? ;"
-							,new ArrayList<>(Arrays.asList("%" + newValue + "%"))));
-					
-					
-					filteredList2 = Product.getProductData( Queries.queryResult("select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer"
-							+ " from product p,Name_manu m"
-							+ " where P.product_name=m.product_name and p.product_name like ? ;"
-			                  ,new ArrayList<>(Arrays.asList("%" + newValue + "%"))));
-
-				} catch (ClassNotFoundException | SQLException | ParseException e) {
-					e.printStackTrace();
-				}
-			} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Sientific Name") {
-				try {
-					
-					filteredList2 = Product.getProductData(Queries.queryResult("select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer"
-							+ " from  drug d,product p,Name_manu m"
-							+ " where P.product_name=m.product_name and D.Product_ID=P.Product_ID and D.Drug_Scientific_Name like ? ;"
-			                  ,new ArrayList<>(Arrays.asList("%" + newValue + "%"))));
-					
-					filteredList = Drug.getDrugData( Queries.queryResult("select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
-							+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,D.Drug_Pharmacetical_Category"
-							+ " from Drug D,Product P,Name_manu m "
-							+ "where D.Product_ID=P.Product_ID and P.product_name=m.product_name and D.Drug_Scientific_Name like ? ;"
-							,new ArrayList<>(Arrays.asList("%" + newValue + "%"))));
-					
-				} catch (ClassNotFoundException | SQLException | ParseException e) {
-					e.printStackTrace();
-				}
-
-			}
-			commercialNameTable.setItems(FXCollections.observableArrayList(filteredList2));
-			scientificNameTable.setItems(FXCollections.observableArrayList(filteredList));
 		});
 
 	}

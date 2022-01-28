@@ -90,7 +90,7 @@
                   </HBox>
                   <Button fx:id="addNewEmployeePaymentButton" layoutX="43.0" layoutY="408.0" mnemonicParsing="false" onAction="#addEmployeeOnAction" prefHeight="26.0" prefWidth="87.0" stylesheets="@../../CSS/button.css" text="Add" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="21.0" />
                   <Button fx:id="clearEmployeeFieldsButton" layoutX="138.0" layoutY="408.0" mnemonicParsing="false" onAction="#clearEmployeeOnAction" prefHeight="26.0" prefWidth="87.0" stylesheets="@../../CSS/button.css" text="clear" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="140.0" />
-                  <ComboBox fx:id="searchEmployeeOp" layoutX="200.0" layoutY="13.0" prefWidth="150.0" promptText="- Search -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="12.0" />
+                  <ComboBox fx:id="employeeOperationComboBox" layoutX="200.0" layoutY="13.0" onAction="#employeePaymentFilterList" prefWidth="150.0" promptText="- Search -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="12.0" />
                   <Label layoutX="205.0" layoutY="267.0" prefHeight="22.0" prefWidth="53.0" text="Amount" textFill="#1d6f84" AnchorPane.leftAnchor="202.0" AnchorPane.topAnchor="267.0">
                      <font>
                         <Font size="14.0" />
@@ -175,7 +175,7 @@
                   </HBox>
                   <Button fx:id="addSupplierButton" layoutX="22.0" layoutY="418.0" mnemonicParsing="false" onAction="#addSupplierOnAction" prefHeight="26.0" prefWidth="87.0" stylesheets="@../../CSS/button.css" text="Add" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="21.0" />
                   <Button fx:id="clearSupplierButton" layoutX="140.0" layoutY="418.0" mnemonicParsing="false" onAction="#clearSupplierOnAction" prefHeight="26.0" prefWidth="87.0" stylesheets="@../../CSS/button.css" text="clear" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="140.0" />
-                  <ComboBox fx:id="searchSupplierOperationComboBox" layoutX="194.0" layoutY="12.0" prefWidth="150.0" promptText="- Search -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="12.0" />
+                  <ComboBox fx:id="searchSupplierOperationComboBox" layoutX="194.0" layoutY="12.0" onAction="#supplierPaymentFilterList" prefWidth="150.0" promptText="- Search -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="12.0" />
                   <Label layoutX="202.0" layoutY="269.0" prefHeight="22.0" prefWidth="52.0" text="Amount" textFill="#1d6f84" AnchorPane.leftAnchor="202.0" AnchorPane.topAnchor="269.0">
                      <font>
                         <Font size="14.0" />
@@ -283,7 +283,7 @@
                   <Button fx:id="addTaxButton" layoutX="40.0" layoutY="407.0" mnemonicParsing="false" onAction="#addTaxOnAction" prefHeight="26.0" prefWidth="87.0" stylesheets="@../../CSS/button.css" text="Add" AnchorPane.bottomAnchor="25.79999999999999" AnchorPane.leftAnchor="21.0" />
                   <Button fx:id="clearTaxButton" layoutX="140.0" layoutY="407.0" mnemonicParsing="false" onAction="#clearTaxOnAction" prefHeight="26.0" prefWidth="87.0" stylesheets="@../../CSS/button.css" text="Clear" AnchorPane.bottomAnchor="25.79999999999999" AnchorPane.leftAnchor="140.0" />
                   <TextField fx:id="searchTaxTextField" layoutX="31.0" layoutY="11.0" prefHeight="26.0" prefWidth="165.0" promptText="Search" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="12.0" />
-                  <ComboBox fx:id="taxOperationComboBox" layoutX="206.0" layoutY="12.0" prefWidth="150.0" promptText="- Search -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="12.0" />
+                  <ComboBox fx:id="taxOperationComboBox" layoutX="206.0" layoutY="12.0" onAction="#taxFilterList" prefWidth="150.0" promptText="- Search -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="12.0" />
                </children>
             </AnchorPane>
          </content>
@@ -307,7 +307,7 @@
                      </columnResizePolicy>
                   </TableView>
                   <TextField fx:id="searchDisposalTextField" layoutX="21.0" layoutY="14.0" promptText="Search" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="12.0" />
-                  <ComboBox fx:id="disposalOperationComboBox" layoutX="188.0" layoutY="14.0" prefWidth="150.0" promptText="- Search -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="12.0" />
+                  <ComboBox fx:id="disposalOperationComboBox" layoutX="188.0" layoutY="14.0" onAction="#disposalFilterList" prefWidth="150.0" promptText="- Search -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="12.0" />
                </children>
             </AnchorPane>
         </content>

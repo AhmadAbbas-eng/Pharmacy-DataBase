@@ -27,7 +27,7 @@
          </columnResizePolicy>
       </TableView>
       <TextField fx:id="searchTextField" layoutX="15.0" layoutY="14.0" promptText="Search" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="14.0" />
-      <ComboBox fx:id="searchOperationComboBox" layoutX="177.0" layoutY="14.0" prefWidth="150.0" promptText="- Select -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="177.0" AnchorPane.topAnchor="14.0" />
+      <ComboBox fx:id="searchOperationComboBox" layoutX="177.0" layoutY="14.0" onAction="#filterList" prefWidth="150.0" promptText="- Select -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="177.0" AnchorPane.topAnchor="14.0" />
       <TextField fx:id="disposalCostTextField" layoutX="27.0" layoutY="353.0" promptText="Dissipation Cost" AnchorPane.bottomAnchor="21.4" AnchorPane.leftAnchor="27.0" />
       <Button fx:id="disposeButton" layoutX="463.0" layoutY="352.0" mnemonicParsing="false" onAction="#disposeOnAction" prefHeight="26.0" prefWidth="112.0" stylesheets="@../../CSS/button.css" text="Dispose" AnchorPane.bottomAnchor="21.6" AnchorPane.rightAnchor="25.0" />
       <CheckBox fx:id="expiredSelectionCheckBox" layoutX="342.0" layoutY="13.0" mnemonicParsing="false" onAction="#selectionOnAction" prefHeight="26.0" prefWidth="73.0" text="Expired" AnchorPane.leftAnchor="342.0" AnchorPane.topAnchor="13.0">

@@ -63,6 +63,129 @@ public class PaymentController implements Initializable {
 
 	@FXML
 	private TableColumn<ArrayList<String>, String> dateOfDisposalColumn;
+	
+	String disposalNewValue = "";
+	
+	public void disposalFilterList() {
+		ArrayList<ArrayList<String>> filteredList = new ArrayList<>();
+		if (disposalNewValue == null || disposalNewValue.isEmpty() || disposalNewValue.isBlank()) {
+			try {
+				filteredList = Queries.queryResult(
+						"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount "
+								+ " from product p, employee e, payment pay,drug_disposal d "
+								+ " where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id;",
+						null);
+
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+		} else if (disposalOperationComboBox.getSelectionModel().getSelectedItem() == "Product Name") {
+			try {
+				filteredList = Queries.queryResult(
+						"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount "
+								+ " from product p, employee e, payment pay,drug_disposal d "
+								+ " where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id"
+								+ " and p.product_name like ? ;",
+						new ArrayList<>(Arrays.asList("%" + disposalNewValue + "%")));
+				
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+		} else if (disposalOperationComboBox.getSelectionModel().getSelectedItem() == "Expired Month") {
+			try {
+				filteredList = Queries.queryResult(
+						"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount "
+								+ " from product p, employee e, payment pay,drug_disposal d "
+								+ " where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id"
+								+ " and  month(d.batch_expiry_date) like ? ;",
+						new ArrayList<>(Arrays.asList("%" + disposalNewValue + "%")));
+				
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+
+		} else if (disposalOperationComboBox.getSelectionModel().getSelectedItem() == "Expired Year") {
+			try {
+				filteredList = Queries.queryResult(
+						"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount "
+								+ " from product p, employee e, payment pay,drug_disposal d "
+								+ " where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id"
+								+ " and  year(d.batch_expiry_date) like ? ;",
+						new ArrayList<>(Arrays.asList("%" + disposalNewValue + "%")));
+				
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+		} else if (disposalOperationComboBox.getSelectionModel().getSelectedItem() == "Production Month") {
+			try {
+				filteredList = Queries.queryResult(
+						"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount "
+								+ " from product p, employee e, payment pay,drug_disposal d "
+								+ " where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id"
+								+ " and  month(d.batch_production_date) like ? ;",
+						new ArrayList<>(Arrays.asList("%" + disposalNewValue + "%")));
+				
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+
+		} else if (disposalOperationComboBox.getSelectionModel().getSelectedItem() == "Production Year") {
+			try {
+				filteredList = Queries.queryResult(
+						"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount "
+								+ " from product p, employee e, payment pay,drug_disposal d "
+								+ " where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id"
+								+ " and  year(d.batch_production_date) like ? ;",
+						new ArrayList<>(Arrays.asList("%" + disposalNewValue + "%")));
+				
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+
+		} else if (disposalOperationComboBox.getSelectionModel().getSelectedItem() == "Disposal Month") {
+			try {
+				filteredList = Queries.queryResult(
+						"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount "
+								+ " from product p, employee e, payment pay,drug_disposal d "
+								+ " where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id"
+								+ " and  month(d.Disposal_date) like ? ;",
+						new ArrayList<>(Arrays.asList("%" + disposalNewValue + "%")));
+				
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+
+		} else if (disposalOperationComboBox.getSelectionModel().getSelectedItem() == "Disposal Year") {
+			try {
+				filteredList = Queries.queryResult(
+						"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount "
+								+ " from product p, employee e, payment pay,drug_disposal d "
+								+ " where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id"
+								+ " and  year(d.Disposal_date) like ? ;",
+						new ArrayList<>(Arrays.asList("%" + disposalNewValue + "%")));
+				
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				filteredList = Queries.queryResult(
+						"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount "
+								+ " from product p, employee e, payment pay,drug_disposal d "
+								+ " where (p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id) "
+								+ " and  (year(d.Disposal_date) like ? or month(d.Disposal_date) like ? or p.product_name like ? "
+								+ " or year(d.Batch_Production_Date) like ? or month(d.Batch_Production_Date) like ? or "
+								+ " year(d.Batch_Expiry_Date) like ? or month(d.Batch_Expiry_Date) like ?);",
+						new ArrayList<>(Arrays.asList("%" + disposalNewValue + "%", "%" + disposalNewValue + "%",
+								"%" + disposalNewValue + "%", "%" + disposalNewValue + "%", "%" + disposalNewValue + "%",
+								"%" + disposalNewValue + "%", "%" + disposalNewValue + "%")));
+				
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		disposalTable.setItems(FXCollections.observableArrayList(filteredList));
+	}
 
 	// --------------------------------------tax----------------------------------------------------
 
@@ -125,9 +248,94 @@ public class PaymentController implements Initializable {
 
 	@FXML
 	private DatePicker writingDateTax;
+	
+	String taxNewValue = "";
 
-	ObservableList<String> TaxChoices = FXCollections.observableArrayList("Tax ID", "Manager Name", "Payment Month",
+	ObservableList<String> TaxChoices = FXCollections.observableArrayList("- Select -","Tax ID", "Manager Name", "Payment Month",
 			"Payment Year");
+	
+	public void taxFilterList() { 
+		ArrayList<ArrayList<String>> filteredList = new ArrayList<>();
+		if (taxNewValue == null || taxNewValue.isEmpty() || taxNewValue.isBlank()) {
+			try {
+				filteredList = Queries.queryResult(
+						"select distinct t.tax_id,e.employee_name,t.tax_date,p.payment_amount "
+								+ " from employee e , tax t, payment p, taxes_payment tp "
+								+ " where  tp.manager_ID=e.employee_ID and tp.payment_ID=p.payment_ID and t.tax_id=tp.tax_id;",
+						null);
+
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+		} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Tax ID") {
+			try {
+				filteredList = Queries
+						.queryResult("select distinct t.tax_id,e.employee_name,t.tax_date,p.payment_amount "
+								+ " from employee e , tax t, payment p, taxes_payment tp "
+								+ " where  tp.manager_ID=e.employee_ID and tp.payment_ID=p.payment_ID and t.tax_id=tp.tax_id"
+								+ " and t.tax_id like ? ;", new ArrayList<>(Arrays.asList("%" + taxNewValue + "%")));
+		
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+		} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Manager Name") {
+			try {
+				filteredList = Queries.queryResult(
+						"select distinct t.tax_id,e.employee_name,t.tax_date,p.payment_amount "
+								+ " from employee e , tax t, payment p, taxes_payment tp "
+								+ " where  tp.manager_ID=e.employee_ID and tp.payment_ID=p.payment_ID and t.tax_id=tp.tax_id"
+								+ " and  e.employee_name like ? ;",
+						new ArrayList<>(Arrays.asList("%" + taxNewValue + "%")));
+				
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+
+		} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Payment Month") {
+			try {
+				filteredList = Queries.queryResult(
+						"select  distinct t.tax_id,e.employee_name,t.tax_date,p.payment_amount "
+								+ " from employee e , tax t, payment p, taxes_payment tp "
+								+ " where  tp.manager_ID=e.employee_ID and tp.payment_ID=p.payment_ID and t.tax_id=tp.tax_id "
+								+ " and  month(t.tax_date) like ? ;",
+						new ArrayList<>(Arrays.asList("%" + taxNewValue + "%")));
+				
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+
+		} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Payment Year") {
+			try {
+				filteredList = Queries.queryResult(
+						"select distinct t.tax_id,e.employee_name,t.tax_date,p.payment_amount "
+								+ " from employee e , tax t, payment p, taxes_payment tp "
+								+ " where  tp.manager_ID=e.employee_ID and tp.payment_ID=p.payment_ID and t.tax_id=tp.tax_id "
+								+ "and  year(t.tax_date) like ? ;",
+						new ArrayList<>(Arrays.asList("%" + taxNewValue + "%")));
+				
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+
+		} else {
+			try {
+				ArrayList<String> parameters = new ArrayList<>();
+				while (parameters.size() < 4) {
+					parameters.add("%" + taxNewValue + "%");
+				}
+				filteredList = Queries
+						.queryResult("select distinct t.tax_id,e.employee_name,t.tax_date,p.payment_amount "
+								+ " from employee e , tax t, payment p, taxes_payment tp "
+								+ " where ( tp.manager_ID=e.employee_ID and tp.payment_ID=p.payment_ID and t.tax_id=tp.tax_id )"
+								+ "and  (year(t.tax_date) like ? " + " or month(t.tax_date) like ? "
+								+ " or  e.employee_name like ? " + " or t.tax_id like ?) ;", parameters);
+				
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		taxTable.setItems(FXCollections.observableArrayList(filteredList));
+	}
 
 	public void chequeTaxOnAction(ActionEvent event) {
 		if (chequeTaxCheckBox.isSelected() == true) {
@@ -384,8 +592,118 @@ public class PaymentController implements Initializable {
 
 	@FXML
 	private Label supplierChequeIDLabel;
+	
+	String supplierNewValue = "";
+	
+	String supplierPaymentNewValue = "";
+	
+	public void supplierPaymentFilterList() {
+		ArrayList<ArrayList<String>> filteredList = new ArrayList<>();
+		if (supplierPaymentNewValue == null || supplierPaymentNewValue.isEmpty() || supplierPaymentNewValue.isBlank()) {
+			try {
+				filteredList = Queries.queryResult(
+						"select distinct e.employee_name, s.supplier_name,p.payment_date,p.payment_amount "
+								+ " from employee e, supplier s, payment p, supplier_payment op, s_order so "
+								+ " where  op.manager_ID=e.employee_ID and op.supplier_Id = so.supplier_id and p.payment_id= op.payment_id "
+								+ " and so.supplier_id=s.supplier_id;",
+						null);
 
-	ObservableList<String> SupplierPaymentChoices = FXCollections.observableArrayList("Supplier Name", "Manager Name",
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+		} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Supplier Name") {
+			try {
+				filteredList = Queries.queryResult(
+						"select distinct e.employee_name, s.supplier_name,p.payment_date,p.payment_amount "
+								+ " from employee e, supplier s, payment p, supplier_payment op, s_order so "
+								+ " where  op.manager_ID=e.employee_ID and op.supplier_Id = so.supplier_id and p.payment_id= op.payment_id "
+								+ " and so.supplier_id=s.supplier_id and  s.supplier_name like ? ;",
+						new ArrayList<>(Arrays.asList("%" + supplierPaymentNewValue + "%")));
+				
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+		} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Manager Name") {
+			try {
+				filteredList = Queries.queryResult(
+						"select distinct e.employee_name, s.supplier_name,p.payment_date,p.payment_amount "
+								+ " from employee e, supplier s, payment p, supplier_payment op, s_order so "
+								+ " where  op.manager_ID=e.employee_ID and op.supplier_Id = so.supplier_id and p.payment_id= op.payment_id "
+								+ " and so.supplier_id=s.supplier_id and  e.employee_name like ? ;",
+						new ArrayList<>(Arrays.asList("%" + supplierPaymentNewValue + "%")));
+				
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+
+		} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Payment Month") {
+			try {
+				filteredList = Queries.queryResult(
+						"select distinct e.employee_name, s.supplier_name,p.payment_date,p.payment_amount "
+								+ " from employee e, supplier s, payment p, supplier_payment op, s_order so "
+								+ " where  op.manager_ID=e.employee_ID and op.supplier_Id = so.supplier_id and p.payment_id= op.payment_id "
+								+ " and so.supplier_id=s.supplier_id and  month(p.payment_date) like ? ;",
+						new ArrayList<>(Arrays.asList("%" + supplierPaymentNewValue + "%")));
+				
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+
+		} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Payment Year") {
+			try {
+				filteredList = Queries.queryResult(
+						"select distinct e.employee_name, s.supplier_name,p.payment_date,p.payment_amount "
+								+ " from employee e, supplier s, payment p, supplier_payment op, s_order so "
+								+ " where  op.manager_ID=e.employee_ID and op.supplier_Id = so.supplier_id and p.payment_id= op.payment_id "
+								+ " and so.supplier_id=s.supplier_id and  year(p.payment_date) like ? ;",
+						new ArrayList<>(Arrays.asList("%" + supplierPaymentNewValue + "%")));
+
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				ArrayList<String> parameters = new ArrayList<>();
+				while (parameters.size() < 4) {
+					parameters.add("%" + supplierPaymentNewValue + "%");
+				}
+				filteredList = Queries.queryResult(
+						"select distinct e.employee_name, s.supplier_name,p.payment_date,p.payment_amount "
+								+ " from employee e, supplier s, payment p, supplier_payment op, s_order so "
+								+ " where  (op.manager_ID=e.employee_ID and op.supplier_Id = so.supplier_id and p.payment_id= op.payment_id "
+								+ " and so.supplier_id=s.supplier_id )and  (year(p.payment_date) like ? "
+								+ " or month(p.payment_date) like ? " + " or  e.employee_name like ? "
+								+ " or s.supplier_name like ? );",
+						parameters);
+				
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		supplierPaymentTable.setItems(FXCollections.observableArrayList(filteredList));
+	}
+	
+	public void supplierFilterList() {
+		ArrayList<Supplier> filteredList = new ArrayList<>();
+		if (supplierNewValue == null || supplierNewValue.isEmpty() || supplierNewValue.isBlank()) {
+			try {
+				filteredList = Supplier.getSupplierData(Queries.queryResult("select * from Supplier;", null));
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				filteredList = Supplier.getSupplierData(Queries.queryResult(
+						"select * from Supplier " + " where  supplier_name like ? " + " order by supplier_ID ;",
+						new ArrayList<>(Arrays.asList("%" + supplierNewValue + "%"))));
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		supplierDataTable.setItems(FXCollections.observableArrayList(filteredList));
+	}
+
+	ObservableList<String> SupplierPaymentChoices = FXCollections.observableArrayList("- Select -","Supplier Name", "Manager Name",
 			"Payment Month", "Payment Year");
 
 	public void chequeSupplierOnAction(ActionEvent event) {
@@ -620,7 +938,7 @@ public class PaymentController implements Initializable {
 	private TextField employeeChequeIDTextField;
 
 	@FXML
-	private ComboBox<String> searchEmployeeOp;
+	private ComboBox<String> employeeOperationComboBox;
 
 	@FXML
 	private TextField searchEmployeePaymentTextField;
@@ -637,9 +955,79 @@ public class PaymentController implements Initializable {
 	@FXML
 	private Label bankNameLabel;
 	
-	ObservableList<String> EmployeeChoices = FXCollections.observableArrayList("Employee Name", "Payment Month",
+	String employeePaymentNewValue = "";
+	
+	ObservableList<String> EmployeeChoices = FXCollections.observableArrayList("- Select -","Employee Name", "Payment Month",
 			"Payment Year");
 
+	public void employeePaymentFilterList() {
+		ArrayList<ArrayList<String>> filteredList = new ArrayList<>();
+		if (employeePaymentNewValue == null || employeePaymentNewValue.isEmpty() || employeePaymentNewValue.isBlank()) {
+			try {
+				filteredList = Queries
+						.queryResult(
+								"select distinct e.employee_name,p.payment_date,p.payment_amount "
+										+ " from e_salary es,payment p, employee e "
+										+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.manager_Id",
+								null);
+
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+		} else if (employeeOperationComboBox.getSelectionModel().getSelectedItem() == "Employee Name") {
+			try {
+				filteredList = Queries.queryResult(
+						"select distinct e.employee_name,p.payment_date,p.payment_amount "
+								+ " from e_salary es,payment p, employee e "
+								+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.manager_Id and  e.employee_name like ? ;",
+						new ArrayList<>(Arrays.asList("%" + employeePaymentNewValue + "%")));
+				
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+		} else if (employeeOperationComboBox.getSelectionModel().getSelectedItem() == "Payment Month") {
+			try {
+				filteredList = Queries.queryResult(
+						"select distinct e.employee_name,p.payment_date,p.payment_amount "
+								+ " from e_salary es,payment p, employee e "
+								+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.manager_Id and  month(p.payment_date) like ? ;",
+						new ArrayList<>(Arrays.asList("%" + employeePaymentNewValue + "%")));
+				
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+		} else if (employeeOperationComboBox.getSelectionModel().getSelectedItem() == "Payment Year") {
+			try {
+				filteredList = Queries.queryResult(
+						"select distinct e.employee_name,p.payment_date,p.payment_amount "
+								+ " from e_salary es,payment p, employee e "
+								+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.manager_Id and year(p.payment_date) like ? ;",
+						new ArrayList<>(Arrays.asList("%" + employeePaymentNewValue + "%")));
+
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+
+		} else {
+			try {
+				ArrayList<String> parameters = new ArrayList<>();
+				while (parameters.size() < 3) {
+					parameters.add("%" + employeePaymentNewValue + "%");
+				}
+				filteredList = Queries.queryResult(
+						"select distinct e.employee_name,p.payment_date,p.payment_amount "
+								+ " from e_salary es,payment p, employee e "
+								+ " where  (p.payment_Id=es.payment_Id and e.employee_Id=es.manager_Id) and  (year(p.payment_date) like ? "
+								+ " or month(p.payment_date) like ? " + " or  e.employee_name like ?) ;",
+						parameters);
+				
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		employeePaymentTable.setItems(FXCollections.observableArrayList(filteredList));
+	}
+	
 	public void chequeEmployeeOnAction(ActionEvent event) {
 		if (chequeEmployeeCheckBox.isSelected() == true) {
 			employeeBankNameTextField.setOpacity(1);
@@ -809,7 +1197,7 @@ public class PaymentController implements Initializable {
 		}
 	}
 
-	ObservableList<String> Choices = FXCollections.observableArrayList("Product Name", "Expired Month", "Expired Year",
+	ObservableList<String> Choices = FXCollections.observableArrayList("- Select -","Product Name", "Expired Month", "Expired Year",
 			"Production Month", "Production Year", "Disposal Month", "Disposal Year");
 
 	// -----------------------------------------Disposal---------------------------------------------------------
@@ -921,124 +1309,8 @@ public class PaymentController implements Initializable {
 				});
 
 		searchDisposalTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			ArrayList<ArrayList<String>> filteredList = new ArrayList<>();
-			if (newValue == null || newValue.isEmpty() || newValue.isBlank()) {
-				try {
-					filteredList = Queries.queryResult(
-							"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount "
-									+ " from product p, employee e, payment pay,drug_disposal d "
-									+ " where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id;",
-							null);
-
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-			} else if (disposalOperationComboBox.getSelectionModel().getSelectedItem() == "Product Name") {
-				try {
-					filteredList = Queries.queryResult(
-							"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount "
-									+ " from product p, employee e, payment pay,drug_disposal d "
-									+ " where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id"
-									+ " and p.product_name like ? ;",
-							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
-					
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-			} else if (disposalOperationComboBox.getSelectionModel().getSelectedItem() == "Expired Month") {
-				try {
-					filteredList = Queries.queryResult(
-							"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount "
-									+ " from product p, employee e, payment pay,drug_disposal d "
-									+ " where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id"
-									+ " and  month(d.batch_expiry_date) like ? ;",
-							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
-					
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-
-			} else if (disposalOperationComboBox.getSelectionModel().getSelectedItem() == "Expired Year") {
-				try {
-					filteredList = Queries.queryResult(
-							"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount "
-									+ " from product p, employee e, payment pay,drug_disposal d "
-									+ " where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id"
-									+ " and  year(d.batch_expiry_date) like ? ;",
-							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
-					
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-			} else if (disposalOperationComboBox.getSelectionModel().getSelectedItem() == "Production Month") {
-				try {
-					filteredList = Queries.queryResult(
-							"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount "
-									+ " from product p, employee e, payment pay,drug_disposal d "
-									+ " where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id"
-									+ " and  month(d.batch_production_date) like ? ;",
-							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
-					
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-
-			} else if (disposalOperationComboBox.getSelectionModel().getSelectedItem() == "Production Year") {
-				try {
-					filteredList = Queries.queryResult(
-							"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount "
-									+ " from product p, employee e, payment pay,drug_disposal d "
-									+ " where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id"
-									+ " and  year(d.batch_production_date) like ? ;",
-							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
-					
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-
-			} else if (disposalOperationComboBox.getSelectionModel().getSelectedItem() == "Disposal Month") {
-				try {
-					filteredList = Queries.queryResult(
-							"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount "
-									+ " from product p, employee e, payment pay,drug_disposal d "
-									+ " where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id"
-									+ " and  month(d.Disposal_date) like ? ;",
-							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
-					
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-
-			} else if (disposalOperationComboBox.getSelectionModel().getSelectedItem() == "Disposal Year") {
-				try {
-					filteredList = Queries.queryResult(
-							"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount "
-									+ " from product p, employee e, payment pay,drug_disposal d "
-									+ " where p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id"
-									+ " and  year(d.Disposal_date) like ? ;",
-							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
-					
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-			} else {
-				try {
-					filteredList = Queries.queryResult(
-							"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount "
-									+ " from product p, employee e, payment pay,drug_disposal d "
-									+ " where (p.product_id = d.product_id and e.employee_id=d.employee_id and pay.payment_id = d.payment_id) "
-									+ " and  (year(d.Disposal_date) like ? or month(d.Disposal_date) like ? or p.product_name like ? "
-									+ " or year(d.Batch_Production_Date) like ? or month(d.Batch_Production_Date) like ? or "
-									+ " year(d.Batch_Expiry_Date) like ? or month(d.Batch_Expiry_Date) like ?);",
-							new ArrayList<>(Arrays.asList("%" + newValue + "%", "%" + newValue + "%",
-									"%" + newValue + "%", "%" + newValue + "%", "%" + newValue + "%",
-									"%" + newValue + "%", "%" + newValue + "%")));
-					
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			disposalTable.setItems(FXCollections.observableArrayList(filteredList));
+			disposalNewValue = newValue;
+			disposalFilterList();
 
 		});
 
@@ -1051,8 +1323,8 @@ public class PaymentController implements Initializable {
 		availableUntilDateEmployeeLabel.setOpacity(0);
 		chequeIDEmployeeLabel.setOpacity(0);
 		writingDateEmployeeLabel.setOpacity(0);
-		searchEmployeeOp.setValue("select");
-		searchEmployeeOp.setItems(EmployeeChoices);
+		employeeOperationComboBox.setValue("select");
+		employeeOperationComboBox.setItems(EmployeeChoices);
 		employeeNameColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
 		employeeIDColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("iD"));
 		try {
@@ -1077,7 +1349,7 @@ public class PaymentController implements Initializable {
 			} else {
 				try {
 					filteredList = Employee
-							.getEmployeeData(Queries.queryResult("select * from Employee where Employee_Name like ? ;",
+							.getEmployeeData(Queries.queryResult("select * from Employee where Employee_Name like ? and employee_id <> -1  ;",
 									new ArrayList<>(Arrays.asList("%" + newValue + "%"))));
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
@@ -1143,71 +1415,8 @@ public class PaymentController implements Initializable {
 				});
 
 		searchEmployeePaymentTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			ArrayList<ArrayList<String>> filteredList = new ArrayList<>();
-			if (newValue == null || newValue.isEmpty() || newValue.isBlank()) {
-				try {
-					filteredList = Queries
-							.queryResult(
-									"select distinct e.employee_name,p.payment_date,p.payment_amount "
-											+ " from e_salary es,payment p, employee e "
-											+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.manager_Id",
-									null);
-
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-			} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Employee Name") {
-				try {
-					filteredList = Queries.queryResult(
-							"select distinct e.employee_name,p.payment_date,p.payment_amount "
-									+ " from e_salary es,payment p, employee e "
-									+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.manager_Id and  e.employee_name like ? ;",
-							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
-					
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-			} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Payment Month") {
-				try {
-					filteredList = Queries.queryResult(
-							"select distinct e.employee_name,p.payment_date,p.payment_amount "
-									+ " from e_salary es,payment p, employee e "
-									+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.manager_Id and  month(p.payment_date) like ? ;",
-							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
-					
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-			} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Payment Year") {
-				try {
-					filteredList = Queries.queryResult(
-							"select distinct e.employee_name,p.payment_date,p.payment_amount "
-									+ " from e_salary es,payment p, employee e "
-									+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.manager_Id and year(p.payment_date) like ? ;",
-							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
-
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-
-			} else {
-				try {
-					ArrayList<String> parameters = new ArrayList<>();
-					while (parameters.size() < 3) {
-						parameters.add("%" + newValue + "%");
-					}
-					filteredList = Queries.queryResult(
-							"select distinct e.employee_name,p.payment_date,p.payment_amount "
-									+ " from e_salary es,payment p, employee e "
-									+ " where  (p.payment_Id=es.payment_Id and e.employee_Id=es.manager_Id) and  (year(p.payment_date) like ? "
-									+ " or month(p.payment_date) like ? " + " or  e.employee_name like ?) ;",
-							parameters);
-					
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			employeePaymentTable.setItems(FXCollections.observableArrayList(filteredList));
+			employeePaymentNewValue = newValue;
+			employeePaymentFilterList();
 		});
 
 		// ----------------------------------------supplier----------------------------------------------------------
@@ -1289,109 +1498,13 @@ public class PaymentController implements Initializable {
 					}
 				});
 		searchSupplierPaymentTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			ArrayList<ArrayList<String>> filteredList = new ArrayList<>();
-			if (newValue == null || newValue.isEmpty() || newValue.isBlank()) {
-				try {
-					filteredList = Queries.queryResult(
-							"select distinct e.employee_name, s.supplier_name,p.payment_date,p.payment_amount "
-									+ " from employee e, supplier s, payment p, supplier_payment op, s_order so "
-									+ " where  op.manager_ID=e.employee_ID and op.supplier_Id = so.supplier_id and p.payment_id= op.payment_id "
-									+ " and so.supplier_id=s.supplier_id;",
-							null);
-
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-			} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Supplier Name") {
-				try {
-					filteredList = Queries.queryResult(
-							"select distinct e.employee_name, s.supplier_name,p.payment_date,p.payment_amount "
-									+ " from employee e, supplier s, payment p, supplier_payment op, s_order so "
-									+ " where  op.manager_ID=e.employee_ID and op.supplier_Id = so.supplier_id and p.payment_id= op.payment_id "
-									+ " and so.supplier_id=s.supplier_id and  s.supplier_name like ? ;",
-							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
-					
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-			} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Manager Name") {
-				try {
-					filteredList = Queries.queryResult(
-							"select distinct e.employee_name, s.supplier_name,p.payment_date,p.payment_amount "
-									+ " from employee e, supplier s, payment p, supplier_payment op, s_order so "
-									+ " where  op.manager_ID=e.employee_ID and op.supplier_Id = so.supplier_id and p.payment_id= op.payment_id "
-									+ " and so.supplier_id=s.supplier_id and  e.employee_name like ? ;",
-							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
-					
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-
-			} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Payment Month") {
-				try {
-					filteredList = Queries.queryResult(
-							"select distinct e.employee_name, s.supplier_name,p.payment_date,p.payment_amount "
-									+ " from employee e, supplier s, payment p, supplier_payment op, s_order so "
-									+ " where  op.manager_ID=e.employee_ID and op.supplier_Id = so.supplier_id and p.payment_id= op.payment_id "
-									+ " and so.supplier_id=s.supplier_id and  month(p.payment_date) like ? ;",
-							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
-					
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-
-			} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Payment Year") {
-				try {
-					filteredList = Queries.queryResult(
-							"select distinct e.employee_name, s.supplier_name,p.payment_date,p.payment_amount "
-									+ " from employee e, supplier s, payment p, supplier_payment op, s_order so "
-									+ " where  op.manager_ID=e.employee_ID and op.supplier_Id = so.supplier_id and p.payment_id= op.payment_id "
-									+ " and so.supplier_id=s.supplier_id and  year(p.payment_date) like ? ;",
-							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
-
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-			} else {
-				try {
-					ArrayList<String> parameters = new ArrayList<>();
-					while (parameters.size() < 4) {
-						parameters.add("%" + newValue + "%");
-					}
-					filteredList = Queries.queryResult(
-							"select distinct e.employee_name, s.supplier_name,p.payment_date,p.payment_amount "
-									+ " from employee e, supplier s, payment p, supplier_payment op, s_order so "
-									+ " where  (op.manager_ID=e.employee_ID and op.supplier_Id = so.supplier_id and p.payment_id= op.payment_id "
-									+ " and so.supplier_id=s.supplier_id )and  (year(p.payment_date) like ? "
-									+ " or month(p.payment_date) like ? " + " or  e.employee_name like ? "
-									+ " or s.supplier_name like ? );",
-							parameters);
-					
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			supplierPaymentTable.setItems(FXCollections.observableArrayList(filteredList));
+			supplierPaymentNewValue = newValue;
+			supplierPaymentFilterList();
 		});
 
 		searchSupplierTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			ArrayList<Supplier> filteredList = new ArrayList<>();
-			if (newValue == null || newValue.isEmpty() || newValue.isBlank()) {
-				try {
-					filteredList = Supplier.getSupplierData(Queries.queryResult("select * from Supplier;", null));
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-			} else {
-				try {
-					filteredList = Supplier.getSupplierData(Queries.queryResult(
-							"select * from Supplier " + " where  supplier_name like ? " + " order by supplier_ID ;",
-							new ArrayList<>(Arrays.asList("%" + newValue + "%"))));
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			supplierDataTable.setItems(FXCollections.observableArrayList(filteredList));
+			supplierNewValue = newValue;
+			supplierFilterList();
 		});
 
 		// ------------------------------------------tax-----------------------------------------------------------------------
@@ -1457,7 +1570,7 @@ public class PaymentController implements Initializable {
 
 		amountaTaxColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
-					@Override
+				@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
 						ArrayList<String> x = p.getValue();
 						if (x != null && x.size() > 0) {
@@ -1469,86 +1582,8 @@ public class PaymentController implements Initializable {
 				});
 
 		searchTaxTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			ArrayList<ArrayList<String>> filteredList = new ArrayList<>();
-			if (newValue == null || newValue.isEmpty() || newValue.isBlank()) {
-				try {
-					filteredList = Queries.queryResult(
-							"select distinct t.tax_id,e.employee_name,t.tax_date,p.payment_amount "
-									+ " from employee e , tax t, payment p, taxes_payment tp "
-									+ " where  tp.manager_ID=e.employee_ID and tp.payment_ID=p.payment_ID and t.tax_id=tp.tax_id;",
-							null);
-
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-			} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Tax ID") {
-				try {
-					filteredList = Queries
-							.queryResult("select distinct t.tax_id,e.employee_name,t.tax_date,p.payment_amount "
-									+ " from employee e , tax t, payment p, taxes_payment tp "
-									+ " where  tp.manager_ID=e.employee_ID and tp.payment_ID=p.payment_ID and t.tax_id=tp.tax_id"
-									+ " and t.tax_id like ? ;", new ArrayList<>(Arrays.asList("%" + newValue + "%")));
-			
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-			} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Manager Name") {
-				try {
-					filteredList = Queries.queryResult(
-							"select distinct t.tax_id,e.employee_name,t.tax_date,p.payment_amount "
-									+ " from employee e , tax t, payment p, taxes_payment tp "
-									+ " where  tp.manager_ID=e.employee_ID and tp.payment_ID=p.payment_ID and t.tax_id=tp.tax_id"
-									+ " and  e.employee_name like ? ;",
-							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
-					
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-
-			} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Payment Month") {
-				try {
-					filteredList = Queries.queryResult(
-							"select  distinct t.tax_id,e.employee_name,t.tax_date,p.payment_amount "
-									+ " from employee e , tax t, payment p, taxes_payment tp "
-									+ " where  tp.manager_ID=e.employee_ID and tp.payment_ID=p.payment_ID and t.tax_id=tp.tax_id "
-									+ " and  month(t.tax_date) like ? ;",
-							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
-					
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-
-			} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Payment Year") {
-				try {
-					filteredList = Queries.queryResult(
-							"select distinct t.tax_id,e.employee_name,t.tax_date,p.payment_amount "
-									+ " from employee e , tax t, payment p, taxes_payment tp "
-									+ " where  tp.manager_ID=e.employee_ID and tp.payment_ID=p.payment_ID and t.tax_id=tp.tax_id "
-									+ "and  year(t.tax_date) like ? ;",
-							new ArrayList<>(Arrays.asList("%" + newValue + "%")));
-					
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-
-			} else {
-				try {
-					ArrayList<String> parameters = new ArrayList<>();
-					while (parameters.size() < 4) {
-						parameters.add("%" + newValue + "%");
-					}
-					filteredList = Queries
-							.queryResult("select distinct t.tax_id,e.employee_name,t.tax_date,p.payment_amount "
-									+ " from employee e , tax t, payment p, taxes_payment tp "
-									+ " where ( tp.manager_ID=e.employee_ID and tp.payment_ID=p.payment_ID and t.tax_id=tp.tax_id )"
-									+ "and  (year(t.tax_date) like ? " + " or month(t.tax_date) like ? "
-									+ " or  e.employee_name like ? " + " or t.tax_id like ?) ;", parameters);
-					
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			taxTable.setItems(FXCollections.observableArrayList(filteredList));
+			taxNewValue = newValue;
+			taxFilterList();
 		});
 		
 	}
