@@ -216,20 +216,20 @@
                                                 <Line fx:id="line2" endX="120.80001831054688" endY="3.814697265625E-6" startX="-147.99998474121094" startY="3.814697265625E-6" style="-fx-opacity: 0.1;" />
                                                 <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="10.0" minWidth="10.0" prefHeight="200.0" prefWidth="250.0" VBox.vgrow="ALWAYS">
                                                    <children>
-                                                      <VBox minHeight="10.0" minWidth="10.0" prefHeight="189.0" prefWidth="163.0">
+                                                      <VBox alignment="CENTER" minHeight="10.0" minWidth="10.0" prefHeight="189.0" prefWidth="163.0" HBox.hgrow="ALWAYS">
                                                          <children>
-                                                            <Label alignment="CENTER" minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="223.0" style="-fx-background-color: #d1e2e7; -fx-border-color: #bbd3db;" text="Today's Report" />
-                                                            <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #e8f0f3; -fx-border-color: #bbd3db;" text="Total Sales" />
-                                                            <Label alignment="CENTER" layoutX="10.0" layoutY="60.0" minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #d1e2e7; -fx-border-color: #bbd3db;" text="Total Discount" />
-                                                            <Label alignment="CENTER" layoutX="10.0" layoutY="111.0" minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #e8f0f3; -fx-border-color: #bbd3db;" text="Total Income" />
+                                                            <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="1.7976931348623157E308" style="-fx-background-color: #d1e2e7; -fx-border-color: #bbd3db;" text="Today's Report" VBox.vgrow="ALWAYS" />
+                                                            <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="1.7976931348623157E308" style="-fx-background-color: #e8f0f3; -fx-border-color: #bbd3db;" text="Total Sales" VBox.vgrow="ALWAYS" />
+                                                            <Label alignment="CENTER" layoutX="10.0" layoutY="60.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="1.7976931348623157E308" style="-fx-background-color: #d1e2e7; -fx-border-color: #bbd3db;" text="Total Discount" VBox.vgrow="ALWAYS" />
+                                                            <Label alignment="CENTER" layoutX="10.0" layoutY="111.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="1.7976931348623157E308" style="-fx-background-color: #e8f0f3; -fx-border-color: #bbd3db;" text="Total Income" VBox.vgrow="ALWAYS" />
                                                          </children>
                                                       </VBox>
-                                                      <VBox layoutX="10.0" layoutY="10.0" minHeight="10.0" minWidth="10.0" prefHeight="200.0" prefWidth="115.0">
+                                                      <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" minHeight="10.0" minWidth="10.0" prefHeight="200.0" prefWidth="115.0" HBox.hgrow="ALWAYS">
                                                          <children>
-                                                            <Label alignment="CENTER" minHeight="5.0" minWidth="5.0" prefHeight="50.0" prefWidth="174.0" style="-fx-background-color: #d1e2e7; -fx-border-color: #bbd3db;" text="Amount" />
-                                                            <Label fx:id="totalSaleLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" minHeight="5.0" minWidth="5.0" prefHeight="50.0" prefWidth="124.0" style="-fx-background-color: #e8f0f3; -fx-border-color: #bbd3db;" text="0.0" />
-                                                            <Label fx:id="totalDiscountLabel" alignment="CENTER" layoutX="10.0" layoutY="60.0" minHeight="5.0" minWidth="5.0" prefHeight="50.0" prefWidth="124.0" style="-fx-background-color: #d1e2e7; -fx-border-color: #bbd3db;" text="0.0" />
-                                                            <Label fx:id="totalIncomeLabel" alignment="CENTER" layoutX="10.0" layoutY="111.0" minHeight="5.0" minWidth="5.0" prefHeight="50.0" prefWidth="124.0" style="-fx-background-color: #e8f0f3; -fx-border-color: #bbd3db;" text="0.0" />
+                                                            <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="5.0" minWidth="5.0" prefHeight="50.0" prefWidth="1.7976931348623157E308" style="-fx-background-color: #d1e2e7; -fx-border-color: #bbd3db;" text="Amount" VBox.vgrow="ALWAYS" />
+                                                            <Label fx:id="totalSaleLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="5.0" minWidth="5.0" prefHeight="50.0" prefWidth="1.7976931348623157E308" style="-fx-background-color: #e8f0f3; -fx-border-color: #bbd3db;" text="0.0" VBox.vgrow="ALWAYS" />
+                                                            <Label fx:id="totalDiscountLabel" alignment="CENTER" layoutX="10.0" layoutY="60.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="5.0" minWidth="5.0" prefHeight="50.0" prefWidth="1.7976931348623157E308" style="-fx-background-color: #d1e2e7; -fx-border-color: #bbd3db;" text="0.0" VBox.vgrow="ALWAYS" />
+                                                            <Label fx:id="totalIncomeLabel" alignment="CENTER" layoutX="10.0" layoutY="111.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="5.0" minWidth="5.0" prefHeight="50.0" prefWidth="1.7976931348623157E308" style="-fx-background-color: #e8f0f3; -fx-border-color: #bbd3db;" text="0.0" VBox.vgrow="ALWAYS" />
                                                          </children>
                                                       </VBox>
                                                    </children>
@@ -248,15 +248,11 @@
                                                 </DropShadow>
                                              </effect>
                                              <children>
-                                                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="132.0" prefWidth="182.0">
-                                                   <children>
-                                                      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="36.0" layoutY="7.0" minHeight="30.0" prefHeight="48.0" prefWidth="182.0" text="Out Of Stock" textAlignment="JUSTIFY" textFill="#1d6f84" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                         <font>
-                                                            <Font name="System Bold Italic" size="18.0" />
-                                                         </font>
-                                                      </Label>
-                                                   </children>
-                                                </AnchorPane>
+                                                <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="45.0" minHeight="45.0" prefHeight="54.0" prefWidth="182.0" text="Out Of Stock" textAlignment="JUSTIFY" textFill="#1d6f84" wrapText="true">
+                                                   <font>
+                                                      <Font name="System Bold Italic" size="18.0" />
+                                                   </font>
+                                                </Label>
                                                 <TableView fx:id="outOfStockTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="10.0" minWidth="10.0" prefHeight="291.0" prefWidth="331.0" stylesheets="@../../CSS/table.css" VBox.vgrow="ALWAYS">
                                                    <columns>
                                                       <TableColumn fx:id="outOfStockNameColumn" prefWidth="75.0" text="Product Name" />
@@ -276,15 +272,11 @@
                                                 </DropShadow>
                                              </effect>
                                              <children>
-                                                <AnchorPane minWidth="10.0" prefHeight="132.0" prefWidth="442.0">
-                                                   <children>
-                                                      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="94.0" layoutY="6.0" minHeight="30.0" minWidth="10.0" prefHeight="27.0" prefWidth="210.0" text="Expires within 30 days  " textAlignment="JUSTIFY" textFill="#1d6f84" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                         <font>
-                                                            <Font name="System Bold Italic" size="18.0" />
-                                                         </font>
-                                                      </Label>
-                                                   </children>
-                                                </AnchorPane>
+                                                <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="45.0" minHeight="45.0" minWidth="10.0" prefHeight="30.0" prefWidth="402.0" text="Expires within 30 days  " textAlignment="JUSTIFY" textFill="#1d6f84" wrapText="true">
+                                                   <font>
+                                                      <Font name="System Bold Italic" size="18.0" />
+                                                   </font>
+                                                </Label>
                                                 <TableView fx:id="expiresTabel" minHeight="10.0" minWidth="10.0" prefHeight="291.0" prefWidth="422.0" stylesheets="@../../CSS/table.css" VBox.vgrow="ALWAYS">
                                                   <columns>
                                                     <TableColumn fx:id="expiresProductIDColumn" prefWidth="75.0" text="Product ID" />
@@ -346,7 +338,7 @@
                               </DropShadow>
                            </effect>
                            <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="55.0" prefWidth="362.0" text="Orders to be paid whithin 30 days" textAlignment="JUSTIFY" textFill="#1d6f84" wrapText="true">
+                              <Label alignment="CENTER" contentDisplay="CENTER" minHeight="45.0" prefHeight="43.0" prefWidth="382.0" text="Orders to be paid whithin 30 days" textAlignment="JUSTIFY" textFill="#1d6f84" wrapText="true">
                                  <font>
                                     <Font name="System Bold Italic" size="18.0" />
                                  </font>
@@ -370,7 +362,7 @@
                               </DropShadow>
                            </effect>
                            <children>
-                              <Label alignment="CENTER" prefHeight="55.0" prefWidth="210.0" text="Out Of Stock Soon" textAlignment="JUSTIFY" textFill="#1d6f84">
+                              <Label alignment="CENTER" maxHeight="45.0" minHeight="45.0" prefHeight="45.0" prefWidth="401.0" text="Out Of Stock Soon" textAlignment="JUSTIFY" textFill="#1d6f84">
                                  <font>
                                     <Font name="System Bold Italic" size="18.0" />
                                  </font>
