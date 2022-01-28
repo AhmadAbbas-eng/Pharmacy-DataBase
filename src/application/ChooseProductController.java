@@ -137,7 +137,7 @@ public class ChooseProductController implements Initializable {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Missing Info");
 			alert.setHeaderText(null);
-			alert.setContentText("No Product Was Selected");
+			alert.setContentText("No Batch Was Selected");
 			alert.showAndWait();
 		} else if (amountStr == null || amountStr.isBlank() || amountStr.isEmpty()) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
