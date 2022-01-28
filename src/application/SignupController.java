@@ -35,7 +35,7 @@ import javafx.stage.Stage;
  * @author Loor Sawalhi
  *
  */
-public class signupController implements Initializable {
+public class SignupController implements Initializable {
 
 	int flag = 0;
 

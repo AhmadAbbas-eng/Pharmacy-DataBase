@@ -19,9 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
-import javafx.scene.chart.Axis;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -573,21 +571,21 @@ public class DashboardController implements Initializable {
 			ArrayList<ArrayList<String>> todaysTotalIncomeAmountArrayList = Queries
 					.queryResult("select sum(income_amount) from income where income_Date=date(now());", null);
 
-			double totalSoled = 0.0, totalIncome = 0.0, totalDiscount = 0.0;
+			double totalIncome = 0.0;
 
 			if (todaysTotalDiscountArrayList.get(0).get(0) == null) {
 				totalDiscountLabel.setText("0.0");
 			} else {
 				System.out.println(todaysTotalDiscountArrayList.toString());
 				totalDiscountLabel.setText(todaysTotalDiscountArrayList.get(0).get(0));
-				totalDiscount = Double.parseDouble(todaysTotalDiscountArrayList.get(0).get(0));
+				Double.parseDouble(todaysTotalDiscountArrayList.get(0).get(0));
 			}
 
 			if (todaysTotalPaidAmountArrayList.get(0).get(0) == null) {
 				totalSaleLabel.setText("0.0");
 			} else {
 				totalSaleLabel.setText(todaysTotalPaidAmountArrayList.get(0).get(0));
-				totalSoled = Double.parseDouble(todaysTotalPaidAmountArrayList.get(0).get(0));
+				Double.parseDouble(todaysTotalPaidAmountArrayList.get(0).get(0));
 			}
 
 			if (todaysTotalIncomeAmountArrayList.get(0).get(0) == null) {
