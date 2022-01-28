@@ -369,7 +369,6 @@
                               </Label>
                               <TableView fx:id="outOfStockSoonTable" prefHeight="307.0" prefWidth="332.0" stylesheets="@../../CSS/table.css" VBox.vgrow="ALWAYS">
                                 <columns>
-                                  <TableColumn fx:id="outOfStockSoonIDColumn" prefWidth="75.0" text="Product ID" />
                                   <TableColumn fx:id="outOfStockSoonNameColumn" minWidth="100.0" prefWidth="88.5333251953125" text="Product Name" />
                                     <TableColumn fx:id="outOfStockSoonProductionDateColumn" prefWidth="101.066650390625" text="Production Date" />
                                     <TableColumn fx:id="outOfStockSoonExpiryDateColumn" prefWidth="89.066650390625" text="Exoiry Date" />

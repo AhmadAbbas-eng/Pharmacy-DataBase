@@ -57,9 +57,6 @@ public class DashboardController implements Initializable {
 	private TableColumn<ArrayList<String>, String> expiresProductionDateColumn;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> outOfStockSoonIDColumn;
-
-	@FXML
 	private TableColumn<ArrayList<String>, String> outOfStockSoonNameColumn;
 
 	@FXML
@@ -771,7 +768,8 @@ public class DashboardController implements Initializable {
 						}
 					}
 				});
-		outOfStockSoonIDColumn.setCellValueFactory(
+	
+		outOfStockSoonNameColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -783,7 +781,7 @@ public class DashboardController implements Initializable {
 						}
 					}
 				});
-		outOfStockSoonNameColumn.setCellValueFactory(
+		outOfStockSoonProductionDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -795,7 +793,7 @@ public class DashboardController implements Initializable {
 						}
 					}
 				});
-		outOfStockSoonProductionDateColumn.setCellValueFactory(
+		outOfStockSoonExpiryDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
@@ -807,25 +805,13 @@ public class DashboardController implements Initializable {
 						}
 					}
 				});
-		outOfStockSoonExpiryDateColumn.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
-					@Override
-					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
-						ArrayList<String> x = p.getValue();
-						if (x != null && x.size() > 0) {
-							return new SimpleStringProperty(x.get(3));
-						} else {
-							return new SimpleStringProperty("");
-						}
-					}
-				});
 		outOfStockAmountColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
 						ArrayList<String> x = p.getValue();
 						if (x != null && x.size() > 0) {
-							return new SimpleStringProperty(x.get(4));
+							return new SimpleStringProperty(x.get(3));
 						} else {
 							return new SimpleStringProperty("");
 						}
