@@ -635,6 +635,7 @@ public class DashboardController implements Initializable {
 				numberOfProductLabel.setText("0");
 			} else {
 				if (numberOfExpiredProductsArrayList.get(0).get(0) != null)
+					
 					productNum = Integer.parseInt(numberOfAvailableProductsArrayList.get(0).get(0))
 							- Integer.parseInt(numberOfExpiredProductsArrayList.get(0).get(0)) - outOfStock;
 				else

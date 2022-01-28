@@ -370,6 +370,7 @@ public class PaymentController implements Initializable {
 							|| writingDateTax.getValue().compareTo(availableUntilDateTax.getValue()) > 0) {
 						flag = true;
 					}
+					
 					ArrayList<Tax> List = new ArrayList<>();
 					List = Tax.getTaxData(Queries.queryResult("select * from Tax where tax_ID = ? ;",
 							new ArrayList<>(Arrays.asList(taxIDTextField.getText().toString()))));
@@ -381,7 +382,7 @@ public class PaymentController implements Initializable {
 						if (List2.isEmpty() == true) {
 							try {
 								Double num = Double.parseDouble(amountTaxTextField.getText());
-								if (num == 0) {
+								if (num <= 0) {
 									flag = true;
 								}
 							} catch (NumberFormatException e1) {
@@ -453,7 +454,7 @@ public class PaymentController implements Initializable {
 					try {
 
 						Double num = Double.parseDouble(amountTaxTextField.getText());
-						if (num == 0) {
+						if (num <= 0) {
 							flag = true;
 						}
 					} catch (NumberFormatException e1) {
@@ -766,7 +767,7 @@ public class PaymentController implements Initializable {
 
 							try {
 								Double num = Double.parseDouble(amountSupplierTextField.getText());
-								if (num == 0) {
+								if (num <= 0) {
 									flag = true;
 								}
 							} catch (NumberFormatException e1) {
@@ -841,7 +842,7 @@ public class PaymentController implements Initializable {
 				boolean flag = false;
 				try {
 					Double num = Double.parseDouble(amountSupplierTextField.getText());
-					if (num == 0) {
+					if (num <= 0) {
 						flag = true;
 					}
 				} catch (NumberFormatException e1) {
@@ -1087,7 +1088,7 @@ public class PaymentController implements Initializable {
 						if (List2.isEmpty() == true) {
 							try {
 								Double amount = Double.parseDouble(amountEmployeeTextField.getText());
-								if (amount == 0) {
+								if (amount <= 0) {
 									flag = true;
 								}
 							} catch (NumberFormatException e1) {
@@ -1152,7 +1153,7 @@ public class PaymentController implements Initializable {
 				boolean flag = false;
 				try {
 					Double num = Double.parseDouble(amountEmployeeTextField.getText());
-					if (num == 0) {
+					if (num <= 0) {
 						flag = true;
 					}
 				} catch (NumberFormatException e1) {
