@@ -1,12 +1,17 @@
 package application;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import Relations.Batch;
@@ -71,7 +76,7 @@ public class ReportController implements Initializable {
 
 	}
 
-	public void saveOnAction(ActionEvent e) {
+	public void saveOnAction(ActionEvent e) throws IOException {
 		if (reportType.getSelectionModel().getSelectedItem() == "-Select-") {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
@@ -162,11 +167,69 @@ public class ReportController implements Initializable {
 				e1.printStackTrace();
 			}
 
+		} else if (reportType.getSelectionModel().getSelectedItem() == "Net Profit") {
+			int currentMonth, currentYear, startMonth, startYear;
+
+			currentMonth = Integer.parseInt(LocalDate.now().toString().substring(5, 7));
+			currentYear = Integer.parseInt(LocalDate.now().toString().substring(0, 4));
+
+			ArrayList<ArrayList<String>> minimunMonthArrayList = null;
+			ArrayList<ArrayList<String>> tableData = new ArrayList<>();
+			
+			try {
+				minimunMonthArrayList = Queries
+						.queryResult("select min(x) from (\r\n" + "select min(I.income_Date) as 'x' from income I\r\n"
+								+ "union\r\n" + "select min(p.payment_Date) as 'x' from payment p) as a;", null);
+			} catch (ClassNotFoundException | SQLException e1) {
+				e1.printStackTrace();
+			}
+
+			if (minimunMonthArrayList.get(0).get(0) != null) {
+
+				startMonth = Integer.parseInt(minimunMonthArrayList.get(0).get(0).substring(5, 7));
+				startYear = Integer.parseInt(minimunMonthArrayList.get(0).get(0).substring(0, 4));
+			} else {
+				startMonth = currentMonth;
+				startYear = currentYear;
+			}
+			while (startYear < currentYear || (startMonth <= currentMonth && startYear == currentYear)) {
+				Double netProfit = 0.0;
+
+				try {
+					netProfit = Queries.getNetProfit(startMonth, startYear);
+				} catch (NumberFormatException | ClassNotFoundException | SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+				String yearAndMonth = startMonth + "-" + startYear;
+				ArrayList<String> data = new ArrayList<>();
+				data.add(yearAndMonth);
+				data.add(netProfit+"");
+				tableData.add(data);
+				if (startMonth == 12) {
+					++startYear;
+					startMonth = 1;
+				} else {
+					++startMonth;
+				}
+
+			}
+			
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss"); // format date as current date
+			LocalDateTime now = LocalDateTime.now();
+
+			FileWriter fileWriter = new FileWriter(selectedDirectory.toString() + "/Net Profit" + dtf.format(now) + ".csv"); // Write on the path the user asked
+			fileWriter.write("Date"+","+"net Profit"+"\n");
+			// Write the names of attributes on file
+			for (int i = 0; i < tableData.size(); i++) {
+				fileWriter.write(tableData.get(i).get(0)+","+tableData.get(i).get(1)+"\n");
+			}
+			fileWriter.close();
 		}
 	}
 
 	ObservableList<String> reports = FXCollections.observableArrayList("-Select-", "Payment", "Suppliers", "Cheques",
-			"Disposal", "Customers", "Products Information", "Product Batches");
+			"Disposal", "Customers", "Products Information", "Product Batches","Net Profit");
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -200,6 +263,18 @@ public class ReportController implements Initializable {
 				Region page;
 				try {
 					page = FXMLLoader.load(getClass().getResource("SuppliersReport.fxml"));
+					display.getChildren().removeAll();
+					display.getChildren().setAll(page);
+					page.prefWidthProperty().bind(display.widthProperty());
+					page.prefHeightProperty().bind(display.heightProperty());
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+
+			}else if (reportType.getSelectionModel().getSelectedItem() == "Net Profit") {
+				Region page;
+				try {
+					page = FXMLLoader.load(getClass().getResource("NetProfit.fxml"));
 					display.getChildren().removeAll();
 					display.getChildren().setAll(page);
 					page.prefWidthProperty().bind(display.widthProperty());
