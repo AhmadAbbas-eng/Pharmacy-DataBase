@@ -14,19 +14,26 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
+import javafx.scene.chart.Axis;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.util.Callback;
 
@@ -186,7 +193,9 @@ public class DashboardController implements Initializable {
 
 	@FXML
 	private VBox reportVBox;
+	
 	int counter = 0;
+	
 	ObservableList<String> months = FXCollections.observableArrayList("January", "February", "March", "April", "May",
 			"June", "July", "August", "September", "October", "November", "December");
 
@@ -194,6 +203,42 @@ public class DashboardController implements Initializable {
 
 	ArrayList<ArrayList<String>> dailySalesArrayList = null;
 
+	class HoveredThresholdNode extends StackPane {
+		HoveredThresholdNode(double value) {
+			setPrefSize(12, 12);
+
+			final Label label = createDataThresholdLabel(value);
+
+			setOnMouseEntered(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent mouseEvent) {
+					getChildren().setAll(label);
+					setCursor(Cursor.NONE);
+					toFront();
+				}
+			});
+			setOnMouseExited(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent mouseEvent) {
+					getChildren().clear();
+					setCursor(Cursor.CROSSHAIR);
+				}
+			});
+		}
+
+		private Label createDataThresholdLabel(double value) {
+			final Label label = new Label(value + "");
+			label.getStyleClass().addAll("default-color0", "chart-line-symbol", "chart-series-line");
+			label.setStyle("-fx-font-size: 10; -fx-font-weight: bold;");
+
+			label.setTextFill(Color.DARKGRAY);
+
+			label.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
+			return label;
+		}
+	}
+
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		leftVBox.prefWidthProperty().bind(mainPane.widthProperty().multiply(0.75));
@@ -311,7 +356,7 @@ public class DashboardController implements Initializable {
 
 		XYChart.Series<String, Double> series = new XYChart.Series<>();
 		series.setName("Daily Sales");
-
+		monthlySellChart.setTitle("Pharmacy Sales");
 		try {
 			dailySalesArrayList = Queries.queryResult("select sum(order_price), day(order_date)\r\n"
 					+ "	from c_order\r\n"
@@ -322,21 +367,27 @@ public class DashboardController implements Initializable {
 		}
 
 		for (int i = 1; i <= 31; ++i) {
-
+			XYChart.Data<String, Double> data ;
 			if (counter < dailySalesArrayList.size()) {
 				if (Integer.parseInt(dailySalesArrayList.get(counter).get(1)) == i) {
-					series.getData().add(
-							new XYChart.Data<>(i + "", Double.parseDouble(dailySalesArrayList.get(counter).get(0))));
+					data = new XYChart.Data<>(i + "", Double.parseDouble(dailySalesArrayList.get(counter).get(0)));
+					series.getData().add(data);
+					data.setNode(new HoveredThresholdNode( Double.parseDouble(dailySalesArrayList.get(counter).get(0))));
+
 					++counter;
 				} else {
-					series.getData().add(new XYChart.Data<>(i + "", 0.0));
-
+					data = new XYChart.Data<>(i + "", 0.0);
+					series.getData().add(data);
+					data.setNode(new HoveredThresholdNode(0.0));
 				}
 			} else {
-				series.getData().add(new XYChart.Data<>(i + "", 0.0));
+				data = new XYChart.Data<>(i + "", 0.0);
+				series.getData().add(data);
+				data.setNode(new HoveredThresholdNode(0.0));
 
 			}
 		}
+
 		monthlySellChart.getData().add(series);
 
 		yearBox.setOnAction(e -> {
@@ -375,17 +426,23 @@ public class DashboardController implements Initializable {
 
 			counter = 0;
 			for (int i = 1; i <= 31; ++i) {
+				XYChart.Data<String, Double> data ;
 				if (counter < dailySalesArrayList.size()) {
 					if (Integer.parseInt(dailySalesArrayList.get(counter).get(1)) == i) {
-						series2.getData().add(new XYChart.Data<>(i + "",
-								Double.parseDouble(dailySalesArrayList.get(counter).get(0))));
+						data = new XYChart.Data<>(i + "", Double.parseDouble(dailySalesArrayList.get(counter).get(0)));
+						series2.getData().add(data);
+						data.setNode(new HoveredThresholdNode( Double.parseDouble(dailySalesArrayList.get(counter).get(0))));
+
 						++counter;
 					} else {
-						series2.getData().add(new XYChart.Data<>(i + "", 0.0));
-
+						data = new XYChart.Data<>(i + "", 0.0);
+						series2.getData().add(data);
+						data.setNode(new HoveredThresholdNode(0.0));
 					}
 				} else {
-					series2.getData().add(new XYChart.Data<>(i + "", 0.0));
+					data = new XYChart.Data<>(i + "", 0.0);
+					series2.getData().add(data);
+					data.setNode(new HoveredThresholdNode(0.0));
 
 				}
 			}
@@ -432,18 +489,24 @@ public class DashboardController implements Initializable {
 			counter = 0;
 
 			for (int i = 1; i <= 31; ++i) {
-
+				XYChart.Data<String, Double> data ;
 				if (counter < dailySalesArrayList.size()) {
 					if (Integer.parseInt(dailySalesArrayList.get(counter).get(1)) == i) {
-						series2.getData().add(new XYChart.Data<>(i + "",
-								Double.parseDouble(dailySalesArrayList.get(counter).get(0))));
+						data = new XYChart.Data<>(i + "", Double.parseDouble(dailySalesArrayList.get(counter).get(0)));
+						series2.getData().add(data);
+						data.setNode(new HoveredThresholdNode( Double.parseDouble(dailySalesArrayList.get(counter).get(0))));
+
 						++counter;
 					} else {
-						series2.getData().add(new XYChart.Data<>(i + "", 0.0));
-
+						data = new XYChart.Data<>(i + "", 0.0);
+						series2.getData().add(data);
+						data.setNode(new HoveredThresholdNode(0.0));
 					}
 				} else {
-					series2.getData().add(new XYChart.Data<>(i + "", 0.0));
+					data = new XYChart.Data<>(i + "", 0.0);
+					series2.getData().add(data);
+					data.setNode(new HoveredThresholdNode(0.0));
+
 				}
 			}
 

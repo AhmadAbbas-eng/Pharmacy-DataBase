@@ -168,8 +168,8 @@ public class ReceiveOrdersController implements Initializable {
 									receivedDatePicker.getValue().toString(), costTextField.getText(),
 									supplierOrder.getID() + "")));
 					
-					Queries.queryUpdate("update Supplier set supplier_dues =? where Supplier_ID =?;", new ArrayList<>(
-							Arrays.asList(costTextField.getText(), supplierOrder.getSupplierID() + "")));
+					Queries.queryUpdate("update Supplier set supplier_dues =  supplier_dues - ? + ? where Supplier_ID =?;", new ArrayList<>(
+							Arrays.asList(supplierOrder.getCost()+"",costTextField.getText(), supplierOrder.getSupplierID() + "")));
 
 				} else {
 					Queries.queryUpdate("update s_order set Recieved_by=? , Recieved_Date=? where order_id=? ;",
@@ -301,7 +301,7 @@ public class ReceiveOrdersController implements Initializable {
 	public void setRow(SupplierOrder supplierOrder) throws ClassNotFoundException, SQLException, ParseException {
 		// this.caller = caller;
 		this.supplierOrder = supplierOrder; // order id
-		
+		costTextField.setText(supplierOrder.getCost()+"");
 		// get products
 		orderedProducts = SupplierOrderBatch
 				.getSupplierOrderBatchData(Queries.queryResult("select * from s_order_batch where order_id =?;",
@@ -401,7 +401,7 @@ public class ReceiveOrdersController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-
+		
 		if (confirmQuantityCheckBox.isSelected() == true) {
 			quantityTextField.setOpacity(0);
 			quantityLabel.setOpacity(0);

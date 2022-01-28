@@ -70,7 +70,8 @@ public class AddBatchController implements Initializable {
 		if (productionDateDatePicker.getValue() != null && expiryDateDatePicker.getValue() != null) {
 			if (productionDateDatePicker.getValue().compareTo(expiryDateDatePicker.getValue()) > 0
 					|| productionDateDatePicker.getValue().compareTo(expiryDateDatePicker.getValue()) == 0
-					|| productionDateDatePicker.getValue().compareTo(LocalDate.now()) > 0) {
+					|| productionDateDatePicker.getValue().compareTo(LocalDate.now()) > 0 
+					|| expiryDateDatePicker.getValue().compareTo(LocalDate.now()) <= 0) {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle("Wrong Input Format");
 				alert.setHeaderText(null);

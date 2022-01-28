@@ -10,6 +10,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="512.0" prefWidth="739.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SelectProductController">
    <children>
@@ -23,8 +24,8 @@
       </TableView>
       <ListView fx:id="listOrder" layoutX="21.0" layoutY="227.0" prefHeight="144.0" prefWidth="338.0" stylesheets="@../../CSS/list.css" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="228.0" AnchorPane.topAnchor="227.0" />
       <TextField fx:id="searchTextField" layoutX="21.0" layoutY="14.0" prefHeight="24.0" prefWidth="202.0" promptText="Search" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="14.0" />
-      <TextField fx:id="quantityTextField" layoutX="477.0" layoutY="14.0" prefHeight="26.0" prefWidth="80.0" promptText="Quantity" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="477.0" AnchorPane.topAnchor="14.0" />
-      <TextField fx:id="costTextField" layoutX="481.0" layoutY="14.0" prefHeight="26.0" prefWidth="74.0" promptText="Cost/piece" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="391.0" AnchorPane.topAnchor="14.0" />
+      <TextField fx:id="quantityTextField" layoutX="629.0" layoutY="15.0" prefHeight="26.0" prefWidth="80.0" promptText="Quantity" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="629.0" AnchorPane.topAnchor="15.0" />
+      <TextField fx:id="costTextField" layoutX="473.0" layoutY="15.0" prefHeight="26.0" prefWidth="74.0" promptText="Cost/piece" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="473.0" AnchorPane.topAnchor="15.0" />
       <ImageView fx:id="addDrugIcon" fitHeight="25.0" fitWidth="27.0" layoutX="369.0" layoutY="229.0" onMouseEntered="#addOnMouseEntered" onMouseExited="#addOnMouseExited" onMousePressed="#addOnMousePressed" onMouseReleased="#addOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="193.39999999999998" AnchorPane.topAnchor="228.4">
          <image>
             <Image url="@../../Icons/icons8-add-48.png" />
@@ -52,5 +53,15 @@
          </image>
       </ImageView>
       <ComboBox fx:id="searchOperationComboBox" layoutX="235.0" layoutY="15.0" onAction="#filterList" prefWidth="150.0" promptText="- Search -" stylesheets="@../../CSS/combobox.css" />
+      <Label layoutX="397.0" layoutY="19.0" text="Cost/Piece" textFill="#1d6f84">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="559.0" layoutY="18.0" text="Quantity" textFill="#1d6f84">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
