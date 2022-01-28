@@ -132,16 +132,17 @@ public class DashboardController implements Initializable {
 		if (years.indexOf(current_date.getYear() + "") == -1) {
 			years.add(current_date.getYear() + "");
 		}
-		yearBox.setItems(years); 
+		yearBox.setItems(years);
 		monthBox.setItems(months);
 
 		XYChart.Series<String, Double> series = new XYChart.Series<>();
 		series.setName("Daily Sales");
 
 		try {
-			dailySalesArrayList = Queries.queryResult("select sum(order_price), day(order_date)\r\n" + "	from c_order\r\n"
+			dailySalesArrayList = Queries.queryResult("select sum(order_price), day(order_date)\r\n"
+					+ "	from c_order\r\n"
 					+ "	where  year(order_date) = year(date(now())) and month(order_date) = month(date(now())) \r\n"
-					+ "	group by day(order_date) ;", null);
+					+ "	group by day(order_date) order by day(order_date);", null);
 		} catch (ClassNotFoundException | SQLException e1) {
 			e1.printStackTrace();
 		}
@@ -150,7 +151,8 @@ public class DashboardController implements Initializable {
 
 			if (counter < dailySalesArrayList.size()) {
 				if (Integer.parseInt(dailySalesArrayList.get(counter).get(1)) == i) {
-					series.getData().add(new XYChart.Data<>(i + "", Double.parseDouble(dailySalesArrayList.get(counter).get(0))));
+					series.getData().add(
+							new XYChart.Data<>(i + "", Double.parseDouble(dailySalesArrayList.get(counter).get(0))));
 					++counter;
 				} else {
 					series.getData().add(new XYChart.Data<>(i + "", 0.0));
@@ -174,12 +176,12 @@ public class DashboardController implements Initializable {
 			} else {
 				thisMonth = monthBox.getSelectionModel().getSelectedIndex() + 1;
 			}
-			if (yearBox.getSelectionModel().getSelectedItem() == null ) {
+			if (yearBox.getSelectionModel().getSelectedItem() == null) {
 				try {
 					dailySalesArrayList = Queries.queryResult(
 							"select sum(order_price), day(order_date)\r\n" + "	from c_order\r\n"
 									+ "	where  year(order_date) = year(date(now())) and month(order_date) = ? \r\n"
-									+ "	group by day(order_date) ;",
+									+ "	group by day(order_date) order by day(order_date);",
 							new ArrayList<String>(Arrays.asList("" + thisMonth)));
 				} catch (ClassNotFoundException | SQLException e1) {
 					e1.printStackTrace();
@@ -187,8 +189,10 @@ public class DashboardController implements Initializable {
 			} else {
 				int currentYear = yearBox.getSelectionModel().getSelectedIndex() + 2018;
 				try {
-					dailySalesArrayList = Queries.queryResult("select sum(order_price), day(order_date)\r\n" + "	from c_order\r\n"
-							+ "	where  year(order_date) = ? and month(order_date) = ?" + "	group by day(order_date) ;",
+					dailySalesArrayList = Queries.queryResult(
+							"select sum(order_price), day(order_date)\r\n" + "	from c_order\r\n"
+									+ "	where  year(order_date) = ? and month(order_date) = ?"
+									+ "	group by day(order_date) order by day(order_date);",
 							new ArrayList<String>(Arrays.asList(currentYear + "", "" + thisMonth)));
 				} catch (ClassNotFoundException | SQLException e1) {
 					e1.printStackTrace();
@@ -199,8 +203,8 @@ public class DashboardController implements Initializable {
 			for (int i = 1; i <= 31; ++i) {
 				if (counter < dailySalesArrayList.size()) {
 					if (Integer.parseInt(dailySalesArrayList.get(counter).get(1)) == i) {
-						series2.getData()
-								.add(new XYChart.Data<>(i + "", Double.parseDouble(dailySalesArrayList.get(counter).get(0))));
+						series2.getData().add(new XYChart.Data<>(i + "",
+								Double.parseDouble(dailySalesArrayList.get(counter).get(0))));
 						++counter;
 					} else {
 						series2.getData().add(new XYChart.Data<>(i + "", 0.0));
@@ -228,12 +232,12 @@ public class DashboardController implements Initializable {
 			} else {
 				thisMonth = monthBox.getSelectionModel().getSelectedIndex() + 1;
 			}
-			if (yearBox.getSelectionModel().getSelectedItem() == null ) {
+			if (yearBox.getSelectionModel().getSelectedItem() == null) {
 				try {
 					dailySalesArrayList = Queries.queryResult(
 							"select sum(order_price), day(order_date)\r\n" + "	from c_order\r\n"
 									+ "	where  year(order_date) = year(date(now())) and month(order_date) = ? \r\n"
-									+ "	group by day(order_date) ;",
+									+ "	group by day(order_date) order by day(order_date); ",
 							new ArrayList<String>(Arrays.asList("" + thisMonth)));
 				} catch (ClassNotFoundException | SQLException e1) {
 					e1.printStackTrace();
@@ -241,8 +245,10 @@ public class DashboardController implements Initializable {
 			} else {
 				int currentYear = yearBox.getSelectionModel().getSelectedIndex() + 2018;
 				try {
-					dailySalesArrayList = Queries.queryResult("select sum(order_price), day(order_date)\r\n" + "	from c_order\r\n"
-							+ "	where  year(order_date) = ? and month(order_date) = ?" + "	group by day(order_date) ;",
+					dailySalesArrayList = Queries.queryResult(
+							"select sum(order_price), day(order_date)\r\n" + "	from c_order\r\n"
+									+ "	where  year(order_date) = ? and month(order_date) = ?"
+									+ "	group by day(order_date) order by day(order_date);",
 							new ArrayList<String>(Arrays.asList(currentYear + "", "" + thisMonth)));
 				} catch (ClassNotFoundException | SQLException e1) {
 					e1.printStackTrace();
@@ -255,8 +261,8 @@ public class DashboardController implements Initializable {
 
 				if (counter < dailySalesArrayList.size()) {
 					if (Integer.parseInt(dailySalesArrayList.get(counter).get(1)) == i) {
-						series2.getData()
-								.add(new XYChart.Data<>(i + "", Double.parseDouble(dailySalesArrayList.get(counter).get(0))));
+						series2.getData().add(new XYChart.Data<>(i + "",
+								Double.parseDouble(dailySalesArrayList.get(counter).get(0))));
 						++counter;
 					} else {
 						series2.getData().add(new XYChart.Data<>(i + "", 0.0));
@@ -311,11 +317,14 @@ public class DashboardController implements Initializable {
 			ArrayList<ArrayList<String>> numberOfEmployeesArrayList = Queries
 					.queryResult("SELECT count(*)\r\n" + "	from employee\r\n" + "	where isActive='true';\r\n", null);
 
-			ArrayList<ArrayList<String>> numberOfSuppliersArrayList = Queries.queryResult("SELECT count(*)\r\n" + "from supplier;", null);
+			ArrayList<ArrayList<String>> numberOfSuppliersArrayList = Queries
+					.queryResult("SELECT count(*)\r\n" + "from supplier;", null);
 
-			ArrayList<ArrayList<String>> numberOfCustomersArrayList = Queries.queryResult("SELECT count(*)" + " from customer;", null);
+			ArrayList<ArrayList<String>> numberOfCustomersArrayList = Queries
+					.queryResult("SELECT count(*)" + " from customer;", null);
 
-			ArrayList<ArrayList<String>> numberOfAvailableProductsArrayList = Queries.queryResult("SELECT count(*)" + " from product;", null);
+			ArrayList<ArrayList<String>> numberOfAvailableProductsArrayList = Queries
+					.queryResult("SELECT count(*)" + " from product;", null);
 
 			ArrayList<ArrayList<String>> todaysTotalDiscountArrayList = Queries.queryResult(
 					"select sum(order_discount)\r\n" + "from c_order\r\n" + "where order_date = date(now());", null);
@@ -330,10 +339,9 @@ public class DashboardController implements Initializable {
 			ArrayList<ArrayList<String>> todaysTotalIncomeAmountArrayList = Queries
 					.queryResult("select sum(income_amount) from income where income_Date=date(now());", null);
 
-			
-			double totalSoled =0.0, totalIncome =0.0,totalDiscount =0.0;
-			
-			if (todaysTotalDiscountArrayList.get(0).get(0)==null) {
+			double totalSoled = 0.0, totalIncome = 0.0, totalDiscount = 0.0;
+
+			if (todaysTotalDiscountArrayList.get(0).get(0) == null) {
 				totalDiscountLabel.setText("0.0");
 			} else {
 				System.out.println(todaysTotalDiscountArrayList.toString());
@@ -341,59 +349,60 @@ public class DashboardController implements Initializable {
 				totalDiscount = Double.parseDouble(todaysTotalDiscountArrayList.get(0).get(0));
 			}
 
-			if (todaysTotalPaidAmountArrayList.get(0).get(0)==null) {
+			if (todaysTotalPaidAmountArrayList.get(0).get(0) == null) {
 				totalSaleLabel.setText("0.0");
 			} else {
 				totalSaleLabel.setText(todaysTotalPaidAmountArrayList.get(0).get(0));
 				totalSoled = Double.parseDouble(todaysTotalPaidAmountArrayList.get(0).get(0));
 			}
 
-			if (todaysTotalIncomeAmountArrayList.get(0).get(0)==null) {
+			if (todaysTotalIncomeAmountArrayList.get(0).get(0) == null) {
 				totalIncomeLabel.setText("0.0");
 
 			} else {
 				totalIncome = Double.parseDouble(todaysTotalIncomeAmountArrayList.get(0).get(0));
-				totalIncomeLabel.setText(totalIncome + "" );
-				
+				totalIncomeLabel.setText(totalIncome + "");
+
 			}
 
-			if (numberOfCustomersArrayList.get(0).get(0)==null) {
+			if (numberOfCustomersArrayList.get(0).get(0) == null) {
 				numberOfCustomerLabel.setText("0");
 			} else {
 				numc = Integer.parseInt(numberOfCustomersArrayList.get(0).get(0)) - 1;
 				numberOfCustomerLabel.setText("" + numc);
 			}
 
-			if (numberOfExpiredProductsArrayList.get(0).get(0)==null) {
+			if (numberOfExpiredProductsArrayList.get(0).get(0) == null) {
 				numberOfExpiredProductsLabel.setText("0");
 			} else {
 				numberOfExpiredProductsLabel.setText(numberOfExpiredProductsArrayList.get(0).get(0));
 			}
 
-			if (numberOfEmployeesArrayList.get(0).get(0)==null) {
+			if (numberOfEmployeesArrayList.get(0).get(0) == null) {
 				numberOfEmployeesLabel.setText("0");
 			} else {
 				numberOfEmployeesLabel.setText(numberOfEmployeesArrayList.get(0).get(0));
 			}
 
-			if (numberOfSuppliersArrayList.get(0).get(0)==null) {
+			if (numberOfSuppliersArrayList.get(0).get(0) == null) {
 				numberOfSupplierLabel.setText("0");
 			} else {
 				numberOfSupplierLabel.setText(numberOfSuppliersArrayList.get(0).get(0));
 			}
 
-			if (numberOfAvailableProductsArrayList.get(0).get(0)==null) {
+			if (numberOfAvailableProductsArrayList.get(0).get(0) == null) {
 				numberOfProductLabel.setText("0");
 			} else {
 				if (numberOfExpiredProductsArrayList.get(0).get(0) != null)
-					productNum = Integer.parseInt(numberOfAvailableProductsArrayList.get(0).get(0)) - Integer.parseInt(numberOfExpiredProductsArrayList.get(0).get(0));
+					productNum = Integer.parseInt(numberOfAvailableProductsArrayList.get(0).get(0))
+							- Integer.parseInt(numberOfExpiredProductsArrayList.get(0).get(0));
 				else
 					productNum = Integer.parseInt(numberOfAvailableProductsArrayList.get(0).get(0));
 
 				numberOfProductLabel.setText(productNum + "");
 			}
 
-			if (numberOfOutOfStockArrayList.get(0).get(0)==null) {
+			if (numberOfOutOfStockArrayList.get(0).get(0) == null) {
 				outOfStockLabel.setText("0");
 			} else {
 				outOfStockLabel.setText(numberOfOutOfStockArrayList.get(0).get(0));
