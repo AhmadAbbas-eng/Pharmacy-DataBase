@@ -22,7 +22,7 @@ public class Queries {
 
 	// All information needed to connect the date base with java
 	private static String userName = "root";
-	private static String password = "IamTheBest!";
+	private static String password = "k2m36htg";
 	private static String host = "127.0.0.1";
 	private static String port = "3306";
 	private static String dataBaseName = "newData";
@@ -175,24 +175,29 @@ public class Queries {
 		creation.close();
 		executioResult.close();
 	}
-
-	/**
-	 * getNetProfit get total profit
-	 * 
-	 * @return the profit of the pharmacy
-	 * @throws NumberFormatException  If there are any formatting exception
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 */
-	public static int getNetProfit() throws NumberFormatException, ClassNotFoundException, SQLException {
-		return Integer
-				.parseInt(
-						queryResult(
-								"\r\n" + "select sum(c.order_price)\r\n"
-										+ "-(select sum(s.supplier_dues) +(select sum(c.payment_amount)\r\n"
-										+ "from payment c)\r\n" + "from supplier s, payment p)\r\n" + "from c_order c;",
-								null).get(0).get(0));
+	
+	public static double getNetProfit(int month,int year) throws NumberFormatException, ClassNotFoundException, SQLException {
+		ArrayList<String> parameters = new ArrayList<>();
+		parameters.add("%" + year + "%");
+		parameters.add("%" + month + "%");
+		parameters.add("%" + year + "%");
+		parameters.add("%" + month + "%");
+		if (queryResult("select sum(I.income_amount)\r\n" + "-(select sum(p.payment_amount)\r\n"
+				+ "from payment p where year(p.payment_Date) like ? and month(p.payment_Date) like ?)\r\n"
+				+ "from income I where year(i.income_Date) like ? and month(i.income_Date) like ?;", parameters)
+						.get(0).get(0) == null) {
+			return 0.0;
+		}
+		
+		return Double
+				.parseDouble(
+						queryResult("select sum(I.income_amount)\r\n"
+								+ "-(select sum(p.payment_amount)\r\n"
+								+ "from payment p where year(p.payment_Date) like ? and month(p.payment_Date) like ?)\r\n"
+								+ "from income I where year(i.income_Date) like ? and month(i.income_Date) like ?;",
+								parameters).get(0).get(0));
 	}
+
 
 	/**
 	 * getPaymentAmount: calculate the money paid on certain month
@@ -240,12 +245,12 @@ public class Queries {
 	 */
 	public static ArrayList<ArrayList<String>> amountToFinish() throws ClassNotFoundException, SQLException {
 		return queryResult(
-				"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
+				"SELECT P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
 						+ "from batch b,product p,drug d\r\n"
 						+ "where b.batch_amount>0 and b.product_ID=p.product_ID and d.product_ID=p.product_Id and b.batch_production_date <>'1111-01-01' \r\n"
 						+ "and ((d.drug_pharmacetical_category like 'non' and b.batch_amount<10 and b.batch_amount>0) \r\n"
 						+ "or ((d.drug_pharmacetical_category like '%d%' and b.batch_amount<5 and b.batch_amount>0)))\r\n"
-						+ "union(SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
+						+ "union(SELECT P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
 						+ "from batch b,product p\r\n" + "where b.product_ID=p.product_ID and b.batch_amount<10 and b.batch_amount>0 and b.batch_production_date <>'1111-01-01')\r\n"
 						+ "order by batch_expiry_date;",
 				null);
