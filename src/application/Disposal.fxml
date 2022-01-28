@@ -42,12 +42,12 @@
          </image>
       </ImageView>
       <Label fx:id="success" layoutX="440.0" layoutY="19.0" style="-fx-opacity: 0;" text="Disposed Successfully" />
-      <Label layoutX="22.0" layoutY="356.0" text="Dissipation Cost" textFill="#1d6f84">
+      <Label layoutX="22.0" layoutY="356.0" text="Dissipation Cost" textFill="#1d6f84" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="22.0">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label fx:id="amountLabel" layoutX="281.0" layoutY="354.0" text="Amount" textFill="#1d6f84">
+      <Label fx:id="amountLabel" layoutX="281.0" layoutY="354.0" text="Amount" textFill="#1d6f84" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="22.0">
          <font>
             <Font size="13.0" />
          </font>
