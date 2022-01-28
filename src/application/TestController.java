@@ -24,6 +24,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
@@ -199,13 +200,15 @@ public class TestController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
+		 
 		// iconsHBox.prefWidthProperty().bind(mainPane.widthProperty().multiply(0.55));
 		leftVBox.prefWidthProperty().bind(mainPane.widthProperty().multiply(0.75));
 		iconsHBox.spacingProperty().bind(iconsHBox.widthProperty().divide(20.0));
 
+
 		iconsHBox.paddingProperty()
-				.bind(Bindings.createObjectBinding(() -> new Insets(0, iconsHBox.spacingProperty().doubleValue(), 0,
-						iconsHBox.spacingProperty().doubleValue()), iconsHBox.spacingProperty()));
+				.bind(Bindings.createObjectBinding(() -> new Insets(0, iconsHBox.widthProperty().divide(20).doubleValue(), 0,
+						iconsHBox.widthProperty().divide(20).doubleValue()), iconsHBox.widthProperty()));
 
 		iconsHBox.minHeightProperty().bind(iconsHBox.widthProperty().multiply(13).divide(120));
 		iconsHBox.prefHeightProperty().bind(employeePane.widthProperty());
