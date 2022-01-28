@@ -34,7 +34,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
-public class addProductController implements Initializable {
+public class AddProductController implements Initializable {
 
 	ArrayList<ArrayList<String>> product;
 

@@ -23,7 +23,7 @@ import Relations.Queries;
  * @version 27 January 2022
  * @author Loor Sawalhi
  */
-public class loginController {
+public class LoginController {
 
 	@FXML
 	private Button cancelButton;
