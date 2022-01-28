@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="563.0" prefWidth="991.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ReceivedOrderController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="449.0" prefWidth="690.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ReceivedOrderController">
    <children>
       <StackPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="411.0" prefWidth="613.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane prefHeight="456.0" prefWidth="690.0">
+            <AnchorPane prefHeight="534.0" prefWidth="953.0">
                <children>
                   <TableView fx:id="ordersTable" layoutX="15.0" layoutY="53.0" prefHeight="358.0" prefWidth="660.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="53.0">
                      <columns>
@@ -37,7 +37,7 @@
                      </image>
                   </ImageView>
                   <Button fx:id="receivedOrdersButton" layoutX="145.0" layoutY="359.0" mnemonicParsing="false" onAction="#receivedOrdersOnAction" prefHeight="26.0" prefWidth="122.0" stylesheets="@../../CSS/button.css" text="Received Orders" AnchorPane.bottomAnchor="14.600000000000001" AnchorPane.leftAnchor="145.0" />
-                  <ComboBox fx:id="searchOperationComboBox" layoutX="199.0" layoutY="14.0" prefWidth="150.0" promptText="- Select -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="199.0" AnchorPane.topAnchor="14.0" />
+                  <ComboBox fx:id="searchOperationComboBox" layoutX="199.0" layoutY="14.0" onAction="#filterList" prefWidth="150.0" promptText="- Select -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="199.0" AnchorPane.topAnchor="14.0" />
                </children>
             </AnchorPane>
          </children>

@@ -270,7 +270,7 @@ public class ReceiveOrdersController implements Initializable {
 
 	public void saveUpdates() throws ClassNotFoundException, SQLException, ParseException {
 		productsBatchColumn.setItems(FXCollections.observableArrayList(Batch.getBatchData(Queries.queryResult(
-				"select * from Batch where product_id =? and batch_production_date <> '1111-01-01';",
+				"select * from Batch where product_id =? and batch_production_date <> '1111-01-01' and batch_expiry_date > DATE(NOW());",
 				new ArrayList<>(Arrays.asList(orderedProducts.get(counter).getProductID() + ""))))));
 		
 		productsBatchColumn.refresh();
