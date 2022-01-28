@@ -270,6 +270,7 @@ public class ChooseProductController implements Initializable {
 			isDrug.setSelected(true);
 			isControlled.setSelected(false);
 		}
+		batchTable.getItems().clear();
 		filterProductList();
 	}
 
@@ -278,6 +279,7 @@ public class ChooseProductController implements Initializable {
 			isDrug.setSelected(true);
 			isDanger.setSelected(false);
 		}
+		batchTable.getItems().clear();
 		filterProductList();
 	}
 
@@ -290,7 +292,7 @@ public class ChooseProductController implements Initializable {
 				fieldSelector.setValue("-Specify Field-");
 			}
 		}
-
+		batchTable.getItems().clear();
 		filterProductList();
 	}
 
@@ -438,7 +440,7 @@ public class ChooseProductController implements Initializable {
 									+ " from product P, Name_Manu NM" + " where P.Product_Name = NM.Product_Name"
 									+ " and P.Product_ID not in (select D.Product_ID from Drug D)"
 									+ " and NM.Product_Manufactrer like ?;", parameters));
-					
+
 				}
 				if (!isDanger.isSelected() && !isControlled.isSelected()) { // All Drugs
 					filteredList.addAll(Queries.queryResult(
@@ -448,7 +450,7 @@ public class ChooseProductController implements Initializable {
 									+ " where D.Product_ID=P.Product_ID and P.product_name=NM.product_name"
 									+ " and NM.Product_Manufactrer like ?;",
 							parameters));
-					
+
 				} else if (isDanger.isSelected()) { // Danger Drugs
 					filteredList = Queries.queryResult(
 							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
@@ -468,7 +470,7 @@ public class ChooseProductController implements Initializable {
 									+ " and D.Drug_Pharmacetical_Category='Controlled'"
 									+ " and NM.Product_Manufactrer like ?;",
 							parameters);
-					
+
 				}
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
@@ -485,7 +487,7 @@ public class ChooseProductController implements Initializable {
 									+ " where D.Product_ID=P.Product_ID and P.product_name=NM.product_name"
 									+ " and D.Drug_Scientific_Name like ?;",
 							parameters));
-					
+
 				} else if (isDanger.isSelected()) { // Danger Drugs
 					filteredList = Queries.queryResult(
 							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
@@ -505,7 +507,7 @@ public class ChooseProductController implements Initializable {
 									+ " and D.Drug_Pharmacetical_Category='Controlled'"
 									+ " and D.Drug_Scientific_Name like ?;",
 							parameters);
-					
+
 				}
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
@@ -521,7 +523,7 @@ public class ChooseProductController implements Initializable {
 									+ " where D.Product_ID=P.Product_ID and P.product_name=NM.product_name"
 									+ " and D.Drug_Risk_Pregnency_Category like ?;",
 							parameters));
-					
+
 				} else if (isDanger.isSelected()) { // Danger Drugs
 					filteredList = Queries.queryResult(
 							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
@@ -557,7 +559,7 @@ public class ChooseProductController implements Initializable {
 									+ " where D.Product_ID=P.Product_ID and P.product_name=NM.product_name"
 									+ " and D.Drug_Category like ?;",
 							parameters));
-					
+
 				} else if (isDanger.isSelected()) { // Danger Drugs
 					filteredList = Queries.queryResult(
 							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
@@ -575,7 +577,7 @@ public class ChooseProductController implements Initializable {
 									+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
 									+ " and D.Drug_Pharmacetical_Category='Controlled' and D.Drug_Category like ?;",
 							parameters);
-					
+
 				}
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
@@ -591,7 +593,7 @@ public class ChooseProductController implements Initializable {
 									+ " and P.Product_ID not in (select D.Product_ID from Drug D)"
 									+ " and (P.Product_ID like ? or" + " P.Product_Name like ? or"
 									+ " NM.Product_Manufactrer like ?);", parameters));
-					
+
 				}
 				if (!isDanger.isSelected() && !isControlled.isSelected()) { // All Drugs
 					while (parameters.size() < 6) {
@@ -606,7 +608,7 @@ public class ChooseProductController implements Initializable {
 									+ " or NM.Product_Manufactrer like ? " + " or D.Drug_Scientific_Name like ? or "
 									+ " D.Drug_Risk_Pregnency_Category like ? or " + " D.Drug_Category like ? );",
 							parameters));
-					
+
 				} else if (isDanger.isSelected()) { // Danger Drugs
 					while (parameters.size() < 6) {
 						parameters.add("%" + stringToSearch + "%");
@@ -621,7 +623,7 @@ public class ChooseProductController implements Initializable {
 									+ " D.Drug_Scientific_Name like ? or" + " D.Drug_Risk_Pregnency_Category like ? or"
 									+ " D.Drug_Category like ?);",
 							parameters);
-					
+
 				} else { // Controlled Drugs
 					while (parameters.size() < 6) {
 						parameters.add("%" + stringToSearch + "%");
