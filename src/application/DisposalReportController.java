@@ -19,7 +19,7 @@ import javafx.util.Callback;
  * @version 27 January 2022
  * @author Ahmad Abbas
  */
-public class disposalReportController implements Initializable {
+public class DisposalReportController implements Initializable {
 
 	@FXML
 	private TableColumn<ArrayList<String>, String> disposalAmountColumn;

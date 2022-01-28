@@ -24,7 +24,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 
-public class monthlyNetProfitController implements Initializable {
+public class MonthlyNetProfitController implements Initializable {
 	
     @FXML
     private TableColumn<ArrayList<String>, String> dateColumn;

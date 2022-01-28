@@ -149,8 +149,8 @@ public class ComboBoxAutoComplete<T> {
 				answer = true;
 				String newName = fullName.getText().toString();
 				if (newName.isBlank() == false) {
-					if (caller instanceof addProductController)
-						addProductController.manufacturerObservableList.add(newName);
+					if (caller instanceof AddProductController)
+						AddProductController.manufacturerObservableList.add(newName);
 					else if(caller instanceof ProductEditController)
 						ProductEditController.manufacturerObservableList.add(newName);
 					originalItems.add((T) newName);
