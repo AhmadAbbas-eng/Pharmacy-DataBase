@@ -542,7 +542,7 @@ public class DashboardController implements Initializable {
 		}
 
 		try {
-			int numc = 0, productNum = 0;
+			int numc = 0, productNum = 0, outOfStock = 0;
 			ArrayList<ArrayList<String>> numberOfExpiredProductsArrayList = Queries.queryResult("SELECT count(*)\r\n"
 					+ "		from batch b\r\n"
 					+ "		where b.batch_amount>0 and b.batch_expiry_date <DATE(NOW()) and b.batch_production_date <>'1111-01-01';",
@@ -623,24 +623,27 @@ public class DashboardController implements Initializable {
 			} else {
 				numberOfSupplierLabel.setText(numberOfSuppliersArrayList.get(0).get(0));
 			}
+			
+			if (numberOfOutOfStockArrayList.get(0).get(0) == null) {
+				outOfStockLabel.setText("0");
+			} else {
+				outOfStock =  Integer.parseInt(numberOfOutOfStockArrayList.get(0).get(0));
+				outOfStockLabel.setText(numberOfOutOfStockArrayList.get(0).get(0));
+			}
 
 			if (numberOfAvailableProductsArrayList.get(0).get(0) == null) {
 				numberOfProductLabel.setText("0");
 			} else {
 				if (numberOfExpiredProductsArrayList.get(0).get(0) != null)
 					productNum = Integer.parseInt(numberOfAvailableProductsArrayList.get(0).get(0))
-							- Integer.parseInt(numberOfExpiredProductsArrayList.get(0).get(0));
+							- Integer.parseInt(numberOfExpiredProductsArrayList.get(0).get(0)) - outOfStock;
 				else
-					productNum = Integer.parseInt(numberOfAvailableProductsArrayList.get(0).get(0));
+					productNum = Integer.parseInt(numberOfAvailableProductsArrayList.get(0).get(0)) - outOfStock;
 
 				numberOfProductLabel.setText(productNum + "");
 			}
 
-			if (numberOfOutOfStockArrayList.get(0).get(0) == null) {
-				outOfStockLabel.setText("0");
-			} else {
-				outOfStockLabel.setText(numberOfOutOfStockArrayList.get(0).get(0));
-			}
+			
 
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
