@@ -7,15 +7,22 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import Relations.Queries;
+import application.DashboardController.HoveredThresholdNode;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.util.Callback;
 
 public class monthlyNetProfitController implements Initializable {
@@ -31,10 +38,46 @@ public class monthlyNetProfitController implements Initializable {
 
 	@FXML
 	private LineChart<String, Double> montlyNetProfitChart;
+	
+	class HoveredThresholdNode extends StackPane {
+		HoveredThresholdNode(double value) {
+			setPrefSize(12, 12);
+
+			final Label label = createDataThresholdLabel(value);
+
+			setOnMouseEntered(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent mouseEvent) {
+					getChildren().setAll(label);
+					setCursor(Cursor.NONE);
+					toFront();
+				}
+			});
+			setOnMouseExited(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent mouseEvent) {
+					getChildren().clear();
+					setCursor(Cursor.CROSSHAIR);
+				}
+			});
+		}
+
+		private Label createDataThresholdLabel(double value) {
+			final Label label = new Label(value + "");
+			label.getStyleClass().addAll("default-color0", "chart-line-symbol", "chart-series-line");
+			label.setStyle("-fx-font-size: 10; -fx-font-weight: bold;");
+
+			label.setTextFill(Color.DARKGRAY);
+
+			label.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
+			return label;
+		}
+	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		XYChart.Series<String, Double> series = new XYChart.Series<>();
+		montlyNetProfitChart.setTitle("Pharmacy Net Profit");
 		series.setName("Monthly Net Profit");
 		int currentMonth, currentYear, startMonth, startYear;
 
@@ -70,7 +113,9 @@ public class monthlyNetProfitController implements Initializable {
 			}
 			
 			String yearAndMonth = startMonth + "-" + startYear;
-			series.getData().add(new XYChart.Data<>(yearAndMonth, netProfit ));
+			XYChart.Data<String, Double> dataChart = new XYChart.Data<>(yearAndMonth, netProfit );
+			series.getData().add(dataChart);
+			dataChart.setNode(new HoveredThresholdNode( netProfit));
 			ArrayList<String> data = new ArrayList<>();
 			data.add(yearAndMonth);
 			data.add(netProfit+"");
@@ -83,6 +128,7 @@ public class monthlyNetProfitController implements Initializable {
 			}
 
 		}
+		
 		montlyNetProfitChart.getData().add(series);
 		
 		netProfitTable.setItems(FXCollections.observableArrayList(tableData));

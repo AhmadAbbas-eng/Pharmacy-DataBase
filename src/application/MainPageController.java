@@ -136,10 +136,9 @@ public class MainPageController implements Initializable {
 
 		Region page = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
 		contentArea.getChildren().removeAll();
-		contentArea.getChildren().setAll(page);
 		page.prefWidthProperty().bind(contentArea.widthProperty());
 		page.prefHeightProperty().bind(contentArea.heightProperty());
-
+		contentArea.getChildren().setAll(page);
 	}
 
 	public void ProductsOnAction(ActionEvent e) throws IOException {

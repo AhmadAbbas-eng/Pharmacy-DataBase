@@ -14,9 +14,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="623.0" prefWidth="1078.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ReceiveOrdersController">
+<StackPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="617.0" prefWidth="965.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ReceiveOrdersController">
    <children>
-      <AnchorPane prefHeight="622.0" prefWidth="1078.0">
+      <AnchorPane prefHeight="623.0" prefWidth="1046.0">
          <children>
             <Label fx:id="orderNumberLabel" layoutX="45.0" layoutY="1.0" prefHeight="26.0" prefWidth="242.0" text="order no" textFill="#1d6f84" AnchorPane.leftAnchor="45.0" AnchorPane.topAnchor="1.0">
                <font>
@@ -67,7 +67,7 @@
             <TextField fx:id="quantityTextField" layoutX="337.0" layoutY="137.0" prefHeight="26.0" prefWidth="93.0" promptText="New Quantity" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="337.0" AnchorPane.topAnchor="137.0" />
             <Button fx:id="confirmBatchButton" layoutX="45.0" layoutY="138.0" mnemonicParsing="false" onAction="#confirmBatchOnAction" prefHeight="26.0" prefWidth="80.0" stylesheets="@../../CSS/button.css" text="Confirm" AnchorPane.leftAnchor="45.0" AnchorPane.topAnchor="138.0" />
             <DatePicker fx:id="receivedDatePicker" layoutX="469.0" layoutY="199.0" prefHeight="26.0" prefWidth="203.0" promptText="Received Date" stylesheets="@../../CSS/datePicker.css" AnchorPane.leftAnchor="469.0" AnchorPane.topAnchor="199.0" />
-            <ImageView fx:id="saveIcon" fitHeight="26.0" fitWidth="26.0" layoutX="1369.0" layoutY="200.0" onMouseEntered="#saveOnMouseEntered" onMouseExited="#saveOnMouseExited" onMousePressed="#saveOnMousePressed" onMouseReleased="#saveOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="200.0">
+            <ImageView fx:id="saveIcon" fitHeight="26.0" fitWidth="26.0" layoutX="937.0" layoutY="200.0" onMouseEntered="#saveOnMouseEntered" onMouseExited="#saveOnMouseExited" onMousePressed="#saveOnMousePressed" onMouseReleased="#saveOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="34.60000000000002" AnchorPane.topAnchor="200.0">
                <image>
                   <Image url="@../../Icons/icons8-save-60.png" />
                </image>
@@ -78,7 +78,7 @@
                   <Image url="@../../Icons/icons8-add-48.png" />
                </image>
             </ImageView>
-            <TextField fx:id="costTextField" layoutX="808.0" layoutY="201.0" prefHeight="27.0" prefWidth="108.0" promptText="Optional" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="808.0" AnchorPane.topAnchor="201.0" />
+            <TextField fx:id="costTextField" layoutX="786.0" layoutY="199.0" prefHeight="27.0" prefWidth="108.0" promptText="Optional" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="786.0" AnchorPane.topAnchor="199.0" />
             <DatePicker fx:id="payDueDatePicker" layoutX="134.0" layoutY="199.0" prefHeight="26.0" prefWidth="203.0" promptText="Pay Due Date" stylesheets="@../../CSS/datePicker.css" AnchorPane.leftAnchor="134.0" AnchorPane.topAnchor="199.0" />
             <Label layoutX="119.0" layoutY="177.0" prefHeight="1.0" prefWidth="706.0" style="-fx-background-color: #1d6f84;" textFill="#1d6f84" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="177.0">
                <font>
@@ -95,7 +95,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="703.0" layoutY="205.0" text="New Total Cost" textFill="#1d6f84">
+            <Label layoutX="706.0" layoutY="205.0" text="Order Cost" textFill="#1d6f84" AnchorPane.topAnchor="205.0">
                <font>
                   <Font size="14.0" />
                </font>

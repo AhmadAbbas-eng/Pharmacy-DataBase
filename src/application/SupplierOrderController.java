@@ -206,7 +206,7 @@ public class SupplierOrderController implements Initializable {
 				double newSupplierDues = supplierTable.getSelectionModel().getSelectedItem().getDues() + costValue
 						- Discount;
 
-				Queries.queryUpdate("update Supplier set supplier_dues =? where Supplier_ID =?;",
+				Queries.queryUpdate("update Supplier set supplier_dues = ? where Supplier_ID =?;",
 						new ArrayList<>(Arrays.asList(newSupplierDues + "",
 								supplierTable.getSelectionModel().getSelectedItem().getID() + "")));
 
