@@ -24,9 +24,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
 import javafx.beans.binding.Bindings;
+import javafx.geometry.Insets;
 
 public class TestController implements Initializable {
 	@FXML
@@ -170,6 +173,21 @@ public class TestController implements Initializable {
 	@FXML
 	private AnchorPane mainPane;
 
+	@FXML
+	private VBox mainVBox;
+
+	@FXML
+	private VBox leftVBox;
+
+	@FXML
+	private Line line1;
+
+	@FXML
+	private Line line2;
+
+	@FXML
+	private VBox reportVBox;
+
 	int counter = 0;
 	ObservableList<String> months = FXCollections.observableArrayList("January", "February", "March", "April", "May",
 			"June", "July", "August", "September", "October", "November", "December");
@@ -181,9 +199,32 @@ public class TestController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
-		iconsHBox.prefWidthProperty().bind(mainPane.widthProperty().multiply(0.55));
+		// iconsHBox.prefWidthProperty().bind(mainPane.widthProperty().multiply(0.55));
+		leftVBox.prefWidthProperty().bind(mainPane.widthProperty().multiply(0.75));
 		iconsHBox.spacingProperty().bind(iconsHBox.widthProperty().divide(20.0));
+
+		iconsHBox.paddingProperty()
+				.bind(Bindings.createObjectBinding(() -> new Insets(0, iconsHBox.spacingProperty().doubleValue(), 0,
+						iconsHBox.spacingProperty().doubleValue()), iconsHBox.spacingProperty()));
+
+		iconsHBox.minHeightProperty().bind(iconsHBox.widthProperty().multiply(13).divide(120));
 		iconsHBox.prefHeightProperty().bind(employeePane.widthProperty());
+
+		line1.startXProperty().bind(iconsHBox.layoutXProperty());
+
+		line1.endXProperty().bind(iconsHBox.layoutXProperty().add(iconsHBox.widthProperty()));
+
+		line2.startXProperty().bind(reportVBox.widthProperty().multiply(-0.5));
+		line2.endXProperty().bind(reportVBox.widthProperty().multiply(0.5));
+
+		mainVBox.paddingProperty()
+				.bind(Bindings.createObjectBinding(
+						() -> new Insets(mainPane.prefHeightProperty().multiply(0.01).doubleValue(),
+								mainPane.prefWidthProperty().multiply(0.01).doubleValue(),
+								mainPane.prefHeightProperty().multiply(0.01).doubleValue(),
+								mainPane.prefWidthProperty().multiply(0.01).doubleValue()),
+						mainPane.prefWidthProperty(), mainPane.prefHeightProperty()));
+
 		employeeImage.fitWidthProperty().bind(employeePane.widthProperty().multiply(0.65));
 		totalEmployeesLabel.prefWidthProperty().bind(employeePane.widthProperty().multiply(0.86));
 		totalEmployeesLabel.prefHeightProperty().bind(employeePane.widthProperty().multiply(0.3));
@@ -261,15 +302,6 @@ public class TestController implements Initializable {
 		numberOfExpiredProductsLabel.styleProperty()
 				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
 						expiredLabel.widthProperty().divide(5)));
-		
-		//--------------------------------------------------------------------------------------------------------------
-
-//		outOfStockLabel.fontProperty().bind(Bindings.createObjectBinding(
-//				() -> new Font((int) employeePane.widthProperty().get()), employeePane.widthProperty()));
-
-		// employeePane.prefHeightProperty().bind(employeePane.prefWidthProperty());
-		// employeePane.prefWidthProperty().bind(iconsHBox.widthProperty().multiply(4.0/30));
-		// employeeImage.fitHeightProperty().bind(iconsHBox.heightProperty());
 
 		LocalDate current_date = LocalDate.now();
 		if (years.indexOf(current_date.getYear() + "") == -1) {
