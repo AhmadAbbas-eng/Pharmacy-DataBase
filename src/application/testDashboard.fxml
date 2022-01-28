@@ -22,7 +22,7 @@
    <children>
       <VBox fx:id="mainVBox" alignment="CENTER" layoutX="19.0" layoutY="16.0" prefHeight="672.0" prefWidth="1276.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox minHeight="10.0" minWidth="10.0" prefHeight="722.0" prefWidth="1314.0">
+            <HBox alignment="CENTER" minHeight="10.0" minWidth="10.0" prefHeight="722.0" prefWidth="1314.0">
                <children>
                   <VBox fx:id="leftVBox" minHeight="10.0" minWidth="10.0" prefHeight="587.0" prefWidth="906.0" spacing="10.0">
                      <children>
