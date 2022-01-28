@@ -43,6 +43,9 @@ import javafx.util.Duration;
  */
 public class DisposalController implements Initializable {
 
+    @FXML
+    private Label amountLabel;
+
 	@FXML
 	private TableView<ArrayList<String>> toBeDisposedTable;
 
@@ -117,6 +120,7 @@ public class DisposalController implements Initializable {
 				e1.printStackTrace();
 			}
 			amountToBeDisposed.setOpacity(0);
+			amountLabel.setOpacity(0);
 		} else {
 
 			try {
@@ -131,6 +135,7 @@ public class DisposalController implements Initializable {
 				e1.printStackTrace();
 			}
 			amountToBeDisposed.setOpacity(1);
+			amountLabel.setOpacity(1);
 		}
 	}
 
