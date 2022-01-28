@@ -153,10 +153,9 @@ public class SelectProductController implements Initializable {
 							String s = temp.get(i);
 							String[] data = s.split(",");
 							String[] idTemp = data[0].split("=");
-							System.out.println(
-									idTemp[0] + commercialNameTable.getSelectionModel().getSelectedItem().getID());
-							if (commercialNameTable.getSelectionModel().getSelectedItem().getID()
-									+ "".compareTo(idTemp[1]) == 0) {
+							System.out.println("loor"+
+									idTemp[1] + commercialNameTable.getSelectionModel().getSelectedItem().getID());
+							if (commercialNameTable.getSelectionModel().getSelectedItem().getID() == Integer.parseInt(idTemp[1])) {
 								String[] quantityTemp = data[2].split("=");
 								Quantity += Integer.parseInt(quantityTemp[1]);
 								listOrder.getSelectionModel().select(i);
