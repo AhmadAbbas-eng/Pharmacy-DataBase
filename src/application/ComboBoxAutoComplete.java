@@ -73,9 +73,9 @@ public class ComboBoxAutoComplete<T> {
 			filteredList = originalItems;
 			cmb.getTooltip().hide();
 		} else {
-			Stream<T> itens = cmb.getItems().stream();
+			Stream<T> items = cmb.getItems().stream();
 			String txtUsr = filter.toString().toLowerCase();
-			itens.filter(el -> el.toString().toLowerCase().contains(txtUsr)).forEach(filteredList::add);
+			items.filter(el -> el.toString().toLowerCase().contains(txtUsr)).forEach(filteredList::add);
 			cmb.getTooltip().setText(txtUsr);
 			Window stage = cmb.getScene().getWindow();
 			Bounds boundsInScene = cmb.localToScene(cmb.getBoundsInLocal());
