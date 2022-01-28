@@ -13,17 +13,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-/**
- * 
- * @version 27 January 2022
- * @author Ahmad Abbas
- */
 public class MainPageController implements Initializable {
-    
+
 	@FXML
 	private Label choosenButtonLabel;
 
@@ -53,7 +51,7 @@ public class MainPageController implements Initializable {
 
 	@FXML
 	private Button logOutButton;
-	
+
 	@FXML
 	private Button reportButton;
 
@@ -62,13 +60,22 @@ public class MainPageController implements Initializable {
 
 	@FXML
 	private Button disposeButton;
-	
+
 	@FXML
 	private Button payingOffButton;
 
 	@FXML
 	private Label userNameLabel;
-	
+
+	@FXML
+	private VBox vbox;
+
+	@FXML
+	private AnchorPane rightPane;
+
+	@FXML
+	private BorderPane mainPane;
+
 	public void PayingOffOnAction(ActionEvent e) throws IOException {
 		choosenButtonLabel.setText("Paying Off");
 		Parent page = FXMLLoader.load(getClass().getResource("PayingOff.fxml"));
@@ -82,10 +89,10 @@ public class MainPageController implements Initializable {
 		contentArea.getChildren().removeAll();
 		contentArea.getChildren().setAll(page);
 	}
-	
+
 	public void ReportOnAction(ActionEvent e) throws IOException {
 		choosenButtonLabel.setText("Reports");
-		
+
 		if (Employee.hasAccess()) {
 			Parent page = FXMLLoader.load(getClass().getResource("Reports.fxml"));
 			contentArea.getChildren().removeAll();
@@ -115,7 +122,7 @@ public class MainPageController implements Initializable {
 		contentArea.getChildren().removeAll();
 		contentArea.getChildren().setAll(page);
 	}
-	
+
 	public void CustomerOnAction(ActionEvent e) throws IOException {
 		choosenButtonLabel.setText("Customers");
 
@@ -127,12 +134,12 @@ public class MainPageController implements Initializable {
 	public void DashboardOnAction(ActionEvent e) throws IOException {
 		choosenButtonLabel.setText("Dashboard");
 
-		Region  page = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
+		Region page = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
 		contentArea.getChildren().removeAll();
 		contentArea.getChildren().setAll(page);
 		page.prefWidthProperty().bind(contentArea.widthProperty());
 		page.prefHeightProperty().bind(contentArea.heightProperty());
-		
+
 	}
 
 	public void ProductsOnAction(ActionEvent e) throws IOException {
@@ -196,6 +203,19 @@ public class MainPageController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		rightPane.prefHeightProperty().bind(mainPane.heightProperty());
+		dashboardButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));
+		paymentButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));
+		sellButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));
+		payingOffButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));
+		ordersButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));
+		customersButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));
+		productsButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));
+		employeesButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));
+		supplierButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));
+		disposeButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));
+		reportButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));
+
 		if (Employee.getCurrentID() != 0) {
 			userNameLabel.setText(Employee.getEmployeeName());
 		} else {
@@ -204,7 +224,7 @@ public class MainPageController implements Initializable {
 
 		Region page;
 		try {
-			
+
 			choosenButtonLabel.setText("Dashboard");
 			page = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
 			page.prefWidthProperty().bind(contentArea.widthProperty());

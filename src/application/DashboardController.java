@@ -7,19 +7,27 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.ResourceBundle;
+
 import Relations.Queries;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Line;
 import javafx.util.Callback;
 
 public class DashboardController implements Initializable {
@@ -118,6 +126,66 @@ public class DashboardController implements Initializable {
 
 	@FXML
 	private ComboBox<String> yearBox;
+
+	@FXML
+	private HBox iconsHBox;
+
+	@FXML
+	private AnchorPane employeePane;
+
+	@FXML
+	private ImageView employeeImage;
+
+	@FXML
+	private ImageView customerImage;
+
+	@FXML
+	private ImageView supplierImage;
+
+	@FXML
+	private ImageView productImage;
+
+	@FXML
+	private ImageView stockImage;
+
+	@FXML
+	private ImageView expiredImage;
+
+	@FXML
+	private Label totalEmployeesLabel;
+
+	@FXML
+	private Label totalProductsLabel;
+
+	@FXML
+	private Label stockLabel;
+
+	@FXML
+	private Label totalSuppliersLabel;
+
+	@FXML
+	private Label totalCustomersLabel;
+
+	@FXML
+	private Label expiredLabel;
+
+	@FXML
+	private AnchorPane mainPane;
+
+	@FXML
+	private VBox mainVBox;
+
+	@FXML
+	private VBox leftVBox;
+
+	@FXML
+	private Line line1;
+
+	@FXML
+	private Line line2;
+
+	@FXML
+	private VBox reportVBox;
 	int counter = 0;
 	ObservableList<String> months = FXCollections.observableArrayList("January", "February", "March", "April", "May",
 			"June", "July", "August", "September", "October", "November", "December");
@@ -128,6 +196,112 @@ public class DashboardController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		leftVBox.prefWidthProperty().bind(mainPane.widthProperty().multiply(0.75));
+		iconsHBox.spacingProperty().bind(iconsHBox.widthProperty().divide(20.0));
+
+		iconsHBox.paddingProperty()
+				.bind(Bindings
+						.createObjectBinding(
+								() -> new Insets(0, iconsHBox.widthProperty().divide(20).doubleValue(), 0,
+										iconsHBox.widthProperty().divide(20).doubleValue()),
+								iconsHBox.widthProperty()));
+
+		iconsHBox.minHeightProperty().bind(iconsHBox.widthProperty().multiply(13).divide(120));
+		iconsHBox.prefHeightProperty().bind(employeePane.widthProperty());
+
+		line1.startXProperty().bind(iconsHBox.layoutXProperty());
+
+		line1.endXProperty().bind(iconsHBox.layoutXProperty().add(iconsHBox.widthProperty()));
+
+		line2.startXProperty().bind(reportVBox.widthProperty().multiply(-0.5));
+		line2.endXProperty().bind(reportVBox.widthProperty().multiply(0.5));
+
+		mainVBox.paddingProperty()
+				.bind(Bindings.createObjectBinding(
+						() -> new Insets(mainPane.prefHeightProperty().multiply(0.01).doubleValue(),
+								mainPane.prefWidthProperty().multiply(0.01).doubleValue(),
+								mainPane.prefHeightProperty().multiply(0.01).doubleValue(),
+								mainPane.prefWidthProperty().multiply(0.01).doubleValue()),
+						mainPane.prefWidthProperty(), mainPane.prefHeightProperty()));
+
+		employeeImage.fitWidthProperty().bind(employeePane.widthProperty().multiply(0.65));
+		totalEmployeesLabel.prefWidthProperty().bind(employeePane.widthProperty().multiply(0.86));
+		totalEmployeesLabel.prefHeightProperty().bind(employeePane.widthProperty().multiply(0.3));
+		numberOfEmployeesLabel.prefHeightProperty().bind(employeePane.widthProperty().multiply(0.35));
+
+		totalEmployeesLabel.styleProperty()
+				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
+						totalEmployeesLabel.widthProperty().divide(12)));
+
+		numberOfEmployeesLabel.styleProperty()
+				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
+						totalEmployeesLabel.widthProperty().divide(5)));
+
+		supplierImage.fitWidthProperty().bind(employeePane.widthProperty().multiply(0.65));
+		totalSuppliersLabel.prefWidthProperty().bind(employeePane.widthProperty().multiply(0.86));
+		totalSuppliersLabel.prefHeightProperty().bind(employeePane.widthProperty().multiply(0.3));
+		numberOfSupplierLabel.prefHeightProperty().bind(employeePane.widthProperty().multiply(0.35));
+
+		totalSuppliersLabel.styleProperty()
+				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
+						totalSuppliersLabel.widthProperty().divide(12)));
+
+		numberOfSupplierLabel.styleProperty()
+				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
+						totalSuppliersLabel.widthProperty().divide(5)));
+
+		customerImage.fitWidthProperty().bind(employeePane.widthProperty().multiply(0.65));
+		totalCustomersLabel.prefWidthProperty().bind(employeePane.widthProperty().multiply(0.86));
+		totalCustomersLabel.prefHeightProperty().bind(employeePane.widthProperty().multiply(0.3));
+		numberOfCustomerLabel.prefHeightProperty().bind(employeePane.widthProperty().multiply(0.35));
+
+		totalCustomersLabel.styleProperty()
+				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
+						totalCustomersLabel.widthProperty().divide(12)));
+
+		numberOfCustomerLabel.styleProperty()
+				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
+						totalCustomersLabel.widthProperty().divide(5)));
+
+		productImage.fitWidthProperty().bind(employeePane.widthProperty().multiply(0.65));
+		totalProductsLabel.prefWidthProperty().bind(employeePane.widthProperty().multiply(0.86));
+		totalProductsLabel.prefHeightProperty().bind(employeePane.widthProperty().multiply(0.3));
+		numberOfProductLabel.prefHeightProperty().bind(employeePane.widthProperty().multiply(0.35));
+
+		totalProductsLabel.styleProperty()
+				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
+						totalProductsLabel.widthProperty().divide(12)));
+
+		numberOfProductLabel.styleProperty()
+				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
+						totalProductsLabel.widthProperty().divide(5)));
+
+		stockImage.fitWidthProperty().bind(employeePane.widthProperty().multiply(0.65));
+		stockLabel.prefWidthProperty().bind(employeePane.widthProperty().multiply(0.86));
+		stockLabel.prefHeightProperty().bind(employeePane.widthProperty().multiply(0.3));
+		outOfStockLabel.prefHeightProperty().bind(employeePane.widthProperty().multiply(0.35));
+
+		stockLabel.styleProperty()
+				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
+						stockLabel.widthProperty().divide(12)));
+
+		outOfStockLabel.styleProperty()
+				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
+						stockLabel.widthProperty().divide(5)));
+
+		expiredImage.fitWidthProperty().bind(employeePane.widthProperty().multiply(0.65));
+		expiredLabel.prefWidthProperty().bind(employeePane.widthProperty().multiply(0.86));
+		expiredLabel.prefHeightProperty().bind(employeePane.widthProperty().multiply(0.3));
+		numberOfExpiredProductsLabel.prefHeightProperty().bind(employeePane.widthProperty().multiply(0.35));
+
+		expiredLabel.styleProperty()
+				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
+						expiredLabel.widthProperty().divide(12)));
+
+		numberOfExpiredProductsLabel.styleProperty()
+				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
+						expiredLabel.widthProperty().divide(5)));
+
 		LocalDate current_date = LocalDate.now();
 		if (years.indexOf(current_date.getYear() + "") == -1) {
 			years.add(current_date.getYear() + "");
