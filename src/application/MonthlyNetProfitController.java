@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import Relations.Queries;
-import application.DashboardController.HoveredThresholdNode;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -25,7 +24,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 
-public class monthlyNetProfitController implements Initializable {
+public class MonthlyNetProfitController implements Initializable {
 	
     @FXML
     private TableColumn<ArrayList<String>, String> dateColumn;

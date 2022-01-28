@@ -145,7 +145,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="drugCategoryTextField" promptText="Drug Category" stylesheets="@../../CSS/textField.css" />
+                  <TextField fx:id="drugCategoryTextField" promptText="(Antibiotics,Antacids,...)" stylesheets="@../../CSS/textField.css" />
                   <Label text="  *" textFill="RED">
                      <font>
                         <Font name="System Bold" size="12.0" />
@@ -175,7 +175,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="dosageFormTextField" promptText="Dosage Form" stylesheets="@../../CSS/textField.css" />
+                  <TextField fx:id="dosageFormTextField" promptText="(Tablet,Cream,Spray,...)" stylesheets="@../../CSS/textField.css" />
                   <Label text="  *" textFill="RED">
                      <font>
                         <Font name="System Bold" size="12.0" />

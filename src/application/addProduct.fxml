@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="301.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.addProductController">
+<AnchorPane prefHeight="301.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AddProductController">
    <children>
       <Label layoutX="40.0" layoutY="27.0" prefHeight="25.0" prefWidth="133.0" text="Add New Product" textFill="#1d6f84" AnchorPane.leftAnchor="40.0">
          <font>
@@ -118,7 +118,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="drugCategoryTextField" promptText="Drug Category" stylesheets="@../../CSS/textField.css" />
+                  <TextField fx:id="drugCategoryTextField" promptText="(Antibiotics,Antacids,...)" stylesheets="@../../CSS/textField.css" />
                   <Label text="  *" textFill="RED">
                      <font>
                         <Font name="System Bold" size="12.0" />
@@ -148,7 +148,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="dosageFormTextField" promptText="Dosage Form" stylesheets="@../../CSS/textField.css" />
+                  <TextField fx:id="dosageFormTextField" promptText="(Tablet,Cream,Spray,...)" stylesheets="@../../CSS/textField.css" />
                   <Label text="  *" textFill="RED">
                      <font>
                         <Font name="System Bold" size="12.0" />
