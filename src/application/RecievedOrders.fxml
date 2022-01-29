@@ -8,10 +8,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="584.0" prefWidth="858.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ReceivedController">
    <children>
-      <TableView fx:id="recievedOrdersTable" layoutX="15.0" layoutY="45.0" prefHeight="334.0" prefWidth="574.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="45.0">
+      <TableView fx:id="recievedOrdersTable" layoutX="15.0" layoutY="45.0" prefHeight="520.0" prefWidth="832.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="45.0">
          <columns>
             <TableColumn fx:id="orderIDColumn" prefWidth="35.19998264312744" text="ID" />
             <TableColumn fx:id="orderByIDColumn" prefWidth="84.800048828125" text="Order By " />
