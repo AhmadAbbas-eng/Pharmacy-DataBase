@@ -17,7 +17,6 @@ public class Product {
 
 	private static ArrayList<Product> data = new ArrayList<Product>();
 	private static ObservableList<Product> dataList;
-	private static int maxID = 0;
 	private int ID;
 	private String Name;
 	private double Price;
@@ -53,11 +52,7 @@ public class Product {
 	}
 
 	public static int getMaxID() {
-		return maxID;
-	}
-
-	public static void setMaxID(int maxID) {
-		Product.maxID = maxID;
+		return Integer.parseInt(Queries.queryResult("select max(product_ID) from product;", null).get(0).get(0));
 	}
 
 	public int getID() {
@@ -113,7 +108,6 @@ public class Product {
 
 			data.add(temp);
 		}
-		maxID = Integer.parseInt(Queries.queryResult("select max(product_ID) from product;", null).get(0).get(0));
 		dataList = FXCollections.observableArrayList(data);
 
 	}
@@ -137,9 +131,8 @@ public class Product {
 	}
 
 	public static void insertProduct(String name, double price) {
-		setMaxID(getMaxID() + 1);
 		Queries.queryUpdate("Insert into Product values (?, ?, ?);",
-				new ArrayList<>(Arrays.asList(getMaxID() + "", name, price + "")));
+				new ArrayList<>(Arrays.asList((getMaxID()+1) + "", name, price + "")));
 	}
 
 	/**

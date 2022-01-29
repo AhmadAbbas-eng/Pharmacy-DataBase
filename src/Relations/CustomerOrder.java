@@ -19,7 +19,6 @@ public class CustomerOrder {
 
 	private static ArrayList<CustomerOrder> data = new ArrayList<CustomerOrder>();
 	private static ObservableList<CustomerOrder> dataList;
-	private static int maxID = 0;
 	private int ID;
 	private LocalDate date;
 	private double price;
@@ -90,7 +89,7 @@ public class CustomerOrder {
 	}
 
 	public static int getMaxID() {
-		return maxID;
+		return Integer.parseInt(Queries.queryResult("select max(order_ID) from c_order;", null).get(0).get(0));
 	}
 
 	public int getEmployeeID() {
@@ -99,10 +98,6 @@ public class CustomerOrder {
 
 	public static void setData(ArrayList<CustomerOrder> data) {
 		CustomerOrder.data = data;
-	}
-
-	public static void setMaxID(int maxID) {
-		CustomerOrder.maxID = maxID;
 	}
 
 	public void setEmployeeID(int employeeID) {
@@ -127,8 +122,6 @@ public class CustomerOrder {
 
 			data.add(temp);
 		}
-		System.out.println(maxID);
-		maxID = Integer.parseInt(Queries.queryResult("select max(order_ID) from c_order;", null).get(0).get(0));
 		dataList = FXCollections.observableArrayList(data);
 	}
 
@@ -136,10 +129,10 @@ public class CustomerOrder {
 	public static void insertCustomerOrder(String date, double price, double discount, double paid, int employeeID,
 			String customerNID) {
 		Queries.queryUpdate("Insert into C_order values (? ,?, ?, ?, ?); ",
-				new ArrayList<>(Arrays.asList((++maxID) + "", date, price + "", discount + "", employeeID + "")));
+				new ArrayList<>(Arrays.asList((getMaxID()+1) + "", date, price + "", discount + "", employeeID + "")));
 
 		Queries.queryUpdate("Insert into customer2order values(?, ?);",
-				new ArrayList<>(Arrays.asList(customerNID, maxID + "")));
+				new ArrayList<>(Arrays.asList(customerNID, (getMaxID()) + "")));
 
 		Queries.queryUpdate("update Customer set Customer_Debt=customer_Debt+ ? where customer_nid=? ;",
 				new ArrayList<>(Arrays.asList((price - discount - paid) + "", customerNID)));
