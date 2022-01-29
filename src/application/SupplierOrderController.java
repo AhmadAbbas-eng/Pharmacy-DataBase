@@ -96,9 +96,6 @@ public class SupplierOrderController implements Initializable {
 
 	@FXML
 	private Label orderNOLabel;
-
-	@FXML
-	private StackPane mainPane;
 	
 	private double costValue;
 	private String stringToSearch = "";
@@ -173,10 +170,10 @@ public class SupplierOrderController implements Initializable {
 
 	public void cancelOnAction(ActionEvent e) throws IOException {
 		Region page = FXMLLoader.load(getClass().getResource("SupplierReceivedOrder.fxml"));
-		mainPane.getChildren().removeAll();
-		mainPane.getChildren().setAll(page);
-		page.prefWidthProperty().bind(mainPane.widthProperty());
-		page.prefHeightProperty().bind(mainPane.heightProperty());
+		MainPageController.pane.getChildren().removeAll();
+		MainPageController.pane.getChildren().setAll(page);
+		page.prefWidthProperty().bind(MainPageController.pane.widthProperty());
+		page.prefHeightProperty().bind(MainPageController.pane.heightProperty());
 	}
 
 	public void confirmOnAction(ActionEvent e)
@@ -251,10 +248,10 @@ public class SupplierOrderController implements Initializable {
 				}
 
 				Region page = FXMLLoader.load(getClass().getResource("SupplierReceivedOrder.fxml"));
-				mainPane.getChildren().removeAll();
-				mainPane.getChildren().setAll(page);
-				page.prefWidthProperty().bind(mainPane.widthProperty());
-				page.prefHeightProperty().bind(mainPane.heightProperty());
+				MainPageController.pane.getChildren().removeAll();
+				MainPageController.pane.getChildren().setAll(page);
+				page.prefWidthProperty().bind(MainPageController.pane.widthProperty());
+				page.prefHeightProperty().bind(MainPageController.pane.heightProperty());
 			}
 
 		} else {

@@ -114,9 +114,6 @@ public class ReceiveOrdersController implements Initializable {
 	@FXML
 	private ImageView addBatchIcon;
 
-	@FXML
-	private StackPane mainPane;
-
 	private String ProductName;
 
 	private String ProductId;
@@ -201,10 +198,10 @@ public class ReceiveOrdersController implements Initializable {
 					++counter;
 				}
 				Region page = FXMLLoader.load(getClass().getResource("UnReceivedOrders.fxml"));
-				mainPane.getChildren().removeAll();
-				mainPane.getChildren().setAll(page);
-				page.prefWidthProperty().bind(mainPane.widthProperty());
-				page.prefHeightProperty().bind(mainPane.heightProperty());
+				MainPageController.pane.getChildren().removeAll();
+				MainPageController.pane.getChildren().setAll(page);
+				page.prefWidthProperty().bind(MainPageController.pane.widthProperty());
+				page.prefHeightProperty().bind(MainPageController.pane.heightProperty());
 			}
 		} else {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -394,9 +391,11 @@ public class ReceiveOrdersController implements Initializable {
 	}
 
 	public void cancelOnAction(ActionEvent e) throws IOException {
-		Parent page = FXMLLoader.load(getClass().getResource("UnReceivedOrders.fxml"));
-		mainPane.getChildren().removeAll();
-		mainPane.getChildren().setAll(page);
+		Region page = FXMLLoader.load(getClass().getResource("UnReceivedOrders.fxml"));
+		MainPageController.pane.getChildren().removeAll();
+		MainPageController.pane.getChildren().setAll(page);
+		page.prefWidthProperty().bind(MainPageController.pane.widthProperty());
+		page.prefHeightProperty().bind(MainPageController.pane.heightProperty());
 	}
 
 	@Override

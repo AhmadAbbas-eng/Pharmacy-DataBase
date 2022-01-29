@@ -21,6 +21,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class MainPageController implements Initializable {
+	
+	static StackPane pane = null;
 
 	@FXML
 	private Label choosenButtonLabel;
@@ -256,6 +258,7 @@ public class MainPageController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		this.pane = contentArea;
 		rightPane.prefHeightProperty().bind(mainPane.heightProperty());
 		dashboardButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));
 		paymentButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));
