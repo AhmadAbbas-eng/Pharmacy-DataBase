@@ -123,7 +123,7 @@ public class ReportController implements Initializable {
 			showAndFade(saveIcon);
 			showAndFade(savedLabel);
 
-		} else if (reportType.getSelectionModel().getSelectedItem() == "Customers") {
+		} else if (reportType.getSelectionModel().getSelectedItem() == "Customers Order") {
 			Customer.report(selectedDirectory.toString() + "/Customers");
 			showAndFade(saveIcon);
 			showAndFade(savedLabel);
@@ -192,7 +192,7 @@ public class ReportController implements Initializable {
 	}
 
 	ObservableList<String> reports = FXCollections.observableArrayList("-Select-", "Payment", "Suppliers", "Cheques",
-			"Disposal", "Customers", "Products Information", "Product Batches","Net Profit");
+			"Disposal", "Customers Order", "Products Information", "Product Batches","Net Profit");
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -270,7 +270,7 @@ public class ReportController implements Initializable {
 					e1.printStackTrace();
 				}
 
-			} else if (reportType.getSelectionModel().getSelectedItem() == "Customers") {
+			} else if (reportType.getSelectionModel().getSelectedItem() == "Customers Order") {
 				Region page;
 				try {
 					page = FXMLLoader.load(getClass().getResource("CustomersReport.fxml"));
