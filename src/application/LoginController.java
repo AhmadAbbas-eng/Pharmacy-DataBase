@@ -29,7 +29,7 @@ public class LoginController {
 
 	@FXML
 	private Button cancelButton;
-
+ 
 	@FXML
 	private Button logInButton;
 

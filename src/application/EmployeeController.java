@@ -19,7 +19,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import java.io.IOException;
-import java.net.URL;
+import java.net.URL; 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
