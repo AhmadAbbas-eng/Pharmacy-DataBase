@@ -15,6 +15,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -25,6 +27,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
+import javafx.stage.Stage;
 
 /**
  * 
@@ -75,6 +78,34 @@ public class ReceivedOrderController implements Initializable {
 	MainPageController mainPageController;
 
 	private String stringToSearch = "";
+	
+	@FXML
+	private Button showProductsButton;
+	
+	public void showProductsOnAction() {
+		if (ordersTable.getSelectionModel().getSelectedItem() == null) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setHeaderText("An Order Must Be Chosen First");
+			alert.setContentText("Choose An Order From The Table");
+			alert.showAndWait();
+			return;
+		}
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("SupplierOrderBatch.fxml"));
+			Parent products = (Parent) loader.load();
+			SupplierOrderBatchController show = loader.getController();
+			show.setOrder(ordersTable.getSelectionModel().getSelectedItem());
+			Stage productsStage = new Stage();
+			productsStage.setAlwaysOnTop(true);
+			Scene scene = new Scene(products);
+			productsStage.setScene(scene);
+			productsStage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
 
 	public void newOrderOnMouseReleased() {
 		ColorAdjust effect = new ColorAdjust();
