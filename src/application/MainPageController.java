@@ -26,7 +26,7 @@ public class MainPageController implements Initializable {
 
 	@FXML
 	private Label choosenButtonLabel;
-
+ 
 	@FXML
 	private Button employeesButton;
 
