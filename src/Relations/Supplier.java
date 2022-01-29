@@ -17,7 +17,6 @@ public class Supplier {
 
 	private static ArrayList<Supplier> data = new ArrayList<Supplier>();
 	private static ObservableList<Supplier> dataList;
-	private static int maxID = 0;
 	private int ID;
 	private String name;
 	private String address;
@@ -119,11 +118,7 @@ public class Supplier {
 	}
 
 	public static int getMaxID() {
-		return maxID;
-	}
-
-	public static void setMaxID(int maxID) {
-		Supplier.maxID = maxID;
+		return Integer.parseInt(Queries.queryResult("select max(supplier_ID) from supplier;", null).get(0).get(0));
 	}
 	
 	public static void setDataList(ObservableList<Supplier> dataList) {
@@ -147,7 +142,7 @@ public class Supplier {
 			getSupplierPhone(temp);
 			data.add(temp);
 		}
-		maxID = Integer.parseInt(Queries.queryResult("select max(supplier_ID) from supplier;", null).get(0).get(0));
+		
 		dataList = FXCollections.observableArrayList(data);
 	}
 
@@ -208,9 +203,9 @@ public class Supplier {
 	public static void insertSupplier(String sname, String address, String email, double dues,
 			ArrayList<String> phones) {
 		Queries.queryUpdate("insert into Supplier values (?, ?, ?, ?, ?);",
-				new ArrayList<>(Arrays.asList((++maxID) + "", sname, address, email, dues + "")));
+				new ArrayList<>(Arrays.asList((getMaxID()+1) + "", sname, address, email, dues + "")));
 		if (phones != null) {
-			insertSupplierPhone(phones, maxID);
+			insertSupplierPhone(phones, getMaxID());
 		}
 	}
 }

@@ -18,7 +18,6 @@ public class Payment {
 
 	private static ArrayList<Payment> data = new ArrayList<Payment>();
 	private static ObservableList<Payment> dataList;
-	private static int maxID = 0;
 	private int ID;
 	private LocalDate date;
 	private double amount;
@@ -78,11 +77,7 @@ public class Payment {
 	}
 
 	public static int getMaxID() {
-		return maxID;
-	}
-
-	public static void setMaxID(int maxID) {
-		Payment.maxID = maxID;
+		return Integer.parseInt(Queries.queryResult("select max(payment_ID) from payment;", null).get(0).get(0));
 	}
 
 	public static ObservableList<Payment> getDataList() {
@@ -110,13 +105,12 @@ public class Payment {
 					Double.parseDouble(table.get(i).get(2)), table.get(i).get(3));
 			data.add(temp);
 		}
-		maxID = Integer.parseInt(Queries.queryResult("select max(payment_ID) from payment;", null).get(0).get(0));
 		dataList = FXCollections.observableArrayList(data);
 	}
 
 	public static void insertPayment(LocalDate date, double amount, String method) {
 		Queries.queryUpdate("Insert into Payment values (?, ?, ?, ?);",
-				new ArrayList<>(Arrays.asList((++maxID) + "", date.toString(), amount + "", method)));
+				new ArrayList<>(Arrays.asList((getMaxID()+1) + "", date.toString(), amount + "", method)));
 	}
 
 	/**

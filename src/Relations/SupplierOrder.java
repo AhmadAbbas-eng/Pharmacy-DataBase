@@ -19,7 +19,6 @@ public class SupplierOrder {
 
 	private static ArrayList<SupplierOrder> data = new ArrayList<SupplierOrder>();
 	private static ObservableList<SupplierOrder> dataList;
-	private static int maxID = 0;
 	private int ID;
 	private LocalDate dateOfOrder;
 	private double cost;
@@ -143,12 +142,7 @@ public class SupplierOrder {
 	}
 
 	public static int getMaxID() {
-		return maxID;
-	}
-
-	public static int setMaxID(int maxID) {
-		SupplierOrder.maxID = maxID;
-		return maxID;
+		return Integer.parseInt(Queries.queryResult("select max(order_Id) from s_order;", null).get(0).get(0));
 	}
 
 	public static ObservableList<SupplierOrder> getDataList() {
@@ -180,7 +174,6 @@ public class SupplierOrder {
 
 			data.add(temp);
 		}
-		maxID = Integer.parseInt(Queries.queryResult("select max(order_Id) from s_order;", null).get(0).get(0));
 		dataList = FXCollections.observableArrayList(data);
 	}
 
@@ -210,7 +203,7 @@ public class SupplierOrder {
 	public static void insertSupplierOrder(LocalDate dateOfOrder, double cost, double discount,
 			LocalDate dueDateOfPayment, int supplierID, int managerID, int recievedBy, LocalDate recDate) {
 		Queries.queryUpdate("Insert into s_order values(?, ?, ?, ?, ?, ?, ?, ?, ?);",
-				new ArrayList<>(Arrays.asList((setMaxID(getMaxID() + 1)) + "", dateOfOrder.toString(), cost + "",
+				new ArrayList<>(Arrays.asList((getMaxID() + 1) + "", dateOfOrder.toString(), cost + "",
 						discount + "", dueDateOfPayment.toString(), supplierID + "", managerID + "", recievedBy + "",
 						recDate.toString())));
 	}

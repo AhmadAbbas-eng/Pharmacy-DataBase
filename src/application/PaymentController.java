@@ -1037,7 +1037,7 @@ public class PaymentController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		disposalOperationComboBox.setItems(Choices);
-
+		Payment.getData();
 		disposalTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
 				"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount\r\n"
 						+ "from product p, employee e, payment pay,drug_disposal d\r\n"
