@@ -9,6 +9,7 @@ import java.util.Arrays;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 /**
  * CustomerOrderBatch represents the details of each customer's order
@@ -124,7 +125,7 @@ public class CustomerOrderBatch {
 	 * @throws SQLException           If any connection exceptions occurred
 	 * @throws ParseException         If any exception data type parsing occurred
 	 */
-	public static void getCustomerOrderBatchData() throws ClassNotFoundException, SQLException, ParseException {
+	public static void getCustomerOrderBatchData(){
 
 		data.clear();
 		ArrayList<ArrayList<String>> table = Queries.queryResult("select * from S_order_batch;", null);
@@ -148,14 +149,11 @@ public class CustomerOrderBatch {
 	 * 
 	 * @param table ArrayList<ArrayList<String>> to fill data with
 	 * @return ArrayList<CustomerOrderBatch> of data
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
 	 */
-	public static ArrayList<CustomerOrderBatch> getSupplierOrderBatchData(ArrayList<ArrayList<String>> table)
-			throws ClassNotFoundException, SQLException, ParseException {
+	public static ArrayList<CustomerOrderBatch> getSupplierOrderBatchData(ArrayList<ArrayList<String>> table) {
 
-		ArrayList<CustomerOrderBatch> tempData = new ArrayList<CustomerOrderBatch>();
+		
+		try {ArrayList<CustomerOrderBatch> tempData = new ArrayList<CustomerOrderBatch>();
 		Connection getPhoneConnection = Queries.dataBaseConnection();
 
 		for (int i = 0; i < table.size(); i++) {
@@ -168,23 +166,28 @@ public class CustomerOrderBatch {
 			tempData.add(temp);
 		}
 
-		getPhoneConnection.close();
-		return tempData;
+			getPhoneConnection.close();
+			return tempData;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Loding Error");
+			alert.setHeaderText("Can't load data from c_order_batch");
+			alert.setContentText(null);
+			alert.showAndWait();
+			return null;
+		}
+		
 	}
 
 	public static void insertCustomerOrderBatch(String oID, String pID, String productionDate, String expiryDate,
 			int amount) {
-		try {
-			Queries.queryUpdate("Insert into C_order_batch values (? ,?, ?, ?, ?);",
-					new ArrayList<>(Arrays.asList(oID, pID, productionDate, expiryDate, amount + "")));
+		Queries.queryUpdate("Insert into C_order_batch values (? ,?, ?, ?, ?);",
+				new ArrayList<>(Arrays.asList(oID, pID, productionDate, expiryDate, amount + "")));
 
-			Queries.queryUpdate(
-					"update batch set Batch_Amount=Batch_Amount- ? where Product_ID=? and Batch_Production_Date=? "
-							+ " and Batch_Expiry_Date=? ;",
-					new ArrayList<>(Arrays.asList(amount + "", pID + "", productionDate, expiryDate)));
-
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		Queries.queryUpdate(
+				"update batch set Batch_Amount=Batch_Amount- ? where Product_ID=? and Batch_Production_Date=? "
+						+ " and Batch_Expiry_Date=? ;",
+				new ArrayList<>(Arrays.asList(amount + "", pID + "", productionDate, expiryDate)));
 	}
 }

@@ -1,7 +1,6 @@
 package application;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -86,13 +85,9 @@ public class MonthlyNetProfitController implements Initializable {
 		ArrayList<ArrayList<String>> minimunMonthArrayList = null;
 		ArrayList<ArrayList<String>> tableData = new ArrayList<>();
 		
-		try {
-			minimunMonthArrayList = Queries
-					.queryResult("select min(x) from (\r\n" + "select min(I.income_Date) as 'x' from income I\r\n"
-							+ "union\r\n" + "select min(p.payment_Date) as 'x' from payment p) as a;", null);
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		minimunMonthArrayList = Queries
+				.queryResult("select min(x) from (\r\n" + "select min(I.income_Date) as 'x' from income I\r\n"
+						+ "union\r\n" + "select min(p.payment_Date) as 'x' from payment p) as a;", null);
 
 		if (minimunMonthArrayList.get(0).get(0) != null) {
 
@@ -105,11 +100,7 @@ public class MonthlyNetProfitController implements Initializable {
 		while (startYear < currentYear || (startMonth <= currentMonth && startYear == currentYear)) {
 			Double netProfit = 0.0;
 
-			try {
-				netProfit = Queries.getNetProfit(startMonth, startYear);
-			} catch (NumberFormatException | ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			netProfit = Queries.getNetProfit(startMonth, startYear);
 			
 			String yearAndMonth = startMonth + "-" + startYear;
 			XYChart.Data<String, Double> dataChart = new XYChart.Data<>(yearAndMonth, netProfit );

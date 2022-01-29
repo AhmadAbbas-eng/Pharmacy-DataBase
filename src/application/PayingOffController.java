@@ -1,7 +1,6 @@
 package application;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -88,41 +87,21 @@ public class PayingOffController implements Initializable {
 		parameters.add("%" + stringToSearch + "%");
 		ArrayList<Customer> filteredList = new ArrayList<>();
 		if (stringToSearch == null || stringToSearch.isEmpty() || stringToSearch.isBlank()) {
-			try {
-				filteredList = Customer.getCustomerData(Queries
-						.queryResult("select * from Customer where Customer_Debt>0 order by Customer_name;", null));
-		
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			filteredList = Customer.getCustomerData(Queries
+					.queryResult("select * from Customer where Customer_Debt>0 order by Customer_name;", null));
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "National ID") {
-			try {
-				filteredList = Customer
-						.getCustomerData(Queries.queryResult("select * from Customer " + " where Customer_NID like ?"
-								+ " and Customer_Debt>0 " + " order by Customer_name;", parameters));
-			
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
-		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Name") {
-			try {
-				filteredList = Customer
-						.getCustomerData(Queries.queryResult("select * from Customer " + " where Customer_Name like ? "
+			filteredList = Customer
+					.getCustomerData(Queries.queryResult("select * from Customer " + " where Customer_NID like ?"
 							+ " and Customer_Debt>0 " + " order by Customer_name;", parameters));
-			
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Name") {
+			filteredList = Customer
+					.getCustomerData(Queries.queryResult("select * from Customer " + " where Customer_Name like ? "
+						+ " and Customer_Debt>0 " + " order by Customer_name;", parameters));
 		} else {
-			try {
-				parameters.add("%" + stringToSearch + "%");
-				filteredList = Customer.getCustomerData(Queries
-						.queryResult("select * from Customer where Customer_Name like ? " + " or Customer_NID like ? "
-								+ " and Customer_Debt>0 " + " order by Customer_name;", parameters));
-			
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			parameters.add("%" + stringToSearch + "%");
+			filteredList = Customer.getCustomerData(Queries
+					.queryResult("select * from Customer where Customer_Name like ? " + " or Customer_NID like ? "
+							+ " and Customer_Debt>0 " + " order by Customer_name;", parameters));
 		}
 		customerTable.setItems(FXCollections.observableArrayList(filteredList));
 		customerTable.refresh();
@@ -168,19 +147,14 @@ public class PayingOffController implements Initializable {
 			alert.setContentText("Paid Amount Must Be A Positive Real Number");
 			alert.showAndWait();
 		} else {
-			try {
-				Queries.queryUpdate(
-						"Insert into Income"
-								+ " (Income_amount, Income_Date, Employee_ID, Customer_NID) Values(?, ?, ?, ?);",
-						new ArrayList<>(Arrays.asList(paidAmount + "", dateLabel.getText(),
-								Employee.getCurrentID() + "", customerNIDLabel.getText())));
-				
-				Queries.queryUpdate("Update Customer set Customer_Debt=Customer_Debt-? where Customer_NID=? ;",
-						new ArrayList<>(Arrays.asList(paidStr, customerNIDLabel.getText())));
-				
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			Queries.queryUpdate(
+					"Insert into Income"
+							+ " (Income_amount, Income_Date, Employee_ID, Customer_NID) Values(?, ?, ?, ?);",
+					new ArrayList<>(Arrays.asList(paidAmount + "", dateLabel.getText(),
+							Employee.getCurrentID() + "", customerNIDLabel.getText())));
+			
+			Queries.queryUpdate("Update Customer set Customer_Debt=Customer_Debt-? where Customer_NID=? ;",
+					new ArrayList<>(Arrays.asList(paidStr, customerNIDLabel.getText())));
 			showAndFade(paidIcon);
 			showAndFade(paidLabel);
 			customerNIDLabel.setText("-");

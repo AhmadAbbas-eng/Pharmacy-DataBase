@@ -14,7 +14,6 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import Relations.Customer;
@@ -71,37 +70,20 @@ public class CustomerController implements Initializable {
 		parameters.add("%" + stringToSearch + "%");
 		ArrayList<Customer> filteredList = new ArrayList<>();
 		if (stringToSearch == null || stringToSearch.isEmpty() || stringToSearch.isBlank()) {
-			try {
-				filteredList = Customer.getCustomerData(Queries.queryResult(
-						"select * from Customer where true " + debtCondition + " order by Customer_name;", null));
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			filteredList = Customer.getCustomerData(Queries.queryResult(
+					"select * from Customer where true " + debtCondition + " order by Customer_name;", null));
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "National ID") {
-			try {
-				filteredList = Customer.getCustomerData(Queries.queryResult("select * from Customer "
-						+ " where Customer_NID like ? " + debtCondition + " order by Customer_name;", parameters));
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			filteredList = Customer.getCustomerData(Queries.queryResult("select * from Customer "
+					+ " where Customer_NID like ? " + debtCondition + " order by Customer_name;", parameters));
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Name") {
-			try {
-				filteredList = Customer.getCustomerData(Queries.queryResult("select * from Customer "
-						+ " where Customer_Name like ? " + debtCondition + " order by Customer_name;", parameters));
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			filteredList = Customer.getCustomerData(Queries.queryResult("select * from Customer "
+					+ " where Customer_Name like ? " + debtCondition + " order by Customer_name;", parameters));
 
 		} else {
-			try {
-				parameters.add("%" + stringToSearch + "%");
-				filteredList = Customer.getCustomerData(Queries
-						.queryResult("select * from Customer where (Customer_Name like ? " + " or Customer_NID like ? )"
-								+ debtCondition + " order by Customer_name;", parameters));
-				
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			parameters.add("%" + stringToSearch + "%");
+			filteredList = Customer.getCustomerData(Queries
+					.queryResult("select * from Customer where (Customer_Name like ? " + " or Customer_NID like ? )"
+							+ debtCondition + " order by Customer_name;", parameters));
 		}
 		customerTable.setItems(FXCollections.observableArrayList(filteredList));
 	}
@@ -204,12 +186,7 @@ public class CustomerController implements Initializable {
 		nidColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("NID"));
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
 		debtColumn.setCellValueFactory(new PropertyValueFactory<Customer, Double>("debt"));
-		try {
-			Customer.getCustomerData();
-		} catch (ClassNotFoundException | SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		Customer.getCustomerData();
 		customerTable.setItems(Customer.getDataList());
 		
 		searchBox.textProperty().addListener((observable, oldValue, newValue) -> {

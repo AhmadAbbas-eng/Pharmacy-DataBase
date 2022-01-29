@@ -1,7 +1,6 @@
 package application;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
@@ -108,38 +107,28 @@ public class DisposalController implements Initializable {
 	public void selectionOnAction(ActionEvent e) {
 
 		if (expiredSelectionCheckBox.isSelected()) {
-			try {
-				toBeDisposedTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
-						"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
-								+ "from batch b,product p\r\n"
-								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW()) \r\n"
-								+ "order by b.batch_expiry_date;",
-						null)));
-
-			} catch (ClassNotFoundException | SQLException e1) {
-				e1.printStackTrace();
-			}
+			toBeDisposedTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
+					"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
+							+ "from batch b,product p\r\n"
+							+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW()) \r\n"
+							+ "order by b.batch_expiry_date;",
+					null)));
 			amountToBeDisposed.setOpacity(0);
 			amountLabel.setOpacity(0);
 		} else {
 
-			try {
-				toBeDisposedTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
-						"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
-								+ "from batch b,product p\r\n"
-								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' \r\n"
-								+ "order by b.batch_expiry_date;",
-						null)));
-
-			} catch (ClassNotFoundException | SQLException e1) {
-				e1.printStackTrace();
-			}
+			toBeDisposedTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
+					"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
+							+ "from batch b,product p\r\n"
+							+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' \r\n"
+							+ "order by b.batch_expiry_date;",
+					null)));
 			amountToBeDisposed.setOpacity(1);
 			amountLabel.setOpacity(1);
 		}
 	}
 
-	public void disposeOnAction(ActionEvent e) throws ClassNotFoundException, SQLException {
+	public void disposeOnAction(ActionEvent e){
 		if (toBeDisposedTable.getSelectionModel().getSelectedItem() != null) {
 			if (expiredSelectionCheckBox.isSelected()) {
 				if (disposalCostTextField.getText().isBlank()) {
@@ -192,17 +181,12 @@ public class DisposalController implements Initializable {
 
 						showAndFade(success);
 						showAndFade(successIcon);
-						try {
-							toBeDisposedTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
-									"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
-											+ "from batch b,product p\r\n"
-											+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' \r\n"
-											+ "order by b.batch_expiry_date;",
-									null)));
-
-						} catch (ClassNotFoundException | SQLException e1) {
-							e1.printStackTrace();
-						}
+						toBeDisposedTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
+								"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
+										+ "from batch b,product p\r\n"
+										+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' \r\n"
+										+ "order by b.batch_expiry_date;",
+								null)));
 					}
 				}
 			} else {
@@ -290,17 +274,12 @@ public class DisposalController implements Initializable {
 
 						showAndFade(success);
 						showAndFade(successIcon);
-						try {
-							toBeDisposedTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
-									"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
-											+ "from batch b,product p\r\n"
-											+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' \r\n"
-											+ "order by b.batch_expiry_date;",
-									null)));
-							
-						} catch (ClassNotFoundException | SQLException e1) {
-							e1.printStackTrace();
-						}
+						toBeDisposedTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
+								"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
+										+ "from batch b,product p\r\n"
+										+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' \r\n"
+										+ "order by b.batch_expiry_date;",
+								null)));
 					}
 
 				}
@@ -322,203 +301,134 @@ public class DisposalController implements Initializable {
 		ArrayList<ArrayList<String>> filteredList = new ArrayList<>();
 		if (stringToSearch == null || stringToSearch.isEmpty()
 				|| stringToSearch.isBlank() && expiredSelectionCheckBox.isSelected() == false) {
-			try {
-				filteredList = Queries.queryResult(
-						"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
-								+ "from batch b,product p\r\n"
-								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' \r\n"
-								+ "order by b.batch_expiry_date;",
-						null);
-
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			filteredList = Queries.queryResult(
+					"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
+							+ "from batch b,product p\r\n"
+							+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' \r\n"
+							+ "order by b.batch_expiry_date;",
+					null);
 		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Name"
 				&& expiredSelectionCheckBox.isSelected() == false) {
-			try {
-				filteredList = Queries.queryResult(
-						"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
-								+ "from batch b,product p "
-								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' "
-								+ " and p.product_name like ? ;",
-						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
-
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			filteredList = Queries.queryResult(
+					"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
+							+ "from batch b,product p "
+							+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' "
+							+ " and p.product_name like ? ;",
+					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
 		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Expired Month"
 				&& expiredSelectionCheckBox.isSelected() == false) {
-			try {
-				filteredList = Queries.queryResult(
-						"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
-								+ "from batch b,product p "
-								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' "
-								+ " and  month(b.batch_expiry_date) like ? ;",
-						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
-
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			filteredList = Queries.queryResult(
+					"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
+							+ "from batch b,product p "
+							+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' "
+							+ " and  month(b.batch_expiry_date) like ? ;",
+					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
 
 		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Expired Year"
 				&& expiredSelectionCheckBox.isSelected() == false) {
-			try {
-				filteredList = Queries.queryResult(
-						"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
-								+ "from batch b,product p "
-								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' "
-								+ " and  year(b.batch_expiry_date) like ? ;",
-						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
-
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			filteredList = Queries.queryResult(
+					"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
+							+ "from batch b,product p "
+							+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' "
+							+ " and  year(b.batch_expiry_date) like ? ;",
+					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
 		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Production Month"
 				&& expiredSelectionCheckBox.isSelected() == false) {
-			try {
-				filteredList = Queries.queryResult(
-						"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
-								+ "from batch b,product p "
-								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' "
-								+ " and  month(b.batch_production_date) like ? ;",
-						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
-
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			filteredList = Queries.queryResult(
+					"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
+							+ "from batch b,product p "
+							+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' "
+							+ " and  month(b.batch_production_date) like ? ;",
+					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
 
 		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Production Year"
 				&& expiredSelectionCheckBox.isSelected() == false) {
-			try {
-				filteredList = Queries.queryResult(
-						"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
-								+ "from batch b,product p "
-								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' "
-								+ " and  year(b.batch_production_date) like ? ;",
-						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
-
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			filteredList = Queries.queryResult(
+					"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
+							+ "from batch b,product p "
+							+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' "
+							+ " and  year(b.batch_production_date) like ? ;",
+					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
 
 		} else if (expiredSelectionCheckBox.isSelected() == false) {
-			try {
-				ArrayList<String> parameters = new ArrayList<>();
-				while (parameters.size() < 5) {
-					parameters.add("%" + stringToSearch + "%");
-				}
-				filteredList = Queries.queryResult(
-						"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
-								+ "	from batch b,product p "
-								+ " where ( b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01')"
-								+ "and (  year(b.batch_production_date) like ? "
-								+ " or month(b.batch_production_date) like ? "
-								+ " or  year(b.batch_expiry_date) like ? " + " or  p.product_name like ? "
-								+ " or month(b.batch_expiry_date) like ? ) ;",
-						parameters);
-
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
+			ArrayList<String> parameters = new ArrayList<>();
+			while (parameters.size() < 5) {
+				parameters.add("%" + stringToSearch + "%");
 			}
+			filteredList = Queries.queryResult(
+					"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
+							+ "	from batch b,product p "
+							+ " where ( b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01')"
+							+ "and (  year(b.batch_production_date) like ? "
+							+ " or month(b.batch_production_date) like ? "
+							+ " or  year(b.batch_expiry_date) like ? " + " or  p.product_name like ? "
+							+ " or month(b.batch_expiry_date) like ? ) ;",
+					parameters);
 		} else if (stringToSearch == null || stringToSearch.isEmpty()
 				|| stringToSearch.isBlank() && expiredSelectionCheckBox.isSelected() == true) {
-			try {
-				filteredList = Queries.queryResult(
-						"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
-								+ "from batch b,product p\r\n"
-								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW()) \r\n"
-								+ "order by b.batch_expiry_date;",
-						null);
-
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			filteredList = Queries.queryResult(
+					"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
+							+ "from batch b,product p\r\n"
+							+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW()) \r\n"
+							+ "order by b.batch_expiry_date;",
+					null);
 		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Name"
 				&& expiredSelectionCheckBox.isSelected() == true) {
-			try {
-				filteredList = Queries.queryResult(
-						"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
-								+ "from batch b,product p "
-								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW())"
-								+ " and p.product_name like ? ;",
-						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
-
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			filteredList = Queries.queryResult(
+					"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
+							+ "from batch b,product p "
+							+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW())"
+							+ " and p.product_name like ? ;",
+					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
 		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Expired Month"
 				&& expiredSelectionCheckBox.isSelected() == true) {
-			try {
-				filteredList = Queries.queryResult(
-						"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
-								+ "from batch b,product p "
-								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW())"
-								+ " and  month(b.batch_expiry_date) like ? ;",
-						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
-
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			filteredList = Queries.queryResult(
+					"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
+							+ "from batch b,product p "
+							+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW())"
+							+ " and  month(b.batch_expiry_date) like ? ;",
+					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
 
 		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Expired Year"
 				&& expiredSelectionCheckBox.isSelected() == true) {
-			try {
-				filteredList = Queries.queryResult(
-						"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
-								+ "from batch b,product p "
-								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW())"
-								+ " and  year(b.batch_expiry_date) like ? ;",
-						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
-
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			filteredList = Queries.queryResult(
+					"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
+							+ "from batch b,product p "
+							+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW())"
+							+ " and  year(b.batch_expiry_date) like ? ;",
+					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
 		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Production Month"
 				&& expiredSelectionCheckBox.isSelected() == true) {
-			try {
-				filteredList = Queries.queryResult(
-						"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
-								+ "from batch b,product p "
-								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW())"
-								+ " and  month(b.batch_production_date) like ? ;",
-						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
-
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			filteredList = Queries.queryResult(
+					"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
+							+ "from batch b,product p "
+							+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW())"
+							+ " and  month(b.batch_production_date) like ? ;",
+					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
 
 		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Production Year"
 				&& expiredSelectionCheckBox.isSelected() == true) {
-			try {
-				filteredList = Queries.queryResult(
-						"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
-								+ "from batch b,product p "
-								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW())"
-								+ " and  year(b.batch_production_date) like ? ;",
-						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
-
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			filteredList = Queries.queryResult(
+					"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
+							+ "from batch b,product p "
+							+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW())"
+							+ " and  year(b.batch_production_date) like ? ;",
+					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%")));
 
 		} else if (expiredSelectionCheckBox.isSelected() == true) {
-			try {
-				ArrayList<String> parameters = new ArrayList<>();
-				while (parameters.size() < 5) {
-					parameters.add("%" + stringToSearch + "%");
-				}
-				filteredList = Queries.queryResult(
-						"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
-								+ "	from batch b,product p "
-								+ " where ( b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW()))"
-								+ "and (  year(b.batch_production_date) like ? "
-								+ " or month(b.batch_production_date) like ? "
-								+ " or  year(b.batch_expiry_date) like ? " + " or  p.product_name like ? "
-								+ " or month(b.batch_expiry_date) like ? ) ;",
-						parameters);
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
+			ArrayList<String> parameters = new ArrayList<>();
+			while (parameters.size() < 5) {
+				parameters.add("%" + stringToSearch + "%");
 			}
+			filteredList = Queries.queryResult(
+					"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount "
+							+ "	from batch b,product p "
+							+ " where ( b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW()))"
+							+ "and (  year(b.batch_production_date) like ? "
+							+ " or month(b.batch_production_date) like ? "
+							+ " or  year(b.batch_expiry_date) like ? " + " or  p.product_name like ? "
+							+ " or month(b.batch_expiry_date) like ? ) ;",
+					parameters);
 		}
 		toBeDisposedTable.setItems(FXCollections.observableArrayList(filteredList));
 	}
@@ -526,17 +436,12 @@ public class DisposalController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		searchOperationComboBox.setItems(searchChoices);
-		try {
-			toBeDisposedTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
-					"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
-							+ "from batch b,product p\r\n"
-							+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' \r\n"
-							+ "order by b.batch_expiry_date;",
-					null)));
-
-		} catch (ClassNotFoundException | SQLException e1) {
-			e1.printStackTrace();
-		}
+		toBeDisposedTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
+				"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
+						+ "from batch b,product p\r\n"
+						+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' \r\n"
+						+ "order by b.batch_expiry_date;",
+				null)));
 
 		productIDColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {

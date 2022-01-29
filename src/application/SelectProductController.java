@@ -123,15 +123,21 @@ public class SelectProductController implements Initializable {
 		deleteIcon.setEffect(effect);
 	}
 
-	public void addProductOnMousePressed() throws IOException {
+	public void addProductOnMousePressed() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
 		addDrugIcon.setEffect(effect);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("addProduct.fxml"));
-		Parent root1 = (Parent) loader.load();
+		Parent root1;
+		try {
+			root1 = (Parent) loader.load();
+		
 		Stage stage2 = new Stage();
 		stage2.setScene(new Scene(root1));
-		stage2.show();
+		stage2.show();} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void addOnMousePressed() {
@@ -360,7 +366,7 @@ public class SelectProductController implements Initializable {
 		scientificNameTable.setItems(FXCollections.observableArrayList(scientificNameArrayList));
 	}
 	
-	public void scientificNameTableOnSelected() throws ClassNotFoundException, SQLException, ParseException {
+	public void scientificNameTableOnSelected(){
 		if(scientificNameTable.getSelectionModel().getSelectedIndex() !=-1) {
 			String scientificName = scientificNameTable.getSelectionModel().getSelectedItem().getScientificName();
 			commercialNameTable.setItems(FXCollections.observableArrayList(Product.getProductData(Queries.queryResult(

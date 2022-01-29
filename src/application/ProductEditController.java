@@ -29,7 +29,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
@@ -133,25 +132,19 @@ public class ProductEditController implements Initializable {
 			ColorAdjust effect = new ColorAdjust();
 			effect.setBrightness(0.8);
 			saveProduct.setEffect(effect);
-			try {
-				Queries.queryUpdate("update Name_Manu set Product_Name=? where Product_Name=? ;",
-						new ArrayList<>(Arrays.asList(productTable.getItems().get(0).get(1), oldName)));
+			Queries.queryUpdate("update Name_Manu set Product_Name=? where Product_Name=? ;",
+					new ArrayList<>(Arrays.asList(productTable.getItems().get(0).get(1), oldName)));
 
-				Queries.queryUpdate("update Product set Product_Price=? where Product_ID=? ;",
-						new ArrayList<>(Arrays.asList(productTable.getItems().get(0).get(2), product.get(0).get(0))));
-				if (productTable.getItems().size() > 8) {
-					Queries.queryUpdate("update Drug set Drug_Dosage_Form=? where Product_ID=? ;", new ArrayList<>(
-							Arrays.asList(productTable.getItems().get(0).get(8), product.get(0).get(0))));
-				}
-
-				caller.saveEdits();
-				showAndFade(savedLabel);
-				showAndFade(savedIcon);
-
-			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			Queries.queryUpdate("update Product set Product_Price=? where Product_ID=? ;",
+					new ArrayList<>(Arrays.asList(productTable.getItems().get(0).get(2), product.get(0).get(0))));
+			if (productTable.getItems().size() > 8) {
+				Queries.queryUpdate("update Drug set Drug_Dosage_Form=? where Product_ID=? ;", new ArrayList<>(
+						Arrays.asList(productTable.getItems().get(0).get(8), product.get(0).get(0))));
 			}
+
+			caller.saveEdits();
+			showAndFade(savedLabel);
+			showAndFade(savedIcon);
 		}
 	}
 
@@ -187,7 +180,7 @@ public class ProductEditController implements Initializable {
 
 	static ObservableList<String> manufacturerObservableList = FXCollections.observableArrayList();
 
-	public void addProductOnMousePressed() throws ClassNotFoundException, SQLException {
+	public void addProductOnMousePressed()  {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
 		addProduct.setEffect(effect);
@@ -327,12 +320,8 @@ public class ProductEditController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		
-		try {
-			manufacturerName = Queries.queryResult("select distinct product_manufactrer\n"
-					+ "from name_manu;", null);
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		manufacturerName = Queries.queryResult("select distinct product_manufactrer\n"
+				+ "from name_manu;", null);
 		setManufacturerNames();
 		maufacturerComboBox.setItems(manufacturerObservableList); 
 		maufacturerComboBox.setTooltip(manufacturerToolTip);

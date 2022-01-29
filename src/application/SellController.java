@@ -198,15 +198,11 @@ public class SellController implements Initializable {
 					CustomerOrderBatch.insertCustomerOrderBatch("" + CustomerOrder.getMaxID(), row.get(0), row.get(2),
 							row.get(3), Integer.parseInt(row.get(5)));
 				}
-				try {
-					Queries.queryUpdate(
-							"Insert into Income"
-									+ " (Income_amount, Income_Date, Employee_ID, Customer_NID) Values(?, ?, ?, ?);",
-							new ArrayList<>(Arrays.asList(paidAmount + "", dateLabel.getText(),
-									Employee.getCurrentID() + "", customerNID)));
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
+				Queries.queryUpdate(
+						"Insert into Income"
+								+ " (Income_amount, Income_Date, Employee_ID, Customer_NID) Values(?, ?, ?, ?);",
+						new ArrayList<>(Arrays.asList(paidAmount + "", dateLabel.getText(),
+								Employee.getCurrentID() + "", customerNID)));
 				showAndFade(soldIcon);
 				showAndFade(soldLabel);
 				chosenProducts.clear();
@@ -260,11 +256,7 @@ public class SellController implements Initializable {
 			}
 			productTable.getItems().remove(productTable.getSelectionModel().getSelectedIndex());
 			ChooseProductController productController = productLoader.getController();
-			try {
-				productController.filterBatchList();
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
-			}
+			productController.filterBatchList();
 		}
 	}
 
@@ -453,16 +445,12 @@ public class SellController implements Initializable {
 
 		amountColumn.setOnEditCommit((CellEditEvent<ArrayList<String>, String> t) -> {
 			ArrayList<ArrayList<String>> amount = new ArrayList<>();
-			try {
-				ArrayList<String> parameters = new ArrayList<>();
-				parameters.add((t.getTableView().getItems().get(t.getTablePosition().getRow())).get(0));
-				parameters.add((t.getTableView().getItems().get(t.getTablePosition().getRow())).get(2));
-				parameters.add((t.getTableView().getItems().get(t.getTablePosition().getRow())).get(3));
-				amount = Queries.queryResult("Select Batch_Amount from Batch where Product_ID=?"
-						+ " and Batch_Production_Date=? and Batch_Expiry_Date=? ;", parameters);
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			ArrayList<String> parameters = new ArrayList<>();
+			parameters.add((t.getTableView().getItems().get(t.getTablePosition().getRow())).get(0));
+			parameters.add((t.getTableView().getItems().get(t.getTablePosition().getRow())).get(2));
+			parameters.add((t.getTableView().getItems().get(t.getTablePosition().getRow())).get(3));
+			amount = Queries.queryResult("Select Batch_Amount from Batch where Product_ID=?"
+					+ " and Batch_Production_Date=? and Batch_Expiry_Date=? ;", parameters);
 			boolean checkAmount = true;
 			try {
 				Integer.parseInt(t.getNewValue());

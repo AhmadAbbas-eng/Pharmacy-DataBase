@@ -1,13 +1,11 @@
 package application;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.ResourceBundle;
-
 import Relations.Queries;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
@@ -352,14 +350,10 @@ public class DashboardController implements Initializable {
 		XYChart.Series<String, Double> series = new XYChart.Series<>();
 		series.setName("Daily Sales");
 		monthlySellChart.setTitle("Pharmacy Sales");
-		try {
-			dailySalesArrayList = Queries.queryResult("select sum(order_price), day(order_date)\r\n"
-					+ "	from c_order\r\n"
-					+ "	where  year(order_date) = year(date(now())) and month(order_date) = month(date(now())) \r\n"
-					+ "	group by day(order_date) order by day(order_date);", null);
-		} catch (ClassNotFoundException | SQLException e1) {
-			e1.printStackTrace();
-		}
+		dailySalesArrayList = Queries.queryResult("select sum(order_price), day(order_date)\r\n"
+				+ "	from c_order\r\n"
+				+ "	where  year(order_date) = year(date(now())) and month(order_date) = month(date(now())) \r\n"
+				+ "	group by day(order_date) order by day(order_date);", null);
 
 		for (int i = 1; i <= 31; ++i) {
 			XYChart.Data<String, Double> data ;
@@ -397,26 +391,18 @@ public class DashboardController implements Initializable {
 				thisMonth = monthBox.getSelectionModel().getSelectedIndex() + 1;
 			}
 			if (yearBox.getSelectionModel().getSelectedItem() == null) {
-				try {
-					dailySalesArrayList = Queries.queryResult(
-							"select sum(order_price), day(order_date)\r\n" + "	from c_order\r\n"
-									+ "	where  year(order_date) = year(date(now())) and month(order_date) = ? \r\n"
-									+ "	group by day(order_date) order by day(order_date);",
-							new ArrayList<String>(Arrays.asList("" + thisMonth)));
-				} catch (ClassNotFoundException | SQLException e1) {
-					e1.printStackTrace();
-				}
+				dailySalesArrayList = Queries.queryResult(
+						"select sum(order_price), day(order_date)\r\n" + "	from c_order\r\n"
+								+ "	where  year(order_date) = year(date(now())) and month(order_date) = ? \r\n"
+								+ "	group by day(order_date) order by day(order_date);",
+						new ArrayList<String>(Arrays.asList("" + thisMonth)));
 			} else {
 				int currentYear = yearBox.getSelectionModel().getSelectedIndex() + 2018;
-				try {
-					dailySalesArrayList = Queries.queryResult(
-							"select sum(order_price), day(order_date)\r\n" + "	from c_order\r\n"
-									+ "	where  year(order_date) = ? and month(order_date) = ?"
-									+ "	group by day(order_date) order by day(order_date);",
-							new ArrayList<String>(Arrays.asList(currentYear + "", "" + thisMonth)));
-				} catch (ClassNotFoundException | SQLException e1) {
-					e1.printStackTrace();
-				}
+				dailySalesArrayList = Queries.queryResult(
+						"select sum(order_price), day(order_date)\r\n" + "	from c_order\r\n"
+								+ "	where  year(order_date) = ? and month(order_date) = ?"
+								+ "	group by day(order_date) order by day(order_date);",
+						new ArrayList<String>(Arrays.asList(currentYear + "", "" + thisMonth)));
 			}
 
 			counter = 0;
@@ -459,26 +445,18 @@ public class DashboardController implements Initializable {
 				thisMonth = monthBox.getSelectionModel().getSelectedIndex() + 1;
 			}
 			if (yearBox.getSelectionModel().getSelectedItem() == null) {
-				try {
-					dailySalesArrayList = Queries.queryResult(
-							"select sum(order_price), day(order_date)\r\n" + "	from c_order\r\n"
-									+ "	where  year(order_date) = year(date(now())) and month(order_date) = ? \r\n"
-									+ "	group by day(order_date) order by day(order_date); ",
-							new ArrayList<String>(Arrays.asList("" + thisMonth)));
-				} catch (ClassNotFoundException | SQLException e1) {
-					e1.printStackTrace();
-				}
+				dailySalesArrayList = Queries.queryResult(
+						"select sum(order_price), day(order_date)\r\n" + "	from c_order\r\n"
+								+ "	where  year(order_date) = year(date(now())) and month(order_date) = ? \r\n"
+								+ "	group by day(order_date) order by day(order_date); ",
+						new ArrayList<String>(Arrays.asList("" + thisMonth)));
 			} else {
 				int currentYear = yearBox.getSelectionModel().getSelectedIndex() + 2018;
-				try {
-					dailySalesArrayList = Queries.queryResult(
-							"select sum(order_price), day(order_date)\r\n" + "	from c_order\r\n"
-									+ "	where  year(order_date) = ? and month(order_date) = ?"
-									+ "	group by day(order_date) order by day(order_date);",
-							new ArrayList<String>(Arrays.asList(currentYear + "", "" + thisMonth)));
-				} catch (ClassNotFoundException | SQLException e1) {
-					e1.printStackTrace();
-				}
+				dailySalesArrayList = Queries.queryResult(
+						"select sum(order_price), day(order_date)\r\n" + "	from c_order\r\n"
+								+ "	where  year(order_date) = ? and month(order_date) = ?"
+								+ "	group by day(order_date) order by day(order_date);",
+						new ArrayList<String>(Arrays.asList(currentYear + "", "" + thisMonth)));
 			}
 
 			counter = 0;
@@ -509,143 +487,120 @@ public class DashboardController implements Initializable {
 
 		});
 
-		try {
-			expiresTabel.setItems(FXCollections.observableArrayList(Queries.expiryDate()));
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+		expiresTabel.setItems(FXCollections.observableArrayList(Queries.expiryDate()));
+
+		outOfStockSoonTable.setItems(FXCollections.observableArrayList(Queries.amountToFinish()));
+
+		toBePaidTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
+				"select o.order_id,s.supplier_name,o.due_date_for_payment,o.order_cost\r\n"
+						+ "from s_order o,supplier s\r\n"
+						+ "where o.supplier_Id=s.supplier_ID and o.due_date_for_payment >DATE_ADD(DATE(NOW()), INTERVAL 30 DAY);",
+				null)));
+
+		outOfStockTable.setItems(FXCollections.observableArrayList(Queries.queryResult("select P.product_name\r\n"
+				+ "		from product p where p.product_id not in(\r\n" + " select b.product_id\r\n"
+				+ "		from batch b\r\n" + "		where  b.batch_amount>0\r\n" + "		);", null)));
+
+		int numc = 0, productNum = 0, outOfStock = 0;
+		ArrayList<ArrayList<String>> numberOfExpiredProductsArrayList = Queries.queryResult("SELECT count(*)\r\n"
+				+ "		from batch b\r\n"
+				+ "		where b.batch_amount>0 and b.batch_expiry_date <DATE(NOW()) and b.batch_production_date <>'1111-01-01';",
+				null);
+
+		ArrayList<ArrayList<String>> numberOfEmployeesArrayList = Queries
+				.queryResult("SELECT count(*)\r\n" + "	from employee\r\n" + "	where isActive='true';\r\n", null);
+
+		ArrayList<ArrayList<String>> numberOfSuppliersArrayList = Queries
+				.queryResult("SELECT count(*)\r\n" + "from supplier;", null);
+
+		ArrayList<ArrayList<String>> numberOfCustomersArrayList = Queries
+				.queryResult("SELECT count(*)" + " from customer;", null);
+
+		ArrayList<ArrayList<String>> numberOfAvailableProductsArrayList = Queries
+				.queryResult("SELECT count(*)" + " from product;", null);
+
+		ArrayList<ArrayList<String>> todaysTotalDiscountArrayList = Queries.queryResult(
+				"select sum(order_discount)\r\n" + "from c_order\r\n" + "where order_date = date(now());", null);
+
+		ArrayList<ArrayList<String>> todaysTotalPaidAmountArrayList = Queries.queryResult(
+				"select sum(order_price)\r\n" + "	from c_order\r\n" + "	where order_date = date(now());", null);
+
+		ArrayList<ArrayList<String>> numberOfOutOfStockArrayList = Queries.queryResult("select count(*) \r\n"
+				+ "from product p where p.product_id not in(\r\n" + "select b.product_id\r\n" + "from batch b\r\n"
+				+ "where  b.batch_amount > 0 and b.batch_production_date <>'1111-01-01');", null);
+
+		ArrayList<ArrayList<String>> todaysTotalIncomeAmountArrayList = Queries
+				.queryResult("select sum(income_amount) from income where income_Date=date(now());", null);
+
+		double totalIncome = 0.0;
+
+		if (todaysTotalDiscountArrayList.get(0).get(0) == null) {
+			totalDiscountLabel.setText("0.0");
+		} else {
+			System.out.println(todaysTotalDiscountArrayList.toString());
+			totalDiscountLabel.setText(todaysTotalDiscountArrayList.get(0).get(0));
+			Double.parseDouble(todaysTotalDiscountArrayList.get(0).get(0));
 		}
 
-		try {
-			outOfStockSoonTable.setItems(FXCollections.observableArrayList(Queries.amountToFinish()));
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+		if (todaysTotalPaidAmountArrayList.get(0).get(0) == null) {
+			totalSaleLabel.setText("0.0");
+		} else {
+			totalSaleLabel.setText(todaysTotalPaidAmountArrayList.get(0).get(0));
+			Double.parseDouble(todaysTotalPaidAmountArrayList.get(0).get(0));
 		}
 
-		try {
-			toBePaidTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
-					"select o.order_id,s.supplier_name,o.due_date_for_payment,o.order_cost\r\n"
-							+ "from s_order o,supplier s\r\n"
-							+ "where o.supplier_Id=s.supplier_ID and o.due_date_for_payment >DATE_ADD(DATE(NOW()), INTERVAL 30 DAY);",
-					null)));
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+		if (todaysTotalIncomeAmountArrayList.get(0).get(0) == null) {
+			totalIncomeLabel.setText("0.0");
+
+		} else {
+			totalIncome = Double.parseDouble(todaysTotalIncomeAmountArrayList.get(0).get(0));
+			totalIncomeLabel.setText(totalIncome + "");
+
 		}
 
-		try {
-			outOfStockTable.setItems(FXCollections.observableArrayList(Queries.queryResult("select P.product_name\r\n"
-					+ "		from product p where p.product_id not in(\r\n" + " select b.product_id\r\n"
-					+ "		from batch b\r\n" + "		where  b.batch_amount>0\r\n" + "		);", null)));
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+		if (numberOfCustomersArrayList.get(0).get(0) == null) {
+			numberOfCustomerLabel.setText("0");
+		} else {
+			numc = Integer.parseInt(numberOfCustomersArrayList.get(0).get(0)) - 1;
+			numberOfCustomerLabel.setText("" + numc);
 		}
 
-		try {
-			int numc = 0, productNum = 0, outOfStock = 0;
-			ArrayList<ArrayList<String>> numberOfExpiredProductsArrayList = Queries.queryResult("SELECT count(*)\r\n"
-					+ "		from batch b\r\n"
-					+ "		where b.batch_amount>0 and b.batch_expiry_date <DATE(NOW()) and b.batch_production_date <>'1111-01-01';",
-					null);
+		if (numberOfExpiredProductsArrayList.get(0).get(0) == null) {
+			numberOfExpiredProductsLabel.setText("0");
+		} else {
+			numberOfExpiredProductsLabel.setText(numberOfExpiredProductsArrayList.get(0).get(0));
+		}
 
-			ArrayList<ArrayList<String>> numberOfEmployeesArrayList = Queries
-					.queryResult("SELECT count(*)\r\n" + "	from employee\r\n" + "	where isActive='true';\r\n", null);
+		if (numberOfEmployeesArrayList.get(0).get(0) == null) {
+			numberOfEmployeesLabel.setText("0");
+		} else {
+			numberOfEmployeesLabel.setText(numberOfEmployeesArrayList.get(0).get(0));
+		}
 
-			ArrayList<ArrayList<String>> numberOfSuppliersArrayList = Queries
-					.queryResult("SELECT count(*)\r\n" + "from supplier;", null);
+		if (numberOfSuppliersArrayList.get(0).get(0) == null) {
+			numberOfSupplierLabel.setText("0");
+		} else {
+			numberOfSupplierLabel.setText(numberOfSuppliersArrayList.get(0).get(0));
+		}
+		
+		if (numberOfOutOfStockArrayList.get(0).get(0) == null) {
+			outOfStockLabel.setText("0");
+		} else {
+			outOfStock =  Integer.parseInt(numberOfOutOfStockArrayList.get(0).get(0));
+			outOfStockLabel.setText(numberOfOutOfStockArrayList.get(0).get(0));
+		}
 
-			ArrayList<ArrayList<String>> numberOfCustomersArrayList = Queries
-					.queryResult("SELECT count(*)" + " from customer;", null);
+		if (numberOfAvailableProductsArrayList.get(0).get(0) == null) {
+			numberOfProductLabel.setText("0");
+		} else {
+			if (numberOfExpiredProductsArrayList.get(0).get(0) != null)
+				
+				productNum = Integer.parseInt(numberOfAvailableProductsArrayList.get(0).get(0))
+						- Integer.parseInt(numberOfExpiredProductsArrayList.get(0).get(0)) - outOfStock;
+			else
+				productNum = Integer.parseInt(numberOfAvailableProductsArrayList.get(0).get(0)) - outOfStock;
 
-			ArrayList<ArrayList<String>> numberOfAvailableProductsArrayList = Queries
-					.queryResult("SELECT count(*)" + " from product;", null);
-
-			ArrayList<ArrayList<String>> todaysTotalDiscountArrayList = Queries.queryResult(
-					"select sum(order_discount)\r\n" + "from c_order\r\n" + "where order_date = date(now());", null);
-
-			ArrayList<ArrayList<String>> todaysTotalPaidAmountArrayList = Queries.queryResult(
-					"select sum(order_price)\r\n" + "	from c_order\r\n" + "	where order_date = date(now());", null);
-
-			ArrayList<ArrayList<String>> numberOfOutOfStockArrayList = Queries.queryResult("select count(*) \r\n"
-					+ "from product p where p.product_id not in(\r\n" + "select b.product_id\r\n" + "from batch b\r\n"
-					+ "where  b.batch_amount > 0 and b.batch_production_date <>'1111-01-01');", null);
-
-			ArrayList<ArrayList<String>> todaysTotalIncomeAmountArrayList = Queries
-					.queryResult("select sum(income_amount) from income where income_Date=date(now());", null);
-
-			double totalIncome = 0.0;
-
-			if (todaysTotalDiscountArrayList.get(0).get(0) == null) {
-				totalDiscountLabel.setText("0.0");
-			} else {
-				System.out.println(todaysTotalDiscountArrayList.toString());
-				totalDiscountLabel.setText(todaysTotalDiscountArrayList.get(0).get(0));
-				Double.parseDouble(todaysTotalDiscountArrayList.get(0).get(0));
-			}
-
-			if (todaysTotalPaidAmountArrayList.get(0).get(0) == null) {
-				totalSaleLabel.setText("0.0");
-			} else {
-				totalSaleLabel.setText(todaysTotalPaidAmountArrayList.get(0).get(0));
-				Double.parseDouble(todaysTotalPaidAmountArrayList.get(0).get(0));
-			}
-
-			if (todaysTotalIncomeAmountArrayList.get(0).get(0) == null) {
-				totalIncomeLabel.setText("0.0");
-
-			} else {
-				totalIncome = Double.parseDouble(todaysTotalIncomeAmountArrayList.get(0).get(0));
-				totalIncomeLabel.setText(totalIncome + "");
-
-			}
-
-			if (numberOfCustomersArrayList.get(0).get(0) == null) {
-				numberOfCustomerLabel.setText("0");
-			} else {
-				numc = Integer.parseInt(numberOfCustomersArrayList.get(0).get(0)) - 1;
-				numberOfCustomerLabel.setText("" + numc);
-			}
-
-			if (numberOfExpiredProductsArrayList.get(0).get(0) == null) {
-				numberOfExpiredProductsLabel.setText("0");
-			} else {
-				numberOfExpiredProductsLabel.setText(numberOfExpiredProductsArrayList.get(0).get(0));
-			}
-
-			if (numberOfEmployeesArrayList.get(0).get(0) == null) {
-				numberOfEmployeesLabel.setText("0");
-			} else {
-				numberOfEmployeesLabel.setText(numberOfEmployeesArrayList.get(0).get(0));
-			}
-
-			if (numberOfSuppliersArrayList.get(0).get(0) == null) {
-				numberOfSupplierLabel.setText("0");
-			} else {
-				numberOfSupplierLabel.setText(numberOfSuppliersArrayList.get(0).get(0));
-			}
-			
-			if (numberOfOutOfStockArrayList.get(0).get(0) == null) {
-				outOfStockLabel.setText("0");
-			} else {
-				outOfStock =  Integer.parseInt(numberOfOutOfStockArrayList.get(0).get(0));
-				outOfStockLabel.setText(numberOfOutOfStockArrayList.get(0).get(0));
-			}
-
-			if (numberOfAvailableProductsArrayList.get(0).get(0) == null) {
-				numberOfProductLabel.setText("0");
-			} else {
-				if (numberOfExpiredProductsArrayList.get(0).get(0) != null)
-					
-					productNum = Integer.parseInt(numberOfAvailableProductsArrayList.get(0).get(0))
-							- Integer.parseInt(numberOfExpiredProductsArrayList.get(0).get(0)) - outOfStock;
-				else
-					productNum = Integer.parseInt(numberOfAvailableProductsArrayList.get(0).get(0)) - outOfStock;
-
-				numberOfProductLabel.setText(productNum + "");
-			}
-
-			
-
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+			numberOfProductLabel.setText(productNum + "");
 		}
 
 		outOfStockNameColumn.setCellValueFactory(

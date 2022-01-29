@@ -11,8 +11,6 @@ import javafx.scene.control.TableView;
 import javafx.fxml.Initializable;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -55,7 +53,6 @@ public class BatchController implements Initializable {
 	public void setProductID(String productID) {
 		this.productID = productID;
 		title.setText("Batch For Product " + productID);
-		try {
 			filterData();
 			ArrayList<String> parameters = new ArrayList<>();
 			parameters.add(productID);
@@ -66,20 +63,14 @@ public class BatchController implements Initializable {
 				totalQuantityLable.setText(totalAmount.get(0).get(0));
 			} else {
 				totalQuantityLable.setText("0");
-			}
-		} catch (ClassNotFoundException | SQLException | ParseException e) {
-			e.printStackTrace();
-		}
+			}	
 	}
 
 	/**
 	 * Filtering the data to show depending on search text field
 	 * 
-	 * @throws ClassNotFoundException
-	 * @throws SQLException
-	 * @throws ParseException
 	 */
-	public void filterData() throws ClassNotFoundException, SQLException, ParseException {
+	public void filterData(){
 		ArrayList<String> parameters = new ArrayList<>();
 		parameters.add(productID);
 		if (datePicker.getValue() == null || datePicker.getValue().toString().isBlank()

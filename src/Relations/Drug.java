@@ -191,17 +191,12 @@ public class Drug extends Product {
 
 	public static void insertDrug(String name, double price, String scientificName, String riskPregnency, String dosage,
 			String category, String dosageForm, String pharmaceticalCategory) {
-		try {
-			setMaxID(getMaxID() + 1);
-			Queries.queryUpdate("Insert into Product values(?, ?, ?);",
-					new ArrayList<>(Arrays.asList(getMaxID() + "", name, price + "")));
+		setMaxID(getMaxID() + 1);
+		Queries.queryUpdate("Insert into Product values(?, ?, ?);",
+				new ArrayList<>(Arrays.asList(getMaxID() + "", name, price + "")));
 
-			Queries.queryUpdate("Insert into Drug values (?, ?, ?, ?, ?, ?);",
-					new ArrayList<>(Arrays.asList(getMaxID() + "", scientificName, riskPregnency, category, dosageForm,
-							pharmaceticalCategory)));
-
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		Queries.queryUpdate("Insert into Drug values (?, ?, ?, ?, ?, ?);",
+				new ArrayList<>(Arrays.asList(getMaxID() + "", scientificName, riskPregnency, category, dosageForm,
+						pharmaceticalCategory)));
 	}
 }

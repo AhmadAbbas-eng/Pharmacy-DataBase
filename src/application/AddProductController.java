@@ -1,7 +1,6 @@
 package application;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
@@ -38,11 +37,11 @@ public class AddProductController implements Initializable {
 
 	ArrayList<ArrayList<String>> product;
 
-    @FXML
-	private Tooltip manufacturerToolTip ;
-	
-    @FXML
-    private ComboBox<String> maufacturerComboBox;
+	@FXML
+	private Tooltip manufacturerToolTip;
+
+	@FXML
+	private ComboBox<String> maufacturerComboBox;
 
 	@FXML
 	private TableView<ArrayList<String>> productTable;
@@ -109,16 +108,13 @@ public class AddProductController implements Initializable {
 
 	@FXML
 	private Label addedLabel;
-	
+
 	static boolean answer = false;
-
+	static ObservableList<String> manufacturerObservableList = FXCollections.observableArrayList();
 	String filter = "";
-
 	ArrayList<ArrayList<String>> manufacturerName = null;
 
-	static ObservableList<String> manufacturerObservableList = FXCollections.observableArrayList();
-
-	public void addProductOnMousePressed() throws ClassNotFoundException, SQLException {
+	public void addProductOnMousePressed() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
 		addProduct.setEffect(effect);
@@ -148,19 +144,20 @@ public class AddProductController implements Initializable {
 			alert.showAndWait();
 		}
 
-		else if (checkPrice && price > 0 && !name.isBlank() && !name.isBlank() && maufacturerComboBox.getSelectionModel().getSelectedItem() != null) {
+		else if (checkPrice && price > 0 && !name.isBlank() && !name.isBlank()
+				&& maufacturerComboBox.getSelectionModel().getSelectedItem() != null) {
 			if (isDrug.isSelected()) {
 				if (!scientificName.isBlank() && !scientificName.isEmpty() && pregnencyCategory != null
 						&& !drugCategory.isBlank() && !drugCategory.isEmpty() && !dosage.isBlank() && !dosage.isEmpty()
 						&& !dosageForm.isBlank() && !dosageForm.isEmpty()) {
-					Queries.queryUpdate("Insert into Name_Manu values(?, ?);",
-							new ArrayList<>(Arrays.asList(name,maufacturerComboBox.getSelectionModel().getSelectedItem())));
+					Queries.queryUpdate("Insert into Name_Manu values(?, ?);", new ArrayList<>(
+							Arrays.asList(name, maufacturerComboBox.getSelectionModel().getSelectedItem())));
 					Drug.insertDrug(name, price, scientificName, pregnencyCategory, dosage, drugCategory, dosageForm,
 							pharmaceticalCategory);
 					showAndFade(addedLabel);
 					showAndFade(addedIcon);
 					setManufacturerNames();
-					maufacturerComboBox.setItems(manufacturerObservableList); 
+					maufacturerComboBox.setItems(manufacturerObservableList);
 					nameTextField.setText("");
 					maufacturerComboBox.getSelectionModel().clearSelection();
 					scientificNameTextField.setText("");
@@ -176,12 +173,13 @@ public class AddProductController implements Initializable {
 					alert.showAndWait();
 				}
 			} else {
-				Queries.queryUpdate("Insert into Name_Manu values(?, ?);",
-						new ArrayList<>(Arrays.asList(name,maufacturerComboBox.getSelectionModel().getSelectedItem())));
+				Queries.queryUpdate("Insert into Name_Manu values(?, ?);", new ArrayList<>(
+						Arrays.asList(name, maufacturerComboBox.getSelectionModel().getSelectedItem())));
 				Product.insertProduct(name, price);
 				showAndFade(addedLabel);
-				showAndFade(addedIcon);setManufacturerNames();
-				maufacturerComboBox.setItems(manufacturerObservableList); 
+				showAndFade(addedIcon);
+				setManufacturerNames();
+				maufacturerComboBox.setItems(manufacturerObservableList);
 				nameTextField.setText("");
 				maufacturerComboBox.getSelectionModel().clearSelection();
 				scientificNameTextField.setText("");
@@ -243,35 +241,28 @@ public class AddProductController implements Initializable {
 			drugInfoVBox.setOpacity(0);
 		}
 	}
-	
+
 	public void setManufacturerNames() {
-		for(int i=0; i< manufacturerName.size();++i) {
+		for (int i = 0; i < manufacturerName.size(); ++i) {
 			if (manufacturerObservableList.indexOf(manufacturerName.get(i).get(0)) == -1) {
-			manufacturerObservableList.add(manufacturerName.get(i).get(0));
-		}
+				manufacturerObservableList.add(manufacturerName.get(i).get(0));
+			}
 		}
 	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		try {
-			manufacturerName = Queries.queryResult("select distinct product_manufactrer\n"
-					+ "from name_manu;", null);
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		manufacturerName = Queries.queryResult("select distinct product_manufactrer\n" + "from name_manu;", null);
+
 		setManufacturerNames();
 		maufacturerComboBox.setTooltip(manufacturerToolTip);
-		maufacturerComboBox.setItems(manufacturerObservableList); 
-		new ComboBoxAutoComplete<String>(maufacturerComboBox,this);
-
+		maufacturerComboBox.setItems(manufacturerObservableList);
+		new ComboBoxAutoComplete<String>(maufacturerComboBox, this);
 		addedIcon.setOpacity(0);
 		addedLabel.setOpacity(0);
 		drugInfoHBox.setOpacity(0);
 		drugInfoVBox.setOpacity(0);
-		
 		pharmaceticalCategorySelector.setItems(FXCollections.observableArrayList("non", "Controlled", "Danger"));
 		pregnencyCategorySelector.setItems(FXCollections.observableArrayList("A", "B", "C"));
-
 	}
 }

@@ -7,7 +7,6 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -101,71 +100,43 @@ public class ReportController implements Initializable {
 		File selectedDirectory = directoryChooser.showDialog(null);
 
 		if (reportType.getSelectionModel().getSelectedItem() == "Payment") {
-			try {
-				Payment.report(selectedDirectory.toString() + "/Payment");
-				showAndFade(saveIcon);
-				showAndFade(savedLabel);
-			} catch (ClassNotFoundException | SQLException | IOException e1) {
-				e1.printStackTrace();
-			}
+			Payment.report(selectedDirectory.toString() + "/Payment");
+			showAndFade(saveIcon);
+			showAndFade(savedLabel);
 		} else if (reportType.getSelectionModel().getSelectedItem() == "Suppliers") {
-			try {
-				Supplier.report(selectedDirectory.toString() + "/Suppliers");
-				showAndFade(saveIcon);
-				showAndFade(savedLabel);
-			} catch (ClassNotFoundException | SQLException | IOException e1) {
-				e1.printStackTrace();
-			}
+			Supplier.report(selectedDirectory.toString() + "/Suppliers");
+			showAndFade(saveIcon);
+			showAndFade(savedLabel);
 
 		} else if (reportType.getSelectionModel().getSelectedItem() == "Cheques") {
-			try {
-				Cheque.report(selectedDirectory.toString() + "/Cheques");
-				showAndFade(saveIcon);
-				showAndFade(savedLabel);
-			} catch (ClassNotFoundException | SQLException | IOException e1) {
-				e1.printStackTrace();
-			}
+			Cheque.report(selectedDirectory.toString() + "/Cheques");
+			showAndFade(saveIcon);
+			showAndFade(savedLabel);
 
 		} else if (reportType.getSelectionModel().getSelectedItem() == "Disposal") {
-			try {
-				Queries.reportQuerey(
-						"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
-								+ "from batch b,product p\r\n"
-								+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW()) \r\n"
-								+ "order by b.batch_expiry_date;",
-						selectedDirectory.toString() + "/Disposal");
-				showAndFade(saveIcon);
-				showAndFade(savedLabel);
-			} catch (ClassNotFoundException | SQLException | IOException e1) {
-				e1.printStackTrace();
-			}
+			Queries.reportQuerey(
+					"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
+							+ "from batch b,product p\r\n"
+							+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW()) \r\n"
+							+ "order by b.batch_expiry_date;",
+					selectedDirectory.toString() + "/Disposal");
+			showAndFade(saveIcon);
+			showAndFade(savedLabel);
 
 		} else if (reportType.getSelectionModel().getSelectedItem() == "Customers") {
-			try {
-				Customer.report(selectedDirectory.toString() + "/Customers");
-				showAndFade(saveIcon);
-				showAndFade(savedLabel);
-			} catch (ClassNotFoundException | SQLException | IOException e1) {
-				e1.printStackTrace();
-			}
+			Customer.report(selectedDirectory.toString() + "/Customers");
+			showAndFade(saveIcon);
+			showAndFade(savedLabel);
 
 		} else if (reportType.getSelectionModel().getSelectedItem() == "Products Information") {
-			try {
-				Product.report(selectedDirectory.toString() + "/Products Information");
-				showAndFade(saveIcon);
-				showAndFade(savedLabel);
-			} catch (ClassNotFoundException | SQLException | IOException e1) {
-				e1.printStackTrace();
-			}
+			Product.report(selectedDirectory.toString() + "/Products Information");
+			showAndFade(saveIcon);
+			showAndFade(savedLabel);
 
 		} else if (reportType.getSelectionModel().getSelectedItem() == "Product Batches") {
-			try {
-				Batch.report(selectedDirectory.toString() + "/Product Batches");
-				showAndFade(saveIcon);
-				showAndFade(savedLabel);
-			} catch (ClassNotFoundException | SQLException | IOException e1) {
-				e1.printStackTrace();
-			}
+			Batch.report(selectedDirectory.toString() + "/Product Batches");
+			showAndFade(saveIcon);
+			showAndFade(savedLabel);
 
 		} else if (reportType.getSelectionModel().getSelectedItem() == "Net Profit") {
 			int currentMonth, currentYear, startMonth, startYear;
@@ -176,13 +147,9 @@ public class ReportController implements Initializable {
 			ArrayList<ArrayList<String>> minimunMonthArrayList = null;
 			ArrayList<ArrayList<String>> tableData = new ArrayList<>();
 			
-			try {
-				minimunMonthArrayList = Queries
-						.queryResult("select min(x) from (\r\n" + "select min(I.income_Date) as 'x' from income I\r\n"
-								+ "union\r\n" + "select min(p.payment_Date) as 'x' from payment p) as a;", null);
-			} catch (ClassNotFoundException | SQLException e1) {
-				e1.printStackTrace();
-			}
+			minimunMonthArrayList = Queries
+					.queryResult("select min(x) from (\r\n" + "select min(I.income_Date) as 'x' from income I\r\n"
+							+ "union\r\n" + "select min(p.payment_Date) as 'x' from payment p) as a;", null);
 
 			if (minimunMonthArrayList.get(0).get(0) != null) {
 
@@ -195,11 +162,7 @@ public class ReportController implements Initializable {
 			while (startYear < currentYear || (startMonth <= currentMonth && startYear == currentYear)) {
 				Double netProfit = 0.0;
 
-				try {
-					netProfit = Queries.getNetProfit(startMonth, startYear);
-				} catch (NumberFormatException | ClassNotFoundException | SQLException e1) {
-					e1.printStackTrace();
-				}
+				netProfit = Queries.getNetProfit(startMonth, startYear);
 				
 				String yearAndMonth = startMonth + "-" + startYear;
 				ArrayList<String> data = new ArrayList<>();

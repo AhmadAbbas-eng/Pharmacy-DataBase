@@ -1,10 +1,8 @@
 package application;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 import Relations.Queries;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -39,14 +37,10 @@ public class PaymentReportController  implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		try {
-			paymentTable.setItems(
-					FXCollections.observableArrayList(Queries.queryResult(
-							"select * from payment",
-							null)));
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		paymentTable.setItems(
+				FXCollections.observableArrayList(Queries.queryResult(
+						"select * from payment",
+						null)));
 
 		paymentIDColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {

@@ -1,8 +1,5 @@
 package Relations;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,11 +67,8 @@ public class Tax {
 	/**
 	 * Read from data base and fill the ArrayList
 	 * 
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
 	 */
-	public static void getTaxData() throws ClassNotFoundException, SQLException, ParseException {
+	public static void getTaxData(){
 
 		data.clear();
 		ArrayList<ArrayList<String>> table = Queries.queryResult("select * from Tax;", null);
@@ -95,19 +89,13 @@ public class Tax {
 	 * 
 	 * @param table ArrayList<ArrayList<String>> to fill data with
 	 * @return ArrayList<Tax> of data
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
 	 */
-	public static ArrayList<Tax> getTaxData(ArrayList<ArrayList<String>> table)
-			throws ClassNotFoundException, SQLException, ParseException {
-
+	public static ArrayList<Tax> getTaxData(ArrayList<ArrayList<String>> table){
 		ArrayList<Tax> tempData = new ArrayList<Tax>();
 
 		for (int i = 0; i < table.size(); i++) {
 			LocalDate taxDate = LocalDate.parse(table.get(i).get(1));
 			Tax temp = new Tax(table.get(i).get(0), taxDate, Double.parseDouble(table.get(i).get(2)));
-
 			tempData.add(temp);
 		}
 
@@ -123,12 +111,8 @@ public class Tax {
 	}
 
 	public static void insertTax(String ID, LocalDate date, double value) {
-		try {
-			Queries.queryUpdate("Insert into Tax values (?, ?, ?);",
-					new ArrayList<>(Arrays.asList(ID, date.toString(), value + "")));
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		Queries.queryUpdate("Insert into Tax values (?, ?, ?);",
+				new ArrayList<>(Arrays.asList(ID, date.toString(), value + "")));
 	}
 
 	/**
@@ -136,11 +120,9 @@ public class Tax {
 	 * 
 	 * @param path The path of file
 	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
-	 * @throws IOException
+
 	 */
-	public void report(String path) throws ClassNotFoundException, SQLException, IOException {
+	public void report(String path) {
 		Queries.reportQuerey(
 				"select t.tax_id,t.tax_Date,e.employee_name,p.payment_amount\r\n"
 						+ "from employee e , tax t, payment p, taxes_payment tp\r\n"

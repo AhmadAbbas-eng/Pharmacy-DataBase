@@ -1,11 +1,8 @@
 package application;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import Relations.Employee;
 import Relations.Queries;
 import javafx.event.ActionEvent;
@@ -38,77 +35,83 @@ public class ConfirmNewUserController {
 	@FXML
 	private PasswordField passwordPasswordField;
 
-	public void cancelButton(ActionEvent e) throws IOException {
+	public void cancelButton(ActionEvent e) {
 
-		Stage stage = (Stage) cancelButton.getScene().getWindow();
-		stage.close();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("LogIn.fxml"));
-		Parent root1 = (Parent) loader.load();
-		Stage stage2 = new Stage();
-		stage2.setResizable(false);
-		stage2.setScene(new Scene(root1));
-		stage2.show();
+		try {
+			Stage stage = (Stage) cancelButton.getScene().getWindow();
+			stage.close();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("LogIn.fxml"));
+			Parent root1;
+			root1 = (Parent) loader.load();
+			Stage stage2 = new Stage();
+			stage2.setResizable(false);
+			stage2.setScene(new Scene(root1));
+			stage2.show();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
 	}
 
-	public void confirm(ActionEvent event) throws IOException, ClassNotFoundException, SQLException, ParseException {
+	public void confirm(ActionEvent event){
 
 		ArrayList<Employee> filteredList = new ArrayList<>();
 		if (idTextField.getText().isBlank() == false && passwordPasswordField.getText().isBlank() == false) {
 			try {
-			Integer.parseInt(idTextField.getText());
-			filteredList = Employee.getEmployeeData(
-					Queries.queryResult("select * from Employee where Employee_ID = ? order by Employee_ID;",
-							new ArrayList<>(Arrays.asList(idTextField.getText()))));
-			
-			if (filteredList.isEmpty() == true) {
-				Alert alert = new Alert(Alert.AlertType.ERROR);
-				alert.setTitle(null);
-				alert.setHeaderText(null);
-				alert.setContentText("This User ID is Not Available!!");
-				alert.showAndWait();
-			} else {
-				filteredList = Employee.getEmployeeData(Queries.queryResult(
-						"select * from Employee where Employee_ID = ? "
-								+ " and Employee_password = ? order by Employee_ID;",
-						new ArrayList<>(Arrays.asList(idTextField.getText(), passwordPasswordField.getText()))));
-				
+				Integer.parseInt(idTextField.getText());
+				filteredList = Employee.getEmployeeData(
+						Queries.queryResult("select * from Employee where Employee_ID = ? order by Employee_ID;",
+								new ArrayList<>(Arrays.asList(idTextField.getText()))));
+
 				if (filteredList.isEmpty() == true) {
 					Alert alert = new Alert(Alert.AlertType.ERROR);
 					alert.setTitle(null);
 					alert.setHeaderText(null);
-					alert.setContentText("Wrong Password!!");
+					alert.setContentText("This User ID is Not Available!!");
 					alert.showAndWait();
 				} else {
 					filteredList = Employee.getEmployeeData(Queries.queryResult(
-							"select * from Employee where Employee_ID = ? and isManager = "
-									+ "'true' and Employee_password = ? order by Employee_ID;",
+							"select * from Employee where Employee_ID = ? "
+									+ " and Employee_password = ? order by Employee_ID;",
 							new ArrayList<>(Arrays.asList(idTextField.getText(), passwordPasswordField.getText()))));
-				
+
 					if (filteredList.isEmpty() == true) {
 						Alert alert = new Alert(Alert.AlertType.ERROR);
 						alert.setTitle(null);
 						alert.setHeaderText(null);
-						alert.setContentText("You Have To Be The Manager To Add Users!!");
+						alert.setContentText("Wrong Password!!");
 						alert.showAndWait();
 					} else {
-						Stage stage1 = (Stage) confirmButton.getScene().getWindow();
-						stage1.close();
-						Stage stage = (Stage) confirmButton.getScene().getWindow();
-						stage.close();
-						FXMLLoader loader = new FXMLLoader(getClass().getResource("SignUp.fxml"));
-						Parent root1 = (Parent) loader.load();
-						Stage stage2 = new Stage();
-						stage2.setScene(new Scene(root1));
-						stage2.setResizable(false);
-						stage2.show();
-					}
-				}
-			
+						filteredList = Employee.getEmployeeData(Queries.queryResult(
+								"select * from Employee where Employee_ID = ? and isManager = "
+										+ "'true' and Employee_password = ? order by Employee_ID;",
+								new ArrayList<>(
+										Arrays.asList(idTextField.getText(), passwordPasswordField.getText()))));
 
-			}
-			idTextField.clear();
-			passwordPasswordField.clear();
-			} catch (NumberFormatException e1) {
+						if (filteredList.isEmpty() == true) {
+							Alert alert = new Alert(Alert.AlertType.ERROR);
+							alert.setTitle(null);
+							alert.setHeaderText(null);
+							alert.setContentText("You Have To Be The Manager To Add Users!!");
+							alert.showAndWait();
+						} else {
+							Stage stage1 = (Stage) confirmButton.getScene().getWindow();
+							stage1.close();
+							Stage stage = (Stage) confirmButton.getScene().getWindow();
+							stage.close();
+							FXMLLoader loader = new FXMLLoader(getClass().getResource("SignUp.fxml"));
+							Parent root1 = (Parent) loader.load();
+							Stage stage2 = new Stage();
+							stage2.setScene(new Scene(root1));
+							stage2.setResizable(false);
+							stage2.show();
+						}
+					}
+
+				}
+				idTextField.clear();
+				passwordPasswordField.clear();
+			} catch (NumberFormatException | IOException e1) {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle(null);
 				alert.setHeaderText(null);
