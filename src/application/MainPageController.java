@@ -258,7 +258,7 @@ public class MainPageController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		this.pane = contentArea;
+		pane = contentArea;
 		rightPane.prefHeightProperty().bind(mainPane.heightProperty());
 		dashboardButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));
 		paymentButton.prefHeightProperty().bind(vbox.heightProperty().divide(12.5));

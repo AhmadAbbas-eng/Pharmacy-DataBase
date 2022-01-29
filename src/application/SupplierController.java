@@ -11,6 +11,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.TableView;
 import javafx.fxml.Initializable;
@@ -124,6 +125,7 @@ public class SupplierController implements Initializable {
 				SupplierPhoneController show = loader.getController();
 				show.setPhoneNumbers(supplierTable.getSelectionModel().getSelectedItem());
 				Stage contactInfoStage = new Stage();
+				contactInfoStage.setAlwaysOnTop(true);
 				Scene scene = new Scene(contactInfo, 500, 500);
 				contactInfoStage.setScene(scene);
 				contactInfoStage.show();
@@ -167,6 +169,7 @@ public class SupplierController implements Initializable {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Stage editStage = new Stage();
 			editStage.setResizable(false);
+			editStage.initModality(Modality.APPLICATION_MODAL);
 			editStage.setScene(scene);
 			editStage.show();
 		} catch (IOException e) {

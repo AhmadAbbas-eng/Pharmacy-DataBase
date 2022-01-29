@@ -15,7 +15,7 @@
 
 <AnchorPane prefHeight="453.0" prefWidth="669.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ProductController">
    <children>
-      <TableView fx:id="productTable" layoutX="22.0" layoutY="70.0" onMousePressed="#tableOnMousePressed" prefHeight="311.0" prefWidth="604.0" style="-fx-background-color: transparent;" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="72.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="43.0" AnchorPane.topAnchor="70.0">
+      <TableView fx:id="productTable" layoutX="22.0" layoutY="70.0" prefHeight="311.0" prefWidth="604.0" style="-fx-background-color: transparent;" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="72.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="43.0" AnchorPane.topAnchor="70.0">
          <columns>
             <TableColumn fx:id="idColumn" minWidth="70.0" prefWidth="70.0" text="ID" />
             <TableColumn fx:id="nameColumn" minWidth="200.0" prefWidth="200.0" text="Product Name" />
@@ -67,7 +67,7 @@
             </CheckBox>
          </children>
       </HBox>
-      <Button fx:id="showBatchButton" layoutX="42.0" layoutY="405.0" mnemonicParsing="false" onAction="#showOnAction" prefHeight="25.0" prefWidth="91.0" stylesheets="@../../CSS/button.css" text="Show Stock" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="42.0" />
+      <Button fx:id="showStockButton" layoutX="42.0" layoutY="405.0" mnemonicParsing="false" onAction="#showStockOnAction" prefHeight="25.0" prefWidth="91.0" stylesheets="@../../CSS/button.css" text="Show Stock" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="42.0" />
       <Button fx:id="showSoldButton" layoutX="142.0" layoutY="404.0" mnemonicParsing="false" onAction="#showSoldOnAction" prefHeight="25.0" prefWidth="91.0" stylesheets="@../../CSS/button.css" text="Show Sold" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="142.0" />
    </children>
 </AnchorPane>
