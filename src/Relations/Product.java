@@ -1,13 +1,10 @@
 package Relations;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
 
 /**
  * Product class here where all Products' operations are occurred
@@ -30,10 +27,10 @@ public class Product {
 	 * Allocates a {@code Product} object and initializes it to represent the
 	 * specified parameters.
 	 * 
-	 * @param iD The product ID.
-	 * @param name The commercial name of the product.
-	 * @param price The price of the Product.
-	 * @param manufacturer The manufacturer of the product. 
+	 * @param iD           The product ID.
+	 * @param name         The commercial name of the product.
+	 * @param price        The price of the Product.
+	 * @param manufacturer The manufacturer of the product.
 	 */
 	public Product(int iD, String name, double price, String manufacturer) {
 		super();
@@ -101,12 +98,8 @@ public class Product {
 
 	/**
 	 * Read from data base and fill the ArrayList
-	 * 
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
 	 */
-	public static void getProductData(){
+	public static void getProductData() {
 
 		data.clear();
 		ArrayList<ArrayList<String>> table = Queries
@@ -120,7 +113,7 @@ public class Product {
 
 			data.add(temp);
 		}
-		maxID=Integer.parseInt(Queries.queryResult("select max(product_ID) from product;", null).get(0).get(0));
+		maxID = Integer.parseInt(Queries.queryResult("select max(product_ID) from product;", null).get(0).get(0));
 		dataList = FXCollections.observableArrayList(data);
 
 	}
@@ -130,16 +123,9 @@ public class Product {
 	 * 
 	 * @param table ArrayList<ArrayList<String>> to fill data with
 	 * @return ArrayList<Product> of data
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
 	 */
 	public static ArrayList<Product> getProductData(ArrayList<ArrayList<String>> table) {
-
-	
-
-		try {	ArrayList<Product> tempData = new ArrayList<Product>();
-		Connection getPhoneConnection = Queries.dataBaseConnection();
+		ArrayList<Product> tempData = new ArrayList<Product>();
 
 		for (int i = 0; i < table.size(); i++) {
 			Product temp = new Product(Integer.parseInt(table.get(i).get(0)), table.get(i).get(1),
@@ -147,19 +133,7 @@ public class Product {
 
 			tempData.add(temp);
 		}
-			getPhoneConnection.close();
-			return tempData;
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			Alert alert = new Alert(Alert.AlertType.ERROR);
-			alert.setTitle("Loding Error");
-			alert.setHeaderText("Can't load data from product");
-			alert.setContentText(null);
-			alert.showAndWait();
-			return null;
-		}
-
-		
+		return tempData;
 	}
 
 	public static void insertProduct(String name, double price) {
@@ -173,7 +147,7 @@ public class Product {
 	 * 
 	 * @param path The path of file
 	 */
-	public static void report(String path){
+	public static void report(String path) {
 		Queries.reportQuerey("select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer\r\n"
 				+ "from product p,Name_manu m\r\n" + "where P.product_name=m.product_name;", path);
 	}

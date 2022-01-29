@@ -188,7 +188,7 @@ public class Supplier {
 
 	public void clearSupplierPhones() {
 		for (int i = 0; i < getPhones().size(); i++) {
-			Queries.queryResult("delete from Supplier_Phone where Supplier_ID=? ;",
+			Queries.queryUpdate("delete from Supplier_Phone where Supplier_ID=? ;",
 					new ArrayList<>(Arrays.asList(getID() + "")));
 		}
 	}

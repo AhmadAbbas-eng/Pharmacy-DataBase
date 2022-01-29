@@ -35,8 +35,6 @@ public class Queries {
 	 * dataBaseConnection: a method that creates the connection to the data base
 	 * 
 	 * @return The connection object
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
 	 */
 	static Connection dataBaseConnection() {
 
@@ -66,8 +64,6 @@ public class Queries {
 	 * 
 	 * @param SQL the query we want to execute
 	 * @return the result of query as ArrayList<ArrayList<String>>
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
 	 */
 	public static ArrayList<ArrayList<String>> queryResult(String statment, ArrayList<String> parameters) {
 		try {
@@ -156,10 +152,6 @@ public class Queries {
 	 * 
 	 * @param query    the query we want to report
 	 * @param filePath path of the file we want to save into
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws IOException            If there are any errors on inputs or outputs
-	 *                                of the file
 	 */
 	public static void reportQuerey(String query, String filePath) {
 
@@ -231,32 +223,12 @@ public class Queries {
 						.get(0));
 	}
 
-	/**
-	 * getPaymentAmount: calculate the money paid on certain month
-	 * 
-	 * @param month the month of required date
-	 * @param year  the year of required date
-	 * @return the total paid amount in this month
-	 * @throws NumberFormatException  If there are any formatting exception
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 */
-	public static int getPaymentAmount(int month, int year) {
-		ArrayList<String> parameters = new ArrayList<>();
-		parameters.add("%" + month + "%");
-		parameters.add("%" + year + "%");
 
-		return Integer.parseInt(queryResult("select sum(p.payment_amount) from payment p "
-				+ "where month(Payment_Date) like ? and year(Payment_Date) like ?;", parameters).get(0).get(0));
-	}
 
 	/**
 	 * expiryDate: to get drugs with close expire date
 	 * 
 	 * @return ArrayList<ArrayList<String>> contains all data of the drugs
-	 * @throws NumberFormatException
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
 	 */
 	public static ArrayList<ArrayList<String>> expiryDate() {
 		return queryResult(
@@ -271,8 +243,6 @@ public class Queries {
 	 * amountToFinish: get the data of batches that are about to finish
 	 * 
 	 * @return ArrayList<ArrayList<String>> contains all data of the batches
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
 	 */
 	public static ArrayList<ArrayList<String>> amountToFinish(){
 		return queryResult("SELECT P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
@@ -284,20 +254,6 @@ public class Queries {
 				+ "from batch b,product p\r\n"
 				+ "where b.product_ID=p.product_ID and b.batch_amount<10 and b.batch_amount>0 and b.batch_production_date <>'1111-01-01')\r\n"
 				+ "order by batch_expiry_date;", null);
-	}
-
-	/**
-	 * closePayments: get all near due date for payments
-	 * 
-	 * @return ArrayList<ArrayList<String>> contains all data of the payments
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 */
-	public static ArrayList<ArrayList<String>> closePayments(){
-		return queryResult("select o.order_id,s.supplier_name,o.due_date_for_payment,o.order_cost\r\n"
-				+ "from s_order o,supplier s\r\n"
-				+ "where o.supplier_Id=s.supplier_ID and o.due_date_for_payment >DATE_ADD(DATE(NOW()), INTERVAL 30 DAY);",
-				null);
 	}
 
 }

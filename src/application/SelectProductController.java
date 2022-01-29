@@ -2,12 +2,11 @@ package application;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
+import Relations.Batch;
 import Relations.Drug;
 import Relations.Product;
 import Relations.Queries;
@@ -283,83 +282,59 @@ public class SelectProductController implements Initializable {
 		ArrayList<Product> commertialNameArrayList = new ArrayList<>();
 
 		if (stringToSearch == null || stringToSearch.isEmpty() || stringToSearch.isBlank()) {
-			try {
+			scientificNameArrayList = Drug.getDrugData(Queries.queryResult(
+					"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
+							+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,D.Drug_Pharmacetical_Category"
+							+ " from Drug D,Product P,Name_manu m "
+							+ "where D.Product_ID=P.Product_ID and P.product_name=m.product_name;",
+					null));
 
-				scientificNameArrayList = Drug.getDrugData(Queries.queryResult(
-						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
-								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,D.Drug_Pharmacetical_Category"
-								+ " from Drug D,Product P,Name_manu m "
-								+ "where D.Product_ID=P.Product_ID and P.product_name=m.product_name;",
-						null));
-
-				commertialNameArrayList = Product
-						.getProductData(Queries.queryResult(
-								"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer"
-										+ " from product p,Name_manu m" + " where P.product_name=m.product_name;",
-								null));
-
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
-			}
+			commertialNameArrayList = Product
+					.getProductData(Queries.queryResult(
+							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer"
+									+ " from product p,Name_manu m" + " where P.product_name=m.product_name;",
+							null));
 		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Commerical Name") {
-			try {
+			scientificNameArrayList = Drug.getDrugData(Queries.queryResult(
+					"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
+							+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,D.Drug_Pharmacetical_Category"
+							+ " from Drug D,Product P,Name_manu m "
+							+ "where D.Product_ID=P.Product_ID and P.product_name=m.product_name and P.product_name like ? ;",
+					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
 
-				scientificNameArrayList = Drug.getDrugData(Queries.queryResult(
-						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
-								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,D.Drug_Pharmacetical_Category"
-								+ " from Drug D,Product P,Name_manu m "
-								+ "where D.Product_ID=P.Product_ID and P.product_name=m.product_name and P.product_name like ? ;",
-						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
-
-				commertialNameArrayList = Product.getProductData(Queries.queryResult(
-						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer"
-								+ " from product p,Name_manu m"
-								+ " where P.product_name=m.product_name and p.product_name like ? ;",
-						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
-
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
-			}
+			commertialNameArrayList = Product.getProductData(Queries.queryResult(
+					"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer"
+							+ " from product p,Name_manu m"
+							+ " where P.product_name=m.product_name and p.product_name like ? ;",
+					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
 		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Sientific Name") {
-			try {
+			commertialNameArrayList = Product.getProductData(Queries.queryResult(
+					"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer"
+							+ " from  drug d,product p,Name_manu m"
+							+ " where P.product_name=m.product_name and D.Product_ID=P.Product_ID and D.Drug_Scientific_Name like ? ;",
+					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
 
-				commertialNameArrayList = Product.getProductData(Queries.queryResult(
-						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer"
-								+ " from  drug d,product p,Name_manu m"
-								+ " where P.product_name=m.product_name and D.Product_ID=P.Product_ID and D.Drug_Scientific_Name like ? ;",
-						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
-
-				scientificNameArrayList = Drug.getDrugData(Queries.queryResult(
-						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
-								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,D.Drug_Pharmacetical_Category"
-								+ " from Drug D,Product P,Name_manu m "
-								+ "where D.Product_ID=P.Product_ID and P.product_name=m.product_name and D.Drug_Scientific_Name like ? ;",
-						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
-
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
-			}
+			scientificNameArrayList = Drug.getDrugData(Queries.queryResult(
+					"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
+							+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,D.Drug_Pharmacetical_Category"
+							+ " from Drug D,Product P,Name_manu m "
+							+ "where D.Product_ID=P.Product_ID and P.product_name=m.product_name and D.Drug_Scientific_Name like ? ;",
+					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
 
 		} else {
 
-			try {
-				
-				commertialNameArrayList = Product.getProductData(Queries.queryResult(
-						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer"
-								+ " from product p,Name_manu m"
-								+ " where P.product_name=m.product_name and p.product_name like ? ;",
-						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
-				
-				scientificNameArrayList = Drug.getDrugData(Queries.queryResult(
-						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
-								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,D.Drug_Pharmacetical_Category"
-								+ " from Drug D,Product P,Name_manu m "
-								+ "where D.Product_ID=P.Product_ID and P.product_name=m.product_name and D.Drug_Scientific_Name like ? ;",
-						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
-
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
-			}
+			commertialNameArrayList = Product.getProductData(Queries.queryResult(
+					"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer"
+							+ " from product p,Name_manu m"
+							+ " where P.product_name=m.product_name and p.product_name like ? ;",
+					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
+			
+			scientificNameArrayList = Drug.getDrugData(Queries.queryResult(
+					"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
+							+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,D.Drug_Pharmacetical_Category"
+							+ " from Drug D,Product P,Name_manu m "
+							+ "where D.Product_ID=P.Product_ID and P.product_name=m.product_name and D.Drug_Scientific_Name like ? ;",
+					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
 			
 		}
 		commercialNameTable.setItems(FXCollections.observableArrayList(commertialNameArrayList));
@@ -381,6 +356,9 @@ public class SelectProductController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		Batch.getBatchData();
+		Drug.getDrugData();
+		Product.getProductData();
 		searchOperationComboBox.setValue("Select");
 		searchOperationComboBox.setItems(Choices);
 		scientificNameColumn.setCellValueFactory(new PropertyValueFactory<Drug, String>("scientificName"));
