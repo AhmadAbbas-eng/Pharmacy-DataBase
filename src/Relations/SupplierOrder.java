@@ -192,8 +192,7 @@ public class SupplierOrder {
 	 * @throws SQLException           If any connection exceptions occurred
 	 * @throws ParseException         If any exception data type parsing occurred
 	 */
-	public static ArrayList<SupplierOrder> getSupplierOrderData(ArrayList<ArrayList<String>> table)
-			throws ClassNotFoundException, SQLException, ParseException {
+	public static ArrayList<SupplierOrder> getSupplierOrderData(ArrayList<ArrayList<String>> table){
 
 		ArrayList<SupplierOrder> tempData = new ArrayList<SupplierOrder>();
 		Connection getPhoneConnection = Queries.dataBaseConnection();
@@ -209,7 +208,12 @@ public class SupplierOrder {
 			tempData.add(temp);
 		}
 
-		getPhoneConnection.close();
+		try {
+			getPhoneConnection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return tempData;
 	}
 
@@ -223,15 +227,10 @@ public class SupplierOrder {
 
 	public static void insertSupplierOrder(LocalDate dateOfOrder, double cost, double discount,
 			LocalDate dueDateOfPayment, int supplierID, int managerID, int recievedBy, LocalDate recDate) {
-		try {
-			Queries.queryUpdate("Insert into s_order values(?, ?, ?, ?, ?, ?, ?, ?, ?);",
-					new ArrayList<>(Arrays.asList((setMaxID(getMaxID() + 1)) + "", dateOfOrder.toString(), cost + "",
-							discount + "", dueDateOfPayment.toString(), supplierID + "", managerID + "",
-							recievedBy + "", recDate.toString())));
-
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		Queries.queryUpdate("Insert into s_order values(?, ?, ?, ?, ?, ?, ?, ?, ?);",
+				new ArrayList<>(Arrays.asList((setMaxID(getMaxID() + 1)) + "", dateOfOrder.toString(), cost + "",
+						discount + "", dueDateOfPayment.toString(), supplierID + "", managerID + "",
+						recievedBy + "", recDate.toString())));
 	}
 
 	/**
