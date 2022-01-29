@@ -28,8 +28,6 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import java.net.URL;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.*;
 import java.text.DateFormatSymbols;
@@ -107,7 +105,7 @@ public class EmployeeWorkedHoursController implements Initializable {
 		blinkFade.play();
 	}
 
-	public void saveOnMousePressed() throws ParseException, ClassNotFoundException, SQLException {
+	public void saveOnMousePressed(){
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
 		saveButton.setEffect(effect);
@@ -141,7 +139,7 @@ public class EmployeeWorkedHoursController implements Initializable {
 		saveButton.setEffect(effect);
 	}
 
-	public void addOnMousePressed() throws ClassNotFoundException, SQLException, ParseException {
+	public void addOnMousePressed(){
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
 		addButton.setEffect(effect);
@@ -208,14 +206,10 @@ public class EmployeeWorkedHoursController implements Initializable {
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 		title.setText(employee.getName() + " Worked Hours");
-		try {
-			filterData();
-		} catch (ClassNotFoundException | SQLException | ParseException e) {
-			e.printStackTrace();
-		}
+		filterData();
 	}
 
-	public void filterData() throws ClassNotFoundException, SQLException, ParseException {
+	public void filterData(){
 		String dateCondition = "";
 		ArrayList<String> parameters = new ArrayList<>();
 		parameters.add(employee.getID() + "");
@@ -255,31 +249,19 @@ public class EmployeeWorkedHoursController implements Initializable {
 			alert.getButtonTypes().setAll(saveButtonType, continueButtonType, cancelButtonType);
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == saveButtonType) {
-				try {
-					saveOnMousePressed();
-					saveOnMouseReleased();
-					editedFlag = false;
-					filterData();
-				} catch (ParseException | ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
+				saveOnMousePressed();
+				saveOnMouseReleased();
+				editedFlag = false;
+				filterData();
 			} else if (result.get() == continueButtonType) {
-				try {
-					filterData();
-					editedFlag = false;
-				} catch (ClassNotFoundException | SQLException | ParseException e) {
-					e.printStackTrace();
-				}
+				filterData();
+				editedFlag = false;
 			} else {
 				monthSearchSelector.setValue(prevSelectedMonth);
 				yearSearchSelector.setValue(prevSelectedYear);
 			}
 		} else {
-			try {
-				filterData();
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
-			}
+			filterData();
 		}
 	}
 

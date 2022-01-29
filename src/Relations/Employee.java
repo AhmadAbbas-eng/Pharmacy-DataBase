@@ -1,8 +1,5 @@
 package Relations;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -223,11 +220,8 @@ public class Employee {
 	/**
 	 * Read from data base and fill the ArrayList
 	 * 
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
 	 */
-	public static void getEmployeeData() throws ClassNotFoundException, SQLException, ParseException {
+	public static void getEmployeeData() {
 
 		data.clear();
 		ArrayList<ArrayList<String>> table = Queries.queryResult("select * from Employee where Employee_ID<>-1;", null);
@@ -251,12 +245,9 @@ public class Employee {
 	 * 
 	 * @param table ArrayList<ArrayList<String>> to fill data with
 	 * @return ArrayList<Employee> of data
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
+
 	 */
-	public static ArrayList<Employee> getEmployeeData(ArrayList<ArrayList<String>> table)
-			throws ClassNotFoundException, SQLException, ParseException {
+	public static ArrayList<Employee> getEmployeeData(ArrayList<ArrayList<String>> table) {
 
 		ArrayList<Employee> tempData = new ArrayList<Employee>();
 
@@ -273,7 +264,7 @@ public class Employee {
 		return tempData;
 	}
 
-	public static void getEmployeePhone(Employee employee) throws SQLException, ClassNotFoundException {
+	public static void getEmployeePhone(Employee employee){
 		ArrayList<ArrayList<String>> phonesSet = Queries.queryResult(
 				"select Phone from Employee_Phone where Employee_ID=? ;",
 				new ArrayList<>(Arrays.asList(employee.getID() + "")));
@@ -283,29 +274,20 @@ public class Employee {
 		for (int i = 0; i < phonesSet.size(); i++) {
 			phones.add(phonesSet.get(i).get(0));
 		}
-
 		employee.setPhones(phones);
 	}
 
 	public void clearEmployeePhones() {
 		for (int i = 0; i < getPhones().size(); i++) {
-			try {
-				Queries.queryResult("delete from  Employee_Phone where Employee_ID=? ;",
-						new ArrayList<>(Arrays.asList(getID() + "")));
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			Queries.queryResult("delete from  Employee_Phone where Employee_ID=? ;",
+					new ArrayList<>(Arrays.asList(getID() + "")));
 		}
 	}
 
 	public static void insertEmployeePhone(String phone, int employeeID) {
 
-		try {
-			Queries.queryUpdate("Insert into Employee_Phone (Employee_ID, Phone) values(?, ?);",
-					new ArrayList<>(Arrays.asList(employeeID + "", phone)));
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		Queries.queryUpdate("Insert into Employee_Phone (Employee_ID, Phone) values(?, ?);",
+				new ArrayList<>(Arrays.asList(employeeID + "", phone)));
 	}
 
 	public static void insertEmployeePhone(ArrayList<String> phones, int employeeID) {
@@ -316,16 +298,11 @@ public class Employee {
 
 	public static void insertEmployee(String name, String nID, LocalDate dateOfWork, double hourlyPaid,
 			ArrayList<String> phones, String password, String isManager, String isActive) {
-		try {
-			Queries.queryUpdate("insert into Employee values (?, ?, ?, ?, ?, ?, ?, ?);",
-					new ArrayList<>(Arrays.asList((++maxID) + "", name, nID, dateOfWork.toString(), hourlyPaid + "",
-							encryptPassword(name, password), isManager, isActive)));
-			if (phones != null) {
-				insertEmployeePhone(phones, maxID);
-			}
-
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+		Queries.queryUpdate("insert into Employee values (?, ?, ?, ?, ?, ?, ?, ?);",
+				new ArrayList<>(Arrays.asList((++maxID) + "", name, nID, dateOfWork.toString(), hourlyPaid + "",
+						encryptPassword(name, password), isManager, isActive)));
+		if (phones != null) {
+			insertEmployeePhone(phones, maxID);
 		}
 	}
 
@@ -359,12 +336,8 @@ public class Employee {
 	 * Report Employees informations on csv file
 	 * 
 	 * @param path The path of file
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
-	 * @throws IOException
 	 */
-	public void report(String path) throws ClassNotFoundException, SQLException, IOException {
+	public void report(String path) {
 		Queries.reportQuerey("select employee_ID,employee_name,employee_national_Id,employee_date_of_work\r\n"
 				+ "employee_hourly_paid,isManager,isActive\r\n" + "from employee;", path);
 	}

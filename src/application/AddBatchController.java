@@ -1,8 +1,6 @@
 package application;
 
 import java.net.URL;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -64,13 +62,13 @@ public class AddBatchController implements Initializable {
 		stage.close();
 	}
 
-	public void addBatch(ActionEvent event) throws ClassNotFoundException, SQLException, ParseException {
+	public void addBatch(ActionEvent event) {
 
 		// Check the values of text fields and assign entered data
 		if (productionDateDatePicker.getValue() != null && expiryDateDatePicker.getValue() != null) {
 			if (productionDateDatePicker.getValue().compareTo(expiryDateDatePicker.getValue()) > 0
 					|| productionDateDatePicker.getValue().compareTo(expiryDateDatePicker.getValue()) == 0
-					|| productionDateDatePicker.getValue().compareTo(LocalDate.now()) > 0 
+					|| productionDateDatePicker.getValue().compareTo(LocalDate.now()) > 0
 					|| expiryDateDatePicker.getValue().compareTo(LocalDate.now()) <= 0) {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle("Wrong Input Format");
@@ -90,7 +88,7 @@ public class AddBatchController implements Initializable {
 				if (batch.isEmpty()) {
 					Batch.insertBatch(productID, productionDateDatePicker.getValue(), expiryDateDatePicker.getValue(),
 							0);
-					
+
 					Stage stage = (Stage) addButton.getScene().getWindow();
 					stage.close();
 					caller.saveUpdates();

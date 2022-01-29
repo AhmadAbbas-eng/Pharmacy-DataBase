@@ -20,8 +20,6 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -188,74 +186,44 @@ public class EmployeeController implements Initializable {
 		ArrayList<String> parameters = new ArrayList<>();
 		parameters.add("%" + stringToSearch + "%");
 		if (stringToSearch == null || stringToSearch.isEmpty() || stringToSearch.isBlank()) {
-			try {
-				filteredList = Employee
-						.getEmployeeData(Queries.queryResult("select * from Employee where Employee_ID<>-1 "
-								+ isActiveCondition + isManagerCondition + " order by Employee_ID;", null));
-
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
-			}
+			filteredList = Employee
+					.getEmployeeData(Queries.queryResult("select * from Employee where Employee_ID<>-1 "
+							+ isActiveCondition + isManagerCondition + " order by Employee_ID;", null));
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "National ID") {
-			try {
-				filteredList = Employee
-						.getEmployeeData(
-								Queries.queryResult(
-										"select * from Employee where Employee_ID<>-1 and Employee_National_ID like ? "
-												+ isActiveCondition + isManagerCondition + " order by Employee_ID;",
-										null));
-
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
-			}
+			filteredList = Employee
+					.getEmployeeData(
+							Queries.queryResult(
+									"select * from Employee where Employee_ID<>-1 and Employee_National_ID like ? "
+											+ isActiveCondition + isManagerCondition + " order by Employee_ID;",
+									null));
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Name") {
-			try {
-				filteredList = Employee
-						.getEmployeeData(Queries.queryResult(
-								"select * from Employee where Employee_ID<>-1 and Employee_Name like ? "
-										+ isActiveCondition + isManagerCondition + " order by Employee_ID;",
-								parameters));
-
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
-			}
+			filteredList = Employee
+					.getEmployeeData(Queries.queryResult(
+							"select * from Employee where Employee_ID<>-1 and Employee_Name like ? "
+									+ isActiveCondition + isManagerCondition + " order by Employee_ID;",
+							parameters));
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "ID") {
-			try {
-				filteredList = Employee
-						.getEmployeeData(Queries.queryResult(
-								"select * from Employee where Employee_ID<>-1 and Employee_ID like ? "
-										+ isActiveCondition + isManagerCondition + " order by Employee_ID;",
-								parameters));
-
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
-			}
+			filteredList = Employee
+					.getEmployeeData(Queries.queryResult(
+							"select * from Employee where Employee_ID<>-1 and Employee_ID like ? "
+									+ isActiveCondition + isManagerCondition + " order by Employee_ID;",
+							parameters));
 
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Date of Work") {
-			try {
-				filteredList = Employee
-						.getEmployeeData(Queries.queryResult(
-								"select * from Employee where Employee_ID<>-1 and Employee_Date_Of_Work like ? "
-										+ isActiveCondition + isManagerCondition + " order by Employee_ID;",
-								parameters));
-
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
-			}
+			filteredList = Employee
+					.getEmployeeData(Queries.queryResult(
+							"select * from Employee where Employee_ID<>-1 and Employee_Date_Of_Work like ? "
+									+ isActiveCondition + isManagerCondition + " order by Employee_ID;",
+							parameters));
 
 		} else {
-			try {
-				while (parameters.size() < 4) {
-					parameters.add("%" + stringToSearch + "%");
-				}
-				filteredList = Employee.getEmployeeData(Queries.queryResult("select * from Employee "
-						+ " where (Employee_Name like ? or Employee_National_ID  like ? or Employee_ID like ? "
-						+ " or Employee_Date_Of_Work like ? ) " + isActiveCondition + isManagerCondition
-						+ " order by Employee_ID;", parameters));
-
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
+			while (parameters.size() < 4) {
+				parameters.add("%" + stringToSearch + "%");
 			}
+			filteredList = Employee.getEmployeeData(Queries.queryResult("select * from Employee "
+					+ " where (Employee_Name like ? or Employee_National_ID  like ? or Employee_ID like ? "
+					+ " or Employee_Date_Of_Work like ? ) " + isActiveCondition + isManagerCondition
+					+ " order by Employee_ID;", parameters));
 		}
 		employeeTable.setItems(FXCollections.observableArrayList(filteredList));
 		employeeTable.refresh();
@@ -274,11 +242,7 @@ public class EmployeeController implements Initializable {
 		passwordColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("password"));
 		isManagerColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("isManager"));
 		isActiveColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("isActive"));
-		try {
-			Employee.getEmployeeData();
-		} catch (ClassNotFoundException | SQLException | ParseException e1) {
-			e1.printStackTrace();
-		}
+		Employee.getEmployeeData();
 		employeeTable.setItems(Employee.getDataList());
 		searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
 			stringToSearch = newValue;

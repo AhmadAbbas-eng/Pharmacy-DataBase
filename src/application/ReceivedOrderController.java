@@ -2,8 +2,6 @@ package application;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
@@ -27,7 +25,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 
 /**
  * 
@@ -59,7 +56,7 @@ public class ReceivedOrderController implements Initializable {
 
 	@FXML
 	private Button receivedOrdersButton;
-	
+
 	@FXML
 	private Button reportSupplierOrders;
 
@@ -77,7 +74,7 @@ public class ReceivedOrderController implements Initializable {
 
 	MainPageController mainPageController;
 
-	private String stringToSearch="";
+	private String stringToSearch = "";
 
 	public void newOrderOnMouseReleased() {
 		ColorAdjust effect = new ColorAdjust();
@@ -97,48 +94,81 @@ public class ReceivedOrderController implements Initializable {
 		newOrderIcon.setEffect(effect);
 	}
 
-	public void newOrderOnMousePressed() throws IOException {
-		
+	public void newOrderOnMousePressed() {
+
 		if (Employee.hasAccess()) {
-			Region page = FXMLLoader.load(getClass().getResource("SupplierOrder.fxml"));
-			MainPageController.pane.getChildren().removeAll();
-			MainPageController.pane.getChildren().setAll(page);
-			page.prefWidthProperty().bind(MainPageController.pane.widthProperty());
-			page.prefHeightProperty().bind(MainPageController.pane.heightProperty());
+			Region page;
+			try {
+				page = FXMLLoader.load(getClass().getResource("SupplierOrder.fxml"));
+
+				MainPageController.pane.getChildren().removeAll();
+				MainPageController.pane.getChildren().setAll(page);
+				page.prefWidthProperty().bind(MainPageController.pane.widthProperty());
+				page.prefHeightProperty().bind(MainPageController.pane.heightProperty());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else {
-			Region page = FXMLLoader.load(getClass().getResource("NotAvailable.fxml"));
-			MainPageController.pane.getChildren().removeAll();
-			MainPageController.pane.getChildren().setAll(page);
+			Region page;
+			try {
+				page = FXMLLoader.load(getClass().getResource("NotAvailable.fxml"));
+
+				MainPageController.pane.getChildren().removeAll();
+				MainPageController.pane.getChildren().setAll(page);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
-	public void receivedOrdersOnAction(ActionEvent event) throws IOException {
-		//contentArea
+	public void receivedOrdersOnAction(ActionEvent event) {
+		// contentArea
 		if (Employee.hasAccess()) {
-			Region page = FXMLLoader.load(getClass().getResource("RecievedOrders.fxml"));
-			MainPageController.pane.getChildren().removeAll();
-			MainPageController.pane.getChildren().setAll(page);
-			page.prefWidthProperty().bind(MainPageController.pane.widthProperty());
-			page.prefHeightProperty().bind(MainPageController.pane.heightProperty());
+			Region page;
+			try {
+				page = FXMLLoader.load(getClass().getResource("RecievedOrders.fxml"));
+
+				MainPageController.pane.getChildren().removeAll();
+				MainPageController.pane.getChildren().setAll(page);
+				page.prefWidthProperty().bind(MainPageController.pane.widthProperty());
+				page.prefHeightProperty().bind(MainPageController.pane.heightProperty());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else {
-			Region page = FXMLLoader.load(getClass().getResource("NotAvailable.fxml"));
-			MainPageController.pane.getChildren().removeAll();
-			MainPageController.pane.getChildren().setAll(page);
+			Region page;
+			try {
+				page = FXMLLoader.load(getClass().getResource("NotAvailable.fxml"));
+
+				MainPageController.pane.getChildren().removeAll();
+				MainPageController.pane.getChildren().setAll(page);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		
+
 	}
 
-	public void unReceiveOrderOnAction(ActionEvent event)
-			throws IOException, ClassNotFoundException, SQLException, ParseException {
+	public void unReceiveOrderOnAction(ActionEvent event) {
 		ArrayList<SupplierOrder> unRecievedOrdersArrayList = SupplierOrder
 				.getSupplierOrderData(Queries.queryResult("select * from S_Order where Recieved_By = '-1' ;", null));
-		if (unRecievedOrdersArrayList.size()!=0) {
-			Region page = FXMLLoader.load(getClass().getResource("UnReceivedOrders.fxml"));
-			MainPageController.pane.getChildren().removeAll();
-			MainPageController.pane.getChildren().setAll(page);
-			page.prefWidthProperty().bind(MainPageController.pane.widthProperty());
-			page.prefHeightProperty().bind(MainPageController.pane.heightProperty());
+		if (unRecievedOrdersArrayList.size() != 0) {
+			Region page;
+			try {
+				page = FXMLLoader.load(getClass().getResource("UnReceivedOrders.fxml"));
 
+				MainPageController.pane.getChildren().removeAll();
+				MainPageController.pane.getChildren().setAll(page);
+				page.prefWidthProperty().bind(MainPageController.pane.widthProperty());
+				page.prefHeightProperty().bind(MainPageController.pane.heightProperty());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Alert");
@@ -148,79 +178,49 @@ public class ReceivedOrderController implements Initializable {
 		}
 
 	}
-	
+
 	public void filterList() {
 		ArrayList<SupplierOrder> filteredList = new ArrayList<>();
 		if (stringToSearch == null || stringToSearch.isEmpty() || stringToSearch.isBlank()) {
-			try {
-				filteredList = SupplierOrder
-						.getSupplierOrderData(Queries.queryResult("select * from S_Order ;", null));
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
-			}
+			filteredList = SupplierOrder.getSupplierOrderData(Queries.queryResult("select * from S_Order ;", null));
 		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Order Id") {
-			try {
-				filteredList = SupplierOrder
-						.getSupplierOrderData(Queries.queryResult("select * from S_Order where Order_ID like ? ;",
-								new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
-			}
+			filteredList = SupplierOrder
+					.getSupplierOrderData(Queries.queryResult("select * from S_Order where Order_ID like ? ;",
+							new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
 		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Order From") {
-			try {
-				filteredList = SupplierOrder.getSupplierOrderData(
-						Queries.queryResult("select * from S_Order where Supplier_ID like ? ;",
-								new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
-			}
+			filteredList = SupplierOrder
+					.getSupplierOrderData(Queries.queryResult("select * from S_Order where Supplier_ID like ? ;",
+							new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
 		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Order By") {
-			try {
-				filteredList = SupplierOrder
-						.getSupplierOrderData(Queries.queryResult("select * from S_Order where Manager_id like ? ;",
-								new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
-			}
+			filteredList = SupplierOrder
+					.getSupplierOrderData(Queries.queryResult("select * from S_Order where Manager_id like ? ;",
+							new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
 
 		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Order Month") {
-			try {
-				filteredList = SupplierOrder.getSupplierOrderData(
-						Queries.queryResult("select * from S_Order where month(Date_Of_Order) like ? ;",
-								new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
-			}
+			filteredList = SupplierOrder.getSupplierOrderData(
+					Queries.queryResult("select * from S_Order where month(Date_Of_Order) like ? ;",
+							new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
 
 		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Year") {
-			try {
-				filteredList = SupplierOrder.getSupplierOrderData(Queries.queryResult(
-						"select * from S_Order " + " where  Year(Date_Of_Order) like ? order by Order_ID;",
-						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
-			}
+			filteredList = SupplierOrder.getSupplierOrderData(Queries.queryResult(
+					"select * from S_Order " + " where  Year(Date_Of_Order) like ? order by Order_ID;",
+					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
 		} else {
-			try {
-				ArrayList<String> parameters = new ArrayList<>();
-				while (parameters.size() < 4) {
-					parameters.add("%" + stringToSearch + "%");
-				}
-				filteredList = SupplierOrder
-						.getSupplierOrderData(Queries.queryResult(
-								"select * from S_Order " + " where year(Date_Of_Order) like ? "
-										+ " or month(Date_Of_Order) like ? " + " or Manager_id like ? "
-										+ " or Order_ID like ? ;",
-								new ArrayList<>(Arrays.asList("%" + stringToSearch + "%","%" + stringToSearch + "%","%" + stringToSearch + "%","%" + stringToSearch + "%"))));
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
+			ArrayList<String> parameters = new ArrayList<>();
+			while (parameters.size() < 4) {
+				parameters.add("%" + stringToSearch + "%");
 			}
+			filteredList = SupplierOrder.getSupplierOrderData(Queries.queryResult(
+					"select * from S_Order " + " where year(Date_Of_Order) like ? " + " or month(Date_Of_Order) like ? "
+							+ " or Manager_id like ? " + " or Order_ID like ? ;",
+					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%", "%" + stringToSearch + "%",
+							"%" + stringToSearch + "%", "%" + stringToSearch + "%"))));
 		}
 		ordersTable.setItems(FXCollections.observableArrayList(filteredList));
 	}
 
-	ObservableList<String> searchChoices = FXCollections.observableArrayList("Select","Order Id", "Order From", "Order By",
-			"Order Month", "Order Year");
+	ObservableList<String> searchChoices = FXCollections.observableArrayList("Select", "Order Id", "Order From",
+			"Order By", "Order Month", "Order Year");
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -237,7 +237,7 @@ public class ReceivedOrderController implements Initializable {
 		ordersTable.setItems(SupplierOrder.getDataList());
 
 		searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			stringToSearch=newValue;
+			stringToSearch = newValue;
 			filterList();
 		});
 

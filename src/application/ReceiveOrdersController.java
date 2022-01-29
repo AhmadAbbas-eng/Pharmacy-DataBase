@@ -22,12 +22,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -139,7 +136,7 @@ public class ReceiveOrdersController implements Initializable {
 		}
 	}
 
-	public void saveOnMousePressed() throws IOException, ClassNotFoundException, SQLException {
+	public void saveOnMousePressed(){
 		if (receivedDatePicker.getValue() != null && payDueDatePicker.getValue() != null) {
 
 			if (receivedDatePicker.getValue().compareTo(payDueDatePicker.getValue()) == 0
@@ -197,11 +194,17 @@ public class ReceiveOrdersController implements Initializable {
 					
 					++counter;
 				}
-				Region page = FXMLLoader.load(getClass().getResource("UnReceivedOrders.fxml"));
+				Region page;
+				try {
+					page = FXMLLoader.load(getClass().getResource("UnReceivedOrders.fxml"));
+				
 				MainPageController.pane.getChildren().removeAll();
 				MainPageController.pane.getChildren().setAll(page);
 				page.prefWidthProperty().bind(MainPageController.pane.widthProperty());
-				page.prefHeightProperty().bind(MainPageController.pane.heightProperty());
+				page.prefHeightProperty().bind(MainPageController.pane.heightProperty());} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		} else {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -234,17 +237,23 @@ public class ReceiveOrdersController implements Initializable {
 		saveIcon.setEffect(effect);
 	}
 
-	public void addOnMousePressed() throws IOException {
+	public void addOnMousePressed() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
 		addBatchIcon.setEffect(effect);		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("AddBatch.fxml"));
-		Parent root1 = (Parent) loader.load();
+		Parent root1;
+		try {
+			root1 = (Parent) loader.load();
+		
 		AddBatchController addBatchController = loader.getController();
 		addBatchController.setProduct(orderedProducts.get(counter).getProductID(), ProductName, this);		
 		Stage stage2 = new Stage();
 		stage2.setScene(new Scene(root1));
-		stage2.show();
+		stage2.show();} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void addOnMouseReleased() {
@@ -265,7 +274,7 @@ public class ReceiveOrdersController implements Initializable {
 		addBatchIcon.setEffect(effect);
 	}
 
-	public void saveUpdates() throws ClassNotFoundException, SQLException, ParseException {
+	public void saveUpdates(){
 		productsBatchColumn.setItems(FXCollections.observableArrayList(Batch.getBatchData(Queries.queryResult(
 				"select * from Batch where product_id =? and batch_production_date <> '1111-01-01' and batch_expiry_date > DATE(NOW());",
 				new ArrayList<>(Arrays.asList(orderedProducts.get(counter).getProductID() + ""))))));
@@ -273,7 +282,7 @@ public class ReceiveOrdersController implements Initializable {
 		productsBatchColumn.refresh();
 	}
 
-	public void updateTable() throws ClassNotFoundException, SQLException, ParseException {
+	public void updateTable()  {
 
 		// upload batches to the listview
 		productsBatchColumn.setItems(FXCollections.observableArrayList(Batch.getBatchData(Queries.queryResult(
@@ -295,7 +304,7 @@ public class ReceiveOrdersController implements Initializable {
 		savedQuantityLabel.setText("Quantity = " + orderedProducts.get(counter).getAmount() + "");
 	}
 
-	public void setRow(SupplierOrder supplierOrder) throws ClassNotFoundException, SQLException, ParseException {
+	public void setRow(SupplierOrder supplierOrder) {
 		// this.caller = caller;
 		this.supplierOrder = supplierOrder; // order id
 		costTextField.setText(supplierOrder.getCost()+"");
@@ -323,7 +332,7 @@ public class ReceiveOrdersController implements Initializable {
 		QuantityStored = orderedProducts.get(0).getAmount() + "";
 	}
 
-	public void confirmBatchOnAction(ActionEvent event) throws ClassNotFoundException, SQLException, ParseException {
+	public void confirmBatchOnAction(ActionEvent event) {
 		if (orderedProducts.size() > counter) {
 			if (orderedProducts.size() > counter && productsBatchColumn.getSelectionModel().getSelectedItem() != null) {
 				ArrayList<String> productsEntered = new ArrayList<String>();
@@ -390,12 +399,19 @@ public class ReceiveOrdersController implements Initializable {
 		}
 	}
 
-	public void cancelOnAction(ActionEvent e) throws IOException {
-		Region page = FXMLLoader.load(getClass().getResource("UnReceivedOrders.fxml"));
+	public void cancelOnAction(ActionEvent e) {
+		Region page;
+		try {
+			page = FXMLLoader.load(getClass().getResource("UnReceivedOrders.fxml"));
+		
 		MainPageController.pane.getChildren().removeAll();
 		MainPageController.pane.getChildren().setAll(page);
 		page.prefWidthProperty().bind(MainPageController.pane.widthProperty());
 		page.prefHeightProperty().bind(MainPageController.pane.heightProperty());
+	} catch (IOException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
 	}
 
 	@Override

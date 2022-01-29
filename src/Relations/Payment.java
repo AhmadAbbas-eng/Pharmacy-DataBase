@@ -1,15 +1,14 @@
 package Relations;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 /**
  * Payment class here where all Payments' operations are occurred
@@ -92,11 +91,8 @@ public class Payment {
 	/**
 	 * Read from data base and fill the ArrayList
 	 * 
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
 	 */
-	public static void getPaymentData() throws ClassNotFoundException, SQLException, ParseException {
+	public static void getPaymentData() {
 
 		data.clear();
 		ArrayList<ArrayList<String>> table = Queries.queryResult("select * from Payment;", null);
@@ -118,26 +114,33 @@ public class Payment {
 	 * 
 	 * @param table ArrayList<ArrayList<String>> to fill data with
 	 * @return ArrayList<Payment> of data
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
 	 */
-	public static ArrayList<Payment> getPaymentData(ArrayList<ArrayList<String>> table)
-			throws ClassNotFoundException, SQLException, ParseException {
+	public static ArrayList<Payment> getPaymentData(ArrayList<ArrayList<String>> table) {
 
-		ArrayList<Payment> tempData = new ArrayList<Payment>();
+		try {
+			ArrayList<Payment> tempData = new ArrayList<Payment>();
 
-		Connection getPhoneConnection = Queries.dataBaseConnection();
+			Connection getPaymentConnection = Queries.dataBaseConnection();
 
-		for (int i = 0; i < table.size(); i++) {
-			LocalDate paymentDate = LocalDate.parse(table.get(i).get(1));
+			for (int i = 0; i < table.size(); i++) {
+				LocalDate paymentDate = LocalDate.parse(table.get(i).get(1));
 
-			Payment temp = new Payment(Integer.parseInt(table.get(i).get(0)), paymentDate,
-					Double.parseDouble(table.get(i).get(2)), table.get(i).get(3));
-			tempData.add(temp);
+				Payment temp = new Payment(Integer.parseInt(table.get(i).get(0)), paymentDate,
+						Double.parseDouble(table.get(i).get(2)), table.get(i).get(3));
+				tempData.add(temp);
+			}
+			getPaymentConnection.close();
+			return tempData;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Loding Error");
+			alert.setHeaderText("Can't load data from Payment");
+			alert.setContentText(null);
+			alert.showAndWait();
+			return null;
 		}
-		getPhoneConnection.close();
-		return tempData;
+
 	}
 
 	public static ObservableList<Payment> getDataList() {
@@ -149,24 +152,16 @@ public class Payment {
 	}
 
 	public static void insertPayment(LocalDate date, double amount, String method) {
-		try {
-			Queries.queryUpdate("Insert into Payment values (?, ?, ?, ?);",
-					new ArrayList<>(Arrays.asList((++maxID) + "", date.toString(), amount + "", method)));
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		Queries.queryUpdate("Insert into Payment values (?, ?, ?, ?);",
+				new ArrayList<>(Arrays.asList((++maxID) + "", date.toString(), amount + "", method)));
 	}
 
 	/**
 	 * Report All payments movement informations on csv file
 	 * 
 	 * @param path The path of file
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
-	 * @throws IOException
 	 */
-	public static void report(String path) throws ClassNotFoundException, SQLException, IOException {
+	public static void report(String path) {
 		Queries.reportQuerey("select * from payment;", path);
 	}
 }

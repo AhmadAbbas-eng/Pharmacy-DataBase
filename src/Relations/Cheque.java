@@ -1,15 +1,14 @@
 package Relations;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 /**
  * Cheque class represents all Cheques' operations
@@ -121,11 +120,8 @@ public class Cheque {
 	/**
 	 * Read from data base and fill the ArrayList
 	 * 
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
 	 */
-	public static void getChequeData() throws ClassNotFoundException, SQLException, ParseException {
+	public static void getChequeData(){
 
 		data.clear();
 		ArrayList<ArrayList<String>> table = Queries.queryResult("select * from Cheque;", null);
@@ -139,7 +135,6 @@ public class Cheque {
 
 			data.add(temp);
 		}
-
 		dataList = FXCollections.observableArrayList(data);
 	}
 
@@ -148,49 +143,49 @@ public class Cheque {
 	 * 
 	 * @param table ArrayList<ArrayList<String>> to fill data with
 	 * @return ArrayList<Cheque> of data
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
 	 */
-	public static ArrayList<Cheque> getChequeData(ArrayList<ArrayList<String>> table)
-			throws ClassNotFoundException, SQLException, ParseException {
+	public static ArrayList<Cheque> getChequeData(ArrayList<ArrayList<String>> table) {
 
-		ArrayList<Cheque> tempData = new ArrayList<Cheque>();
-		Connection getPhoneConnection = Queries.dataBaseConnection();
+		
 
-		for (int i = 0; i < table.size(); i++) {
-			LocalDate writingDate = LocalDate.parse(table.get(i).get(1));
-			LocalDate cashingDate = LocalDate.parse(table.get(i).get(2));
-			Cheque temp = new Cheque(table.get(i).get(0), table.get(i).get(1), writingDate, cashingDate,
-					Integer.parseInt(table.get(i).get(3)), Integer.parseInt(table.get(i).get(4)));
+		try {
+			ArrayList<Cheque> tempData = new ArrayList<Cheque>();
+			Connection getPhoneConnection = Queries.dataBaseConnection();
 
-			tempData.add(temp);
+			for (int i = 0; i < table.size(); i++) {
+				LocalDate writingDate = LocalDate.parse(table.get(i).get(1));
+				LocalDate cashingDate = LocalDate.parse(table.get(i).get(2));
+				Cheque temp = new Cheque(table.get(i).get(0), table.get(i).get(1), writingDate, cashingDate,
+						Integer.parseInt(table.get(i).get(3)), Integer.parseInt(table.get(i).get(4)));
+
+				tempData.add(temp);
+			}
+			getPhoneConnection.close();
+			return tempData;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Loding Error");
+			alert.setHeaderText("Can't load data from cheques");
+			alert.setContentText(null);
+			alert.showAndWait();
+			return null;
 		}
-
-		getPhoneConnection.close();
-		return tempData;
+		
 	}
 
 	public static void insertCheque(String chequeID, String name, LocalDate dateOFWriting, LocalDate dateOfCashing,
-			int paymentID, int managerID) {
-		try {
+			int paymentID, int managerID) {	
 			Queries.queryUpdate("Insert into Cheque values (?, ?, ? ,? ,?, ?);", new ArrayList<>(Arrays.asList(chequeID,
 					name, dateOFWriting.toString(), dateOfCashing.toString(), paymentID + "", managerID + "")));
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
 	}
 
 	/**
 	 * Report Cheques informations on csv file
 	 * 
 	 * @param path The path of file
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
-	 * @throws IOException
 	 */
-	public static void report(String path) throws ClassNotFoundException, SQLException, IOException {
+	public static void report(String path){
 		Queries.reportQuerey("select c.cheque_ID,e.employee_name,c.due_date_of_cashing,p.payment_amount\r\n"
 				+ "from employee e , cheque c, payment p\r\n"
 				+ "where  c.manager_ID=e.employee_ID and c.payment_ID=p.payment_ID ;", path);

@@ -10,7 +10,6 @@ import java.util.*;
 import javafx.scene.control.TableView;
 import javafx.fxml.Initializable;
 import java.net.URL;
-import java.sql.SQLException;
 import Relations.*;
 
 /**
@@ -69,11 +68,7 @@ public class CustomerProductsController implements Initializable {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 		title.setText(customer.getName() + " Bought Products");
-		try {
-			filterList();
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		filterList();
 	}
 
 	public void dangerSelection() {
@@ -81,11 +76,7 @@ public class CustomerProductsController implements Initializable {
 			isDrug.setSelected(true);
 			isControlled.setSelected(false);
 		}
-		try {
-			filterList();
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		filterList();
 	}
 
 	public void controlledSelection() {
@@ -93,11 +84,7 @@ public class CustomerProductsController implements Initializable {
 			isDrug.setSelected(true);
 			isDanger.setSelected(false);
 		}
-		try {
-			filterList();
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		filterList();
 	}
 
 	public void drugSelection() {
@@ -109,14 +96,10 @@ public class CustomerProductsController implements Initializable {
 				fieldSelector.setValue("-Specify Field-");
 			}
 		}
-		try {
-			filterList();
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		filterList();
 	}
 
-	public void filterList() throws ClassNotFoundException, SQLException {
+	public void filterList(){
 		String drugCondition = "";
 		String searchCondition = "";
 		ArrayList<ArrayList<String>> filteredList = new ArrayList<>();
@@ -282,11 +265,7 @@ public class CustomerProductsController implements Initializable {
 
 		searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
 			this.stringToSearch = newValue;
-			try {
-				filterList();
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			filterList();
 		});
 
 	}

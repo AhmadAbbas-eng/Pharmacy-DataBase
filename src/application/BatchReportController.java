@@ -1,10 +1,8 @@
 package application;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 import Relations.Queries;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -37,17 +35,10 @@ public class BatchReportController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		try {
-			batch.setItems(
-					FXCollections.observableArrayList(Queries.queryResult(
-							"select p.product_name,b.batch_production_date,b.batch_expiry_date\r\n"
-									+ "from product p,batch b\r\n"
-									+ "where p.product_ID=b.product_Id and b.batch_production_date <> '1111-01-01';",
-							null)));
-
-		} catch (ClassNotFoundException | SQLException e1) {
-			e1.printStackTrace();
-		}
+		batch.setItems(FXCollections.observableArrayList(Queries.queryResult(
+				"select p.product_name,b.batch_production_date,b.batch_expiry_date\r\n" + "from product p,batch b\r\n"
+						+ "where p.product_ID=b.product_Id and b.batch_production_date <> '1111-01-01';",
+				null)));
 		productNameColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override

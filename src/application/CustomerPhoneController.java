@@ -18,7 +18,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import Relations.*;
@@ -118,11 +117,7 @@ public class CustomerPhoneController implements Initializable {
 		savePhone.setEffect(effect);
 		customer.clearCustomerPhones();
 		Customer.insertCustomerPhone(new ArrayList<>(phoneList.getItems()), customer.getNationalID());
-		try {
-			Customer.getCustomerPhone(customer);
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		Customer.getCustomerPhone(customer);
 		showAndFade(savedLabel);
 		showAndFade(savedIcon);
 	}

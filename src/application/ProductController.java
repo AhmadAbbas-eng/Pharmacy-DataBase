@@ -22,8 +22,6 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import Relations.*;
@@ -180,11 +178,7 @@ public class ProductController implements Initializable {
 			alert.showAndWait();
 			return;
 		}
-		try {
-			Relations.Product.getProductData();
-		} catch (ClassNotFoundException | SQLException | ParseException e1) {
-			e1.printStackTrace();
-		}
+		Relations.Product.getProductData();
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
 		editButton.setEffect(effect);
@@ -247,337 +241,305 @@ public class ProductController implements Initializable {
 		ArrayList<String> parameters = new ArrayList<>();
 		parameters.add("%" + stringToSearch + "%");
 		if (stringToSearch == null || stringToSearch.isEmpty() || stringToSearch.isBlank()) {
-			try {
-				if (!isDrug.isSelected()) {
-					filteredList = (Queries
-							.queryResult("select P.Product_ID, P.Product_Name, P.Product_Price, NM.Product_Manufactrer"
-									+ " from product P, Name_Manu NM" + " where P.Product_Name = NM.Product_Name"
-									+ " and P.Product_ID not in (select D.Product_ID from Drug D);", null));
-					
-				}
-				if (!isDanger.isSelected() && !isControlled.isSelected()) { // All Drugs
-					filteredList.addAll(Queries.queryResult(
-							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
-									+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
-									+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
-									+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name;",
-							null));
-					
-				} else if (isDanger.isSelected()) { // Danger Drugs
-					filteredList = Queries.queryResult(
-							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
-									+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
-									+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
-									+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
-									+ " and D.Drug_Pharmacetical_Category='Danger';",
-							null);
+			if (!isDrug.isSelected()) {
+				filteredList = (Queries
+						.queryResult("select P.Product_ID, P.Product_Name, P.Product_Price, NM.Product_Manufactrer"
+								+ " from product P, Name_Manu NM" + " where P.Product_Name = NM.Product_Name"
+								+ " and P.Product_ID not in (select D.Product_ID from Drug D);", null));
+				
+			}
+			if (!isDanger.isSelected() && !isControlled.isSelected()) { // All Drugs
+				filteredList.addAll(Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
+								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
+								+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name;",
+						null));
+				
+			} else if (isDanger.isSelected()) { // Danger Drugs
+				filteredList = Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
+								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
+								+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
+								+ " and D.Drug_Pharmacetical_Category='Danger';",
+						null);
 
-				} else { // Controlled Drugs
-					filteredList = Queries.queryResult(
-							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
-									+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
-									+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
-									+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
-									+ " and D.Drug_Pharmacetical_Category='Controlled';",
-							null);
+			} else { // Controlled Drugs
+				filteredList = Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
+								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
+								+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
+								+ " and D.Drug_Pharmacetical_Category='Controlled';",
+						null);
 
-				}
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
 			}
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Product ID") {
-			try {
-				if (!isDrug.isSelected()) {
-					filteredList.addAll(Queries
-							.queryResult("select P.Product_ID, P.Product_Name, P.Product_Price, NM.Product_Manufactrer"
-									+ " from product P, Name_Manu NM" + " where P.Product_Name = NM.Product_Name"
-									+ " and P.Product_ID not in (select D.Product_ID from Drug D)"
-									+ " and P.Product_ID like ?;", parameters));
-					
-				}
-				if (!isDanger.isSelected() && !isControlled.isSelected()) { // All Drugs
-					filteredList.addAll(Queries.queryResult(
-							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
-									+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
-									+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
-									+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
-									+ " and P.Product_ID like ?;",
-							parameters));
-					
-				} else if (isDanger.isSelected()) { // Danger Drugs
-					filteredList = Queries.queryResult(
-							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
-									+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
-									+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
-									+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
-									+ " and D.Drug_Pharmacetical_Category='Danger'" + " and P.Product_ID like ?;",
-							parameters);
+			if (!isDrug.isSelected()) {
+				filteredList.addAll(Queries
+						.queryResult("select P.Product_ID, P.Product_Name, P.Product_Price, NM.Product_Manufactrer"
+								+ " from product P, Name_Manu NM" + " where P.Product_Name = NM.Product_Name"
+								+ " and P.Product_ID not in (select D.Product_ID from Drug D)"
+								+ " and P.Product_ID like ?;", parameters));
+				
+			}
+			if (!isDanger.isSelected() && !isControlled.isSelected()) { // All Drugs
+				filteredList.addAll(Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
+								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
+								+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
+								+ " and P.Product_ID like ?;",
+						parameters));
+				
+			} else if (isDanger.isSelected()) { // Danger Drugs
+				filteredList = Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
+								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
+								+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
+								+ " and D.Drug_Pharmacetical_Category='Danger'" + " and P.Product_ID like ?;",
+						parameters);
 
-				} else { // Controlled Drugs
-					filteredList = Queries.queryResult(
-							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
-									+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
-									+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
-									+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
-									+ " and D.Drug_Pharmacetical_Category='Controlled' and P.Product_ID like ?;",
-							parameters);
+			} else { // Controlled Drugs
+				filteredList = Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
+								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
+								+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
+								+ " and D.Drug_Pharmacetical_Category='Controlled' and P.Product_ID like ?;",
+						parameters);
 
-				}
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
 			}
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Product Name") {
-			try {
-				if (!isDrug.isSelected()) {
-					filteredList.addAll(Queries
-							.queryResult("select P.Product_ID, P.Product_Name, P.Product_Price, NM.Product_Manufactrer"
-									+ " from product P, Name_Manu NM" + " where P.Product_Name = NM.Product_Name"
-									+ " and P.Product_ID not in (select D.Product_ID from Drug D)"
-									+ " and P.Product_Name like ?;", parameters));
-					
-				}
-				if (!isDanger.isSelected() && !isControlled.isSelected()) { // All Drugs
-					filteredList.addAll(Queries.queryResult(
-							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
-									+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
-									+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
-									+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
-									+ " and P.Product_Name like ?;",
-							parameters));
-					
-				} else if (isDanger.isSelected()) { // Danger Drugs
-					filteredList = Queries.queryResult(
-							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
-									+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
-									+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
-									+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
-									+ " and D.Drug_Pharmacetical_Category='Danger' and P.Product_Name like ?;",
-							parameters);
+			if (!isDrug.isSelected()) {
+				filteredList.addAll(Queries
+						.queryResult("select P.Product_ID, P.Product_Name, P.Product_Price, NM.Product_Manufactrer"
+								+ " from product P, Name_Manu NM" + " where P.Product_Name = NM.Product_Name"
+								+ " and P.Product_ID not in (select D.Product_ID from Drug D)"
+								+ " and P.Product_Name like ?;", parameters));
+				
+			}
+			if (!isDanger.isSelected() && !isControlled.isSelected()) { // All Drugs
+				filteredList.addAll(Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
+								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
+								+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
+								+ " and P.Product_Name like ?;",
+						parameters));
+				
+			} else if (isDanger.isSelected()) { // Danger Drugs
+				filteredList = Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
+								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
+								+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
+								+ " and D.Drug_Pharmacetical_Category='Danger' and P.Product_Name like ?;",
+						parameters);
 
-				} else { // Controlled Drugs
-					filteredList = Queries.queryResult(
-							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
-									+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
-									+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
-									+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
-									+ " and D.Drug_Pharmacetical_Category='Controlled' and P.Product_Name like ?;",
-							parameters);
+			} else { // Controlled Drugs
+				filteredList = Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
+								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
+								+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
+								+ " and D.Drug_Pharmacetical_Category='Controlled' and P.Product_Name like ?;",
+						parameters);
 
-				}
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
 			}
 
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Manufacturer") {
-			try {
-				if (!isDrug.isSelected()) {
-					filteredList.addAll(Queries
-							.queryResult("select P.Product_ID, P.Product_Name, P.Product_Price, NM.Product_Manufactrer"
-									+ " from product P, Name_Manu NM" + " where P.Product_Name = NM.Product_Name"
-									+ " and P.Product_ID not in (select D.Product_ID from Drug D)"
-									+ " and NM.Product_Manufactrer like ?;", parameters));
-					
-				}
-				if (!isDanger.isSelected() && !isControlled.isSelected()) { // All Drugs
-					filteredList.addAll(Queries.queryResult(
-							"select P.Product_ID, P.Product_Name,P.Product_Price,NM.Product_Manufactrer,D.Drug_Scientific_Name,"
-									+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
-									+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu NM"
-									+ " where D.Product_ID=P.Product_ID and P.product_name=NM.product_name"
-									+ " and NM.Product_Manufactrer like ?;",
-							parameters));
-					
-				} else if (isDanger.isSelected()) { // Danger Drugs
-					filteredList = Queries.queryResult(
-							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
-									+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
-									+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
-									+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
-									+ " and D.Drug_Pharmacetical_Category='Danger'"
-									+ " and NM.Product_Manufactrer like ?;",
-							parameters);
+			if (!isDrug.isSelected()) {
+				filteredList.addAll(Queries
+						.queryResult("select P.Product_ID, P.Product_Name, P.Product_Price, NM.Product_Manufactrer"
+								+ " from product P, Name_Manu NM" + " where P.Product_Name = NM.Product_Name"
+								+ " and P.Product_ID not in (select D.Product_ID from Drug D)"
+								+ " and NM.Product_Manufactrer like ?;", parameters));
+				
+			}
+			if (!isDanger.isSelected() && !isControlled.isSelected()) { // All Drugs
+				filteredList.addAll(Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,NM.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
+								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu NM"
+								+ " where D.Product_ID=P.Product_ID and P.product_name=NM.product_name"
+								+ " and NM.Product_Manufactrer like ?;",
+						parameters));
+				
+			} else if (isDanger.isSelected()) { // Danger Drugs
+				filteredList = Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
+								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
+								+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
+								+ " and D.Drug_Pharmacetical_Category='Danger'"
+								+ " and NM.Product_Manufactrer like ?;",
+						parameters);
 
-				} else { // Controlled Drugs
-					filteredList = Queries.queryResult(
-							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
-									+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
-									+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
-									+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
-									+ " and D.Drug_Pharmacetical_Category='Controlled'"
-									+ " and NM.Product_Manufactrer like ?;",
-							parameters);
+			} else { // Controlled Drugs
+				filteredList = Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
+								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
+								+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
+								+ " and D.Drug_Pharmacetical_Category='Controlled'"
+								+ " and NM.Product_Manufactrer like ?;",
+						parameters);
 
-				}
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
 			}
 
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Scientific Name") {
-			try {
-				isDrug.setSelected(true);
-				if (!isDanger.isSelected() && !isControlled.isSelected()) { // All Drugs
-					filteredList.addAll(Queries.queryResult(
-							"select P.Product_ID, P.Product_Name,P.Product_Price,NM.Product_Manufactrer,D.Drug_Scientific_Name,"
-									+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
-									+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu NM"
-									+ " where D.Product_ID=P.Product_ID and P.product_name=NM.product_name"
-									+ " and D.Drug_Scientific_Name like ?;",
-							parameters));
-					
-				} else if (isDanger.isSelected()) { // Danger Drugs
-					filteredList = Queries.queryResult(
-							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
-									+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
-									+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
-									+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
-									+ " and D.Drug_Pharmacetical_Category='Danger'"
-									+ " and D.Drug_Scientific_Name like ?;",
-							parameters);
+			isDrug.setSelected(true);
+			if (!isDanger.isSelected() && !isControlled.isSelected()) { // All Drugs
+				filteredList.addAll(Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,NM.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
+								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu NM"
+								+ " where D.Product_ID=P.Product_ID and P.product_name=NM.product_name"
+								+ " and D.Drug_Scientific_Name like ?;",
+						parameters));
+				
+			} else if (isDanger.isSelected()) { // Danger Drugs
+				filteredList = Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
+								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
+								+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
+								+ " and D.Drug_Pharmacetical_Category='Danger'"
+								+ " and D.Drug_Scientific_Name like ?;",
+						parameters);
 
-				} else { // Controlled Drugs
-					filteredList = Queries.queryResult(
-							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
-									+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
-									+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
-									+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
-									+ " and D.Drug_Pharmacetical_Category='Controlled'"
-									+ " and D.Drug_Scientific_Name like ?;",
-							parameters);
+			} else { // Controlled Drugs
+				filteredList = Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
+								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
+								+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
+								+ " and D.Drug_Pharmacetical_Category='Controlled'"
+								+ " and D.Drug_Scientific_Name like ?;",
+						parameters);
 
-				}
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
 			}
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Risk Pregnency Category") {
-			try {
-				isDrug.setSelected(true);
-				if (!isDanger.isSelected() && !isControlled.isSelected()) { // All Drugs
-					filteredList.addAll(Queries.queryResult(
-							"select P.Product_ID, P.Product_Name,P.Product_Price,NM.Product_Manufactrer,D.Drug_Scientific_Name,"
-									+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
-									+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu NM"
-									+ " where D.Product_ID=P.Product_ID and P.product_name=NM.product_name"
-									+ " and D.Drug_Risk_Pregnency_Category like ?;",
-							parameters));
-					
-				} else if (isDanger.isSelected()) { // Danger Drugs
-					filteredList = Queries.queryResult(
-							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
-									+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
-									+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
-									+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
-									+ " and D.Drug_Pharmacetical_Category='Danger'"
-									+ " and D.Drug_Risk_Pregnency_Category like ?;",
-							parameters);
+			isDrug.setSelected(true);
+			if (!isDanger.isSelected() && !isControlled.isSelected()) { // All Drugs
+				filteredList.addAll(Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,NM.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
+								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu NM"
+								+ " where D.Product_ID=P.Product_ID and P.product_name=NM.product_name"
+								+ " and D.Drug_Risk_Pregnency_Category like ?;",
+						parameters));
+				
+			} else if (isDanger.isSelected()) { // Danger Drugs
+				filteredList = Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
+								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
+								+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
+								+ " and D.Drug_Pharmacetical_Category='Danger'"
+								+ " and D.Drug_Risk_Pregnency_Category like ?;",
+						parameters);
 
-				} else { // Controlled Drugs
-					filteredList = Queries.queryResult(
-							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
-									+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
-									+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
-									+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
-									+ " and D.Drug_Pharmacetical_Category='Controlled'"
-									+ " and D.Drug_Risk_Pregnency_Category like ?;",
-							parameters);
+			} else { // Controlled Drugs
+				filteredList = Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
+								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
+								+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
+								+ " and D.Drug_Pharmacetical_Category='Controlled'"
+								+ " and D.Drug_Risk_Pregnency_Category like ?;",
+						parameters);
 
-				}
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
 			}
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Drug Category") {
-			try {
-				isDrug.setSelected(true);
-				if (!isDanger.isSelected() && !isControlled.isSelected()) { // All Drugs
-					filteredList.addAll(Queries.queryResult(
-							"select P.Product_ID, P.Product_Name,P.Product_Price,NM.Product_Manufactrer,D.Drug_Scientific_Name,"
-									+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
-									+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu NM"
-									+ " where D.Product_ID=P.Product_ID and P.product_name=NM.product_name"
-									+ " and D.Drug_Category like ?;",
-							parameters));
-					
-				} else if (isDanger.isSelected()) { // Danger Drugs
-					filteredList = Queries.queryResult(
-							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
-									+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
-									+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
-									+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
-									+ " and D.Drug_Pharmacetical_Category='Danger' and D.Drug_Category like ?;",
-							parameters);
+			isDrug.setSelected(true);
+			if (!isDanger.isSelected() && !isControlled.isSelected()) { // All Drugs
+				filteredList.addAll(Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,NM.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
+								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu NM"
+								+ " where D.Product_ID=P.Product_ID and P.product_name=NM.product_name"
+								+ " and D.Drug_Category like ?;",
+						parameters));
+				
+			} else if (isDanger.isSelected()) { // Danger Drugs
+				filteredList = Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
+								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
+								+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
+								+ " and D.Drug_Pharmacetical_Category='Danger' and D.Drug_Category like ?;",
+						parameters);
 
-				} else { // Controlled Drugs
-					filteredList = Queries.queryResult(
-							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
-									+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
-									+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
-									+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
-									+ " and D.Drug_Pharmacetical_Category='Controlled' and D.Drug_Category like ?;",
-							parameters);
-					
-				}
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
+			} else { // Controlled Drugs
+				filteredList = Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
+								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
+								+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
+								+ " and D.Drug_Pharmacetical_Category='Controlled' and D.Drug_Category like ?;",
+						parameters);
+				
 			}
 		} else {
-			try {
-				if (!isDrug.isSelected()) {
+			if (!isDrug.isSelected()) {
+				parameters.add("%" + stringToSearch + "%");
+				parameters.add("%" + stringToSearch + "%");
+				filteredList.addAll(Queries
+						.queryResult("select P.Product_ID, P.Product_Name, P.Product_Price, NM.Product_Manufactrer"
+								+ " from product P, Name_Manu NM" + " where P.Product_Name = NM.Product_Name"
+								+ " and P.Product_ID not in (select D.Product_ID from Drug D)"
+								+ " and (P.Product_ID like ? or" + " P.Product_Name like ? or"
+								+ " NM.Product_Manufactrer like ?);", parameters));
+				
+			}
+			if (!isDanger.isSelected() && !isControlled.isSelected()) { // All Drugs
+				while (parameters.size() < 6) {
 					parameters.add("%" + stringToSearch + "%");
+				}
+				filteredList.addAll(Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,NM.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
+								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu NM"
+								+ " where D.Product_ID=P.Product_ID and P.product_name=NM.product_name"
+								+ " and (P.Product_ID like ? or P.Product_Name like ? "
+								+ " or NM.Product_Manufactrer like ? " + " or D.Drug_Scientific_Name like ? or "
+								+ " D.Drug_Risk_Pregnency_Category like ? or " + " D.Drug_Category like ? );",
+						parameters));
+				
+			} else if (isDanger.isSelected()) { // Danger Drugs
+				while (parameters.size() < 6) {
 					parameters.add("%" + stringToSearch + "%");
-					filteredList.addAll(Queries
-							.queryResult("select P.Product_ID, P.Product_Name, P.Product_Price, NM.Product_Manufactrer"
-									+ " from product P, Name_Manu NM" + " where P.Product_Name = NM.Product_Name"
-									+ " and P.Product_ID not in (select D.Product_ID from Drug D)"
-									+ " and (P.Product_ID like ? or" + " P.Product_Name like ? or"
-									+ " NM.Product_Manufactrer like ?);", parameters));
-					
 				}
-				if (!isDanger.isSelected() && !isControlled.isSelected()) { // All Drugs
-					while (parameters.size() < 6) {
-						parameters.add("%" + stringToSearch + "%");
-					}
-					filteredList.addAll(Queries.queryResult(
-							"select P.Product_ID, P.Product_Name,P.Product_Price,NM.Product_Manufactrer,D.Drug_Scientific_Name,"
-									+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
-									+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu NM"
-									+ " where D.Product_ID=P.Product_ID and P.product_name=NM.product_name"
-									+ " and (P.Product_ID like ? or P.Product_Name like ? "
-									+ " or NM.Product_Manufactrer like ? " + " or D.Drug_Scientific_Name like ? or "
-									+ " D.Drug_Risk_Pregnency_Category like ? or " + " D.Drug_Category like ? );",
-							parameters));
-					
-				} else if (isDanger.isSelected()) { // Danger Drugs
-					while (parameters.size() < 6) {
-						parameters.add("%" + stringToSearch + "%");
-					}
-					filteredList = Queries.queryResult(
-							"select P.Product_ID, P.Product_Name,P.Product_Price,NM.Product_Manufactrer,D.Drug_Scientific_Name,"
-									+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
-									+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu NM"
-									+ " where D.Product_ID=P.Product_ID and P.product_name=NM.product_name"
-									+ " and D.Drug_Pharmacetical_Category='Danger'" + " and (P.Product_ID like ? "
-									+ " or P.Product_Name like ? or" + " NM.Product_Manufactrer like ? or"
-									+ " D.Drug_Scientific_Name like ? or" + " D.Drug_Risk_Pregnency_Category like ? or"
-									+ " D.Drug_Category like ?);",
-							parameters);
+				filteredList = Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,NM.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
+								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu NM"
+								+ " where D.Product_ID=P.Product_ID and P.product_name=NM.product_name"
+								+ " and D.Drug_Pharmacetical_Category='Danger'" + " and (P.Product_ID like ? "
+								+ " or P.Product_Name like ? or" + " NM.Product_Manufactrer like ? or"
+								+ " D.Drug_Scientific_Name like ? or" + " D.Drug_Risk_Pregnency_Category like ? or"
+								+ " D.Drug_Category like ?);",
+						parameters);
 
-				} else { // Controlled Drugs
-					while (parameters.size() < 6) {
-						parameters.add("%" + stringToSearch + "%");
-					}
-					filteredList = Queries.queryResult(
-							"select P.Product_ID, P.Product_Name,P.Product_Price,NM.Product_Manufactrer,D.Drug_Scientific_Name,"
-									+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
-									+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu NM"
-									+ " where D.Product_ID=P.Product_ID and P.product_name=NM.product_name"
-									+ " and D.Drug_Pharmacetical_Category='Controlled'" + " and (P.Product_ID like ? or"
-									+ " P.Product_Name like ? or" + " NM.Product_Manufactrer like ? or"
-									+ " D.Drug_Scientific_Name like ? or" + " D.Drug_Risk_Pregnency_Category like ? or"
-									+ " D.Drug_Category like ?);",
-							parameters);
-
+			} else { // Controlled Drugs
+				while (parameters.size() < 6) {
+					parameters.add("%" + stringToSearch + "%");
 				}
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
+				filteredList = Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,NM.Product_Manufactrer,D.Drug_Scientific_Name,"
+								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
+								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu NM"
+								+ " where D.Product_ID=P.Product_ID and P.product_name=NM.product_name"
+								+ " and D.Drug_Pharmacetical_Category='Controlled'" + " and (P.Product_ID like ? or"
+								+ " P.Product_Name like ? or" + " NM.Product_Manufactrer like ? or"
+								+ " D.Drug_Scientific_Name like ? or" + " D.Drug_Risk_Pregnency_Category like ? or"
+								+ " D.Drug_Category like ?);",
+						parameters);
+
 			}
 		}
 		productTable.getItems().clear();

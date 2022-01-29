@@ -1,16 +1,15 @@
 package Relations;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 /**
  * Batch class where Batch table data have been read and manipulated
@@ -90,12 +89,8 @@ public class Batch {
 
 	/**
 	 * Read from data base and fill the ArrayList
-	 * 
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
 	 */
-	public static void getBatchData() throws ClassNotFoundException, SQLException, ParseException {
+	public static void getBatchData() {
 
 		// Clear data to read it again
 		data.clear();
@@ -122,25 +117,32 @@ public class Batch {
 	 * 
 	 * @param table ArrayList<ArrayList<String>> to fill data with
 	 * @return ArrayList<Batch> of data
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
 	 */
-	public static ArrayList<Batch> getBatchData(ArrayList<ArrayList<String>> table)
-			throws ClassNotFoundException, SQLException, ParseException {
-		ArrayList<Batch> tempData = new ArrayList<Batch>();
-		Connection getPhoneConnection = Queries.dataBaseConnection();
+	public static ArrayList<Batch> getBatchData(ArrayList<ArrayList<String>> table) {
 
-		for (int i = 0; i < table.size(); i++) {
-			LocalDate proDate = LocalDate.parse(table.get(i).get(1));
-			LocalDate expDate = LocalDate.parse(table.get(i).get(2));
-			Batch temp = new Batch(Integer.parseInt(table.get(i).get(0)), proDate, expDate,
-					Integer.parseInt(table.get(i).get(3)));
-			tempData.add(temp);
+		try {
+			ArrayList<Batch> tempData = new ArrayList<Batch>();
+			Connection getPhoneConnection = Queries.dataBaseConnection();
+
+			for (int i = 0; i < table.size(); i++) {
+				LocalDate proDate = LocalDate.parse(table.get(i).get(1));
+				LocalDate expDate = LocalDate.parse(table.get(i).get(2));
+				Batch temp = new Batch(Integer.parseInt(table.get(i).get(0)), proDate, expDate,
+						Integer.parseInt(table.get(i).get(3)));
+				tempData.add(temp);
+
+			}
+			getPhoneConnection.close();
+			return tempData;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Loding Error");
+			alert.setHeaderText("Can't load data from batch");
+			alert.setContentText(null);
+			alert.showAndWait();
+			return null;
 		}
-
-		getPhoneConnection.close();
-		return tempData;
 	}
 
 	/**
@@ -152,24 +154,16 @@ public class Batch {
 	 * @param amount
 	 */
 	public static void insertBatch(int ID, LocalDate productionDate, LocalDate expiryDate, int amount) {
-		try {
-			Queries.queryUpdate("Insert into Batch values (? ,? ,? ,?);",
-					new ArrayList<>(Arrays.asList(ID + "", "" + productionDate, "" + expiryDate, "" + amount)));
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		Queries.queryUpdate("Insert into Batch values (? ,? ,? ,?);",
+				new ArrayList<>(Arrays.asList(ID + "", "" + productionDate, "" + expiryDate, "" + amount)));
 	}
 
 	/**
 	 * Report Batches informations on csv file
 	 * 
 	 * @param path The path of file
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
-	 * @throws IOException
 	 */
-	public static void report(String path) throws ClassNotFoundException, SQLException, IOException {
+	public static void report(String path) {
 		Queries.reportQuerey(
 				"select p.product_name,b.batch_production_date,b.batch_expiry_date\r\n" + "from product p,batch b\r\n"
 						+ "where p.product_ID=b.product_Id and b.batch_production_date <> '1111-01-01';",

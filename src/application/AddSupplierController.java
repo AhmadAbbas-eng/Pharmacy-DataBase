@@ -8,7 +8,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import Relations.*;
@@ -116,7 +115,7 @@ public class AddSupplierController implements Initializable {
 		addPhone.setEffect(effect);
 	}
 
-	public void addSupplierOnMousePressed() throws ClassNotFoundException, SQLException {
+	public void addSupplierOnMousePressed(){
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
 		addSupplier.setEffect(effect);

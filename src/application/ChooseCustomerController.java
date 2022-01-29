@@ -1,7 +1,6 @@
 package application;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import Relations.*;
@@ -87,7 +86,7 @@ public class ChooseCustomerController implements Initializable {
 				new KeyFrame(Duration.seconds(0), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)),
 				new KeyFrame(Duration.seconds(0.5), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)),
 				new KeyFrame(Duration.seconds(1), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)));
-		
+
 		FadeTransition fade = new FadeTransition(Duration.seconds(0.5), node);
 		fade.setFromValue(1);
 		fade.setToValue(0);
@@ -100,7 +99,7 @@ public class ChooseCustomerController implements Initializable {
 			caller.setCustomerNID(customerTable.getSelectionModel().getSelectedItem().getNationalID());
 			showAndFade(addedIcon);
 			showAndFade(addedLabel);
-		}else {
+		} else {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
 			alert.setContentText("Customer Must Be Chosen First");
@@ -171,7 +170,7 @@ public class ChooseCustomerController implements Initializable {
 		addPhone.setEffect(effect);
 	}
 
-	public void addCustomerOnMousePressed() throws ClassNotFoundException, SQLException {
+	public void addCustomerOnMousePressed() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
 		addCustomer.setEffect(effect);
@@ -186,8 +185,7 @@ public class ChooseCustomerController implements Initializable {
 			alert.setHeaderText(null);
 			alert.setContentText("Custemer With This National ID Already Exists");
 			alert.showAndWait();
-		}
-		else if (!NID.matches("[0-9]{9}") || !name.matches("[a-z[A-Z]\\s]+")) {
+		} else if (!NID.matches("[0-9]{9}") || !name.matches("[a-z[A-Z]\\s]+")) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Wrong Input Format");
 			alert.setHeaderText("Wrong Input Format");
@@ -266,56 +264,33 @@ public class ChooseCustomerController implements Initializable {
 	}
 
 	/**
-	 * Filter the data shown on screen in terms of search test field 
+	 * Filter the data shown on screen in terms of search test field
 	 */
 	public void filterList() {
 		ArrayList<Customer> filteredList = new ArrayList<>();
 		ArrayList<String> parameters = new ArrayList<>();
 		parameters.add("%" + stringToSearch + "%");
 		if (stringToSearch == null || stringToSearch.isEmpty() || stringToSearch.isBlank()) {
-			try {
-				filteredList = Customer.getCustomerData(Queries
-						.queryResult("select * from Customer where Customer_NID<>'0' order by Customer_name;", null));
-				
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			filteredList = Customer.getCustomerData(Queries
+					.queryResult("select * from Customer where Customer_NID<>'0' order by Customer_name;", null));
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "National ID") {
-			try {
-				filteredList = Customer.getCustomerData(Queries.queryResult("select * from Customer"
-						+ " where Customer_NID<>'0' and Customer_NID like ? " + " order by Customer_name;",
-						parameters));
-				
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			filteredList = Customer.getCustomerData(Queries.queryResult("select * from Customer"
+					+ " where Customer_NID<>'0' and Customer_NID like ? " + " order by Customer_name;", parameters));
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Name") {
-			try {
-				filteredList = Customer.getCustomerData(Queries.queryResult("select * from Customer"
-						+ " where Customer_NID<>'0' and Customer_Name like ? " + " order by Customer_name;",
-						parameters));
-				
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			filteredList = Customer.getCustomerData(Queries.queryResult("select * from Customer"
+					+ " where Customer_NID<>'0' and Customer_Name like ? " + " order by Customer_name;", parameters));
 
 		} else {
-			try {
-				parameters.add("%" + stringToSearch + "%");
-				filteredList = Customer.getCustomerData(Queries
-						.queryResult("select * from Customer " + " where Customer_NID<>'0' and Customer_Name like ? "
-								+ " or Customer_NID like ? " + " order by Customer_name;", parameters));
-			
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			parameters.add("%" + stringToSearch + "%");
+			filteredList = Customer.getCustomerData(
+					Queries.queryResult("select * from Customer " + " where Customer_NID<>'0' and Customer_Name like ? "
+							+ " or Customer_NID like ? " + " order by Customer_name;", parameters));
 		}
 		customerTable.setItems(FXCollections.observableArrayList(filteredList));
 	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		
 		addedIcon.setOpacity(0);
 		addedLabel.setOpacity(0);
 		fieldSelector.setItems(FXCollections.observableArrayList("-Specify Field-", "National ID", "Name"));

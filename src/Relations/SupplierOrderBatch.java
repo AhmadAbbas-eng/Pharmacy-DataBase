@@ -9,6 +9,7 @@ import java.util.Arrays;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 /**
  * SupplierOrderBatch represents the details of each supplier's order
@@ -136,10 +137,11 @@ public class SupplierOrderBatch {
 	 * @throws SQLException           If any connection exceptions occurred
 	 * @throws ParseException         If any exception data type parsing occurred
 	 */
-	public static ArrayList<SupplierOrderBatch> getSupplierOrderBatchData(ArrayList<ArrayList<String>> table)
-			throws ClassNotFoundException, SQLException, ParseException {
+	public static ArrayList<SupplierOrderBatch> getSupplierOrderBatchData(ArrayList<ArrayList<String>> table){
 
-		ArrayList<SupplierOrderBatch> tempData = new ArrayList<SupplierOrderBatch>();
+		
+
+		try {ArrayList<SupplierOrderBatch> tempData = new ArrayList<SupplierOrderBatch>();
 		Connection getPhoneConnection = Queries.dataBaseConnection();
 
 		for (int i = 0; i < table.size(); i++) {
@@ -151,19 +153,24 @@ public class SupplierOrderBatch {
 
 			tempData.add(temp);
 		}
-
-		getPhoneConnection.close();
-		return tempData;
+			getPhoneConnection.close();
+			return tempData;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Loding Error");
+			alert.setHeaderText("Can't load data from s_order_batch");
+			alert.setContentText(null);
+			alert.showAndWait();
+			return null;
+		}
+		
 	}
 
 	public static void insertSupplierOrderBatch(String oID, String pID, LocalDate productionDate, LocalDate expiryDate,
 			int amount) {
-		try {
-			Queries.queryUpdate("Insert into S_order_batch values (?, ?, ?, ?, ?);", new ArrayList<>(
-					Arrays.asList(oID, pID, productionDate.toString(), expiryDate.toString(), amount + "")));
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		Queries.queryUpdate("Insert into S_order_batch values (?, ?, ?, ?, ?);", new ArrayList<>(
+				Arrays.asList(oID, pID, productionDate.toString(), expiryDate.toString(), amount + "")));
 	}
 
 }

@@ -21,7 +21,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import Relations.*;
@@ -117,11 +116,7 @@ public class SupplierPhoneController implements Initializable {
 		savePhone.setEffect(effect);
 		supplier.clearSupplierPhones();
 		Supplier.insertSupplierPhone(new ArrayList<>(phoneList.getItems()), supplier.getID());
-		try {
-			Supplier.getSupplierPhone(supplier);
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		Supplier.getSupplierPhone(supplier);
 		showAndFade(savedLabel);
 		showAndFade(savedIcon);
 	}

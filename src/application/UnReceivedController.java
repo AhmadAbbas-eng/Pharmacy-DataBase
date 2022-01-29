@@ -2,8 +2,6 @@ package application;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
@@ -25,7 +23,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 
 public class UnReceivedController implements Initializable {
 
@@ -69,16 +66,22 @@ public class UnReceivedController implements Initializable {
 	ObservableList<String> searchChoices = FXCollections.observableArrayList("Select", "Order Id", "Order From",
 			"Order By", "Order Month", "Order Year");
 
-	public void backOnAction() throws IOException {
-		Region page = FXMLLoader.load(getClass().getResource("SupplierReceivedOrder.fxml"));
+	public void backOnAction() {
+		Region page;
+		try {
+			page = FXMLLoader.load(getClass().getResource("SupplierReceivedOrder.fxml"));
+		
 		MainPageController.pane.getChildren().removeAll();
 		MainPageController.pane.getChildren().setAll(page);
 		page.prefWidthProperty().bind(MainPageController.pane.widthProperty());
 		page.prefHeightProperty().bind(MainPageController.pane.heightProperty());
-
+} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	public void receiveOnAction(ActionEvent event) throws IOException, ClassNotFoundException, SQLException, ParseException {
+	public void receiveOnAction(ActionEvent event){
 
 		try {
 			if (unreceivedOrdersTable.getSelectionModel().getSelectedItem() != null) {
@@ -109,77 +112,42 @@ public class UnReceivedController implements Initializable {
 	public void filterList() {
 		ArrayList<SupplierOrder> filteredList = new ArrayList<>();
 		if (stringToSearch == null || stringToSearch.isEmpty() || stringToSearch.isBlank()) {
-			try {
-				filteredList = SupplierOrder.getSupplierOrderData(
-						Queries.queryResult("select * from S_Order where Recieved_By = '-1';", null));
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
-			}
+			filteredList = SupplierOrder.getSupplierOrderData(
+					Queries.queryResult("select * from S_Order where Recieved_By = '-1';", null));
 		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Order Id") {
-			try {
-
-				filteredList = SupplierOrder.getSupplierOrderData(
-						Queries.queryResult("select * from S_Order where Recieved_By = '-1' and Order_ID like ? ;",
-								new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
-			}
+			filteredList = SupplierOrder.getSupplierOrderData(
+					Queries.queryResult("select * from S_Order where Recieved_By = '-1' and Order_ID like ? ;",
+							new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
 		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Order From") {
-			try {
-				filteredList = SupplierOrder.getSupplierOrderData(Queries.queryResult(
-						"select * from S_Order where Recieved_By = '-1' and supplier_ID like ? ;",
-						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
-			}
+			filteredList = SupplierOrder.getSupplierOrderData(Queries.queryResult(
+					"select * from S_Order where Recieved_By = '-1' and supplier_ID like ? ;",
+					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
 		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Order By") {
-			try {
-				filteredList = SupplierOrder.getSupplierOrderData(Queries.queryResult(
-						"select * from S_Order where Recieved_By = '-1' and manager_ID like ? ;",
-						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
-			}
+			filteredList = SupplierOrder.getSupplierOrderData(Queries.queryResult(
+					"select * from S_Order where Recieved_By = '-1' and manager_ID like ? ;",
+					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
 
 		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Order Month") {
-			try {
-				filteredList = SupplierOrder.getSupplierOrderData(Queries.queryResult(
-						"select * from S_Order where Recieved_By = '-1' and month(Date_Of_Order) like ? ;",
-						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
-			}
+			filteredList = SupplierOrder.getSupplierOrderData(Queries.queryResult(
+					"select * from S_Order where Recieved_By = '-1' and month(Date_Of_Order) like ? ;",
+					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
 
 		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Year") {
-			try {
-				filteredList = SupplierOrder.getSupplierOrderData(Queries.queryResult(
-						"select * from S_Order where Recieved_By = '-1' " + "and Year(Date_Of_Order) like ? ;",
-						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
-			}
+			filteredList = SupplierOrder.getSupplierOrderData(Queries.queryResult(
+					"select * from S_Order where Recieved_By = '-1' " + "and Year(Date_Of_Order) like ? ;",
+					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
 		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Select") {
-			try {
-
-				filteredList = SupplierOrder.getSupplierOrderData(Queries.queryResult(
-						"select * from S_Order where Recieved_By = '-1' and (Order_ID like ? or Year(Date_Of_Order) like ? "
-								+ " or month(Date_Of_Order) like ?  or supplier_ID like ? or Order_ID like ? ) ;",
-						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%", "%" + stringToSearch + "%",
-								"%" + stringToSearch + "%", "%" + stringToSearch + "%", "%" + stringToSearch + "%"))));
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
-			}
+			filteredList = SupplierOrder.getSupplierOrderData(Queries.queryResult(
+					"select * from S_Order where Recieved_By = '-1' and (Order_ID like ? or Year(Date_Of_Order) like ? "
+							+ " or month(Date_Of_Order) like ?  or supplier_ID like ? or Order_ID like ? ) ;",
+					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%", "%" + stringToSearch + "%",
+							"%" + stringToSearch + "%", "%" + stringToSearch + "%", "%" + stringToSearch + "%"))));
 		} else {
-			try {
-
-				filteredList = SupplierOrder.getSupplierOrderData(Queries.queryResult(
-						"select * from S_Order where Recieved_By = '-1' and (Order_ID like ? or Year(Date_Of_Order) like ? "
-								+ " or month(Date_Of_Order) like ?  or supplier_ID like ? or Order_ID like ? ) ;",
-						new ArrayList<>(Arrays.asList("%" + stringToSearch + "%", "%" + stringToSearch + "%",
-								"%" + stringToSearch + "%", "%" + stringToSearch + "%", "%" + stringToSearch + "%"))));
-			} catch (ClassNotFoundException | SQLException | ParseException e) {
-				e.printStackTrace();
-			}
+			filteredList = SupplierOrder.getSupplierOrderData(Queries.queryResult(
+					"select * from S_Order where Recieved_By = '-1' and (Order_ID like ? or Year(Date_Of_Order) like ? "
+							+ " or month(Date_Of_Order) like ?  or supplier_ID like ? or Order_ID like ? ) ;",
+					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%", "%" + stringToSearch + "%",
+							"%" + stringToSearch + "%", "%" + stringToSearch + "%", "%" + stringToSearch + "%"))));
 		}
 		unreceivedOrdersTable.setItems(FXCollections.observableArrayList(filteredList));
 	}
@@ -195,12 +163,8 @@ public class UnReceivedController implements Initializable {
 		orderByIDColumn.setCellValueFactory(new PropertyValueFactory<SupplierOrder, String>("managerID"));
 		orderFromIDColumn.setCellValueFactory(new PropertyValueFactory<SupplierOrder, String>("supplierID"));
 
-		try {
-			unreceivedOrdersTable.setItems(FXCollections.observableArrayList(SupplierOrder.getSupplierOrderData(
-					Queries.queryResult("select * from S_Order where Recieved_By = '-1';", null))));
-		} catch (ClassNotFoundException | SQLException | ParseException e1) {
-			e1.printStackTrace();
-		}
+		unreceivedOrdersTable.setItems(FXCollections.observableArrayList(SupplierOrder.getSupplierOrderData(
+				Queries.queryResult("select * from S_Order where Recieved_By = '-1';", null))));
 
 		searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 			stringToSearch=newValue;

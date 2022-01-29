@@ -27,7 +27,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
@@ -169,22 +168,17 @@ public class CustomerEditController implements Initializable {
 			ColorAdjust effect = new ColorAdjust();
 			effect.setBrightness(0.8);
 			saveCustomer.setEffect(effect);
-			try {
-				ArrayList<String> parameters = new ArrayList<>();
-				parameters.add(customerTable.getItems().get(0).getNationalID());
-				parameters.add(customerTable.getItems().get(0).getName());
-				parameters.add("" + customerTable.getItems().get(0).getDebt());
-				parameters.add(customerNID);
-				Queries.queryUpdate("update Customer set Customer_NID=? , Customer_Name=? , Customer_debt=? "
-						+ " where Customer_NID=? ;", parameters);
-				
-				Customer.getCustomerData();
-				caller.saveEdits();
-				customerNID = customer.getNationalID();
-			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			ArrayList<String> parameters = new ArrayList<>();
+			parameters.add(customerTable.getItems().get(0).getNationalID());
+			parameters.add(customerTable.getItems().get(0).getName());
+			parameters.add("" + customerTable.getItems().get(0).getDebt());
+			parameters.add(customerNID);
+			Queries.queryUpdate("update Customer set Customer_NID=? , Customer_Name=? , Customer_debt=? "
+					+ " where Customer_NID=? ;", parameters);
+			
+			Customer.getCustomerData();
+			caller.saveEdits();
+			customerNID = customer.getNationalID();
 		}
 
 	}
@@ -213,7 +207,7 @@ public class CustomerEditController implements Initializable {
 		}
 	}
 
-	public void addCustomerOnMousePressed() throws ClassNotFoundException, SQLException {
+	public void addCustomerOnMousePressed(){
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
 		addCustomer.setEffect(effect);
@@ -334,28 +328,24 @@ public class CustomerEditController implements Initializable {
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
 		debtColumn.setCellValueFactory(new PropertyValueFactory<Customer, Double>("debt"));
 		nidColumn.setOnEditCommit((CellEditEvent<Customer, String> t) -> {
-			try {
-				if ((Queries.queryResult("select * from Customer where Customer_NID=? ;",
-						new ArrayList<>(Arrays.asList(t.getNewValue())))).size() != 0
-						&& !t.getOldValue().equals(t.getNewValue())) {
-					Alert alert = new Alert(Alert.AlertType.ERROR);
-					alert.setHeaderText(null);
-					alert.setContentText("Custemer with this National ID already exists");
-					alert.showAndWait();
-					((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNationalID(t.getOldValue());
-				} else if (t.getNewValue().matches("[0-9]{9}") || t.getNewValue().equals("0")) {
-					((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNationalID(t.getNewValue());
-				} else {
-					Alert alert = new Alert(Alert.AlertType.ERROR);
-					alert.setTitle("Wrong Input Format");
-					alert.setHeaderText(null);
-					alert.setContentText("National ID Must Be 9 Digits");
-					alert.showAndWait();
+			if ((Queries.queryResult("select * from Customer where Customer_NID=? ;",
+					new ArrayList<>(Arrays.asList(t.getNewValue())))).size() != 0
+					&& !t.getOldValue().equals(t.getNewValue())) {
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setHeaderText(null);
+				alert.setContentText("Custemer with this National ID already exists");
+				alert.showAndWait();
+				((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNationalID(t.getOldValue());
+			} else if (t.getNewValue().matches("[0-9]{9}") || t.getNewValue().equals("0")) {
+				((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNationalID(t.getNewValue());
+			} else {
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setTitle("Wrong Input Format");
+				alert.setHeaderText(null);
+				alert.setContentText("National ID Must Be 9 Digits");
+				alert.showAndWait();
 
-					((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNationalID(t.getOldValue());
-				}
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
+				((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNationalID(t.getOldValue());
 			}
 			customerTable.refresh();
 		});

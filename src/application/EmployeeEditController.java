@@ -19,8 +19,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import java.net.URL;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
@@ -157,30 +155,26 @@ public class EmployeeEditController implements Initializable {
 		addPhone.setEffect(effect);
 	}
 
-	public void saveOnMousePressed() throws ParseException {
+	public void saveOnMousePressed(){
 		if (employee != null) {
 			ColorAdjust effect = new ColorAdjust();
 			effect.setBrightness(0.8);
 			saveEmployee.setEffect(effect);
-			try {
-				ArrayList<String> parameters = new ArrayList<>();
-				parameters.add(employeeTable.getItems().get(0).getName());
-				parameters.add(employeeTable.getItems().get(0).getNationalID());
-				parameters.add(employeeTable.getItems().get(0).getHourlyPaid() + "");
-				parameters.add(Employee.encryptPassword(employeeTable.getItems().get(0).getName(),
-						employeeTable.getItems().get(0).getPassword()));
-				parameters.add(employeeTable.getItems().get(0).getIsManager());
-				parameters.add(employeeTable.getItems().get(0).getIsActive());
-				parameters.add(employee.getID() + "");
-				Queries.queryUpdate("update Employee set Employee_Name=?" + " , Employee_National_ID=? "
-						+ " , Employee_Hourly_Paid=? " + " , Employee_password=? " + " , isManager=? "
-						+ " , isActive=? " + " where Employee_ID=? ;", parameters);
+			ArrayList<String> parameters = new ArrayList<>();
+			parameters.add(employeeTable.getItems().get(0).getName());
+			parameters.add(employeeTable.getItems().get(0).getNationalID());
+			parameters.add(employeeTable.getItems().get(0).getHourlyPaid() + "");
+			parameters.add(Employee.encryptPassword(employeeTable.getItems().get(0).getName(),
+					employeeTable.getItems().get(0).getPassword()));
+			parameters.add(employeeTable.getItems().get(0).getIsManager());
+			parameters.add(employeeTable.getItems().get(0).getIsActive());
+			parameters.add(employee.getID() + "");
+			Queries.queryUpdate("update Employee set Employee_Name=?" + " , Employee_National_ID=? "
+					+ " , Employee_Hourly_Paid=? " + " , Employee_password=? " + " , isManager=? "
+					+ " , isActive=? " + " where Employee_ID=? ;", parameters);
 
-				Employee.getEmployeeData();
-				caller.saveEdits();
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			Employee.getEmployeeData();
+			caller.saveEdits();
 		}
 
 	}
@@ -209,7 +203,7 @@ public class EmployeeEditController implements Initializable {
 		}
 	}
 
-	public void addEmployeeOnMousePressed() throws ClassNotFoundException, SQLException {
+	public void addEmployeeOnMousePressed() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
 		addEmployee.setEffect(effect);
@@ -368,30 +362,26 @@ public class EmployeeEditController implements Initializable {
 		isActiveColumn.setCellFactory(TextFieldTableCell.<Employee>forTableColumn());
 		passwordColumn.setCellFactory(TextFieldTableCell.<Employee>forTableColumn());
 		nidColumn.setOnEditCommit((CellEditEvent<Employee, String> t) -> {
-			try {
-				if ((Queries.queryResult("select * from Customer where Employee_NID=? ;",
-						new ArrayList<>(Arrays.asList(t.getNewValue())))).size() != 0
-						&& !t.getOldValue().equals(t.getNewValue())) {
-					Alert alert = new Alert(Alert.AlertType.ERROR);
-					alert.setHeaderText(null);
-					alert.setContentText("Employee with This National ID Already Exists");
-					alert.showAndWait();
-					((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
-							.setNationalID(t.getOldValue());
-				} else if (t.getNewValue().matches("[0-9]{9}")) {
-					((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
-							.setNationalID(t.getNewValue());
-				} else {
-					Alert alert = new Alert(Alert.AlertType.ERROR);
-					alert.setTitle("Wrong Input Format");
-					alert.setHeaderText(null);
-					alert.setContentText("National ID Must Be 9 Digits");
-					alert.showAndWait();
-					((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
-							.setNationalID(t.getOldValue());
-				}
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
+			if ((Queries.queryResult("select * from Customer where Employee_NID=? ;",
+					new ArrayList<>(Arrays.asList(t.getNewValue())))).size() != 0
+					&& !t.getOldValue().equals(t.getNewValue())) {
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setHeaderText(null);
+				alert.setContentText("Employee with This National ID Already Exists");
+				alert.showAndWait();
+				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+						.setNationalID(t.getOldValue());
+			} else if (t.getNewValue().matches("[0-9]{9}")) {
+				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+						.setNationalID(t.getNewValue());
+			} else {
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setTitle("Wrong Input Format");
+				alert.setHeaderText(null);
+				alert.setContentText("National ID Must Be 9 Digits");
+				alert.showAndWait();
+				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+						.setNationalID(t.getOldValue());
 			}
 			employeeTable.refresh();
 		});

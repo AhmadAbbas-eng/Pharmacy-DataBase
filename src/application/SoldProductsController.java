@@ -10,7 +10,6 @@ import java.util.*;
 import javafx.scene.control.TableView;
 import javafx.fxml.Initializable;
 import java.net.URL;
-import java.sql.SQLException;
 import Relations.*;
 
 /**
@@ -66,14 +65,10 @@ public class SoldProductsController implements Initializable {
 	public void setProduct(String productID, String productName) {
 		this.productID = productID;
 		title.setText(productName + " Sold Batches");
-		try {
-			filterList();
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		filterList();
 	}
 
-	public void filterList() throws ClassNotFoundException, SQLException {
+	public void filterList() {
 		String searchCondition = "";
 		ArrayList<ArrayList<String>> filteredList = new ArrayList<>();
 		ArrayList<String> parameters = new ArrayList<>();
@@ -200,11 +195,7 @@ public class SoldProductsController implements Initializable {
 
 		searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
 			this.stringToSearch = newValue;
-			try {
-				filterList();
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			filterList();
 		});
 
 	}

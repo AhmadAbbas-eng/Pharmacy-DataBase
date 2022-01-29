@@ -9,10 +9,8 @@ import javafx.util.Callback;
 import javafx.scene.control.TableView;
 import javafx.fxml.Initializable;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 import Relations.Queries;
 
 /**
@@ -39,15 +37,11 @@ public class ProductsReportController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 
-		try {
-			productTable.setItems(
-					FXCollections.observableArrayList(Queries.queryResult(
-							"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer\r\n"
-									+ "from product p,Name_manu m\r\n" + "where P.product_name=m.product_name;",
-							null)));
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		productTable.setItems(
+				FXCollections.observableArrayList(Queries.queryResult(
+						"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer\r\n"
+								+ "from product p,Name_manu m\r\n" + "where P.product_name=m.product_name;",
+						null)));
 
 		productIdColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {

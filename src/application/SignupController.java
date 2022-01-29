@@ -2,8 +2,6 @@ package application;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
@@ -164,19 +162,26 @@ public class SignupController implements Initializable {
 		addPhone.setEffect(effect);
 	}
 
-	public void cancelButton(ActionEvent e) throws IOException {
+	public void cancelButton(ActionEvent e) {
 
 		Stage stage = (Stage) cancelButton.getScene().getWindow();
 		stage.close();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("LogIn.fxml"));
-		Parent root1 = (Parent) loader.load();
-		Stage stage2 = new Stage();
-		stage2.setScene(new Scene(root1));
-		stage2.show();
+		Parent root1;
+		try {
+			root1 = (Parent) loader.load();
+
+			Stage stage2 = new Stage();
+			stage2.setScene(new Scene(root1));
+			stage2.show();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
-	public void addUser(ActionEvent e) throws IOException, ClassNotFoundException, SQLException, ParseException {
-		
+	public void addUser(ActionEvent e) {
+
 		boolean flag = false;
 		if (employeeNameTextField.getText().isBlank() == false && nationalIDTextField.getText().isBlank() == false
 				&& dateOfWorkPicker.getValue().toString().isBlank() == false
@@ -205,7 +210,7 @@ public class SignupController implements Initializable {
 					if (str.matches("[a-zA-Z]+") == false) {
 						flag = true;
 					}
-					
+
 					if (flag) {
 						Alert alert = new Alert(Alert.AlertType.ERROR);
 						alert.setTitle("Wrong Input");
@@ -224,7 +229,7 @@ public class SignupController implements Initializable {
 								nationalIDTextField.getText(), dateOfWorkPicker.getValue(),
 								Double.parseDouble(hourlyPaidTextField.getText()), phones, passwordTextField.getText(),
 								ismanager, "true");
-						
+
 						Employee.getData().add(temp);
 						Employee.insertEmployee(employeeNameTextField.getText(), nationalIDTextField.getText(),
 								dateOfWorkPicker.getValue(), Double.parseDouble(hourlyPaidTextField.getText()), phones,
@@ -233,10 +238,17 @@ public class SignupController implements Initializable {
 						Stage stage = (Stage) addNewUserButton.getScene().getWindow();
 						stage.close();
 						FXMLLoader loader = new FXMLLoader(getClass().getResource("LogIn.fxml"));
-						Parent root1 = (Parent) loader.load();
-						Stage stage2 = new Stage();
-						stage2.setScene(new Scene(root1));
-						stage2.show();
+						Parent root1;
+						try {
+							root1 = (Parent) loader.load();
+
+							Stage stage2 = new Stage();
+							stage2.setScene(new Scene(root1));
+							stage2.show();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 					}
 				}
 			} else {

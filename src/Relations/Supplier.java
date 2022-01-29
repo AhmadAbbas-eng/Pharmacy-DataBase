@@ -1,8 +1,5 @@
 package Relations;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -136,11 +133,8 @@ public class Supplier {
 	/**
 	 * Read from data base and fill the ArrayList
 	 * 
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
 	 */
-	public static void getSupplierData() throws ClassNotFoundException, SQLException {
+	public static void getSupplierData() {
 
 		data.clear();
 		ArrayList<ArrayList<String>> table = Queries.queryResult("select * from Supplier;", null);
@@ -162,12 +156,8 @@ public class Supplier {
 	 * 
 	 * @param table ArrayList<ArrayList<String>> to fill data with
 	 * @return ArrayList<Supplier> of data
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
 	 */
-	public static ArrayList<Supplier> getSupplierData(ArrayList<ArrayList<String>> table)
-			throws ClassNotFoundException, SQLException {
+	public static ArrayList<Supplier> getSupplierData(ArrayList<ArrayList<String>> table){
 
 		ArrayList<Supplier> tempData = new ArrayList<Supplier>();
 
@@ -182,7 +172,7 @@ public class Supplier {
 		return tempData;
 	}
 
-	public static void getSupplierPhone(Supplier supplier) throws SQLException, ClassNotFoundException {
+	public static void getSupplierPhone(Supplier supplier){
 		ArrayList<ArrayList<String>> phonesSet = Queries.queryResult(
 				"select Supplier_Phone from Supplier_Phone where Supplier_ID=? ;",
 				new ArrayList<>(Arrays.asList(supplier.getID() + "")));
@@ -198,23 +188,15 @@ public class Supplier {
 
 	public void clearSupplierPhones() {
 		for (int i = 0; i < getPhones().size(); i++) {
-			try {
-				Queries.queryResult("delete from Supplier_Phone where Supplier_ID=? ;",
-						new ArrayList<>(Arrays.asList(getID() + "")));
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			Queries.queryResult("delete from Supplier_Phone where Supplier_ID=? ;",
+					new ArrayList<>(Arrays.asList(getID() + "")));
 		}
 	}
 
 	public static void insertSupplierPhone(String phone, int sID) {
 
-		try {
-			Queries.queryUpdate("Insert into Supplier_Phone (Supplier_ID, Supplier_Phone) values(?, ?);",
-					new ArrayList<>(Arrays.asList(sID + "", phone)));
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		Queries.queryUpdate("Insert into Supplier_Phone (Supplier_ID, Supplier_Phone) values(?, ?);",
+				new ArrayList<>(Arrays.asList(sID + "", phone)));
 	}
 
 	public static void insertSupplierPhone(ArrayList<String> phones, int Sid) {
@@ -225,15 +207,10 @@ public class Supplier {
 
 	public static void insertSupplier(String sname, String address, String email, double dues,
 			ArrayList<String> phones) {
-		try {
-			Queries.queryUpdate("insert into Supplier values (?, ?, ?, ?, ?);",
-					new ArrayList<>(Arrays.asList((++maxID) + "", sname, address, email, dues + "")));
-			if (phones != null) {
-				insertSupplierPhone(phones, maxID);
-			}
-
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+		Queries.queryUpdate("insert into Supplier values (?, ?, ?, ?, ?);",
+				new ArrayList<>(Arrays.asList((++maxID) + "", sname, address, email, dues + "")));
+		if (phones != null) {
+			insertSupplierPhone(phones, maxID);
 		}
 	}
 
@@ -241,12 +218,8 @@ public class Supplier {
 	 * Report Suppliers informations on csv file
 	 * 
 	 * @param path The path of file
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
-	 * @throws IOException
 	 */
-	public static void report(String path) throws ClassNotFoundException, SQLException, IOException {
+	public static void report(String path){
 		Queries.reportQuerey(" select * from supplier;", path);
 	}
 }

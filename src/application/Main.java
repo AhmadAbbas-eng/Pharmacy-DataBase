@@ -1,10 +1,6 @@
 package application;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.spec.InvalidKeySpecException;
-import java.io.FileWriter;
-import java.io.IOException;
+
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -35,32 +31,35 @@ public class Main extends Application {
 		}
 	}
 
-	public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException, ParseException,
-			NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
-		 
-		
+	public static void main(String[] args)  {
+
 //		generateS_order();
 //		c_order_generate();
 //		payment();
 		Main.readingData();
-		 launch(args);
+		launch(args);
 	}
 
-	public static void readingData() throws ClassNotFoundException, SQLException, ParseException, IOException {
-		Batch.getBatchData();
-		Cheque.getChequeData();
-		Customer.getCustomerData();
-		CustomerOrder.getCustomerOrderData();
-		Drug.getDrugData();
-		Employee.getEmployeeData();
-		Payment.getPaymentData();
-		Product.getProductData();
-		Supplier.getSupplierData();
-		SupplierOrder.getSupplierOrderData();
-		Tax.getTaxData();
+	public static void readingData() {
+		try {
+			Batch.getBatchData();
+			Cheque.getChequeData();
+			Customer.getCustomerData();
+			CustomerOrder.getCustomerOrderData();
+			Drug.getDrugData();
+			Employee.getEmployeeData();
+			Payment.getPaymentData();
+			Product.getProductData();
+			Supplier.getSupplierData();
+			SupplierOrder.getSupplierOrderData();
+			Tax.getTaxData();
+		} catch (ClassNotFoundException | SQLException | ParseException e) {
+			System.out.println("Can't Read data " + e.getMessage());
+		}
+
 	}
 
-	public static void generateS_order() throws ClassNotFoundException, SQLException, IOException {
+	public static void generateS_order()  {
 		ArrayList<String> s_order = new ArrayList<String>();
 		ArrayList<String> s_order_batch = new ArrayList<String>();
 		ArrayList<String> batch = new ArrayList<String>();
@@ -108,29 +107,21 @@ public class Main extends Application {
 			sOrderId++;
 			orderDate = orderDate.plusDays(15);
 		}
-		FileWriter batchWriter = new FileWriter("batchInsert" + ".txt");
 		for (String s : batch) {
 			Queries.queryUpdate("INSERT INTO `batch` VALUES (" + s + ");\n", null);
 		}
-		batchWriter.close();
-		FileWriter s_orderwriter = new FileWriter("s_orderInsert" + ".txt");
 		for (String s : s_order) {
 			Queries.queryUpdate("INSERT INTO `s_order` VALUES (" + s + ");\n", null);
 
 		}
-		s_orderwriter.close();
-
-		FileWriter s_order_batchwriter = new FileWriter("s_orderBatchInsert" + ".txt");
 		for (String s : s_order_batch) {
 			Queries.queryUpdate("INSERT INTO `s_order_batch` VALUES (" + s + ");\n", null);
 
 		}
-		s_order_batchwriter.close();
-
 		System.out.println("done");
 	}
 
-	public static void c_order_generate() throws ClassNotFoundException, SQLException, IOException {
+	public static void c_order_generate(){
 
 		ArrayList<String> c_order = new ArrayList<String>();
 		ArrayList<String> c_order_batch = new ArrayList<String>();
@@ -179,7 +170,6 @@ public class Main extends Application {
 			}
 			orderDate = orderDate.plusDays(1);
 		}
-		FileWriter incomeWriter = new FileWriter("incomeInsert" + ".txt");
 		for (String s : income) {
 
 			Queries.queryUpdate(
@@ -187,26 +177,19 @@ public class Main extends Application {
 							+ s + ");\n",
 					null);
 		}
-		incomeWriter.close();
 
-		FileWriter c_order_wirter = new FileWriter("c_orderInsert" + ".txt");
 		for (String s : c_order) {
 			Queries.queryUpdate("INSERT INTO `c_order` VALUES(" + s + ");\n", null);
 		}
-		c_order_wirter.close();
 
-		FileWriter c_order_batch_wirter = new FileWriter("c_order_batchInsert" + ".txt");
 		for (String s : c_order_batch) {
 
 			Queries.queryUpdate("INSERT INTO `c_order_batch` VALUES(" + s + ");", null);
 		}
-		c_order_batch_wirter.close();
 
-		FileWriter c2owirter = new FileWriter("c2ohInsert" + ".txt");
 		for (String s : customer2order) {
 			Queries.queryUpdate("INSERT INTO `customer2order` VALUES(" + s + ");", null);
 		}
-		c2owirter.close();
 		System.out.println("done");
 	}
 
@@ -261,7 +244,6 @@ public class Main extends Application {
 								+ "where s.supplier_Id=so.supplier_Id and so.date_of_order<?;",
 						parameters);
 				int index = (int) (Math.random() * suppliers.size());
-				
 
 				for (int i = 0; i < 3 && suppliers.size() != 0; i++) {
 					int bankIndex = (int) (Math.random() * banks.size());
@@ -272,7 +254,8 @@ public class Main extends Application {
 					cheque.add(chequeId++ + "," + banks.get(bankIndex) + ",'" + orderDate.toString() + "','"
 							+ orderDate.plusMonths(1).toString() + "'," + paymentId + ",1");
 					Queries.queryUpdate("update Supplier set supplier_dues = supplier_dues - ? where Supplier_ID =?;",
-							new ArrayList<>(Arrays.asList( suppliers.get(index).get(2)+ "", suppliers.get(index).get(0) + "")));
+							new ArrayList<>(
+									Arrays.asList(suppliers.get(index).get(2) + "", suppliers.get(index).get(0) + "")));
 					suppliers.remove(index);
 					index = (int) (Math.random() * suppliers.size());
 					paymentId++;
@@ -300,7 +283,8 @@ public class Main extends Application {
 		for (String s : supplier) {
 			Queries.queryUpdate("INSERT INTO `supplier_payment` VALUES(" + s + ");", null);
 		}
-		System.out.println("done");System.gc();
+		System.out.println("done");
+		System.gc();
 	}
-	
+
 }

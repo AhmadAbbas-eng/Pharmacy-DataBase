@@ -1,6 +1,5 @@
 package Relations;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -10,6 +9,7 @@ import java.util.Arrays;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 /**
  * CustomerOrder class represents the relation between the customers' and their
@@ -144,14 +144,12 @@ public class CustomerOrder {
 	 * 
 	 * @param table ArrayList<ArrayList<String>> to fill data with
 	 * @return ArrayList<CustomerOrder> of data
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
 	 */
-	public static ArrayList<CustomerOrder> getCustomerOrderData(ArrayList<ArrayList<String>> table)
-			throws ClassNotFoundException, SQLException, ParseException {
+	public static ArrayList<CustomerOrder> getCustomerOrderData(ArrayList<ArrayList<String>> table) {
 
-		ArrayList<CustomerOrder> tempData = new ArrayList<CustomerOrder>();
+		
+
+		try {ArrayList<CustomerOrder> tempData = new ArrayList<CustomerOrder>();
 		Connection getPhoneConnection = Queries.dataBaseConnection();
 
 		for (int i = 0; i < table.size(); i++) {
@@ -162,38 +160,37 @@ public class CustomerOrder {
 
 			tempData.add(temp);
 		}
-
-		getPhoneConnection.close();
-		return tempData;
+			getPhoneConnection.close();
+			return tempData;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Loding Error");
+			alert.setHeaderText("Can't load data from c_order");
+			alert.setContentText(null);
+			alert.showAndWait();
+			return null;		}
+		
 	}
 
 	public static void insertCustomerOrder(String date, double price, double discount, double paid, int employeeID,
 			String customerNID) {
-		try {
-			Queries.queryUpdate("Insert into C_order values (? ,?, ?, ?, ?); ",
-					new ArrayList<>(Arrays.asList((++maxID) + "", date, price + "", discount + "", employeeID + "")));
+		Queries.queryUpdate("Insert into C_order values (? ,?, ?, ?, ?); ",
+				new ArrayList<>(Arrays.asList((++maxID) + "", date, price + "", discount + "", employeeID + "")));
 
-			Queries.queryUpdate("Insert into customer2order values(?, ?);",
-					new ArrayList<>(Arrays.asList(customerNID, maxID + "")));
+		Queries.queryUpdate("Insert into customer2order values(?, ?);",
+				new ArrayList<>(Arrays.asList(customerNID, maxID + "")));
 
-			Queries.queryUpdate("update Customer set Customer_Debt=customer_Debt+ ? where customer_nid=? ;",
-					new ArrayList<>(Arrays.asList((price - discount - paid) + "", customerNID)));
-
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		Queries.queryUpdate("update Customer set Customer_Debt=customer_Debt+ ? where customer_nid=? ;",
+				new ArrayList<>(Arrays.asList((price - discount - paid) + "", customerNID)));
 	}
 
 	/**
 	 * Report Customer selling informations on csv file
 	 * 
 	 * @param path The path of file
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
-	 * @throws IOException
 	 */
-	public void report(String path) throws ClassNotFoundException, SQLException, IOException {
+	public void report(String path){
 		Queries.reportQuerey("select c.customer_name ,co.order_date,co.employee_Id, p.product_name\r\n"
 				+ "from customer c,customer2order c2o,c_order co,c_order_batch cob,product p \r\n"
 				+ "where c.customer_NID=c2o.customer_NID and c2o.order_ID=co.order_ID and co.order_Id=cob.order_Id and p.product_Id=cob.product_ID;",
