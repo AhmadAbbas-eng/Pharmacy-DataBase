@@ -13,14 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import Relations.Batch;
-import Relations.Cheque;
-import Relations.Customer;
-import Relations.CustomerOrder;
-import Relations.Payment;
-import Relations.Product;
-import Relations.Queries;
-import Relations.Supplier;
+import Relations.*;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -54,14 +47,14 @@ public class ReportController implements Initializable {
 
 	@FXML
 	private Button saveReportButton;
-	
-    @FXML
-    private Label savedLabel;
 
-    @FXML
-    private ImageView saveIcon;
-    
-    public void showAndFade(Node node) {
+	@FXML
+	private Label savedLabel;
+
+	@FXML
+	private ImageView saveIcon;
+
+	public void showAndFade(Node node) {
 
 		Timeline show = new Timeline(
 				new KeyFrame(Duration.seconds(0), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)),
@@ -104,8 +97,8 @@ public class ReportController implements Initializable {
 			Payment.report(selectedDirectory.toString() + "/Payment");
 			showAndFade(saveIcon);
 			showAndFade(savedLabel);
-		} else if (reportType.getSelectionModel().getSelectedItem() == "Suppliers") {
-			Supplier.report(selectedDirectory.toString() + "/Suppliers");
+		} else if (reportType.getSelectionModel().getSelectedItem() == "Suppliers' Orders") {
+			SupplierOrder.report(selectedDirectory.toString() + "/Suppliers Orders");
 			showAndFade(saveIcon);
 			showAndFade(savedLabel);
 
@@ -124,8 +117,8 @@ public class ReportController implements Initializable {
 			showAndFade(saveIcon);
 			showAndFade(savedLabel);
 
-		} else if (reportType.getSelectionModel().getSelectedItem() == "Customers Order") {
-			CustomerOrder.report(selectedDirectory.toString() + "/Customers");
+		} else if (reportType.getSelectionModel().getSelectedItem() == "Customers' Orders") {
+			CustomerOrder.report(selectedDirectory.toString() + "/Customers Orders");
 			showAndFade(saveIcon);
 			showAndFade(savedLabel);
 
@@ -147,7 +140,7 @@ public class ReportController implements Initializable {
 
 			ArrayList<ArrayList<String>> minimunMonthArrayList = null;
 			ArrayList<ArrayList<String>> tableData = new ArrayList<>();
-			
+
 			minimunMonthArrayList = Queries
 					.queryResult("select min(x) from (\r\n" + "select min(I.income_Date) as 'x' from income I\r\n"
 							+ "union\r\n" + "select min(p.payment_Date) as 'x' from payment p) as a;", null);
@@ -164,11 +157,11 @@ public class ReportController implements Initializable {
 				Double netProfit = 0.0;
 
 				netProfit = Queries.getNetProfit(startMonth, startYear);
-				
+
 				String yearAndMonth = startMonth + "-" + startYear;
 				ArrayList<String> data = new ArrayList<>();
 				data.add(yearAndMonth);
-				data.add(netProfit+"");
+				data.add(netProfit + "");
 				tableData.add(data);
 				if (startMonth == 12) {
 					++startYear;
@@ -178,22 +171,24 @@ public class ReportController implements Initializable {
 				}
 
 			}
-			
+
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss"); // format date as current date
 			LocalDateTime now = LocalDateTime.now();
 
-			FileWriter fileWriter = new FileWriter(selectedDirectory.toString() + "/Net Profit" + dtf.format(now) + ".csv"); // Write on the path the user asked
-			fileWriter.write("Date"+","+"net Profit"+"\n");
+			FileWriter fileWriter = new FileWriter(
+					selectedDirectory.toString() + "/Net Profit" + dtf.format(now) + ".csv"); // Write on the path the
+																								// user asked
+			fileWriter.write("Date" + "," + "net Profit" + "\n");
 			// Write the names of attributes on file
 			for (int i = 0; i < tableData.size(); i++) {
-				fileWriter.write(tableData.get(i).get(0)+","+tableData.get(i).get(1)+"\n");
+				fileWriter.write(tableData.get(i).get(0) + "," + tableData.get(i).get(1) + "\n");
 			}
 			fileWriter.close();
 		}
 	}
 
-	ObservableList<String> reports = FXCollections.observableArrayList("-Select-", "Payment", "Suppliers", "Cheques",
-			"Disposal", "Customers Order", "Products Information", "Product Batches","Net Profit");
+	ObservableList<String> reports = FXCollections.observableArrayList("-Select-", "Payment", "Suppliers' Orders",
+			"Cheques", "Disposal", "Customers' Orders", "Products Information", "Product Batches", "Net Profit");
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -222,11 +217,10 @@ public class ReportController implements Initializable {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-
-			} else if (reportType.getSelectionModel().getSelectedItem() == "Suppliers") {
+			} else if (reportType.getSelectionModel().getSelectedItem() == "Suppliers' Orders") {
 				Region page;
 				try {
-					page = FXMLLoader.load(getClass().getResource("SuppliersReport.fxml"));
+					page = FXMLLoader.load(getClass().getResource("SupplierOrderReport.fxml"));
 					display.getChildren().removeAll();
 					display.getChildren().setAll(page);
 					page.prefWidthProperty().bind(display.widthProperty());
@@ -235,7 +229,7 @@ public class ReportController implements Initializable {
 					e1.printStackTrace();
 				}
 
-			}else if (reportType.getSelectionModel().getSelectedItem() == "Net Profit") {
+			} else if (reportType.getSelectionModel().getSelectedItem() == "Net Profit") {
 				Region page;
 				try {
 					page = FXMLLoader.load(getClass().getResource("NetProfit.fxml"));
@@ -271,7 +265,7 @@ public class ReportController implements Initializable {
 					e1.printStackTrace();
 				}
 
-			} else if (reportType.getSelectionModel().getSelectedItem() == "Customers Order") {
+			} else if (reportType.getSelectionModel().getSelectedItem() == "Customers' Orders") {
 				Region page;
 				try {
 					page = FXMLLoader.load(getClass().getResource("CustomersReport.fxml"));

@@ -213,13 +213,4 @@ public class Supplier {
 			insertSupplierPhone(phones, maxID);
 		}
 	}
-
-	/**
-	 * Report Suppliers informations on csv file
-	 * 
-	 * @param path The path of file
-	 */
-	public static void report(String path){
-		Queries.reportQuerey(" select * from supplier;", path);
-	}
 }
