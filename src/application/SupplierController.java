@@ -77,7 +77,7 @@ public class SupplierController implements Initializable {
 					parameters.add(supplierTable.getItems().get(i).getEmail());
 					parameters.add(supplierTable.getItems().get(i).getID() + "");
 					Queries.queryUpdate("update Supplier set Supplier_Email=? where Supplier_ID=? ;", parameters);
-					Supplier.getData().get(i).setAddress(supplierTable.getItems().get(i).getEmail());
+					Supplier.getData().get(i).setEmail(supplierTable.getItems().get(i).getEmail());
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
