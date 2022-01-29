@@ -31,7 +31,7 @@ public class CustomersReportController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		nationalIDColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("nationalIDColumn"));
+		nationalIDColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("nationalID"));
 		customerNameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
 		customerDebtColumn.setCellValueFactory(new PropertyValueFactory<Customer, Double>("debt"));
 		CustomerTable.setItems(Customer.getDataList());
