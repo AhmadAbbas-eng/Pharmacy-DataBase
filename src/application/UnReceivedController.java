@@ -63,9 +63,6 @@ public class UnReceivedController implements Initializable {
 
 	@FXML
 	private ImageView backImage;
-
-	@FXML
-	private StackPane mainPane;
 	
 	private String stringToSearch="";
 
@@ -74,10 +71,10 @@ public class UnReceivedController implements Initializable {
 
 	public void backOnAction() throws IOException {
 		Region page = FXMLLoader.load(getClass().getResource("SupplierReceivedOrder.fxml"));
-		mainPane.getChildren().removeAll();
-		mainPane.getChildren().setAll(page);
-		page.prefWidthProperty().bind(mainPane.widthProperty());
-		page.prefHeightProperty().bind(mainPane.heightProperty());
+		MainPageController.pane.getChildren().removeAll();
+		MainPageController.pane.getChildren().setAll(page);
+		page.prefWidthProperty().bind(MainPageController.pane.widthProperty());
+		page.prefHeightProperty().bind(MainPageController.pane.heightProperty());
 
 	}
 
@@ -91,10 +88,10 @@ public class UnReceivedController implements Initializable {
 			
 				ReceiveOrdersController edit = editLoader.getController();
 				edit.setRow(unreceivedOrdersTable.getSelectionModel().getSelectedItem());
-				mainPane.getChildren().removeAll();
-				mainPane.getChildren().setAll(editPane);
-				editPane.prefWidthProperty().bind(mainPane.widthProperty());
-				editPane.prefHeightProperty().bind(mainPane.heightProperty());
+				MainPageController.pane.getChildren().removeAll();
+				MainPageController.pane.getChildren().setAll(editPane);
+				editPane.prefWidthProperty().bind(MainPageController.pane.widthProperty());
+				editPane.prefHeightProperty().bind(MainPageController.pane.heightProperty());
 			} else {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle("Unselected Feild");

@@ -48,9 +48,6 @@ public class ReceivedController implements Initializable {
 	private TableColumn<SupplierOrder, String> orderFromIDColumn;
 
 	@FXML
-	private StackPane mainPane;
-
-	@FXML
 	private TextField searchTextField;
 
 	@FXML
@@ -78,10 +75,10 @@ public class ReceivedController implements Initializable {
 
 	public void backOnAction() throws IOException {
 		Region page = FXMLLoader.load(getClass().getResource("SupplierReceivedOrder.fxml"));
-		mainPane.getChildren().removeAll();
-		mainPane.getChildren().setAll(page);
-		page.prefWidthProperty().bind(mainPane.widthProperty());
-		page.prefHeightProperty().bind(mainPane.heightProperty());
+		MainPageController.pane.getChildren().removeAll();
+		MainPageController.pane.getChildren().setAll(page);
+		page.prefWidthProperty().bind(MainPageController.pane.widthProperty());
+		page.prefHeightProperty().bind(MainPageController.pane.heightProperty());
 
 	}
 	
