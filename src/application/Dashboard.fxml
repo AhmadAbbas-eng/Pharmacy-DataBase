@@ -181,7 +181,7 @@
                                                 <Font name="System Bold" size="24.0" />
                                              </font>
                                           </Label>
-                                          <Label fx:id="expiredLabel" alignment="TOP_CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="5.0" minWidth="10.0" prefHeight="28.0" prefWidth="100.0" text="Expired" textFill="WHITE">
+                                          <Label fx:id="expiredLabel" alignment="TOP_CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="5.0" minWidth="10.0" prefHeight="28.0" prefWidth="100.0" text="Expired Batches" textFill="WHITE">
                                              <font>
                                                 <Font name="System Bold" size="11.0" />
                                              </font>
