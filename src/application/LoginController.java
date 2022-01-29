@@ -1,5 +1,6 @@
 package application;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +12,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -85,7 +89,14 @@ public class LoginController {
 							stage2.setScene(new Scene(root1, 1100, 620));
 							stage2.setMinWidth(1110);
 							stage2.setMinHeight(650);
+
+							stage2.setOnCloseRequest(e -> {
+								// Platform.setImplicitExit(false);
+								Platform.exit();
+								System.exit(0);
+							});
 							stage2.show();
+
 						}
 
 					}
