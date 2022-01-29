@@ -13,6 +13,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.scene.control.TableView;
@@ -90,7 +91,7 @@ public class ProductController implements Initializable {
 	private String stringToSearch = "";
 
 	@FXML
-	private Button showBatchButton;
+	private Button showStockButton;
 
 	@FXML
 	private Button showSoldButton;
@@ -110,16 +111,17 @@ public class ProductController implements Initializable {
 			show.setProduct(productTable.getSelectionModel().getSelectedItem().get(0),
 					productTable.getSelectionModel().getSelectedItem().get(1));
 
-			Stage batchStage = new Stage();
+			Stage soldStage = new Stage();
+			soldStage.setAlwaysOnTop(true);
 			Scene scene = new Scene(sold);
-			batchStage.setScene(scene);
-			batchStage.show();
+			soldStage.setScene(scene);
+			soldStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void showOnAction() {
+	public void showStockOnAction() {
 		if (productTable.getSelectionModel().getSelectedItem() == null) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText("Product Must Be Chosen First");
@@ -133,6 +135,7 @@ public class ProductController implements Initializable {
 			BatchController show = loader.getController();
 			show.setProductID(productTable.getSelectionModel().getSelectedItem().get(0));
 			Stage batchStage = new Stage();
+			batchStage.setAlwaysOnTop(true);
 			Scene scene = new Scene(batch);
 			batchStage.setScene(scene);
 			batchStage.show();
@@ -199,6 +202,7 @@ public class ProductController implements Initializable {
 			Scene scene = new Scene(editPane);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Stage editStage = new Stage();
+			editStage.initModality(Modality.APPLICATION_MODAL);
 			editStage.setResizable(false);
 			editStage.setScene(scene);
 			editStage.show();
@@ -232,15 +236,6 @@ public class ProductController implements Initializable {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0);
 		editButton.setEffect(effect);
-	}
-
-	public void tableOnMousePressed() {
-		if (editLoader != null && productTable.getSelectionModel().getSelectedItem() != null) {
-			ProductEditController edit = editLoader.getController();
-			ArrayList<ArrayList<String>> temp = new ArrayList<>();
-			temp.add(productTable.getSelectionModel().getSelectedItem());
-			edit.setRow(temp, this);
-		}
 	}
 
 	public void saveEdits() {

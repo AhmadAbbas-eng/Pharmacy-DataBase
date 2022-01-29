@@ -11,6 +11,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.TableView;
 import javafx.fxml.Initializable;
@@ -99,6 +100,7 @@ public class EmployeeController implements Initializable {
 			EmployeeWorkedHoursController show = loader.getController();
 			show.setEmployee(employeeTable.getSelectionModel().getSelectedItem());
 			Stage workedHoursStage = new Stage();
+			workedHoursStage.setAlwaysOnTop(true);
 			Scene scene = new Scene(workedHours);
 			workedHoursStage.setScene(scene);
 			workedHoursStage.show();
@@ -121,6 +123,7 @@ public class EmployeeController implements Initializable {
 			EmployeePhoneController show = loader.getController();
 			show.setPhoneNumbers(employeeTable.getSelectionModel().getSelectedItem());
 			Stage contactInfoStage = new Stage();
+			contactInfoStage.setAlwaysOnTop(true);
 			Scene scene = new Scene(contactInfo, 500, 500);
 			contactInfoStage.setScene(scene);
 			contactInfoStage.show();
@@ -141,6 +144,7 @@ public class EmployeeController implements Initializable {
 			Scene scene = new Scene(editPane);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Stage editStage = new Stage();
+			editStage.initModality(Modality.APPLICATION_MODAL);
 			editStage.setResizable(false);
 			editStage.setScene(scene);
 			editStage.show();
@@ -167,13 +171,6 @@ public class EmployeeController implements Initializable {
 		editButton.setEffect(effect);
 	}
 
-	public void tableOnMousePressed() {
-		if (editLoader != null && employeeTable.getSelectionModel().getSelectedItem() != null) {
-			EmployeeEditController edit = editLoader.getController();
-			edit.setRow(employeeTable.getSelectionModel().getSelectedItem(), this);
-		}
-	}
-
 	public void saveEdits() {
 		employeeTable.setItems(Employee.getDataList());
 	}
@@ -195,7 +192,7 @@ public class EmployeeController implements Initializable {
 				filteredList = Employee
 						.getEmployeeData(Queries.queryResult("select * from Employee where Employee_ID<>-1 "
 								+ isActiveCondition + isManagerCondition + " order by Employee_ID;", null));
-			
+
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
 				e.printStackTrace();
 			}
@@ -207,7 +204,7 @@ public class EmployeeController implements Initializable {
 										"select * from Employee where Employee_ID<>-1 and Employee_National_ID like ? "
 												+ isActiveCondition + isManagerCondition + " order by Employee_ID;",
 										null));
-				
+
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
 				e.printStackTrace();
 			}
@@ -218,7 +215,7 @@ public class EmployeeController implements Initializable {
 								"select * from Employee where Employee_ID<>-1 and Employee_Name like ? "
 										+ isActiveCondition + isManagerCondition + " order by Employee_ID;",
 								parameters));
-				
+
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
 				e.printStackTrace();
 			}
@@ -229,7 +226,7 @@ public class EmployeeController implements Initializable {
 								"select * from Employee where Employee_ID<>-1 and Employee_ID like ? "
 										+ isActiveCondition + isManagerCondition + " order by Employee_ID;",
 								parameters));
-				
+
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
 				e.printStackTrace();
 			}
@@ -241,7 +238,7 @@ public class EmployeeController implements Initializable {
 								"select * from Employee where Employee_ID<>-1 and Employee_Date_Of_Work like ? "
 										+ isActiveCondition + isManagerCondition + " order by Employee_ID;",
 								parameters));
-				
+
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
 				e.printStackTrace();
 			}
@@ -255,7 +252,7 @@ public class EmployeeController implements Initializable {
 						+ " where (Employee_Name like ? or Employee_National_ID  like ? or Employee_ID like ? "
 						+ " or Employee_Date_Of_Work like ? ) " + isActiveCondition + isManagerCondition
 						+ " order by Employee_ID;", parameters));
-				
+
 			} catch (ClassNotFoundException | SQLException | ParseException e) {
 				e.printStackTrace();
 			}
@@ -268,7 +265,7 @@ public class EmployeeController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 		fieldSelector.setItems(
 				FXCollections.observableArrayList("-Specify Field-", "National ID", "Name", "ID", "Date of Work"));
-		
+
 		idColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("ID"));
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
 		nidColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("NID"));

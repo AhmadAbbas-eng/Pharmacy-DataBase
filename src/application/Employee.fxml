@@ -15,7 +15,7 @@
 
 <AnchorPane prefHeight="453.0" prefWidth="795.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.EmployeeController">
    <children>
-      <TableView fx:id="employeeTable" layoutX="22.0" layoutY="70.0" onMousePressed="#tableOnMousePressed" prefHeight="275.0" prefWidth="583.0" style="-fx-background-color: transparent;" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="108.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="70.0">
+      <TableView fx:id="employeeTable" layoutX="22.0" layoutY="70.0" prefHeight="275.0" prefWidth="583.0" style="-fx-background-color: transparent;" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="108.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="70.0">
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>

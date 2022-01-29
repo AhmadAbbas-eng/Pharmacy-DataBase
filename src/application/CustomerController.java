@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.fxml.Initializable;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -119,6 +120,7 @@ public class CustomerController implements Initializable {
 			CustomerProductsController show = loader.getController();
 			show.setCustomer(customerTable.getSelectionModel().getSelectedItem());
 			Stage productsStage = new Stage();
+			productsStage.setAlwaysOnTop(true);
 			Scene scene = new Scene(products);
 			productsStage.setScene(scene);
 			productsStage.show();
@@ -141,6 +143,7 @@ public class CustomerController implements Initializable {
 			CustomerPhoneController show = loader.getController();
 			show.setPhoneNumbers(customerTable.getSelectionModel().getSelectedItem());
 			Stage contactInfoStage = new Stage();
+			contactInfoStage.setAlwaysOnTop(true);
 			Scene scene = new Scene(contactInfo, 500, 500);
 			contactInfoStage.setScene(scene);
 			contactInfoStage.show();
@@ -162,6 +165,7 @@ public class CustomerController implements Initializable {
 			Scene scene = new Scene(editPane);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Stage editStage = new Stage();
+			editStage.initModality(Modality.APPLICATION_MODAL);
 			editStage.setResizable(false);
 			editStage.setScene(scene);
 			editStage.show();
@@ -186,13 +190,6 @@ public class CustomerController implements Initializable {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0);
 		editButton.setEffect(effect);
-	}
-
-	public void tableOnMousePressed() {
-		if (editLoader != null && customerTable.getSelectionModel().getSelectedItem() != null) {
-			CustomerEditController edit = editLoader.getController();
-			edit.setRow(customerTable.getSelectionModel().getSelectedItem(), this);
-		}
 	}
 
 	public void saveEdits() {
