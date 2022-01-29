@@ -14,32 +14,32 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="491.0" prefWidth="982.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SupplierOrderController">
+<StackPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="982.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SupplierOrderController">
    <children>
-      <AnchorPane prefHeight="491.0" prefWidth="974.0">
+      <AnchorPane prefHeight="449.0" prefWidth="982.0">
          <children>
-            <ListView fx:id="orderdProductsList" layoutX="20.0" layoutY="342.0" prefHeight="300.0" prefWidth="864.0" stylesheets="@../../CSS/list.css" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="245.0" AnchorPane.topAnchor="288.6" />
-            <ImageView fx:id="addProductIcon" fitHeight="28.0" fitWidth="32.0" layoutX="888.9333333333332" layoutY="289.33333333333337" onMouseEntered="#addOnMouseEntered" onMouseExited="#addOnMouseExited" onMousePressed="#addOnMousePressed" onMouseReleased="#addOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="212.4000000000001" AnchorPane.topAnchor="289.6">
+            <ListView fx:id="orderdProductsList" layoutX="20.0" layoutY="262.0" prefHeight="193.0" prefWidth="717.0" stylesheets="@../../CSS/list.css" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="245.0" AnchorPane.topAnchor="262.0" />
+            <ImageView fx:id="addProductIcon" fitHeight="28.0" fitWidth="32.0" layoutX="741.5999999999999" layoutY="261.6" onMouseEntered="#addOnMouseEntered" onMouseExited="#addOnMouseExited" onMousePressed="#addOnMousePressed" onMouseReleased="#addOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="212.4000000000001" AnchorPane.topAnchor="261.6">
                <image>
                   <Image url="@../../Icons/icons8-add-48.png" />
                </image>
             </ImageView>
             <TextField fx:id="searchTextField" layoutX="20.0" layoutY="52.0" prefHeight="26.0" prefWidth="170.0" promptText="Search" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="52.0" />
-            <Label layoutX="930.1999999999997" layoutY="295.33333333333337" text="Add Products" textFill="#1d6f84" AnchorPane.rightAnchor="109.80000000000018" AnchorPane.topAnchor="295.6">
+            <Label layoutX="782.8666666666664" layoutY="267.6" text="Add Products" textFill="#1d6f84" AnchorPane.rightAnchor="109.80000000000018" AnchorPane.topAnchor="267.6">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label layoutX="914.9333333333332" layoutY="342.33333333333337" prefHeight="27.0" prefWidth="92.0" text="Total Cost" textFill="#1d6f84" AnchorPane.rightAnchor="122.40000000000009" AnchorPane.topAnchor="342.73333333333335">
+            <Label layoutX="767.5999999999999" layoutY="314.73333333333335" prefHeight="27.0" prefWidth="92.0" text="Total Cost" textFill="#1d6f84" AnchorPane.rightAnchor="122.40000000000009" AnchorPane.topAnchor="314.73333333333335">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label fx:id="costLabel" layoutX="917.0" layoutY="342.0" prefHeight="28.0" prefWidth="92.0" AnchorPane.rightAnchor="30.200000000000045" AnchorPane.topAnchor="342.0">
+            <Label fx:id="costLabel" layoutX="859.8" layoutY="314.0" prefHeight="28.0" prefWidth="92.0" AnchorPane.rightAnchor="30.200000000000045" AnchorPane.topAnchor="314.0">
                <font>
                   <Font size="16.0" />
                </font></Label>
-            <TableView fx:id="supplierTable" layoutX="20.0" layoutY="102.0" prefHeight="179.0" prefWidth="460.0" stylesheets="@../../CSS/table.css" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="102.0">
+            <TableView fx:id="supplierTable" layoutX="20.0" layoutY="102.0" prefHeight="150.0" prefWidth="460.0" stylesheets="@../../CSS/table.css" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="102.0">
                <columns>
                   <TableColumn fx:id="supplierNameColumn" prefWidth="265.6000122070312" text=" Supplier Name" />
                </columns>
@@ -61,7 +61,7 @@
                </font>
             </Label>
             <TextField fx:id="discountTextField" layoutX="734.0" layoutY="54.0" prefHeight="26.0" prefWidth="68.0" promptText="Discount" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="734.0" AnchorPane.topAnchor="54.0" />
-            <TableView fx:id="managerTable" layoutX="516.0" layoutY="102.0" prefHeight="179.0" prefWidth="460.0" stylesheets="@../../CSS/table.css" AnchorPane.leftAnchor="516.0" AnchorPane.topAnchor="102.0">
+            <TableView fx:id="managerTable" layoutX="516.0" layoutY="102.0" prefHeight="150.0" prefWidth="422.0" stylesheets="@../../CSS/table.css" AnchorPane.leftAnchor="516.0" AnchorPane.topAnchor="102.0">
                <columns>
                   <TableColumn fx:id="nationalIDColumn" prefWidth="116.0" text="National Id" />
                   <TableColumn fx:id="employeeNameColumn" prefWidth="146.40001220703124" text="Name" />
