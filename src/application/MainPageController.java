@@ -78,15 +78,23 @@ public class MainPageController implements Initializable {
 
 	public void PayingOffOnAction(ActionEvent e) throws IOException {
 		choosenButtonLabel.setText("Paying Off");
-		Parent page = FXMLLoader.load(getClass().getResource("PayingOff.fxml"));
+		Region page = FXMLLoader.load(getClass().getResource("PayingOff.fxml"));
 		contentArea.getChildren().removeAll();
+		page.setMinHeight(0);
+		page.setMinWidth(0);
+		page.prefWidthProperty().bind(contentArea.widthProperty());
+		page.prefHeightProperty().bind(contentArea.heightProperty());
 		contentArea.getChildren().setAll(page);
 	}
 
 	public void DisposeOnAction(ActionEvent e) throws IOException {
 		choosenButtonLabel.setText("Dispose");
-		Parent page = FXMLLoader.load(getClass().getResource("Disposal.fxml"));
+		Region page = FXMLLoader.load(getClass().getResource("Disposal.fxml"));
 		contentArea.getChildren().removeAll();
+		page.setMinHeight(0);
+		page.setMinWidth(0);
+		page.prefWidthProperty().bind(contentArea.widthProperty());
+		page.prefHeightProperty().bind(contentArea.heightProperty());
 		contentArea.getChildren().setAll(page);
 	}
 
@@ -94,12 +102,20 @@ public class MainPageController implements Initializable {
 		choosenButtonLabel.setText("Reports");
 
 		if (Employee.hasAccess()) {
-			Parent page = FXMLLoader.load(getClass().getResource("Reports.fxml"));
+			Region page = FXMLLoader.load(getClass().getResource("Reports.fxml"));
 			contentArea.getChildren().removeAll();
+			page.setMinHeight(0);
+			page.setMinWidth(0);
+			page.prefWidthProperty().bind(contentArea.widthProperty());
+			page.prefHeightProperty().bind(contentArea.heightProperty());
 			contentArea.getChildren().setAll(page);
 		} else {
-			Parent page = FXMLLoader.load(getClass().getResource("NotAvailable.fxml"));
+			Region page = FXMLLoader.load(getClass().getResource("NotAvailable.fxml"));
 			contentArea.getChildren().removeAll();
+			page.setMinHeight(0);
+			page.setMinWidth(0);
+			page.prefWidthProperty().bind(contentArea.widthProperty());
+			page.prefHeightProperty().bind(contentArea.heightProperty());
 			contentArea.getChildren().setAll(page);
 		}
 	}
@@ -118,16 +134,24 @@ public class MainPageController implements Initializable {
 	public void SellOnAction(ActionEvent e) throws IOException {
 		choosenButtonLabel.setText("New Sell");
 
-		Parent page = FXMLLoader.load(getClass().getResource("Sell.fxml"));
+		Region page = FXMLLoader.load(getClass().getResource("Sell.fxml"));
 		contentArea.getChildren().removeAll();
+		page.setMinHeight(0);
+		page.setMinWidth(0);
+		page.prefWidthProperty().bind(contentArea.widthProperty());
+		page.prefHeightProperty().bind(contentArea.heightProperty());
 		contentArea.getChildren().setAll(page);
 	}
 
 	public void CustomerOnAction(ActionEvent e) throws IOException {
 		choosenButtonLabel.setText("Customers");
 
-		Parent page = FXMLLoader.load(getClass().getResource("Customer.fxml"));
+		Region page = FXMLLoader.load(getClass().getResource("Customer.fxml"));
 		contentArea.getChildren().removeAll();
+		page.setMinHeight(0);
+		page.setMinWidth(0);
+		page.prefWidthProperty().bind(contentArea.widthProperty());
+		page.prefHeightProperty().bind(contentArea.heightProperty());
 		contentArea.getChildren().setAll(page);
 	}
 
@@ -136,6 +160,8 @@ public class MainPageController implements Initializable {
 
 		Region page = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
 		contentArea.getChildren().removeAll();
+		page.setMinHeight(0);
+		page.setMinWidth(0);
 		page.prefWidthProperty().bind(contentArea.widthProperty());
 		page.prefHeightProperty().bind(contentArea.heightProperty());
 		contentArea.getChildren().setAll(page);
@@ -144,20 +170,30 @@ public class MainPageController implements Initializable {
 	public void ProductsOnAction(ActionEvent e) throws IOException {
 		choosenButtonLabel.setText("Storage");
 
-		Parent page = FXMLLoader.load(getClass().getResource("Product.fxml"));
+		Region page = FXMLLoader.load(getClass().getResource("Product.fxml"));
 		contentArea.getChildren().removeAll();
+		page.setMinHeight(0);
+		page.setMinWidth(0);
+		page.prefWidthProperty().bind(contentArea.widthProperty());
+		page.prefHeightProperty().bind(contentArea.heightProperty());
 		contentArea.getChildren().setAll(page);
 	}
 
 	public void EmployeesOnAction(ActionEvent e) throws IOException {
 		choosenButtonLabel.setText("Employees");
 		if (Employee.hasAccess()) {
-			Parent page = FXMLLoader.load(getClass().getResource("Employee.fxml"));
+			Region page = FXMLLoader.load(getClass().getResource("Employee.fxml"));
 			contentArea.getChildren().removeAll();
+			page.setMinHeight(0);
+			page.setMinWidth(0);
+			page.prefWidthProperty().bind(contentArea.widthProperty());
+			page.prefHeightProperty().bind(contentArea.heightProperty());
 			contentArea.getChildren().setAll(page);
 		} else {
-			Parent page = FXMLLoader.load(getClass().getResource("NotAvailable.fxml"));
+			Region page = FXMLLoader.load(getClass().getResource("NotAvailable.fxml"));
 			contentArea.getChildren().removeAll();
+			page.prefWidthProperty().bind(contentArea.widthProperty());
+			page.prefHeightProperty().bind(contentArea.heightProperty());
 			contentArea.getChildren().setAll(page);
 		}
 
@@ -166,12 +202,20 @@ public class MainPageController implements Initializable {
 	public void SupplierOnAction(ActionEvent e) throws IOException {
 		choosenButtonLabel.setText("Suppliers");
 		if (Employee.hasAccess()) {
-			Parent page = FXMLLoader.load(getClass().getResource("Supplier.fxml"));
+			Region page = FXMLLoader.load(getClass().getResource("Supplier.fxml"));
 			contentArea.getChildren().removeAll();
+			page.setMinHeight(0);
+			page.setMinWidth(0);
+			page.prefWidthProperty().bind(contentArea.widthProperty());
+			page.prefHeightProperty().bind(contentArea.heightProperty());
 			contentArea.getChildren().setAll(page);
 		} else {
-			Parent page = FXMLLoader.load(getClass().getResource("NotAvailable.fxml"));
+			Region page = FXMLLoader.load(getClass().getResource("NotAvailable.fxml"));
 			contentArea.getChildren().removeAll();
+			page.setMinHeight(0);
+			page.setMinWidth(0);
+			page.prefWidthProperty().bind(contentArea.widthProperty());
+			page.prefHeightProperty().bind(contentArea.heightProperty());
 			contentArea.getChildren().setAll(page);
 		}
 
@@ -180,12 +224,20 @@ public class MainPageController implements Initializable {
 	public void PaymentOnAction(ActionEvent e) throws IOException {
 		choosenButtonLabel.setText("Payment");
 		if (Employee.hasAccess()) {
-			Parent page = FXMLLoader.load(getClass().getResource("Payment.fxml"));
+			Region page = FXMLLoader.load(getClass().getResource("Payment.fxml"));
 			contentArea.getChildren().removeAll();
+			page.setMinHeight(0);
+			page.setMinWidth(0);
+			page.prefWidthProperty().bind(contentArea.widthProperty());
+			page.prefHeightProperty().bind(contentArea.heightProperty());
 			contentArea.getChildren().setAll(page);
 		} else {
-			Parent page = FXMLLoader.load(getClass().getResource("NotAvailable.fxml"));
+			Region page = FXMLLoader.load(getClass().getResource("NotAvailable.fxml"));
 			contentArea.getChildren().removeAll();
+			page.setMinHeight(0);
+			page.setMinWidth(0);
+			page.prefWidthProperty().bind(contentArea.widthProperty());
+			page.prefHeightProperty().bind(contentArea.heightProperty());
 			contentArea.getChildren().setAll(page);
 		}
 
@@ -195,6 +247,8 @@ public class MainPageController implements Initializable {
 		choosenButtonLabel.setText("Orders");
 		Region page = FXMLLoader.load(getClass().getResource("SupplierReceivedOrder.fxml"));
 		contentArea.getChildren().removeAll();
+		page.setMinHeight(0);
+		page.setMinWidth(0);
 		contentArea.getChildren().setAll(page);
 		page.prefWidthProperty().bind(contentArea.widthProperty());
 		page.prefHeightProperty().bind(contentArea.heightProperty());
@@ -223,9 +277,10 @@ public class MainPageController implements Initializable {
 
 		Region page;
 		try {
-
 			choosenButtonLabel.setText("Dashboard");
 			page = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
+			page.setMinHeight(0);
+			page.setMinWidth(0);
 			page.prefWidthProperty().bind(contentArea.widthProperty());
 			page.prefHeightProperty().bind(contentArea.heightProperty());
 			contentArea.getChildren().setAll(page);

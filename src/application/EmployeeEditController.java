@@ -167,7 +167,8 @@ public class EmployeeEditController implements Initializable {
 				parameters.add(employeeTable.getItems().get(0).getName());
 				parameters.add(employeeTable.getItems().get(0).getNationalID());
 				parameters.add(employeeTable.getItems().get(0).getHourlyPaid() + "");
-				parameters.add(employeeTable.getItems().get(0).getPassword());
+				parameters.add(Employee.encryptPassword(employeeTable.getItems().get(0).getName(),
+						employeeTable.getItems().get(0).getPassword()));
 				parameters.add(employeeTable.getItems().get(0).getIsManager());
 				parameters.add(employeeTable.getItems().get(0).getIsActive());
 				parameters.add(employee.getID() + "");
@@ -234,14 +235,14 @@ public class EmployeeEditController implements Initializable {
 
 		else if (!checkHourlyPaid || hourlyPaid <= 0 || !NID.matches("[0-9]{9}") || !name.matches("[a-z[A-Z]\\s]+")
 				|| passwordTextField.getText().isBlank() || passwordTextField.getText().isEmpty()
-				|| !date.matches("[0-9]{4}-(0[1-9]|1[02])-(0[1-9]|[1-3][0-9])")) { 
+				|| !date.matches("[0-9]{4}-(0[1-9]|1[02])-(0[1-9]|[1-3][0-9])")) {
 
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Wrong Input Format");
 			alert.setHeaderText("Wrong Input Format");
 			alert.setContentText("National ID Must Be 9 Digits \n" + "Name Must Consist of Alphabetical Characters\n"
 					+ "Hourly Paid Must Be A Positive Real Number \n" + "All Fields Must Be Filled");
-			
+
 			alert.showAndWait();
 		} else if (phoneList.getItems().size() == 0) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -252,17 +253,17 @@ public class EmployeeEditController implements Initializable {
 		} else {
 			Employee.insertEmployee(name, NID, dateOfWork.getValue(), hourlyPaid, new ArrayList<>(phoneList.getItems()),
 					password, isManager.isSelected() ? "true" : "false", "true");
-			
+
 			Employee.getData()
 					.add(new Employee(Employee.getMaxID(), name, NID, dateOfWork.getValue(), hourlyPaid,
 							new ArrayList<>(phoneList.getItems()), password, isManager.isSelected() ? "true" : "false",
 							"true"));
-			
+
 			Employee.getDataList()
 					.add(new Employee(Employee.getMaxID(), name, NID, dateOfWork.getValue(), hourlyPaid,
 							new ArrayList<>(phoneList.getItems()), password, isManager.isSelected() ? "true" : "false",
 							"true"));
-			
+
 			nidTextField.setText("");
 			nameTextField.setText("");
 			hourlyPaidTextField.setText("");
@@ -362,7 +363,7 @@ public class EmployeeEditController implements Initializable {
 		nameColumn.setCellFactory(TextFieldTableCell.<Employee>forTableColumn());
 		hourlyPaidColumn
 				.setCellFactory(TextFieldTableCell.<Employee, Double>forTableColumn(new DoubleStringConverter()));
-		
+
 		isManagerColumn.setCellFactory(TextFieldTableCell.<Employee>forTableColumn());
 		isActiveColumn.setCellFactory(TextFieldTableCell.<Employee>forTableColumn());
 		passwordColumn.setCellFactory(TextFieldTableCell.<Employee>forTableColumn());
@@ -375,16 +376,19 @@ public class EmployeeEditController implements Initializable {
 					alert.setHeaderText(null);
 					alert.setContentText("Employee with This National ID Already Exists");
 					alert.showAndWait();
-					((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNationalID(t.getOldValue());
+					((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+							.setNationalID(t.getOldValue());
 				} else if (t.getNewValue().matches("[0-9]{9}")) {
-					((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNationalID(t.getNewValue());
+					((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+							.setNationalID(t.getNewValue());
 				} else {
 					Alert alert = new Alert(Alert.AlertType.ERROR);
 					alert.setTitle("Wrong Input Format");
 					alert.setHeaderText(null);
 					alert.setContentText("National ID Must Be 9 Digits");
 					alert.showAndWait();
-					((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNationalID(t.getOldValue());
+					((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+							.setNationalID(t.getOldValue());
 				}
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
@@ -410,7 +414,7 @@ public class EmployeeEditController implements Initializable {
 			if (t.getNewValue().toLowerCase().equals("true") || t.getNewValue().toLowerCase().equals("false")) {
 				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
 						.setIsManager(t.getNewValue());
-				
+
 			} else {
 				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
 						.setIsManager(t.getOldValue());
@@ -427,11 +431,11 @@ public class EmployeeEditController implements Initializable {
 			if (t.getNewValue().toLowerCase().equals("true") || t.getNewValue().toLowerCase().equals("false")) {
 				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
 						.setIsActive(t.getNewValue());
-				
+
 			} else {
 				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
 						.setIsActive(t.getOldValue());
-				
+
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle("Wrong Input Format");
 				alert.setHeaderText(null);

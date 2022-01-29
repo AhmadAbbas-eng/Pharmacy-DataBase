@@ -83,8 +83,8 @@ public class LoginController {
 							Parent root1 = (Parent) loader.load();
 							Stage stage2 = new Stage();
 							stage2.setScene(new Scene(root1, 1100, 620));
-							stage2.setMinWidth(1100);
-							stage2.setMinHeight(620);
+							stage2.setMinWidth(1110);
+							stage2.setMinHeight(650);
 							stage2.show();
 						}
 
