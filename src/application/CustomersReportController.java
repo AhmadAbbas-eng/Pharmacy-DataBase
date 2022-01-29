@@ -45,12 +45,9 @@ public class CustomersReportController implements Initializable {
 		
 
 		CustomerTable.setItems(
-				FXCollections.observableArrayList(Queries.queryResult(" select c.*,sum(co.order_price) \r\n"
-						+ "	 from customer c,customer2order c2o,c_order co\r\n"
-						+ "	 where c.customer_NID=c2o.customer_NID and c2o.order_ID=co.order_ID\r\n"
-						+ "	 group by c.customer_name \r\n" + "	 having sum(co.order_price) >0\r\n"
-						+ "	 union (select *,customer_debt\r\n" + "	 from customer\r\n" + "	 where customer_NID not in (\r\n"
-						+ "	 select customer2order.customer_NID\r\n" + "	 from customer2order))\r\n" + "	 order by 2;",
+				FXCollections.observableArrayList(Queries.queryResult("select c.customer_name ,co.order_date,co.employee_Id, p.product_name\r\n"
+						+ "from customer c,customer2order c2o,c_order co,c_order_batch cob,product p \r\n"
+						+ "where c.customer_NID=c2o.customer_NID and c2o.order_ID=co.order_ID and co.order_Id=cob.order_Id and p.product_Id=cob.product_ID;",
 						null)));
 
 		customerNameColumn.setCellValueFactory(

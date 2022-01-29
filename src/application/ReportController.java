@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 import Relations.Batch;
 import Relations.Cheque;
 import Relations.Customer;
+import Relations.CustomerOrder;
 import Relations.Payment;
 import Relations.Product;
 import Relations.Queries;
@@ -124,7 +125,7 @@ public class ReportController implements Initializable {
 			showAndFade(savedLabel);
 
 		} else if (reportType.getSelectionModel().getSelectedItem() == "Customers Order") {
-			Customer.report(selectedDirectory.toString() + "/Customers");
+			CustomerOrder.report(selectedDirectory.toString() + "/Customers");
 			showAndFade(saveIcon);
 			showAndFade(savedLabel);
 
