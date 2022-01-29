@@ -1,33 +1,35 @@
 package application;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.ResourceBundle;
+
+import Relations.Employee;
+import Relations.Queries;
+import Relations.Supplier;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.TableColumn.CellEditEvent;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.scene.control.TableView;
-import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
-import java.io.IOException;
-import java.net.URL;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Optional;
-import java.util.ResourceBundle;
-import Relations.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * 
@@ -81,51 +83,24 @@ public class SupplierController implements Initializable {
 		ArrayList<String> parameters = new ArrayList<>();
 		parameters.add("%" + stringToSearch + "%");
 		if (stringToSearch == null || stringToSearch.isEmpty() || stringToSearch.isBlank()) {
-			try {
-				filteredList = Supplier
-						.getSupplierData(Queries.queryResult("select * from Supplier order by Supplier_ID;", null));
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			filteredList = Supplier
+					.getSupplierData(Queries.queryResult("select * from Supplier order by Supplier_ID;", null));
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "ID") {
-			try {
-				filteredList = Supplier.getSupplierData(Queries.queryResult(
-						"select * from Supplier where Supplier_ID like ? order by Supplier_ID;", parameters));
-
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			filteredList = Supplier.getSupplierData(Queries
+					.queryResult("select * from Supplier where Supplier_ID like ? order by Supplier_ID;", parameters));
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Name") {
-			try {
-				filteredList = Supplier.getSupplierData(Queries.queryResult(
-						"select * from Supplier where Supplier_Name like ? order by Supplier_ID;", parameters));
-
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			filteredList = Supplier.getSupplierData(Queries.queryResult(
+					"select * from Supplier where Supplier_Name like ? order by Supplier_ID;", parameters));
 		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Address") {
-			try {
-				filteredList = Supplier.getSupplierData(Queries.queryResult(
-						"select * from Supplier where Supplier_Address like ? order by Supplier_ID;", parameters));
-
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			filteredList = Supplier.getSupplierData(Queries.queryResult(
+					"select * from Supplier where Supplier_Address like ? order by Supplier_ID;", parameters));
 		} else {
-			try {
-				while (parameters.size() < 3) {
-					parameters.add("%" + stringToSearch + "%");
-				}
-				filteredList = Supplier
-						.getSupplierData(
-								Queries.queryResult(
-										"select * from Supplier where Supplier_Name like ? " + " or Supplier_ID like ? "
-												+ " or Supplier_Address like ? " + " order by Supplier_ID;",
-										parameters));
-
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
+			while (parameters.size() < 3) {
+				parameters.add("%" + stringToSearch + "%");
 			}
+			filteredList = Supplier.getSupplierData(
+					Queries.queryResult("select * from Supplier where Supplier_Name like ? " + " or Supplier_ID like ? "
+							+ " or Supplier_Address like ? " + " order by Supplier_ID;", parameters));
 		}
 		supplierTable.setItems(FXCollections.observableArrayList(filteredList));
 		supplierTable.refresh();
@@ -178,14 +153,10 @@ public class SupplierController implements Initializable {
 			effect.setBrightness(0.8);
 			saveSupplier.setEffect(effect);
 			for (int i = 0; i < supplierTable.getItems().size(); i++) {
-				try {
-					ArrayList<String> parameters = new ArrayList<>();
-					parameters.add(supplierTable.getItems().get(i).getEmail());
-					parameters.add(supplierTable.getItems().get(i).getID() + "");
-					Queries.queryUpdate("update Supplier set Supplier_Email=? where Supplier_ID=? ;", parameters);
-				} catch (ClassNotFoundException | SQLException e) {
-					e.printStackTrace();
-				}
+				ArrayList<String> parameters = new ArrayList<>();
+				parameters.add(supplierTable.getItems().get(i).getEmail());
+				parameters.add(supplierTable.getItems().get(i).getID() + "");
+				Queries.queryUpdate("update Supplier set Supplier_Email=? where Supplier_ID=? ;", parameters);
 			}
 		}
 	}
@@ -329,7 +300,7 @@ public class SupplierController implements Initializable {
 			((Supplier) t.getTableView().getItems().get(t.getTablePosition().getRow())).setEmail(t.getNewValue());
 
 		});
-		
+
 		filterData();
 
 		searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
