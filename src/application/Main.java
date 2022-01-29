@@ -39,8 +39,8 @@ public class Main extends Application {
 	}
 
 	public static void main(String[] args)  {
-Supplier.getSupplierData();
-			SupplierOrder.getSupplierOrderData();
+//Supplier.getSupplierData();
+//			SupplierOrder.getSupplierOrderData();
 //		generateS_order();
 //		c_order_generate();
 //		payment();

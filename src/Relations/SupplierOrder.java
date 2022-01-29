@@ -220,7 +220,7 @@ public class SupplierOrder {
 	 * 
 	 * @param path The path of file
 	 */
-	public void report(String path) {
+	public static void report(String path) {
 		Queries.reportQuerey(
 				"select s.supplier_name,so.order_cost,so.order_discount,so.recieved_date,s.supplier_dues \r\n"
 						+ "from s_order so,supplier s\r\n" + "where s.supplier_Id=so.supplier_ID;",
