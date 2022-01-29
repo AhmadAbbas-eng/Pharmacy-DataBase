@@ -20,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
@@ -132,6 +133,7 @@ public class SellController implements Initializable {
 			ChooseCustomerController chooseCustomerController = loader.getController();
 			chooseCustomerController.setCaller(this);
 			Stage chooseCustomerStage = new Stage();
+			chooseCustomerStage.initModality(Modality.APPLICATION_MODAL);
 			Scene scene = new Scene(chooseCustomer);
 			chooseCustomerStage.setScene(scene);
 			chooseCustomerStage.show();
@@ -147,10 +149,11 @@ public class SellController implements Initializable {
 			Parent chooseProduct = (Parent) productLoader.load();
 			ChooseProductController chooseProductController = productLoader.getController();
 			chooseProductController.getChosenProducts(chosenProducts, this);
-			Stage chooseCustomerStage = new Stage();
+			Stage chooseProductStage = new Stage();
+			chooseProductStage.initModality(Modality.APPLICATION_MODAL);
 			Scene scene = new Scene(chooseProduct);
-			chooseCustomerStage.setScene(scene);
-			chooseCustomerStage.show();
+			chooseProductStage.setScene(scene);
+			chooseProductStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
