@@ -245,7 +245,7 @@ public class Employee {
 	 * 
 	 * @param table ArrayList<ArrayList<String>> to fill data with
 	 * @return ArrayList<Employee> of data
-
+	 * 
 	 */
 	public static ArrayList<Employee> getEmployeeData(ArrayList<ArrayList<String>> table) {
 
@@ -264,7 +264,7 @@ public class Employee {
 		return tempData;
 	}
 
-	public static void getEmployeePhone(Employee employee){
+	public static void getEmployeePhone(Employee employee) {
 		ArrayList<ArrayList<String>> phonesSet = Queries.queryResult(
 				"select Phone from Employee_Phone where Employee_ID=? ;",
 				new ArrayList<>(Arrays.asList(employee.getID() + "")));
@@ -279,7 +279,7 @@ public class Employee {
 
 	public void clearEmployeePhones() {
 		for (int i = 0; i < getPhones().size(); i++) {
-			Queries.queryResult("delete from  Employee_Phone where Employee_ID=? ;",
+			Queries.queryUpdate("delete from  Employee_Phone where Employee_ID=? ;",
 					new ArrayList<>(Arrays.asList(getID() + "")));
 		}
 	}

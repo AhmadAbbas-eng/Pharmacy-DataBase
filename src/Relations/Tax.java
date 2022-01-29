@@ -64,6 +64,19 @@ public class Tax {
 		return Tax.data;
 	}
 
+	public static ObservableList<Tax> getDataList() {
+		return dataList;
+	}
+
+	public static void setDataList(ObservableList<Tax> dataList) {
+		Tax.dataList = dataList;
+	}
+
+	public static void insertTax(String ID, LocalDate date, double value) {
+		Queries.queryUpdate("Insert into Tax values (?, ?, ?);",
+				new ArrayList<>(Arrays.asList(ID, date.toString(), value + "")));
+	}
+	
 	/**
 	 * Read from data base and fill the ArrayList
 	 * 
@@ -102,25 +115,11 @@ public class Tax {
 		return tempData;
 	}
 
-	public static ObservableList<Tax> getDataList() {
-		return dataList;
-	}
-
-	public static void setDataList(ObservableList<Tax> dataList) {
-		Tax.dataList = dataList;
-	}
-
-	public static void insertTax(String ID, LocalDate date, double value) {
-		Queries.queryUpdate("Insert into Tax values (?, ?, ?);",
-				new ArrayList<>(Arrays.asList(ID, date.toString(), value + "")));
-	}
 
 	/**
 	 * Report Taxes informations on csv file
 	 * 
 	 * @param path The path of file
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-
 	 */
 	public void report(String path) {
 		Queries.reportQuerey(

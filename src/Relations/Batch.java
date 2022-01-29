@@ -1,15 +1,12 @@
 package Relations;
 
-import java.sql.Connection;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
+
 
 /**
  * Batch class where Batch table data have been read and manipulated
@@ -119,30 +116,17 @@ public class Batch {
 	 * @return ArrayList<Batch> of data
 	 */
 	public static ArrayList<Batch> getBatchData(ArrayList<ArrayList<String>> table) {
+		ArrayList<Batch> tempData = new ArrayList<Batch>();
 
-		try {
-			ArrayList<Batch> tempData = new ArrayList<Batch>();
-			Connection getPhoneConnection = Queries.dataBaseConnection();
+		for (int i = 0; i < table.size(); i++) {
+			LocalDate proDate = LocalDate.parse(table.get(i).get(1));
+			LocalDate expDate = LocalDate.parse(table.get(i).get(2));
+			Batch temp = new Batch(Integer.parseInt(table.get(i).get(0)), proDate, expDate,
+					Integer.parseInt(table.get(i).get(3)));
+			tempData.add(temp);
 
-			for (int i = 0; i < table.size(); i++) {
-				LocalDate proDate = LocalDate.parse(table.get(i).get(1));
-				LocalDate expDate = LocalDate.parse(table.get(i).get(2));
-				Batch temp = new Batch(Integer.parseInt(table.get(i).get(0)), proDate, expDate,
-						Integer.parseInt(table.get(i).get(3)));
-				tempData.add(temp);
-
-			}
-			getPhoneConnection.close();
-			return tempData;
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			Alert alert = new Alert(Alert.AlertType.ERROR);
-			alert.setTitle("Loding Error");
-			alert.setHeaderText("Can't load data from batch");
-			alert.setContentText(null);
-			alert.showAndWait();
-			return null;
 		}
+		return tempData;
 	}
 
 	/**

@@ -1,15 +1,11 @@
 package Relations;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
 
 /**
  * CustomerOrder class represents the relation between the customers' and their
@@ -116,11 +112,8 @@ public class CustomerOrder {
 	/**
 	 * Read from data base and fill the ArrayList
 	 * 
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
 	 */
-	public static void getCustomerOrderData() throws ClassNotFoundException, SQLException, ParseException {
+	public static void getCustomerOrderData() {
 
 		data.clear();
 		ArrayList<ArrayList<String>> table = Queries.queryResult("select * from C_Order;", null);
@@ -139,39 +132,6 @@ public class CustomerOrder {
 		dataList = FXCollections.observableArrayList(data);
 	}
 
-	/**
-	 * Fill the an ArrayList from specific ArrayList<ArrayList<String>> entry
-	 * 
-	 * @param table ArrayList<ArrayList<String>> to fill data with
-	 * @return ArrayList<CustomerOrder> of data
-	 */
-	public static ArrayList<CustomerOrder> getCustomerOrderData(ArrayList<ArrayList<String>> table) {
-
-		
-
-		try {ArrayList<CustomerOrder> tempData = new ArrayList<CustomerOrder>();
-		Connection getPhoneConnection = Queries.dataBaseConnection();
-
-		for (int i = 0; i < table.size(); i++) {
-			LocalDate orderDate = LocalDate.parse(table.get(i).get(1));
-			CustomerOrder temp = new CustomerOrder(Integer.parseInt(table.get(i).get(0)), orderDate,
-					Double.parseDouble(table.get(i).get(2)), Double.parseDouble(table.get(i).get(3)),
-					Integer.parseInt(table.get(i).get(4)));
-
-			tempData.add(temp);
-		}
-			getPhoneConnection.close();
-			return tempData;
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			Alert alert = new Alert(Alert.AlertType.ERROR);
-			alert.setTitle("Loding Error");
-			alert.setHeaderText("Can't load data from c_order");
-			alert.setContentText(null);
-			alert.showAndWait();
-			return null;		}
-		
-	}
 
 	public static void insertCustomerOrder(String date, double price, double discount, double paid, int employeeID,
 			String customerNID) {
@@ -184,7 +144,16 @@ public class CustomerOrder {
 		Queries.queryUpdate("update Customer set Customer_Debt=customer_Debt+ ? where customer_nid=? ;",
 				new ArrayList<>(Arrays.asList((price - discount - paid) + "", customerNID)));
 	}
+	public static void insertCustomerOrderBatch(String oID, String pID, String productionDate, String expiryDate,
+			int amount) {
+		Queries.queryUpdate("Insert into C_order_batch values (? ,?, ?, ?, ?);",
+				new ArrayList<>(Arrays.asList(oID, pID, productionDate, expiryDate, amount + "")));
 
+		Queries.queryUpdate(
+				"update batch set Batch_Amount=Batch_Amount- ? where Product_ID=? and Batch_Production_Date=? "
+						+ " and Batch_Expiry_Date=? ;",
+				new ArrayList<>(Arrays.asList(amount + "", pID + "", productionDate, expiryDate)));
+	}
 	/**
 	 * Report Customer selling informations on csv file
 	 * 

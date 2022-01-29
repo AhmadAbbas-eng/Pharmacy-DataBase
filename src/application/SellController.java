@@ -1,5 +1,16 @@
 package application;
 
+import java.io.IOException;
+import java.net.URL;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.ResourceBundle;
+
+import Relations.CustomerOrder;
+import Relations.Employee;
+import Relations.Queries;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -11,6 +22,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,28 +30,18 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellEditEvent;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.util.Callback;
-import javafx.util.Duration;
 import javafx.scene.control.TableView;
-import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import java.io.IOException;
-import java.net.URL;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.ResourceBundle;
-import Relations.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.util.Callback;
+import javafx.util.Duration;
 
 /**
  * 
@@ -195,7 +197,7 @@ public class SellController implements Initializable {
 						discount, paidAmount, Employee.getCurrentID(), customerNID);
 				
 				for (ArrayList<String> row : chosenProducts) {
-					CustomerOrderBatch.insertCustomerOrderBatch("" + CustomerOrder.getMaxID(), row.get(0), row.get(2),
+					CustomerOrder.insertCustomerOrderBatch("" + CustomerOrder.getMaxID(), row.get(0), row.get(2),
 							row.get(3), Integer.parseInt(row.get(5)));
 				}
 				Queries.queryUpdate(
@@ -357,11 +359,7 @@ public class SellController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 		soldIcon.setOpacity(0);
 		soldLabel.setOpacity(0);
-		try {
-			CustomerOrder.getCustomerOrderData();
-		} catch (ClassNotFoundException | SQLException | ParseException e1) {
-			e1.printStackTrace();
-		}
+		CustomerOrder.getCustomerOrderData();
 		dateLabel.setText(LocalDate.now().toString());
 		idColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {

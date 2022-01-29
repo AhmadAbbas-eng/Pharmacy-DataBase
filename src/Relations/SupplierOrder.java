@@ -1,9 +1,5 @@
 package Relations;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -155,15 +151,20 @@ public class SupplierOrder {
 		return maxID;
 	}
 
+	public static ObservableList<SupplierOrder> getDataList() {
+		return dataList;
+	}
+
+	public static void setDataList(ObservableList<SupplierOrder> dataList) {
+		SupplierOrder.dataList = dataList;
+	}
+
 	/**
 	 * Read from data base and fill the ArrayList
 	 * 
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
 	 */
-	public static void getSupplierOrderData() throws ClassNotFoundException, SQLException, ParseException {
-
+	public static void getSupplierOrderData() {
+		Supplier.getSupplierData();
 		data.clear();
 		ArrayList<ArrayList<String>> table = Queries.queryResult("select * from S_Order;", null);
 
@@ -188,14 +189,10 @@ public class SupplierOrder {
 	 * 
 	 * @param table ArrayList<ArrayList<String>> to fill data with
 	 * @return ArrayList<SupplierOrder> of data
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
 	 */
-	public static ArrayList<SupplierOrder> getSupplierOrderData(ArrayList<ArrayList<String>> table){
+	public static ArrayList<SupplierOrder> getSupplierOrderData(ArrayList<ArrayList<String>> table) {
 
 		ArrayList<SupplierOrder> tempData = new ArrayList<SupplierOrder>();
-		Connection getPhoneConnection = Queries.dataBaseConnection();
 
 		for (int i = 0; i < table.size(); i++) {
 			LocalDate orderDate = LocalDate.parse(table.get(i).get(1));
@@ -207,46 +204,26 @@ public class SupplierOrder {
 					Integer.parseInt(table.get(i).get(7)), recDate);
 			tempData.add(temp);
 		}
-
-		try {
-			getPhoneConnection.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return tempData;
-	}
-
-	public static ObservableList<SupplierOrder> getDataList() {
-		return dataList;
-	}
-
-	public static void setDataList(ObservableList<SupplierOrder> dataList) {
-		SupplierOrder.dataList = dataList;
 	}
 
 	public static void insertSupplierOrder(LocalDate dateOfOrder, double cost, double discount,
 			LocalDate dueDateOfPayment, int supplierID, int managerID, int recievedBy, LocalDate recDate) {
 		Queries.queryUpdate("Insert into s_order values(?, ?, ?, ?, ?, ?, ?, ?, ?);",
 				new ArrayList<>(Arrays.asList((setMaxID(getMaxID() + 1)) + "", dateOfOrder.toString(), cost + "",
-						discount + "", dueDateOfPayment.toString(), supplierID + "", managerID + "",
-						recievedBy + "", recDate.toString())));
+						discount + "", dueDateOfPayment.toString(), supplierID + "", managerID + "", recievedBy + "",
+						recDate.toString())));
 	}
 
 	/**
 	 * Report All buying from suppliers movements informations on csv file
 	 * 
 	 * @param path The path of file
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
-	 * @throws IOException
 	 */
-	public void report(String path) throws ClassNotFoundException, SQLException, IOException {
+	public void report(String path) {
 		Queries.reportQuerey(
 				"select s.supplier_name,so.order_cost,so.order_discount,so.recieved_date,s.supplier_dues \r\n"
 						+ "from s_order so,supplier s\r\n" + "where s.supplier_Id=so.supplier_ID;",
 				path);
 	}
-
 }

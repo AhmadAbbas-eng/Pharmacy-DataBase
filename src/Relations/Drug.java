@@ -1,8 +1,5 @@
 package Relations;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -124,14 +121,19 @@ public class Drug extends Product {
 		return Drug.data;
 	}
 
+	public static ObservableList<Drug> getDataListDrug() {
+		return dataList;
+	}
+
+	public static void setDataListDrug(ObservableList<Drug> dataList) {
+		Drug.dataList = dataList;
+	}
+
 	/**
 	 * Read from data base and fill the ArrayList
 	 * 
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
 	 */
-	public static void getDrugData() throws ClassNotFoundException, SQLException, ParseException {
+	public static void getDrugData() {
 
 		data.clear();
 		ArrayList<ArrayList<String>> table = Queries.queryResult(
@@ -159,16 +161,10 @@ public class Drug extends Product {
 	 * 
 	 * @param table ArrayList<ArrayList<String>> to fill data with
 	 * @return ArrayList<Drug> of data
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
 	 */
-	public static ArrayList<Drug> getDrugData(ArrayList<ArrayList<String>> table)
-			throws ClassNotFoundException, SQLException, ParseException {
+	public static ArrayList<Drug> getDrugData(ArrayList<ArrayList<String>> table) {
 
 		ArrayList<Drug> tempData = new ArrayList<Drug>();
-		Connection getPhoneConnection = Queries.dataBaseConnection();
-
 		for (int i = 0; i < table.size(); i++) {
 			Drug temp = new Drug(Integer.parseInt(table.get(i).get(0)), table.get(i).get(1),
 					Double.parseDouble(table.get(i).get(2)), table.get(i).get(3), table.get(i).get(4),
@@ -177,16 +173,7 @@ public class Drug extends Product {
 			tempData.add(temp);
 		}
 
-		getPhoneConnection.close();
 		return tempData;
-	}
-
-	public static ObservableList<Drug> getDataListDrug() {
-		return dataList;
-	}
-
-	public static void setDataListDrug(ObservableList<Drug> dataList) {
-		Drug.dataList = dataList;
 	}
 
 	public static void insertDrug(String name, double price, String scientificName, String riskPregnency, String dosage,
@@ -195,8 +182,7 @@ public class Drug extends Product {
 		Queries.queryUpdate("Insert into Product values(?, ?, ?);",
 				new ArrayList<>(Arrays.asList(getMaxID() + "", name, price + "")));
 
-		Queries.queryUpdate("Insert into Drug values (?, ?, ?, ?, ?, ?);",
-				new ArrayList<>(Arrays.asList(getMaxID() + "", scientificName, riskPregnency, category, dosageForm,
-						pharmaceticalCategory)));
+		Queries.queryUpdate("Insert into Drug values (?, ?, ?, ?, ?, ?);", new ArrayList<>(Arrays
+				.asList(getMaxID() + "", scientificName, riskPregnency, category, dosageForm, pharmaceticalCategory)));
 	}
 }

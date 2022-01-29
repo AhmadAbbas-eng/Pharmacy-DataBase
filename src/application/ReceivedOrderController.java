@@ -224,6 +224,8 @@ public class ReceivedOrderController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		SupplierOrder.getSupplierOrderData();
+
 		searchOperationComboBox.setValue("Select Order");
 		searchOperationComboBox.setItems(searchChoices);
 

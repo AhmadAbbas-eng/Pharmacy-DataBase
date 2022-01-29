@@ -1,14 +1,11 @@
 package Relations;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
 
 /**
  * Payment class here where all Payments' operations are occurred
@@ -88,6 +85,14 @@ public class Payment {
 		Payment.maxID = maxID;
 	}
 
+	public static ObservableList<Payment> getDataList() {
+		return dataList;
+	}
+
+	public static void setDataList(ObservableList<Payment> dataList) {
+		Payment.dataList = dataList;
+	}
+
 	/**
 	 * Read from data base and fill the ArrayList
 	 * 
@@ -107,48 +112,6 @@ public class Payment {
 		}
 		maxID = Integer.parseInt(Queries.queryResult("select max(payment_ID) from payment;", null).get(0).get(0));
 		dataList = FXCollections.observableArrayList(data);
-	}
-
-	/**
-	 * Fill the an ArrayList from specific ArrayList<ArrayList<String>> entry
-	 * 
-	 * @param table ArrayList<ArrayList<String>> to fill data with
-	 * @return ArrayList<Payment> of data
-	 */
-	public static ArrayList<Payment> getPaymentData(ArrayList<ArrayList<String>> table) {
-
-		try {
-			ArrayList<Payment> tempData = new ArrayList<Payment>();
-
-			Connection getPaymentConnection = Queries.dataBaseConnection();
-
-			for (int i = 0; i < table.size(); i++) {
-				LocalDate paymentDate = LocalDate.parse(table.get(i).get(1));
-
-				Payment temp = new Payment(Integer.parseInt(table.get(i).get(0)), paymentDate,
-						Double.parseDouble(table.get(i).get(2)), table.get(i).get(3));
-				tempData.add(temp);
-			}
-			getPaymentConnection.close();
-			return tempData;
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			Alert alert = new Alert(Alert.AlertType.ERROR);
-			alert.setTitle("Loding Error");
-			alert.setHeaderText("Can't load data from Payment");
-			alert.setContentText(null);
-			alert.showAndWait();
-			return null;
-		}
-
-	}
-
-	public static ObservableList<Payment> getDataList() {
-		return dataList;
-	}
-
-	public static void setDataList(ObservableList<Payment> dataList) {
-		Payment.dataList = dataList;
 	}
 
 	public static void insertPayment(LocalDate date, double amount, String method) {

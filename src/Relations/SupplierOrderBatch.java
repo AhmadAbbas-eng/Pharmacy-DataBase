@@ -1,15 +1,10 @@
 package Relations;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
 
 /**
  * SupplierOrderBatch represents the details of each supplier's order
@@ -102,48 +97,13 @@ public class SupplierOrderBatch {
 	}
 
 	/**
-	 * Read from data base and fill the ArrayList
-	 * 
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
-	 */
-	public static void getSupplierOrderBatchData() throws ClassNotFoundException, SQLException, ParseException {
-
-		data.clear();
-		ArrayList<ArrayList<String>> table = Queries.queryResult("select * from S_order_batch;", null);
-
-		for (int i = 0; i < table.size(); i++) {
-
-			LocalDate writingDate = LocalDate.parse(table.get(i).get(2));
-			LocalDate cashingDate = LocalDate.parse(table.get(i).get(3));
-
-			SupplierOrderBatch temp = new SupplierOrderBatch(Integer.parseInt(table.get(i).get(0)),
-					Integer.parseInt(table.get(i).get(1)), writingDate, cashingDate,
-					Integer.parseInt(table.get(i).get(4)));
-
-			data.add(temp);
-		}
-
-		dataList = FXCollections.observableArrayList(data);
-	}
-
-	/**
 	 * Fill the an ArrayList from specific ArrayList<ArrayList<String>> entry
 	 * 
 	 * @param table ArrayList<ArrayList<String>> to fill data with
 	 * @return ArrayList<SupplierOrderBatch> of data
-	 * @throws ClassNotFoundException If com.mysql.jdbc.Driver was not found
-	 * @throws SQLException           If any connection exceptions occurred
-	 * @throws ParseException         If any exception data type parsing occurred
 	 */
 	public static ArrayList<SupplierOrderBatch> getSupplierOrderBatchData(ArrayList<ArrayList<String>> table){
-
-		
-
-		try {ArrayList<SupplierOrderBatch> tempData = new ArrayList<SupplierOrderBatch>();
-		Connection getPhoneConnection = Queries.dataBaseConnection();
-
+		ArrayList<SupplierOrderBatch> tempData = new ArrayList<SupplierOrderBatch>();
 		for (int i = 0; i < table.size(); i++) {
 			LocalDate writingDate = LocalDate.parse(table.get(i).get(2));
 			LocalDate cashingDate = LocalDate.parse(table.get(i).get(3));
@@ -153,20 +113,9 @@ public class SupplierOrderBatch {
 
 			tempData.add(temp);
 		}
-			getPhoneConnection.close();
-			return tempData;
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			Alert alert = new Alert(Alert.AlertType.ERROR);
-			alert.setTitle("Loding Error");
-			alert.setHeaderText("Can't load data from s_order_batch");
-			alert.setContentText(null);
-			alert.showAndWait();
-			return null;
-		}
-		
+			return tempData;	
 	}
-
+	
 	public static void insertSupplierOrderBatch(String oID, String pID, LocalDate productionDate, LocalDate expiryDate,
 			int amount) {
 		Queries.queryUpdate("Insert into S_order_batch values (?, ?, ?, ?, ?);", new ArrayList<>(

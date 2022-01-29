@@ -2,18 +2,25 @@ package application;
 
 
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
-import Relations.*;
+import Relations.Cheque;
+import Relations.Customer;
+import Relations.CustomerOrder;
+import Relations.Employee;
+import Relations.Payment;
+import Relations.Queries;
+import Relations.Supplier;
+import Relations.SupplierOrder;
+import Relations.Tax;
 import javafx.application.Application;
-import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
 
 public class Main extends Application {
 	@Override
@@ -32,31 +39,25 @@ public class Main extends Application {
 	}
 
 	public static void main(String[] args)  {
-
+Supplier.getSupplierData();
+			SupplierOrder.getSupplierOrderData();
 //		generateS_order();
 //		c_order_generate();
 //		payment();
-		Main.readingData();
+		//Main.readingData();
 		launch(args);
 	}
 
 	public static void readingData() {
-		try {
-			Batch.getBatchData();
-			Cheque.getChequeData();
-			Customer.getCustomerData();
-			CustomerOrder.getCustomerOrderData();
-			Drug.getDrugData();
-			Employee.getEmployeeData();
-			Payment.getPaymentData();
-			Product.getProductData();
-			Supplier.getSupplierData();
-			SupplierOrder.getSupplierOrderData();
-			Tax.getTaxData();
-		} catch (ClassNotFoundException | SQLException | ParseException e) {
-			System.out.println("Can't Read data " + e.getMessage());
-		}
-
+		Cheque.getChequeData();
+		Customer.getCustomerData();
+		CustomerOrder.getCustomerOrderData();
+		
+		Employee.getEmployeeData();
+		Payment.getPaymentData();
+		
+		
+		Tax.getTaxData();
 	}
 
 	public static void generateS_order()  {

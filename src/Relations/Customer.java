@@ -176,32 +176,5 @@ public class Customer {
 		}
 	}
 
-	public static void deleteCustomer(String NID) {
-		Queries.queryResult("delete from Customer where Customer_NID =? ;", new ArrayList<>(Arrays.asList(NID)));
-	}
 
-	/**
-	 * Report Customers information on csv file
-	 * 
-	 * @param path The path of file
-	 */
-	public static void report(String path){
-		Queries.reportQuerey(" select c.*,sum(co.order_price) \r\n"
-				+ "	 from customer c,customer2order c2o,c_order co\r\n"
-				+ "	 where c.customer_NID=c2o.customer_NID and c2o.order_ID=co.order_ID\r\n"
-				+ "	 group by c.customer_name \r\n" + "	 having sum(co.order_price) >0\r\n"
-				+ "	 union (select *,customer_debt\r\n" + "	 from customer\r\n" + "	 where customer_NID not in (\r\n"
-				+ "	 select customer2order.customer_NID\r\n" + "	 from customer2order))\r\n" + "	 order by 2;",
-				path);
-	}
-
-	public static void reportDangerDrugCustomer(String path) {
-		Queries.reportQuerey(
-				"select c.customer_name, p.product_name,d.Drug_Scientific_Name,d.drug_pharmacetical_category\r\n"
-						+ "from customer c, c_order_batch co,drug d , customer2order c2o,product p\r\n"
-						+ "where p.product_ID=d.product_ID and c.customer_NID=c2o.customer_NID and c2o.order_ID=co.Order_ID \r\n"
-						+ "and co.Order_ID=c2o.order_ID and co.product_ID=d.product_ID and  ( not d.drug_pharmacetical_category like 'non' and\r\n"
-						+ "d.drug_pharmacetical_category like '%%') \r\n" + "order by 1;\r\n" + "",
-				path);
-	}
 }
