@@ -115,17 +115,4 @@ public class Tax {
 		return tempData;
 	}
 
-
-	/**
-	 * Report Taxes informations on csv file
-	 * 
-	 * @param path The path of file
-	 */
-	public void report(String path) {
-		Queries.reportQuerey(
-				"select t.tax_id,t.tax_Date,e.employee_name,p.payment_amount\r\n"
-						+ "from employee e , tax t, payment p, taxes_payment tp\r\n"
-						+ "where  tp.manager_ID=e.employee_ID and tp.payment_ID=p.payment_ID and t.tax_id=tp.tax_id;",
-				path);
-	}
 }

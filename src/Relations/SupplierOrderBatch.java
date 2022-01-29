@@ -121,5 +121,4 @@ public class SupplierOrderBatch {
 		Queries.queryUpdate("Insert into S_order_batch values (?, ?, ?, ?, ?);", new ArrayList<>(
 				Arrays.asList(oID, pID, productionDate.toString(), expiryDate.toString(), amount + "")));
 	}
-
 }
