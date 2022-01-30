@@ -438,6 +438,9 @@ public class EmployeeEditController implements Initializable {
 		hourlyPaidColumn.setOnEditCommit((CellEditEvent<Employee, Double> t) -> {
 			((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow())).setHourlyPaid(t.getNewValue());
 		});
+		passwordColumn.setOnEditCommit((CellEditEvent<Employee, String> t) -> {
+			((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow())).setPassword(t.getNewValue());
+		});
 		employeeTable.refresh();
 	}
 }

@@ -340,7 +340,16 @@ public class PaymentController implements Initializable {
 								amountTaxTextField.clear();
 								bankNameTaxTextField.clear();
 								chequeIDTaxTextField.clear();
+								writingDateTax.setValue(null);
+								availableUntilDateTax.setValue(null);
 								chequeTaxCheckBox.setSelected(false);
+							}
+							else {
+								Alert alert = new Alert(Alert.AlertType.ERROR);
+								alert.setTitle(null);
+								alert.setHeaderText(null);
+								alert.setContentText("Wrong Data Format");
+								alert.showAndWait();
 							}
 						} else {
 							Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -427,6 +436,8 @@ public class PaymentController implements Initializable {
 		amountTaxTextField.clear();
 		bankNameTaxTextField.clear();
 		chequeIDTaxTextField.clear();
+		writingDateTax.setValue(null);
+		availableUntilDateTax.setValue(null);
 		chequeTaxCheckBox.setSelected(false);
 		bankNameTaxTextField.setOpacity(0);
 		availableUntilDateTax.setOpacity(0);
@@ -609,6 +620,8 @@ public class PaymentController implements Initializable {
 		amountSupplierTextField.clear();
 		bankNameSupplierTextField.clear();
 		chequeIDSupplierTextField.clear();
+		availablUntilDateSupplier.setValue(null);
+		writingDateSupplier.setValue(null);
 		chequeSupplierCheckBox.setSelected(false);
 		bankNameSupplierTextField.setOpacity(0);
 		writingDateSupplier.setOpacity(0);
@@ -684,6 +697,8 @@ public class PaymentController implements Initializable {
 								amountSupplierTextField.clear();
 								bankNameSupplierTextField.clear();
 								chequeIDSupplierTextField.clear();
+								availablUntilDateSupplier.setValue(null);
+								writingDateSupplier.setValue(null);
 								chequeSupplierCheckBox.setSelected(false);
 							} else {
 								Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -909,6 +924,8 @@ public class PaymentController implements Initializable {
 		amountEmployeeTextField.clear();
 		employeeBankNameTextField.clear();
 		employeeChequeIDTextField.clear();
+		employeeWritindDatePicker.setValue(null);
+		employeeAvailableUntilDatePicker.setValue(null);
 		chequeEmployeeCheckBox.setSelected(false);
 		employeeBankNameTextField.setOpacity(0);
 		employeeWritindDatePicker.setOpacity(0);
@@ -981,6 +998,8 @@ public class PaymentController implements Initializable {
 							amountEmployeeTextField.clear();
 							employeeBankNameTextField.clear();
 							employeeChequeIDTextField.clear();
+							employeeWritindDatePicker.setValue(null);
+							employeeAvailableUntilDatePicker.setValue(null);
 							chequeEmployeeCheckBox.setSelected(false);
 						} else {
 							Alert alert = new Alert(Alert.AlertType.ERROR);
