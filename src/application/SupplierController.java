@@ -240,6 +240,8 @@ public class SupplierController implements Initializable {
 		try {
 			FXMLLoader addLoader = new FXMLLoader(getClass().getResource("AddSupplier.fxml"));
 			Parent addPane = (Parent) addLoader.load();
+			AddSupplierController addController = addLoader.getController();
+			addController.setCaller(this);
 			Scene scene = new Scene(addPane);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Stage editStage = new Stage();

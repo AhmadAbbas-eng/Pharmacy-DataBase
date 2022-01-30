@@ -50,7 +50,7 @@ public class AddSupplierController implements Initializable {
 	private ImageView deletePhone;
 
 	public void phoneTextOnEnter(KeyEvent e) {
-		
+
 		// When the use press ENTER
 		if (e.getCode() == KeyCode.ENTER) {
 			String phone = phoneTextField.getText();
@@ -115,7 +115,7 @@ public class AddSupplierController implements Initializable {
 		addPhone.setEffect(effect);
 	}
 
-	public void addSupplierOnMousePressed(){
+	public void addSupplierOnMousePressed() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
 		addSupplier.setEffect(effect);
@@ -130,14 +130,14 @@ public class AddSupplierController implements Initializable {
 			checkDues = false;
 		}
 
-		if (!checkDues || name.isEmpty() || name.isBlank() || address.isEmpty() || address.isBlank() || email.isBlank()
-				|| email.isEmpty()) {
+		if (!checkDues || name == null || name.isEmpty() || name.isBlank() || address == null || address.isEmpty()
+				|| address.isBlank() || email == null || email.isBlank() || email.isEmpty()) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Wrong Input Format");
 			alert.setHeaderText("Wrong Input Format");
 			alert.setContentText("Name Must Consist of Alphabetical Characters\n" + "Dues Must Be A Real Number \n"
 					+ "All Fields Must Be Filled");
-			
+
 			alert.showAndWait();
 		} else if (phoneList.getItems().size() == 0) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -147,12 +147,8 @@ public class AddSupplierController implements Initializable {
 			alert.showAndWait();
 		} else {
 			Supplier.insertSupplier(name, address, email, dues, new ArrayList<>(phoneList.getItems()));
-			Supplier.getData().add(new Supplier(Supplier.getMaxID(), name, address, email, dues,
-					new ArrayList<>(phoneList.getItems())));
 			
-			Supplier.getDataList().add(new Supplier(Supplier.getMaxID(), name, address, email, dues,
-					new ArrayList<>(phoneList.getItems())));
-			
+			caller.filterData();
 			nameTextField.setText("");
 			addressTextField.setText("");
 			duesTextField.setText("");
@@ -222,6 +218,10 @@ public class AddSupplierController implements Initializable {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0);
 		deletePhone.setEffect(effect);
+	}
+
+	public void setCaller(SupplierController caller) {
+		this.caller = caller;
 	}
 
 	@Override
