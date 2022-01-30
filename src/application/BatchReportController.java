@@ -32,11 +32,14 @@ public class BatchReportController implements Initializable {
 
 	@FXML
 	private TableColumn<ArrayList<String>, String> productionDateColumn;
+	
+	@FXML
+	private TableColumn<ArrayList<String>, String> amountColumn;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		batch.setItems(FXCollections.observableArrayList(Queries.queryResult(
-				"select p.product_name,b.batch_production_date,b.batch_expiry_date\r\n" + "from product p,batch b\r\n"
+				"select p.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n" + "from product p,batch b\r\n"
 						+ "where p.product_ID=b.product_Id and b.batch_production_date <> '1111-01-01';",
 				null)));
 		productNameColumn.setCellValueFactory(
@@ -57,7 +60,7 @@ public class BatchReportController implements Initializable {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
 						ArrayList<String> x = p.getValue();
-						if (x != null && x.size() > 0) {
+						if (x != null && x.size() > 1) {
 							return new SimpleStringProperty(x.get(1));
 						} else {
 							return new SimpleStringProperty("");
@@ -70,8 +73,21 @@ public class BatchReportController implements Initializable {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
 						ArrayList<String> x = p.getValue();
-						if (x != null && x.size() > 0) {
+						if (x != null && x.size() > 2) {
 							return new SimpleStringProperty(x.get(2));
+						} else {
+							return new SimpleStringProperty("");
+						}
+					}
+				});
+		
+		amountColumn.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
+						ArrayList<String> x = p.getValue();
+						if (x != null && x.size() > 3) {
+							return new SimpleStringProperty(x.get(3));
 						} else {
 							return new SimpleStringProperty("");
 						}
