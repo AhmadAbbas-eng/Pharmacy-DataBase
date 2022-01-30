@@ -125,11 +125,10 @@ public class CustomerOrder {
 		dataList = FXCollections.observableArrayList(data);
 	}
 
-
 	public static void insertCustomerOrder(String date, double price, double discount, double paid, int employeeID,
 			String customerNID) {
-		Queries.queryUpdate("Insert into C_order values (? ,?, ?, ?, ?); ",
-				new ArrayList<>(Arrays.asList((getMaxID()+1) + "", date, price + "", discount + "", employeeID + "")));
+		Queries.queryUpdate("Insert into C_order values (? ,?, ?, ?, ?); ", new ArrayList<>(
+				Arrays.asList((getMaxID() + 1) + "", date, price + "", discount + "", employeeID + "")));
 
 		Queries.queryUpdate("Insert into customer2order values(?, ?);",
 				new ArrayList<>(Arrays.asList(customerNID, (getMaxID()) + "")));
@@ -137,6 +136,7 @@ public class CustomerOrder {
 		Queries.queryUpdate("update Customer set Customer_Debt=customer_Debt+ ? where customer_nid=? ;",
 				new ArrayList<>(Arrays.asList((price - discount - paid) + "", customerNID)));
 	}
+
 	public static void insertCustomerOrderBatch(String oID, String pID, String productionDate, String expiryDate,
 			int amount) {
 		Queries.queryUpdate("Insert into C_order_batch values (? ,?, ?, ?, ?);",
@@ -147,15 +147,17 @@ public class CustomerOrder {
 						+ " and Batch_Expiry_Date=? ;",
 				new ArrayList<>(Arrays.asList(amount + "", pID + "", productionDate, expiryDate)));
 	}
+
 	/**
 	 * Report Customer selling informations on csv file
 	 * 
 	 * @param path The path of file
 	 */
-	public static void report(String path){
-		Queries.reportQuerey("select c.customer_name ,co.order_date,co.employee_Id, p.product_name\r\n"
-				+ "from customer c,customer2order c2o,c_order co,c_order_batch cob,product p \r\n"
-				+ "where c.customer_NID=c2o.customer_NID and c2o.order_ID=co.order_ID and co.order_Id=cob.order_Id and p.product_Id=cob.product_ID;",
+	public static void report(String path) {
+		Queries.reportQuerey(
+				"select c.customer_name as 'Customer Name',co.order_date as 'Order Date',e.employee_name as 'Employee name', p.product_name as 'Product Name'\r\n"
+						+ "from customer c,customer2order c2o,c_order co,c_order_batch cob,product p,employee e \r\n"
+						+ "where co.employee_Id=e.employee_Id and c.customer_NID=c2o.customer_NID and c2o.order_ID=co.order_ID and co.order_Id=cob.order_Id and p.product_Id=cob.product_ID;",
 				path);
 	}
 }

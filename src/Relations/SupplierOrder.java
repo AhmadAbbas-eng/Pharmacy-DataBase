@@ -215,7 +215,7 @@ public class SupplierOrder {
 	 */
 	public static void report(String path) {
 		Queries.reportQuerey(
-				"select s.supplier_name,so.order_cost,so.order_discount,so.recieved_date,s.supplier_dues \r\n"
+				"select s.supplier_name as 'Suppleir Name',so.order_cost as 'Cost',so.order_discount as 'Discount',so.recieved_date as 'Recieved Date',s.supplier_dues as 'Supplier Dues'\r\n"
 						+ "from s_order so,supplier s\r\n" + "where s.supplier_Id=so.supplier_ID;",
 				path);
 	}

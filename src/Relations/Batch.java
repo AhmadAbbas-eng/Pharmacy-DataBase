@@ -7,7 +7,6 @@ import java.util.Arrays;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-
 /**
  * Batch class where Batch table data have been read and manipulated
  * 
@@ -149,7 +148,8 @@ public class Batch {
 	 */
 	public static void report(String path) {
 		Queries.reportQuerey(
-				"select p.product_name,b.batch_production_date,b.batch_expiry_date\r\n" + "from product p,batch b\r\n"
+				"select p.product_name as 'Product Name',b.batch_production_date as 'Production Date',b.batch_expiry_date as 'Expire Date',b.batch_amount as 'amount'\r\n"
+						+ "from product p,batch b\r\n"
 						+ "where p.product_ID=b.product_Id and b.batch_production_date <> '1111-01-01';",
 				path);
 	}

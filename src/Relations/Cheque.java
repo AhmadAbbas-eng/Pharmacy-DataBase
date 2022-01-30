@@ -6,7 +6,6 @@ import java.util.Arrays;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-
 /**
  * Cheque class represents all Cheques' operations
  * 
@@ -29,7 +28,7 @@ public class Cheque {
 	 * specified parameters.
 	 * 
 	 * @param iD            The ID of The cheque.
-	 * @param name      The name of the bank of the Cheque.
+	 * @param name          The name of the bank of the Cheque.
 	 * @param dateOFWriting The writing date of the Cheque.
 	 * @param dateOfCashing The cashing date of the Cheque.
 	 * @param paymentID     The ID of the Payment operation.
@@ -118,7 +117,7 @@ public class Cheque {
 	 * Read from data base and fill the ArrayList
 	 * 
 	 */
-	public static void getChequeData(){
+	public static void getChequeData() {
 
 		data.clear();
 		ArrayList<ArrayList<String>> table = Queries.queryResult("select * from Cheque;", null);
@@ -153,13 +152,13 @@ public class Cheque {
 			tempData.add(temp);
 		}
 		return tempData;
-		
+
 	}
 
 	public static void insertCheque(String chequeID, String name, LocalDate dateOFWriting, LocalDate dateOfCashing,
-			int paymentID, int managerID) {	
-			Queries.queryUpdate("Insert into Cheque values (?, ?, ? ,? ,?, ?);", new ArrayList<>(Arrays.asList(chequeID,
-					name, dateOFWriting.toString(), dateOfCashing.toString(), paymentID + "", managerID + "")));
+			int paymentID, int managerID) {
+		Queries.queryUpdate("Insert into Cheque values (?, ?, ? ,? ,?, ?);", new ArrayList<>(Arrays.asList(chequeID,
+				name, dateOFWriting.toString(), dateOfCashing.toString(), paymentID + "", managerID + "")));
 	}
 
 	/**
@@ -167,9 +166,11 @@ public class Cheque {
 	 * 
 	 * @param path The path of file
 	 */
-	public static void report(String path){
-		Queries.reportQuerey("select c.cheque_ID,e.employee_name,c.due_date_of_cashing,p.payment_amount\r\n"
-				+ "from employee e , cheque c, payment p\r\n"
-				+ "where  c.manager_ID=e.employee_ID and c.payment_ID=p.payment_ID ;", path);
+	public static void report(String path) {
+		Queries.reportQuerey(
+				"select c.cheque_ID as 'Cheque ID',e.employee_name as 'Employee Name',c.due_date_of_cashing as 'Due date of cashing',p.payment_amount as 'Payment Amount'\r\n"
+						+ "from employee e , cheque c, payment p\r\n"
+						+ "where  c.manager_ID=e.employee_ID and c.payment_ID=p.payment_ID ;",
+				path);
 	}
 }

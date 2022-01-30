@@ -175,6 +175,4 @@ public class Customer {
 			insertCustomerPhone(phones, NID);
 		}
 	}
-
-
 }
