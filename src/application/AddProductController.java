@@ -149,12 +149,13 @@ public class AddProductController implements Initializable {
 			alert.showAndWait();
 		}
 
-		else if (checkPrice && price > 0 && !name.isBlank() && !name.isBlank()
+		else if (checkPrice && price > 0 && name != null && !name.isBlank() && !name.isEmpty()
 				&& maufacturerComboBox.getSelectionModel().getSelectedItem() != null) {
 			if (isDrug.isSelected()) {
-				if (!scientificName.isBlank() && !scientificName.isEmpty() && pregnencyCategory != null
-						&& !drugCategory.isBlank() && !drugCategory.isEmpty() && !dosage.isBlank() && !dosage.isEmpty()
-						&& !dosageForm.isBlank() && !dosageForm.isEmpty()) {
+				if (scientificName != null && !scientificName.isBlank() && !scientificName.isEmpty()
+						&& pregnencyCategory != null && drugCategory != null && !drugCategory.isBlank()
+						&& !drugCategory.isEmpty() && dosage != null && !dosage.isBlank() && !dosage.isEmpty()
+						&& dosageForm != null && !dosageForm.isBlank() && !dosageForm.isEmpty()) {
 					Queries.queryUpdate("Insert into Name_Manu values(?, ?);", new ArrayList<>(
 							Arrays.asList(name, maufacturerComboBox.getSelectionModel().getSelectedItem())));
 					Drug.insertDrug(name, price, scientificName, pregnencyCategory, dosage, drugCategory, dosageForm,
