@@ -338,7 +338,7 @@ public class Employee {
 	 * @param path The path of file
 	 */
 	public void report(String path) {
-		Queries.reportQuerey("select employee_ID,employee_name,employee_national_Id,employee_date_of_work\r\n"
+		Queries.reportQuerey("select employee_ID as 'Employee ID',employee_name as 'Employee Name',employee_national_Id as 'Employee National ID',employee_date_of_work as 'Employee Date Of Work'\r\n"
 				+ "employee_hourly_paid,isManager,isActive\r\n" + "from employee;", path);
 	}
 }

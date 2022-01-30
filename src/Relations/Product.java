@@ -141,7 +141,7 @@ public class Product {
 	 * @param path The path of file
 	 */
 	public static void report(String path) {
-		Queries.reportQuerey("select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer\r\n"
+		Queries.reportQuerey("select P.Product_ID as 'Product ID', P.Product_Name as 'Product Name',P.Product_Price as 'Product Price',m.Product_Manufactrer as 'Product Manufactrer'\r\n"
 				+ "from product p,Name_manu m\r\n" + "where P.product_name=m.product_name;", path);
 	}
 
