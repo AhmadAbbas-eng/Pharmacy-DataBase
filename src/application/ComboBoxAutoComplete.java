@@ -55,6 +55,7 @@ public class ComboBoxAutoComplete<T> {
 		this.caller = caller;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void handleOnKeyPressed(KeyEvent e) {
 		ObservableList<T> filteredList = FXCollections.observableArrayList();
 		KeyCode code = e.getCode();

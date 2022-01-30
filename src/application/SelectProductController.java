@@ -95,8 +95,20 @@ public class SelectProductController implements Initializable {
 			effect.setBrightness(0);
 		} else {
 			effect.setBrightness(0.8);
-			String order = listOrder.getSelectionModel().getSelectedItem();
+			if(listOrder.getSelectionModel().getSelectedItem()!= null) {
+				String order = listOrder.getSelectionModel().getSelectedItem();
+			String arr[]=order.split(",");
+			System.out.println("Q"+ Double.parseDouble(arr[2].split("=")[1]) + " c" + Double.parseDouble(arr[3].split("=")[1]) );
+			 totalCost-=Double.parseDouble(arr[2].split("=")[1])*Double.parseDouble(arr[3].split("=")[1]);
 			listOrder.getItems().remove(order);
+			}else {
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setTitle(null);
+				alert.setHeaderText(null);
+				alert.setContentText("Select item to delete ");
+				alert.showAndWait();
+			}
+			
 		}
 		deleteIcon.setEffect(effect);
 	}
@@ -158,8 +170,7 @@ public class SelectProductController implements Initializable {
 							String s = temp.get(i);
 							String[] data = s.split(",");
 							String[] idTemp = data[0].split("=");
-							System.out.println("loor"+
-									idTemp[1] + commercialNameTable.getSelectionModel().getSelectedItem().getID());
+							
 							if (commercialNameTable.getSelectionModel().getSelectedItem().getID() == Integer.parseInt(idTemp[1])) {
 								String[] quantityTemp = data[2].split("=");
 								Quantity += Integer.parseInt(quantityTemp[1]);

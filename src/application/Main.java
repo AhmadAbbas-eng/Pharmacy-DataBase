@@ -1,6 +1,5 @@
 package application;
 
-
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,8 +12,6 @@ import Relations.CustomerOrder;
 import Relations.Employee;
 import Relations.Payment;
 import Relations.Queries;
-import Relations.Supplier;
-import Relations.SupplierOrder;
 import Relations.Tax;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -38,13 +35,18 @@ public class Main extends Application {
 		}
 	}
 
-	public static void main(String[] args)  {
+	public static void main(String[] args) {
 //Supplier.getSupplierData();
 //			SupplierOrder.getSupplierOrderData();
 //		generateS_order();
 //		c_order_generate();
-//		payment();
-		//Main.readingData();
+//		try {
+//			payment();
+//		} catch (ClassNotFoundException | SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		// Main.readingData();
 		launch(args);
 	}
 
@@ -52,15 +54,14 @@ public class Main extends Application {
 		Cheque.getChequeData();
 		Customer.getCustomerData();
 		CustomerOrder.getCustomerOrderData();
-		
+
 		Employee.getEmployeeData();
 		Payment.getPaymentData();
-		
-		
+
 		Tax.getTaxData();
 	}
 
-	public static void generateS_order()  {
+	public static void generateS_order() {
 		ArrayList<String> s_order = new ArrayList<String>();
 		ArrayList<String> s_order_batch = new ArrayList<String>();
 		ArrayList<String> batch = new ArrayList<String>();
@@ -79,8 +80,9 @@ public class Main extends Application {
 				int price = Integer.parseInt(
 						Queries.queryResult("select product_price from product where product_Id=?;\r\n", parameters)
 								.get(0).get(0));
-				total += (int) Math.floor(price - 0.1 * price);
+
 				int quantity = 5 * (int) Math.floor(Math.random() * (3 - 1 + 1) + 1);
+				total += (int) Math.floor(price - 0.5 * price) * quantity;
 				long minDay = LocalDate.of(2021, 1, 1).toEpochDay();
 				long maxDay = LocalDate.of(orderDate.getYear(), orderDate.getMonth(), orderDate.getDayOfMonth())
 						.toEpochDay();
@@ -122,7 +124,7 @@ public class Main extends Application {
 		System.out.println("done");
 	}
 
-	public static void c_order_generate(){
+	public static void c_order_generate() {
 
 		ArrayList<String> c_order = new ArrayList<String>();
 		ArrayList<String> c_order_batch = new ArrayList<String>();
@@ -131,40 +133,56 @@ public class Main extends Application {
 		int cOrderId = 1;
 		int incomeID = 1;
 		LocalDate orderDate = LocalDate.parse("2021-06-01");
-		while (!orderDate.equals(LocalDate.now())) {
+		while (!orderDate.equals(LocalDate.now().plusDays(1))) {
 
-			int n = (int) Math.floor(Math.random() * (4 - 2 + 1) + 2);
+			int n = (int) Math.floor(Math.random() * (7 - 5 + 1) + 5);
 			int employeeID = (int) Math.floor(Math.random() * (3 - 1 + 1) + 1);
 
 			while (n != 0) {
 				ArrayList<String> parameters = new ArrayList<>();
 				parameters.add(orderDate.toString());
-				ArrayList<ArrayList<String>> nonDrugs = Queries.queryResult(
-						"select b.product_ID,b.batch_production_date,b.batch_expiry_date,p.product_price from product p,batch b,drug d\r\n"
-								+ "where p.product_Id=b.product_Id and  p.product_Id=d.product_Id and d.drug_pharmacetical_category='non' and b.batch_production_date < ?;",
+				ArrayList<ArrayList<String>> Drugs = Queries.queryResult(
+						"select b.product_ID,b.batch_production_date,b.batch_expiry_date,p.product_price,d.Drug_Pharmacetical_Category from product p,batch b,drug d\r\n"
+								+ "where p.product_Id=b.product_Id and  p.product_Id=d.product_Id and b.batch_production_date < ?;",
 						parameters);
 
 				StringBuilder c_order_string = new StringBuilder();
 				c_order_string.append(cOrderId + ",'" + orderDate.toString() + "',");
 				int m = (int) Math.floor(Math.random() * (3 - 1 + 1) + 1);
 				int total = 0;
+				boolean flag = true;
 				while (m != 0) {
 					StringBuilder c_order_batch_string = new StringBuilder();
 					c_order_batch_string.append(cOrderId + ",");
-					int index = (int) (Math.random() * nonDrugs.size());
-					c_order_batch_string.append(nonDrugs.get(index).get(0) + ",'");
-					c_order_batch_string.append(nonDrugs.get(index).get(1) + "','");
-					c_order_batch_string.append(nonDrugs.get(index).get(2) + "'," + 1);
+					int index = (int) (Math.random() * Drugs.size());
+					c_order_batch_string.append(Drugs.get(index).get(0) + ",'");
+					c_order_batch_string.append(Drugs.get(index).get(1) + "','");
+					c_order_batch_string.append(Drugs.get(index).get(2) + "'," + 1);
 					c_order_batch.add(c_order_batch_string.toString());
-					total += Integer.parseInt(nonDrugs.get(index).get(3));
-					nonDrugs.remove(index);
+					total += Integer.parseInt(Drugs.get(index).get(3));
+					if (Drugs.get(index).get(4).toLowerCase().equals("danger")
+							|| Drugs.get(index).get(4).toLowerCase().equals("controlled")) {
+						flag = false;
+					}
+					Drugs.remove(index);
 					m--;
 				}
 				c_order_string.append(total + "," + (int) (0.1 * total) + "," + employeeID);
 				c_order.add(c_order_string.toString());
-				customer2order.add(0 + "," + cOrderId);
-				income.add(incomeID + "," + (total - (int) (0.1 * total)) + ",'" + orderDate.toString() + "',"
-						+ employeeID + ",0");
+
+				if (flag) {
+					customer2order.add(0 + "," + cOrderId);
+					income.add(incomeID + "," + (total - (int) (0.1 * total)) + ",'" + orderDate.toString() + "',"
+							+ employeeID + ",0");
+				} else {
+
+					ArrayList<ArrayList<String>> customers = Queries
+							.queryResult("select customer_nid from customer d\r\n" + "where customer_nid<>'0';", null);
+					int index = (int) (Math.random() * customers.size());
+					customer2order.add(customers.get(index).get(0) + "," + cOrderId);
+					income.add(incomeID + "," + (total - (int) (0.1 * total)) + ",'" + orderDate.toString() + "',"
+							+ employeeID + "," + customers.get(index).get(0));
+				}
 				cOrderId++;
 				incomeID++;
 				n--;
@@ -208,19 +226,32 @@ public class Main extends Application {
 		banks.add("'Jordan Bank'");
 		banks.add("'El Eskan Bank'");
 		LocalDate orderDate = LocalDate.parse("2021-06-01");
+		int month=6,year=2021;
 		int op = 1, paymentId = 1, taxId = 1, chequeId = 1;
-
+		int firstEmployeeSalary = Integer.parseInt(
+				Queries.queryResult("select employee_hourly_paid from employee where employee_ID=2", null).get(0).get(0));
+		int secondEmployeeSalary = Integer.parseInt(
+				Queries.queryResult("select employee_hourly_paid from employee where employee_ID=2", null).get(0).get(0));
+		
+		
 		while (orderDate.compareTo(LocalDate.now()) < 0) {
 
 			// Salary
 			if (op == 1) {
-				int m = (int) Math.floor(Math.random() * (2000 - 1500 + 1) + 1500);
-				payment.add(paymentId + ",'" + orderDate.toString() + "'," + m + "," + "'Cash'");
+				int m = (int) Math.floor(Math.random() * (60 - 50 + 1) + 50);
+				Queries.queryUpdate("INSERT INTO `work_hours` VALUES(2,'" + month + "','"
+						+ year + "'," + m + ");", null);
+				payment.add(paymentId + ",'" + orderDate.toString() + "'," + (m*firstEmployeeSalary) + "," + "'Cash'");
 				salaries.add(1 + "," + 2 + "," + paymentId);
 				paymentId++;
-				m = (int) Math.floor(Math.random() * (2000 - 1500 + 1) + 1500);
-				payment.add(paymentId + ",'" + orderDate.toString() + "'," + m + "," + "'Cash'");
+		/**/		m = (int) Math.floor(Math.random() * (60 - 50 + 1) + 50);
+				Queries.queryUpdate("INSERT INTO `work_hours` VALUES(3,'" + month++ + "','"
+						+ year + "'," + m + ");", null);
+				payment.add(paymentId + ",'" + orderDate.toString() + "'," + (m*secondEmployeeSalary) + "," + "'Cash'");
 				salaries.add(1 + "," + 3 + "," + paymentId);
+				if(month==13) {
+					month=1;year++;
+				}
 				paymentId++;
 				op++;
 			}
@@ -242,10 +273,18 @@ public class Main extends Application {
 				parameters.add(orderDate.toString());
 				ArrayList<ArrayList<String>> suppliers = Queries.queryResult(
 						"select s.supplier_id,s.supplier_dues,(so.order_cost-so.order_discount),so.date_of_order from supplier s,s_order so \r\n"
-								+ "where s.supplier_Id=so.supplier_Id and so.date_of_order<?;",
+								+ "where s.supplier_Id=so.supplier_Id and s.supplier_dues>=(so.order_cost-so.order_discount) and so.date_of_order<?;",
 						parameters);
+				while (suppliers == null) {
+					parameters.clear();
+					orderDate = orderDate.plusDays(1);
+					parameters.add(orderDate.toString());
+					suppliers = Queries.queryResult(
+							"select s.supplier_id,s.supplier_dues,(so.order_cost-so.order_discount),so.date_of_order from supplier s,s_order so \r\n"
+									+ "where s.supplier_Id=so.supplier_Id and s.supplier_dues>0 and so.date_of_order<?;",
+							parameters);
+				}
 				int index = (int) (Math.random() * suppliers.size());
-
 				for (int i = 0; i < 3 && suppliers.size() != 0; i++) {
 					int bankIndex = (int) (Math.random() * banks.size());
 

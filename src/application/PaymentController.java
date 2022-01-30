@@ -744,6 +744,14 @@ public class PaymentController implements Initializable {
 							Supplier.getSupplierData(Queries.queryResult("select * from Supplier;", null))));
 					amountSupplierTextField.clear();
 				}
+				else {
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setTitle(null);
+					alert.setHeaderText(null);
+					alert.setContentText("Wrong amount fromat");
+					alert.showAndWait();
+				}
+				
 
 			}
 		} else {
@@ -1037,6 +1045,7 @@ public class PaymentController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		disposalOperationComboBox.setItems(Choices);
+		Supplier.getSupplierData();
 		Payment.getData();
 		disposalTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
 				"select distinct p.product_name,d.Batch_Production_Date,d.Batch_Expiry_Date, d.Disposal_amount, d.Disposal_date,e.employee_name,pay.Payment_Amount\r\n"
