@@ -181,7 +181,7 @@ public class Drug extends Product {
 		Queries.queryUpdate("Insert into Product values(?, ?, ?);",
 				new ArrayList<>(Arrays.asList((getMaxID()+1) + "", name, price + "")));
 
-		Queries.queryUpdate("Insert into Drug values (?, ?, ?, ?, ?, ?);", new ArrayList<>(Arrays
-				.asList(getMaxID() + "", scientificName, riskPregnency, category, dosageForm, pharmaceticalCategory)));
+		Queries.queryUpdate("Insert into Drug values (?, ?, ?, ?, ?, ?,?);", new ArrayList<>(Arrays
+				.asList(getMaxID() + "", scientificName, riskPregnency,dosage, category, dosageForm, pharmaceticalCategory)));
 	}
 }
