@@ -23,6 +23,7 @@
                <children>
                   <TableView fx:id="employeePaymentTable" layoutX="21.0" layoutY="47.0" prefHeight="186.0" prefWidth="760.0" stylesheets="@../../CSS/table.css" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="21.0" AnchorPane.topAnchor="47.0">
                      <columns>
+                        <TableColumn fx:id="employeePaymentManagerName" prefWidth="75.0" text="Manager Name" />
                         <TableColumn fx:id="employeePaymentNameColumn" prefWidth="187.20001220703125" text="Employee Name" />
                         <TableColumn fx:id="employeePaymentDateColumn" prefWidth="345.60003662109375" text="Payment Date" />
                         <TableColumn fx:id="employeePaymentAmountColumn" prefWidth="345.60003662109375" text="Amount" />
