@@ -35,7 +35,7 @@
          </opaqueInsets>
       </TableView>
       <TextField fx:id="searchBox" layoutX="32.0" layoutY="51.0" promptText="Search ..." stylesheets="@../../CSS/search.css" AnchorPane.leftAnchor="32.0" AnchorPane.topAnchor="51.0" />
-      <ComboBox fx:id="fieldSelector" layoutX="194.0" layoutY="51.0" prefWidth="150.0" promptText="-Specify Field-" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="194.0" AnchorPane.topAnchor="51.0" />
+      <ComboBox fx:id="fieldSelector" layoutX="194.0" layoutY="51.0" onAction="#filterProductList" prefWidth="150.0" promptText="-Specify Field-" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="194.0" AnchorPane.topAnchor="51.0" />
       <HBox alignment="CENTER_LEFT" layoutX="370.0" layoutY="51.0" prefHeight="28.0" prefWidth="264.0" spacing="20.0" AnchorPane.leftAnchor="370.0" AnchorPane.topAnchor="51.0">
          <children>
             <CheckBox fx:id="isDrug" lineSpacing="100.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#drugSelection" text="Drug" textFill="#1d6f84">
@@ -87,8 +87,8 @@
             <TableColumn fx:id="amountColumn" prefWidth="75.0" text="Amount" />
          </columns>
       </TableView>
-      <ComboBox fx:id="dateSelector" layoutX="198.0" layoutY="290.0" onAction="#filterBatchList" prefHeight="28.0" prefWidth="122.0" promptText="Expires On" stylesheets="@../../CSS/combobox.css" />
-      <DatePicker fx:id="datePicker" layoutX="32.0" layoutY="291.0" onAction="#filterBatchList" prefHeight="25.0" prefWidth="145.0" promptText="YYYY/MM/DD" />
+      <ComboBox fx:id="dateSelector" layoutX="194.0" layoutY="291.0" onAction="#filterBatchList" prefHeight="28.0" prefWidth="150.0" promptText="Expires On" stylesheets="@../../CSS/combobox.css" />
+      <DatePicker fx:id="datePicker" layoutX="32.0" layoutY="291.0" onAction="#filterBatchList" prefHeight="28.0" prefWidth="150.0" promptText="YYYY/MM/DD" stylesheets="@../../CSS/datePicker.css" />
       <Button fx:id="addButton" layoutX="32.0" layoutY="559.6666666666666" mnemonicParsing="false" onAction="#addProductOnAction" prefWidth="80.0" stylesheets="@../../CSS/button.css" text="Add" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="32.0" />
       <HBox layoutX="32.0" layoutY="512.0" prefHeight="28.0" prefWidth="337.0" spacing="3.0" AnchorPane.bottomAnchor="72.0" AnchorPane.leftAnchor="32.0">
          <children>
