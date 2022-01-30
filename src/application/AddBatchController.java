@@ -19,8 +19,9 @@ import javafx.stage.Stage;
 
 /**
  * 
- * @version 26 January 2022
- * @author Aseel Sabri
+ * @version 30 January 2022
+ * @author Ahmad Abbas
+ * 
  */
 public class AddBatchController implements Initializable {
 

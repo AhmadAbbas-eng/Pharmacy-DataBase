@@ -20,6 +20,11 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * 
+ * @version 30 January 2022
+ *
+ */
 public class MainPageController implements Initializable {
 	
 	static StackPane pane = null;

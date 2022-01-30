@@ -1,6 +1,7 @@
 package application;
 
 import java.io.IOException;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,9 +35,9 @@ import javafx.stage.Stage;
 
 /**
  * 
- * @version 27 January 2022
+ * @version 30 January 2022
+ * @author Ahmad Abbas
  * @author Loor Sawalhi
- *
  */
 public class SelectProductController implements Initializable {
 

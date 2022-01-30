@@ -36,8 +36,8 @@ import javafx.util.Duration;
 
 /**
  * 
- * @version 27 January 2022
- * @author Ahmad Abbas
+ * @version 30 January 2022
+ * @author Loor Sawalhi
  *
  */
 public class DisposalController implements Initializable {

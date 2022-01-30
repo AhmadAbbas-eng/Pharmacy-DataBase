@@ -23,6 +23,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 
+/**
+ * 
+ * @version 30 January 2022
+ * @author Loor Sawalhi
+ *
+ */
 public class MonthlyNetProfitController implements Initializable {
 	
     @FXML

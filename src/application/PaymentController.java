@@ -26,7 +26,7 @@ import javafx.util.Callback;
 
 /**
  * 
- * @version 27 January 2022
+ * @version 30 January 2022
  * @author Loor Sawalhi
  */
 public class PaymentController implements Initializable {

@@ -45,9 +45,8 @@ import javafx.util.Duration;
 
 /**
  * 
- * @version 27 January 2022
- * @author Loor Sawalhi
- *
+ * @version 30 January 2022
+ * @author Aseel Sabri
  */
 public class SellController implements Initializable {
 	private boolean isCustomerSelected = false;

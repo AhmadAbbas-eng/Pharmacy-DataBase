@@ -33,6 +33,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
+/**
+ * @version 30 January 2022
+ * @author Ahmad Abbas
+ *
+ */
 public class AddProductController implements Initializable {
 
 	ArrayList<ArrayList<String>> product;
