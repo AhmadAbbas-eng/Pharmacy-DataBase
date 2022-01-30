@@ -101,7 +101,7 @@ public class ReceiveOrdersController implements Initializable {
 
 	@FXML
 	private Label choosenProductLabel;
-	
+
 	@FXML
 	private Label quantityLabel;
 
@@ -134,9 +134,10 @@ public class ReceiveOrdersController implements Initializable {
 			quantityTextField.setOpacity(1);
 			quantityLabel.setOpacity(1);
 		}
+		quantityTextField.clear();
 	}
 
-	public void saveOnMousePressed(){
+	public void saveOnMousePressed() {
 		if (receivedDatePicker.getValue() != null && payDueDatePicker.getValue() != null) {
 
 			if (receivedDatePicker.getValue().compareTo(payDueDatePicker.getValue()) == 0
@@ -161,9 +162,11 @@ public class ReceiveOrdersController implements Initializable {
 							new ArrayList<>(Arrays.asList(Employee.getCurrentID() + "",
 									receivedDatePicker.getValue().toString(), costTextField.getText(),
 									supplierOrder.getID() + "")));
-					
-					Queries.queryUpdate("update Supplier set supplier_dues =  supplier_dues - ? + ? where Supplier_ID =?;", new ArrayList<>(
-							Arrays.asList(supplierOrder.getCost()+"",costTextField.getText(), supplierOrder.getSupplierID() + "")));
+
+					Queries.queryUpdate(
+							"update Supplier set supplier_dues =  supplier_dues - ? + ? where Supplier_ID =?;",
+							new ArrayList<>(Arrays.asList(supplierOrder.getCost() + "", costTextField.getText(),
+									supplierOrder.getSupplierID() + "")));
 
 				} else {
 					Queries.queryUpdate("update s_order set Recieved_by=? , Recieved_Date=? where order_id=? ;",
@@ -176,9 +179,9 @@ public class ReceiveOrdersController implements Initializable {
 					String pID = data.get(counter).get(0);
 					String Amount = data.get(counter).get(4);
 					Queries.queryUpdate(
-							"update S_Order_Batch set batch_amount = batch_amount - ?"
-									+ " where product_id = ? and Batch_Production_Date = '1111-01-01';",
-							new ArrayList<>(Arrays.asList(Amount, pID)));
+							"delete from S_Order_Batch"
+									+ " where order_ID = ? and product_id = ? and Batch_Production_Date = '1111-01-01';",
+							new ArrayList<>(Arrays.asList(supplierOrder.getID()+"", pID)));
 
 					Queries.queryUpdate(
 							"update Batch set batch_amount = batch_amount + ?"
@@ -191,17 +194,18 @@ public class ReceiveOrdersController implements Initializable {
 									+ " values(?,?,?,?,?);",
 							new ArrayList<>(Arrays.asList(supplierOrder.getID() + "", pID, data.get(counter).get(2),
 									data.get(counter).get(3), Amount)));
-					
+
 					++counter;
 				}
 				Region page;
 				try {
 					page = FXMLLoader.load(getClass().getResource("UnReceivedOrders.fxml"));
-				
-				MainPageController.pane.getChildren().removeAll();
-				MainPageController.pane.getChildren().setAll(page);
-				page.prefWidthProperty().bind(MainPageController.pane.widthProperty());
-				page.prefHeightProperty().bind(MainPageController.pane.heightProperty());} catch (IOException e) {
+
+					MainPageController.pane.getChildren().removeAll();
+					MainPageController.pane.getChildren().setAll(page);
+					page.prefWidthProperty().bind(MainPageController.pane.widthProperty());
+					page.prefHeightProperty().bind(MainPageController.pane.heightProperty());
+				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -240,28 +244,29 @@ public class ReceiveOrdersController implements Initializable {
 	public void addOnMousePressed() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
-		addBatchIcon.setEffect(effect);	
-		if (orderedProducts.size() <= counter ) {
+		addBatchIcon.setEffect(effect);
+		if (orderedProducts.size() <= counter) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Error");
 			alert.setHeaderText(null);
 			alert.setContentText("No More Products To Select");
 			alert.showAndWait();
-		}else {
+		} else {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("AddBatch.fxml"));
-		Parent root1;
-		try {
-			root1 = (Parent) loader.load();
-		
-		AddBatchController addBatchController = loader.getController();
-		addBatchController.setProduct(orderedProducts.get(counter).getProductID(), ProductName, this);		
-		Stage stage2 = new Stage();
-		stage2.setScene(new Scene(root1));
-		stage2.show();} catch (IOException e) {		
-			e.printStackTrace();
+			Parent root1;
+			try {
+				root1 = (Parent) loader.load();
+
+				AddBatchController addBatchController = loader.getController();
+				addBatchController.setProduct(orderedProducts.get(counter).getProductID(), ProductName, this);
+				Stage stage2 = new Stage();
+				stage2.setScene(new Scene(root1));
+				stage2.show();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		}
-		
+
 	}
 
 	public void addOnMouseReleased() {
@@ -282,28 +287,28 @@ public class ReceiveOrdersController implements Initializable {
 		addBatchIcon.setEffect(effect);
 	}
 
-	public void saveUpdates(){
+	public void saveUpdates() {
 		productsBatchColumn.setItems(FXCollections.observableArrayList(Batch.getBatchData(Queries.queryResult(
 				"select * from Batch where product_id =? and batch_production_date <> '1111-01-01' and batch_expiry_date > DATE(NOW());",
 				new ArrayList<>(Arrays.asList(orderedProducts.get(counter).getProductID() + ""))))));
-		
+
 		productsBatchColumn.refresh();
 	}
 
-	public void updateTable()  {
+	public void updateTable() {
 
 		// upload batches to the listview
 		productsBatchColumn.setItems(FXCollections.observableArrayList(Batch.getBatchData(Queries.queryResult(
 				"select * from Batch where product_id =? and batch_production_date <> '1111-01-01';",
 				new ArrayList<>(Arrays.asList(orderedProducts.get(counter).getProductID() + ""))))));
-		
+
 		// set order number
 		orderNumberLabel.setText("Order NO." + supplierOrder.getID());
-		
+
 		// get products ids
-		ArrayList<Product> productName = Product
-				.getProductData(Queries.queryResult("select * from Product where product_id =?;",
-						new ArrayList<>(Arrays.asList(orderedProducts.get(counter).getProductID() + ""))));
+		ArrayList<Product> productName = Product.getProductData(Queries.queryResult(
+				"select p.*,m.Product_Manufactrer from Product p, name_manu m where p.product_name=m.product_name and p.product_id =?;",
+				new ArrayList<>(Arrays.asList(orderedProducts.get(counter).getProductID() + ""))));
 
 		ProductName = productName.get(0).getName();
 		ProductId = orderedProducts.get(counter).getProductID() + "";
@@ -315,12 +320,12 @@ public class ReceiveOrdersController implements Initializable {
 	public void setRow(SupplierOrder supplierOrder) {
 		// this.caller = caller;
 		this.supplierOrder = supplierOrder; // order id
-		costTextField.setText(supplierOrder.getCost()+"");
+		costTextField.setText(supplierOrder.getCost() + "");
 		// get products
 		orderedProducts = SupplierOrderBatch
 				.getSupplierOrderBatchData(Queries.queryResult("select * from s_order_batch where order_id =?;",
 						new ArrayList<>(Arrays.asList(supplierOrder.getID() + ""))));
-		
+
 		// upload first product batches
 		productsBatchColumn.setItems(FXCollections.observableArrayList(Batch.getBatchData(Queries.queryResult(
 				"select * from batch where product_id =? and Batch_Production_Date <> '1111-01-01';",
@@ -334,7 +339,7 @@ public class ReceiveOrdersController implements Initializable {
 
 		choosenProductLabel.setText(productName.get(0).getName());
 		savedQuantityLabel.setText("Quantity = " + orderedProducts.get(0).getAmount() + "");
-		
+
 		ProductName = productName.get(0).getName();
 		ProductId = orderedProducts.get(0).getProductID() + "";
 		QuantityStored = orderedProducts.get(0).getAmount() + "";
@@ -351,10 +356,10 @@ public class ReceiveOrdersController implements Initializable {
 					productsEntered.add(ProductName);
 					productsEntered.add(
 							productsBatchColumn.getSelectionModel().getSelectedItem().getProductionDate().toString());
-					
+
 					productsEntered
 							.add(productsBatchColumn.getSelectionModel().getSelectedItem().getExpiryDate().toString());
-					
+
 					productsEntered.add(QuantityStored);
 
 					if (orderedProducts.size() > counter && productsEntered.isEmpty() == false) {
@@ -405,26 +410,29 @@ public class ReceiveOrdersController implements Initializable {
 			alert.setContentText("You Have To Save The Data");
 			alert.showAndWait();
 		}
+		quantityTextField.setOpacity(1);
+		quantityTextField.clear();
+		quantityLabel.setOpacity(1);
 	}
 
 	public void cancelOnAction(ActionEvent e) {
 		Region page;
 		try {
 			page = FXMLLoader.load(getClass().getResource("UnReceivedOrders.fxml"));
-		
-		MainPageController.pane.getChildren().removeAll();
-		MainPageController.pane.getChildren().setAll(page);
-		page.prefWidthProperty().bind(MainPageController.pane.widthProperty());
-		page.prefHeightProperty().bind(MainPageController.pane.heightProperty());
-	} catch (IOException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	}
+
+			MainPageController.pane.getChildren().removeAll();
+			MainPageController.pane.getChildren().setAll(page);
+			page.prefWidthProperty().bind(MainPageController.pane.widthProperty());
+			page.prefHeightProperty().bind(MainPageController.pane.heightProperty());
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		
+
 		if (confirmQuantityCheckBox.isSelected() == true) {
 			quantityTextField.setOpacity(0);
 			quantityLabel.setOpacity(0);
@@ -448,7 +456,7 @@ public class ReceiveOrdersController implements Initializable {
 						}
 					}
 				});
-		
+
 		productNameColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
