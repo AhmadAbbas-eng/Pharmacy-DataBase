@@ -16,8 +16,8 @@
                   <Font name="System Bold" size="17.0" />
                </font>
             </Label>
-            <DatePicker fx:id="productionDateDatePicker" layoutX="171.0" layoutY="77.0" promptText="YYYY-MM-DD" />
-            <DatePicker fx:id="expiryDateDatePicker" layoutX="171.0" layoutY="110.0" promptText="YYYY-MM-DD" />
+            <DatePicker fx:id="productionDateDatePicker" layoutX="171.0" layoutY="77.0" promptText="YYYY-MM-DD" stylesheets="@../../CSS/datePicker.css" />
+            <DatePicker fx:id="expiryDateDatePicker" layoutX="171.0" layoutY="110.0" promptText="YYYY-MM-DD" stylesheets="@../../CSS/datePicker.css" />
             <Button fx:id="addButton" layoutX="71.0" layoutY="177.0" mnemonicParsing="false" onAction="#addBatch" prefHeight="26.0" prefWidth="110.0" stylesheets="@../../CSS/button.css" text="Add" />
             <Button fx:id="cancelButton" layoutX="203.0" layoutY="177.0" mnemonicParsing="false" onAction="#cancelButton" prefHeight="26.0" prefWidth="110.0" stylesheets="@../../CSS/button.css" text="Cancel" />
             <Label fx:id="productNameLabel" layoutX="94.0" layoutY="34.0" prefHeight="26.0" prefWidth="221.0" textFill="#1d6f84">

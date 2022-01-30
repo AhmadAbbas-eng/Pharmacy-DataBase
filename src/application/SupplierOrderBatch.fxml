@@ -13,7 +13,7 @@
    <top>
       <AnchorPane prefHeight="41.0" prefWidth="661.0" style="-fx-background-color: #1d6f84;" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="title" layoutX="23.0" layoutY="3.0" prefHeight="34.0" prefWidth="543.0" stylesheets="@../../CSS/TitleLabel.css" text=" Products" textFill="WHITE">
+            <Label fx:id="title" layoutX="23.0" layoutY="3.0" prefHeight="34.0" prefWidth="543.0" stylesheets="@../../CSS/TitleLabel.css" text=" Products" textFill="WHITE" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="3.0">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
@@ -35,8 +35,8 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <TextField fx:id="searchProductsTextField" layoutX="22.0" layoutY="24.0" prefHeight="26.0" prefWidth="179.0" promptText="Search" stylesheets="@../../CSS/textField.css" />
-            <ComboBox fx:id="searchOrderProductsComboBox" layoutX="221.0" layoutY="25.0" onAction="#filterList" prefWidth="150.0" promptText=" - Select -" stylesheets="@../../CSS/combobox.css" />
+            <TextField fx:id="searchProductsTextField" layoutX="22.0" layoutY="24.0" prefHeight="26.0" prefWidth="179.0" promptText="Search" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="20.0" />
+            <ComboBox fx:id="searchOrderProductsComboBox" layoutX="221.0" layoutY="25.0" onAction="#filterList" prefWidth="150.0" promptText=" - Select -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="221.0" AnchorPane.topAnchor="20.0" />
          </children>
       </AnchorPane>
    </center>

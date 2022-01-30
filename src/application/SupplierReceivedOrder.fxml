@@ -8,10 +8,11 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
 <AnchorPane prefHeight="537.0" prefWidth="867.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ReceivedOrderController">
    <children>
-      <TableView fx:id="ordersTable" layoutX="15.0" layoutY="53.0" prefHeight="358.0" prefWidth="660.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="53.0">
+      <TableView fx:id="ordersTable" layoutX="15.0" layoutY="53.0" prefHeight="358.0" prefWidth="660.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="65.0">
          <columns>
             <TableColumn fx:id="orderIDColumn" prefWidth="43.20001220703125" text="ID" />
             <TableColumn fx:id="orderByIDColumn" prefWidth="98.4000244140625" text="Order By " />
@@ -24,15 +25,19 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <TextField fx:id="searchTextField" layoutX="14.0" layoutY="15.0" prefHeight="26.0" prefWidth="170.0" promptText="Search" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="15.0" />
-      <Button fx:id="unreceivedOrdersButton" layoutX="15.0" layoutY="359.0" mnemonicParsing="false" onAction="#unReceiveOrderOnAction" prefHeight="26.0" prefWidth="121.0" stylesheets="@../../CSS/button.css" text="Unreceived Orders" AnchorPane.bottomAnchor="14.600000000000001" AnchorPane.leftAnchor="15.0" />
+      <TextField fx:id="searchTextField" layoutX="14.0" layoutY="15.0" prefHeight="26.0" prefWidth="170.0" promptText="Search" stylesheets="@../../CSS/search.css" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="20.0" />
       <ImageView fx:id="newOrderIcon" fitHeight="30.0" fitWidth="32.0" layoutX="545.0" layoutY="13.0" onMouseEntered="#newOrderOnMouseEntered" onMouseExited="#newOrderOnMouseExited" onMousePressed="#newOrderOnMousePressed" onMouseReleased="#newOrderOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="13.0">
          <image>
             <Image url="@../../Icons/icons8-create-order-50.png" />
          </image>
       </ImageView>
-      <Button fx:id="receivedOrdersButton" layoutX="145.0" layoutY="359.0" mnemonicParsing="false" onAction="#receivedOrdersOnAction" prefHeight="26.0" prefWidth="122.0" stylesheets="@../../CSS/button.css" text="Received Orders" AnchorPane.bottomAnchor="14.600000000000001" AnchorPane.leftAnchor="145.0" />
-      <ComboBox fx:id="searchOperationComboBox" layoutX="199.0" layoutY="14.0" onAction="#filterList" prefWidth="150.0" promptText="- Select -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="199.0" AnchorPane.topAnchor="14.0" />
-      <Button fx:id="showProductsButton" layoutX="274.0" layoutY="496.0" mnemonicParsing="false" onAction="#showProductsOnAction" prefHeight="26.0" prefWidth="122.0" stylesheets="@../../CSS/button.css" text="Show Products" AnchorPane.bottomAnchor="14.600000000000001" AnchorPane.leftAnchor="274.0" />
+      <ComboBox fx:id="searchOperationComboBox" layoutX="208.0" layoutY="20.0" onAction="#filterList" prefWidth="150.0" promptText="- Select -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="208.0" AnchorPane.topAnchor="20.0" />
+      <HBox layoutX="17.0" layoutY="506.0" spacing="7.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="22.0">
+         <children>
+            <Button fx:id="unreceivedOrdersButton" mnemonicParsing="false" onAction="#unReceiveOrderOnAction" prefHeight="26.0" prefWidth="121.0" stylesheets="@../../CSS/button.css" text="Unreceived Orders" />
+            <Button fx:id="receivedOrdersButton" mnemonicParsing="false" onAction="#receivedOrdersOnAction" prefHeight="26.0" prefWidth="122.0" stylesheets="@../../CSS/button.css" text="Received Orders" />
+            <Button fx:id="showProductsButton" mnemonicParsing="false" onAction="#showProductsOnAction" prefHeight="26.0" prefWidth="122.0" stylesheets="@../../CSS/button.css" text="Show Products" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

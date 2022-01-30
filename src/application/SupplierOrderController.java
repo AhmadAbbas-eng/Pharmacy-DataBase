@@ -34,6 +34,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -112,6 +113,7 @@ public class SupplierOrderController implements Initializable {
 			temp.getProductList(new ArrayList<String>(orderdProductsList.getItems()), this);
 			Stage stage2 = new Stage();
 			stage2.setScene(new Scene(root1));
+			stage2.initModality(Modality.APPLICATION_MODAL);
 			stage2.show();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

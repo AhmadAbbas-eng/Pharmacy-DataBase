@@ -22,6 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
@@ -178,10 +179,9 @@ public class ReceiveOrdersController implements Initializable {
 
 					String pID = data.get(counter).get(0);
 					String Amount = data.get(counter).get(4);
-					Queries.queryUpdate(
-							"delete from S_Order_Batch"
-									+ " where order_ID = ? and product_id = ? and Batch_Production_Date = '1111-01-01';",
-							new ArrayList<>(Arrays.asList(supplierOrder.getID()+"", pID)));
+					Queries.queryUpdate("delete from S_Order_Batch"
+							+ " where order_ID = ? and product_id = ? and Batch_Production_Date = '1111-01-01';",
+							new ArrayList<>(Arrays.asList(supplierOrder.getID() + "", pID)));
 
 					Queries.queryUpdate(
 							"update Batch set batch_amount = batch_amount + ?"
@@ -261,6 +261,8 @@ public class ReceiveOrdersController implements Initializable {
 				addBatchController.setProduct(orderedProducts.get(counter).getProductID(), ProductName, this);
 				Stage stage2 = new Stage();
 				stage2.setScene(new Scene(root1));
+				stage2.setResizable(false);
+				stage2.initModality(Modality.APPLICATION_MODAL);
 				stage2.show();
 			} catch (IOException e) {
 				e.printStackTrace();

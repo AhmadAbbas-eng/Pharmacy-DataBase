@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="544.0" prefWidth="866.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.UnReceivedController">
    <children>
       <TableView fx:id="unreceivedOrdersTable" layoutX="15.0" layoutY="53.0" prefHeight="464.0" prefWidth="837.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="51.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="53.0">
@@ -37,6 +36,6 @@
             <Image url="@../../Icons/icons8-back-50.png" />
          </image>
       </ImageView>
-      <ComboBox fx:id="searchOperationComboBox" layoutX="218.0" layoutY="15.0" onAction="#filterList" prefWidth="150.0" promptText="- Select -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="218.0" AnchorPane.topAnchor="15.0" />
+      <ComboBox fx:id="searchOperationComboBox" layoutX="218.0" layoutY="15.0" onAction="#filterList" prefWidth="150.0" promptText="- Select -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="218.0" AnchorPane.topAnchor="14.0" />
    </children>
 </AnchorPane>
