@@ -116,12 +116,12 @@ public class ProductEditController implements Initializable {
 
 	@FXML
 	private Label addedLabel;
-	
-    @FXML
-	private Tooltip manufacturerToolTip ;
-	
-    @FXML
-    private ComboBox<String> maufacturerComboBox;
+
+	@FXML
+	private Tooltip manufacturerToolTip;
+
+	@FXML
+	private ComboBox<String> maufacturerComboBox;
 
 	public void drugSelection() {
 		if (isDrug.isSelected()) {
@@ -144,8 +144,8 @@ public class ProductEditController implements Initializable {
 			Queries.queryUpdate("update Product set Product_Price=? where Product_ID=? ;",
 					new ArrayList<>(Arrays.asList(productTable.getItems().get(0).get(2), product.get(0).get(0))));
 			if (productTable.getItems().size() > 8) {
-				Queries.queryUpdate("update Drug set Drug_Dosage_Form=? where Product_ID=? ;", new ArrayList<>(
-						Arrays.asList(productTable.getItems().get(0).get(8), product.get(0).get(0))));
+				Queries.queryUpdate("update Drug set Drug_Dosage_Form=? where Product_ID=? ;",
+						new ArrayList<>(Arrays.asList(productTable.getItems().get(0).get(8), product.get(0).get(0))));
 			}
 
 			caller.saveEdits();
@@ -186,7 +186,7 @@ public class ProductEditController implements Initializable {
 
 	static ObservableList<String> manufacturerObservableList = FXCollections.observableArrayList();
 
-	public void addProductOnMousePressed()  {
+	public void addProductOnMousePressed() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
 		addProduct.setEffect(effect);
@@ -216,20 +216,22 @@ public class ProductEditController implements Initializable {
 			alert.showAndWait();
 		}
 
-		else if (checkPrice && price > 0 && !name.isBlank() && !name.isBlank() && maufacturerComboBox.getSelectionModel().getSelectedItem() != null) {
+		else if (checkPrice && price > 0 && name != null && !name.isBlank() && !name.isEmpty()
+				&& maufacturerComboBox.getSelectionModel().getSelectedItem() != null) {
 			if (isDrug.isSelected()) {
-				if (!scientificName.isBlank() && !scientificName.isEmpty() && pregnencyCategory != null
-						&& !drugCategory.isBlank() && !drugCategory.isEmpty() && !dosage.isBlank() && !dosage.isEmpty()
-						&& !dosageForm.isBlank() && !dosageForm.isEmpty()) {
-					Queries.queryUpdate("Insert into Name_Manu values(?, ?);",
-							new ArrayList<>(Arrays.asList(name,maufacturerComboBox.getSelectionModel().getSelectedItem())));
+				if (scientificName != null && !scientificName.isBlank() && !scientificName.isEmpty()
+						&& pregnencyCategory != null && drugCategory != null && !drugCategory.isBlank()
+						&& !drugCategory.isEmpty() && dosage != null && !dosage.isBlank() && !dosage.isEmpty()
+						&& dosageForm != null && !dosageForm.isBlank() && !dosageForm.isEmpty()) {
+					Queries.queryUpdate("Insert into Name_Manu values(?, ?);", new ArrayList<>(
+							Arrays.asList(name, maufacturerComboBox.getSelectionModel().getSelectedItem())));
 					Drug.insertDrug(name, price, scientificName, pregnencyCategory, dosage, drugCategory, dosageForm,
 							pharmaceticalCategory);
-					caller.saveEdits();					
+					caller.saveEdits();
 					showAndFade(addedLabel);
 					showAndFade(addedIcon);
 					setManufacturerNames();
-					maufacturerComboBox.setItems(manufacturerObservableList); 
+					maufacturerComboBox.setItems(manufacturerObservableList);
 					nameTextField.setText("");
 					maufacturerComboBox.getSelectionModel().clearSelection();
 					scientificNameTextField.setText("");
@@ -245,14 +247,14 @@ public class ProductEditController implements Initializable {
 					alert.showAndWait();
 				}
 			} else {
-				Queries.queryUpdate("Insert into Name_Manu values(?, ?);",
-						new ArrayList<>(Arrays.asList(name,maufacturerComboBox.getSelectionModel().getSelectedItem())));
+				Queries.queryUpdate("Insert into Name_Manu values(?, ?);", new ArrayList<>(
+						Arrays.asList(name, maufacturerComboBox.getSelectionModel().getSelectedItem())));
 				Product.insertProduct(name, price);
 				caller.saveEdits();
 				showAndFade(addedLabel);
 				showAndFade(addedIcon);
 				setManufacturerNames();
-				maufacturerComboBox.setItems(manufacturerObservableList); 
+				maufacturerComboBox.setItems(manufacturerObservableList);
 				nameTextField.setText("");
 				maufacturerComboBox.getSelectionModel().clearSelection();
 				scientificNameTextField.setText("");
@@ -271,7 +273,6 @@ public class ProductEditController implements Initializable {
 			alert.showAndWait();
 		}
 	}
-
 
 	public void addProductOnMouseReleased() {
 		ColorAdjust effect = new ColorAdjust();
@@ -316,23 +317,22 @@ public class ProductEditController implements Initializable {
 	}
 
 	public void setManufacturerNames() {
-		for(int i=0; i< manufacturerName.size();++i) {
+		for (int i = 0; i < manufacturerName.size(); ++i) {
 			if (manufacturerObservableList.indexOf(manufacturerName.get(i).get(0)) == -1) {
-			manufacturerObservableList.add(manufacturerName.get(i).get(0));
-		}
+				manufacturerObservableList.add(manufacturerName.get(i).get(0));
+			}
 		}
 	}
-	
+
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		
-		manufacturerName = Queries.queryResult("select distinct product_manufactrer\n"
-				+ "from name_manu;", null);
+
+		manufacturerName = Queries.queryResult("select distinct product_manufactrer\n" + "from name_manu;", null);
 		setManufacturerNames();
-		maufacturerComboBox.setItems(manufacturerObservableList); 
+		maufacturerComboBox.setItems(manufacturerObservableList);
 		maufacturerComboBox.setTooltip(manufacturerToolTip);
-		new ComboBoxAutoComplete<String>(maufacturerComboBox,this);
-		
+		new ComboBoxAutoComplete<String>(maufacturerComboBox, this);
+
 		addedIcon.setOpacity(0);
 		addedLabel.setOpacity(0);
 		drugInfoHBox.setOpacity(0);
