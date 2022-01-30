@@ -240,8 +240,15 @@ public class ReceiveOrdersController implements Initializable {
 	public void addOnMousePressed() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
-		addBatchIcon.setEffect(effect);		
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("AddBatch.fxml"));
+		addBatchIcon.setEffect(effect);	
+		if (orderedProducts.size() <= counter ) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText(null);
+			alert.setContentText("No More Products To Select");
+			alert.showAndWait();
+		}else {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("AddBatch.fxml"));
 		Parent root1;
 		try {
 			root1 = (Parent) loader.load();
@@ -250,10 +257,11 @@ public class ReceiveOrdersController implements Initializable {
 		addBatchController.setProduct(orderedProducts.get(counter).getProductID(), ProductName, this);		
 		Stage stage2 = new Stage();
 		stage2.setScene(new Scene(root1));
-		stage2.show();} catch (IOException e) {
-			// TODO Auto-generated catch block
+		stage2.show();} catch (IOException e) {		
 			e.printStackTrace();
 		}
+		}
+		
 	}
 
 	public void addOnMouseReleased() {
