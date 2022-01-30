@@ -119,7 +119,7 @@ public class SellController implements Initializable {
 				new KeyFrame(Duration.seconds(0), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)),
 				new KeyFrame(Duration.seconds(0.5), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)),
 				new KeyFrame(Duration.seconds(1), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)));
-		
+
 		FadeTransition fade = new FadeTransition(Duration.seconds(0.5), node);
 		fade.setFromValue(1);
 		fade.setToValue(0);
@@ -174,47 +174,69 @@ public class SellController implements Initializable {
 		} catch (NumberFormatException e) {
 			checkPaid = false;
 		}
-		if (chosenProducts != null && chosenProducts.size() > 0
-				&& Double.parseDouble(costAfterDiscountLabel.getText()) >= 0 && paidStr != null && !paidStr.isBlank()
-				&& !paidStr.isEmpty() && checkPaid) {
-			if (numbrOfDangerDrugs > 0 && !isCustomerSelected) {
-				Alert alert = new Alert(Alert.AlertType.ERROR);
-				alert.setTitle(null);
-				alert.setHeaderText(null);
-				alert.setContentText("Customer must be selected for danger drugs");
-				alert.showAndWait();
-			} else if (paidAmount < Double.parseDouble(costAfterDiscountLabel.getText()) && !isCustomerSelected) {
-				Alert alert = new Alert(Alert.AlertType.ERROR);
-				alert.setTitle(null);
-				alert.setHeaderText(null);
-				alert.setContentText("Customer must be selected when buying in debt");
-				alert.showAndWait();
-			} else {
-				String customerNID = chooseCustomerButton.getText().equals("Choose Customer") ? "0"
-						: chooseCustomerButton.getText();
-				CustomerOrder.insertCustomerOrder(dateLabel.getText(), Double.parseDouble(totalCostLabel.getText()),
-						discount, paidAmount, Employee.getCurrentID(), customerNID);
-				
-				for (ArrayList<String> row : chosenProducts) {
-					CustomerOrder.insertCustomerOrderBatch("" + CustomerOrder.getMaxID(), row.get(0), row.get(2),
-							row.get(3), Integer.parseInt(row.get(5)));
-				}
-				Queries.queryUpdate(
-						"Insert into Income"
-								+ " (Income_amount, Income_Date, Employee_ID, Customer_NID) Values(?, ?, ?, ?);",
-						new ArrayList<>(Arrays.asList(paidAmount + "", dateLabel.getText(),
-								Employee.getCurrentID() + "", customerNID)));
-				showAndFade(soldIcon);
-				showAndFade(soldLabel);
-				chosenProducts.clear();
-				productTable.getItems().clear();
-				costAfterDiscountLabel.setText("0");
-				totalCostLabel.setText("0");
-				paidTextField.setText("");
-				discountTextField.setText("");
-				chooseCustomerButton.setText("Choose Customer");
-				isCustomerSelected = false;
+
+		if (chosenProducts == null || chosenProducts.size() == 0) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Missing Info");
+			alert.setHeaderText(null);
+			alert.setContentText("At Least One Product Must Be Added");
+			alert.showAndWait();
+		} else if (Double.parseDouble(costAfterDiscountLabel.getText()) < 0) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle(null);
+			alert.setHeaderText(null);
+			alert.setContentText("Discount Must Be Less Than Total Cost");
+			alert.showAndWait();
+		} else if (paidStr == null || paidStr.isBlank() || paidStr.isEmpty()) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Missing Info");
+			alert.setHeaderText(null);
+			alert.setContentText("Paid Amount Must Be Entered");
+			alert.showAndWait();
+		} else if (!checkPaid) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Wrong Input");
+			alert.setHeaderText(null);
+			alert.setContentText("Paid Amount Must Be A Real Number");
+			alert.showAndWait();
+		} else if (numbrOfDangerDrugs > 0 && !isCustomerSelected) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Missing Info");
+			alert.setHeaderText(null);
+			alert.setContentText("Customer Must Be Selected For Danger Drugs");
+			alert.showAndWait();
+		} else if (paidAmount < Double.parseDouble(costAfterDiscountLabel.getText()) && !isCustomerSelected) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Missing Info");
+			alert.setHeaderText(null);
+			alert.setContentText("Customer Must Be Selected When Buying In Debt");
+			alert.showAndWait();
+		} else {
+			String customerNID = chooseCustomerButton.getText().equals("Choose Customer") ? "0"
+					: chooseCustomerButton.getText();
+			CustomerOrder.insertCustomerOrder(dateLabel.getText(), Double.parseDouble(totalCostLabel.getText()),
+					discount, paidAmount, Employee.getCurrentID(), customerNID);
+
+			for (ArrayList<String> row : chosenProducts) {
+				CustomerOrder.insertCustomerOrderBatch("" + CustomerOrder.getMaxID(), row.get(0), row.get(2),
+						row.get(3), Integer.parseInt(row.get(5)));
 			}
+			Queries.queryUpdate(
+					"Insert into Income"
+							+ " (Income_amount, Income_Date, Employee_ID, Customer_NID) Values(?, ?, ?, ?);",
+					new ArrayList<>(Arrays.asList(paidAmount + "", dateLabel.getText(), Employee.getCurrentID() + "",
+							customerNID)));
+			showAndFade(soldIcon);
+			showAndFade(soldLabel);
+			chosenProducts.clear();
+			productTable.getItems().clear();
+			costAfterDiscountLabel.setText("0");
+			totalCostLabel.setText("0");
+			paidTextField.setText("");
+			discountTextField.setText("");
+			chooseCustomerButton.setText("Choose Customer");
+			isCustomerSelected = false;
+
 		}
 	}
 
@@ -255,6 +277,10 @@ public class SellController implements Initializable {
 					parameters)).size() > 0) {
 				numbrOfDangerDrugs--;
 			}
+			double deletedCost = Double.parseDouble(productTable.getSelectionModel().getSelectedItem().get(4))
+					* Double.parseDouble(productTable.getSelectionModel().getSelectedItem().get(5));
+			totalCostLabel.setText("" + (Double.parseDouble(totalCostLabel.getText()) - deletedCost));
+			costAfterDiscountLabel.setText("" + (Double.parseDouble(costAfterDiscountLabel.getText()) - deletedCost));
 			productTable.getItems().remove(productTable.getSelectionModel().getSelectedIndex());
 			ChooseProductController productController = productLoader.getController();
 			productController.filterBatchList();
@@ -287,30 +313,31 @@ public class SellController implements Initializable {
 
 	public void discountOnEnter(KeyEvent event) {
 		if (event.getCode() == KeyCode.ENTER) {
-			double totalCost = Double.parseDouble(totalCostLabel.getText());
-			double discount = 0.0;
-			double costAfterDiscount = totalCost;
-			String discountStr = discountTextField.getText();
-			if (discountStr != null && !discountStr.isBlank() && !discountStr.isEmpty()) {
-				try {
-					discount = Double.parseDouble(discountStr);
-					if (discount > totalCost) {
-						Alert alert = new Alert(Alert.AlertType.ERROR);
-						alert.setTitle("Wrong Input");
-						alert.setHeaderText(null);
-						alert.setContentText("Discount Must Be Less Than Total Cost");
-						alert.showAndWait();
-					}
-				} catch (NumberFormatException e) {
-					Alert alert = new Alert(Alert.AlertType.ERROR);
-					alert.setTitle("Wrong Input Format");
-					alert.setHeaderText(null);
-					alert.setContentText("Discount Must Be A Real Number");
-					alert.showAndWait();
-				}
-				costAfterDiscount -= discount;
-			}
-			costAfterDiscountLabel.setText("" + costAfterDiscount);
+			costAfterDiscountLabel.requestFocus();
+//			double totalCost = Double.parseDouble(totalCostLabel.getText());
+//			double discount = 0.0;
+//			double costAfterDiscount = totalCost;
+//			String discountStr = discountTextField.getText();
+//			if (discountStr != null && !discountStr.isBlank() && !discountStr.isEmpty()) {
+//				try {
+//					discount = Double.parseDouble(discountStr);
+//					if (discount > totalCost) {
+//						Alert alert = new Alert(Alert.AlertType.ERROR);
+//						alert.setTitle("Wrong Input");
+//						alert.setHeaderText(null);
+//						alert.setContentText("Discount Must Be Less Than Total Cost");
+//						alert.showAndWait();
+//					}
+//				} catch (NumberFormatException e) {
+//					Alert alert = new Alert(Alert.AlertType.ERROR);
+//					alert.setTitle("Wrong Input Format");
+//					alert.setHeaderText(null);
+//					alert.setContentText("Discount Must Be A Real Number");
+//					alert.showAndWait();
+//				}
+//				costAfterDiscount -= discount;
+//			}
+//			costAfterDiscountLabel.setText("" + costAfterDiscount);
 		}
 	}
 
@@ -471,6 +498,39 @@ public class SellController implements Initializable {
 				alert.showAndWait();
 			}
 			updateSelectedProducts();
+		});
+
+		discountTextField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+			if (!discountTextField.isFocused()) {
+				double totalCost = Double.parseDouble(totalCostLabel.getText());
+				double discount = 0.0;
+				double costAfterDiscount = totalCost;
+				String discountStr = discountTextField.getText();
+				if (discountStr != null && !discountStr.isBlank() && !discountStr.isEmpty()) {
+					try {
+						discount = Double.parseDouble(discountStr);
+						if (discount > totalCost) {
+							Alert alert = new Alert(Alert.AlertType.ERROR);
+							alert.setTitle("Wrong Input");
+							alert.setHeaderText(null);
+							alert.setContentText("Discount Must Be Less Than Total Cost");
+							alert.showAndWait();
+							discountTextField.setText(null);
+							return;
+						}
+					} catch (NumberFormatException e) {
+						Alert alert = new Alert(Alert.AlertType.ERROR);
+						alert.setTitle("Wrong Input Format");
+						alert.setHeaderText(null);
+						alert.setContentText("Discount Must Be A Real Number");
+						alert.showAndWait();
+						discountTextField.setText(null);
+						return;
+					}
+					costAfterDiscount -= discount;
+				}
+				costAfterDiscountLabel.setText("" + costAfterDiscount);
+			}
 		});
 
 	}
