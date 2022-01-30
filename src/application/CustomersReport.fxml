@@ -14,7 +14,7 @@
          <columns>
             <TableColumn fx:id="customerNameColumn" minWidth="20.0" prefWidth="70.40002822875977" text="Customer Name" />
             <TableColumn fx:id="orderDateColumn" prefWidth="75.0" text="Order Date" />
-            <TableColumn fx:id="employeeIDColumn" prefWidth="75.0" text="Employee ID" />
+            <TableColumn fx:id="employeeNameColumn" prefWidth="75.0" text="Employee Name" />
             <TableColumn fx:id="productNameColumn" prefWidth="75.0" text="Product Name" />
          </columns>
          <opaqueInsets>

@@ -21,32 +21,30 @@ import javafx.util.Callback;
  *
  */
 public class CustomersReportController implements Initializable {
-	
-    @FXML
-    private TableView<ArrayList<String>> CustomerTable;
 
-    @FXML
-    private TableColumn<ArrayList<String>, String> customerNameColumn;
+	@FXML
+	private TableView<ArrayList<String>> CustomerTable;
 
-    @FXML
-    private TableColumn<ArrayList<String>, String> employeeIDColumn;
+	@FXML
+	private TableColumn<ArrayList<String>, String> customerNameColumn;
 
-    @FXML
-    private TableColumn<ArrayList<String>, String> orderDateColumn;
+	@FXML
+	private TableColumn<ArrayList<String>, String> employeeNameColumn;
 
-    @FXML
-    private TableColumn<ArrayList<String>, String> productNameColumn;
+	@FXML
+	private TableColumn<ArrayList<String>, String> orderDateColumn;
 
+	@FXML
+	private TableColumn<ArrayList<String>, String> productNameColumn;
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		
 
-		CustomerTable.setItems(
-				FXCollections.observableArrayList(Queries.queryResult("select c.customer_name ,co.order_date,co.employee_Id, p.product_name\r\n"
-						+ "from customer c,customer2order c2o,c_order co,c_order_batch cob,product p \r\n"
-						+ "where c.customer_NID=c2o.customer_NID and c2o.order_ID=co.order_ID and co.order_Id=cob.order_Id and p.product_Id=cob.product_ID;",
-						null)));
+		CustomerTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
+				"select c.customer_name as 'Customer Name',co.order_date as 'Order Date',e.employee_name as 'Employee name', p.product_name as 'Product Name'\r\n"
+						+ "from customer c,customer2order c2o,c_order co,c_order_batch cob,product p,employee e \r\n"
+						+ "where co.employee_Id=e.employee_Id and c.customer_NID=c2o.customer_NID and c2o.order_ID=co.order_ID and co.order_Id=cob.order_Id and p.product_Id=cob.product_ID;",
+				null)));
 
 		customerNameColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
@@ -61,7 +59,7 @@ public class CustomersReportController implements Initializable {
 					}
 				});
 
-		employeeIDColumn.setCellValueFactory(
+		employeeNameColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
