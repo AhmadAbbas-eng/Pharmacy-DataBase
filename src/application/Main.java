@@ -36,8 +36,6 @@ public class Main extends Application {
 	}
 
 	public static void main(String[] args) {
-//Supplier.getSupplierData();
-//			SupplierOrder.getSupplierOrderData();
 //		generateS_order();
 //		c_order_generate();
 //		try {
@@ -281,7 +279,7 @@ public class Main extends Application {
 					parameters.add(orderDate.toString());
 					suppliers = Queries.queryResult(
 							"select s.supplier_id,s.supplier_dues,(so.order_cost-so.order_discount),so.date_of_order from supplier s,s_order so \r\n"
-									+ "where s.supplier_Id=so.supplier_Id and s.supplier_dues>0 and so.date_of_order<?;",
+									+ "where s.supplier_Id=so.supplier_Id and s.supplier_dues>=(so.order_cost-so.order_discount) and so.date_of_order<?;",
 							parameters);
 				}
 				int index = (int) (Math.random() * suppliers.size());

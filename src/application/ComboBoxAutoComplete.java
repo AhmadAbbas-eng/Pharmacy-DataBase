@@ -27,15 +27,10 @@ import javafx.stage.Window;
 
 /**
  * 
- * Uses a combobox tooltip as the suggestion for auto complete and updates the
- * combo box itens accordingly <br />
- * It does not work with space, space and escape cause the combobox to hide and
- * clean the filter ... Send me a PR if you want it to work with all characters
- * -> It should be a custom controller - I KNOW!
+ * @version 30 January 2022
+ * @author Ahmad Abbas
+ * @author Aseel Sabri
  * 
- * @author wsiqueir
- *
- * @param <T>
  */
 public class ComboBoxAutoComplete<T> {
 

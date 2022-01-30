@@ -18,6 +18,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.util.Callback;
 
+/**
+ * 
+ * @version 30 January 2022
+ * @author Ahmad Abbas
+ * @author Loor Sawalhi
+ */
 public class SupplierOrderBatchController implements Initializable{
 
     @FXML

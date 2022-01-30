@@ -33,6 +33,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.util.Callback;
 
+/**
+ * 
+ * @version 30 January 2022
+ * @author Ahmad Abbas
+ * @author Loor Sawalhi
+ */
 public class DashboardController implements Initializable {
 	@FXML
 	private TableColumn<ArrayList<String>, String> outOfStockAmountColumn;

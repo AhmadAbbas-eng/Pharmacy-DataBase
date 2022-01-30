@@ -29,8 +29,8 @@ import javafx.stage.Stage;
 
 /**
  * 
- * @version 27 January 2022
- * @author Loor Sawalhi
+ * @version 30 January 2022
+ * @author Ahmad Abbas
  *
  */
 public class SignupController implements Initializable {

@@ -1,24 +1,22 @@
 package application;
 
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+
+import Relations.Queries;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.fxml.Initializable;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
-
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-import Relations.Customer;
-import Relations.Queries;
 
 /**
  * 
- * @version 27 January 2022
+ * @version 30 January 2022
  * @author Aseel Sabri
  *
  */

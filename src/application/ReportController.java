@@ -37,6 +37,13 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
 import javafx.util.Duration;
 
+/**
+ * 
+ * @version 30 January 2022
+ * @author Ahmad Abbas
+ * @author Aseel Sabri
+ * @author Loor Sawalhi
+ */
 public class ReportController implements Initializable {
 
 	@FXML

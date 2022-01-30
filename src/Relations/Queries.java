@@ -50,11 +50,11 @@ public class Queries {
 			Class.forName("com.mysql.jdbc.Driver");
 			return (Connection) DriverManager.getConnection(ConnectionURL, setting);
 		} catch (ClassNotFoundException | SQLException e) {
-			/*Alert alert = new Alert(Alert.AlertType.ERROR);
+			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Connection Error");
 			alert.setHeaderText("Can't connect with database");
 			alert.setContentText(null);
-			alert.showAndWait();*/
+			alert.showAndWait();
 			return null;
 		}
 	}

@@ -34,6 +34,12 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 import Relations.*;
 
+/**
+ * 
+ * @version 30 January 2022
+ * @author Aseel Sabri
+ *
+ */
 public class ProductEditController implements Initializable {
 
 	ArrayList<ArrayList<String>> product;
