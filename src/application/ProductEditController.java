@@ -403,7 +403,6 @@ public class ProductEditController implements Initializable {
 		});
 		nameColumn.setOnEditStart((CellEditEvent<ArrayList<String>, String> t) -> {
 			oldName = t.getOldValue();
-			productTable.refresh();
 		});
 
 		priceColumn.setEditable(true);
