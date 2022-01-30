@@ -143,7 +143,7 @@ public class ProductEditController implements Initializable {
 
 			Queries.queryUpdate("update Product set Product_Price=? where Product_ID=? ;",
 					new ArrayList<>(Arrays.asList(productTable.getItems().get(0).get(2), product.get(0).get(0))));
-			if (productTable.getItems().size() > 8) {
+			if (productTable.getItems().get(0).size() > 8) {
 				Queries.queryUpdate("update Drug set Drug_Dosage_Form=? where Product_ID=? ;",
 						new ArrayList<>(Arrays.asList(productTable.getItems().get(0).get(8), product.get(0).get(0))));
 			}
