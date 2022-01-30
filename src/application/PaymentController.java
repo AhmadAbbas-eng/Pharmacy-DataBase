@@ -521,14 +521,14 @@ public class PaymentController implements Initializable {
 							+ " where  op.manager_ID=e.employee_ID and op.supplier_Id = so.supplier_id and p.payment_id= op.payment_id "
 							+ " and so.supplier_id=s.supplier_id;",
 					null);
-		} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Supplier Name") {
+		} else if (searchSupplierOperationComboBox.getSelectionModel().getSelectedItem() == "Supplier Name") {
 			filteredList = Queries.queryResult(
 					"select distinct e.employee_name, s.supplier_name,p.payment_date,p.payment_amount "
 							+ " from employee e, supplier s, payment p, supplier_payment op, s_order so "
 							+ " where  op.manager_ID=e.employee_ID and op.supplier_Id = so.supplier_id and p.payment_id= op.payment_id "
 							+ " and so.supplier_id=s.supplier_id and  s.supplier_name like ? ;",
 					new ArrayList<>(Arrays.asList("%" + supplierPaymentNewValue + "%")));
-		} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Manager Name") {
+		} else if (searchSupplierOperationComboBox.getSelectionModel().getSelectedItem() == "Manager Name") {
 			filteredList = Queries.queryResult(
 					"select distinct e.employee_name, s.supplier_name,p.payment_date,p.payment_amount "
 							+ " from employee e, supplier s, payment p, supplier_payment op, s_order so "
@@ -536,7 +536,7 @@ public class PaymentController implements Initializable {
 							+ " and so.supplier_id=s.supplier_id and  e.employee_name like ? ;",
 					new ArrayList<>(Arrays.asList("%" + supplierPaymentNewValue + "%")));
 
-		} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Payment Month") {
+		} else if (searchSupplierOperationComboBox.getSelectionModel().getSelectedItem() == "Payment Month") {
 			filteredList = Queries.queryResult(
 					"select distinct e.employee_name, s.supplier_name,p.payment_date,p.payment_amount "
 							+ " from employee e, supplier s, payment p, supplier_payment op, s_order so "
@@ -544,7 +544,7 @@ public class PaymentController implements Initializable {
 							+ " and so.supplier_id=s.supplier_id and  month(p.payment_date) like ? ;",
 					new ArrayList<>(Arrays.asList("%" + supplierPaymentNewValue + "%")));
 
-		} else if (taxOperationComboBox.getSelectionModel().getSelectedItem() == "Payment Year") {
+		} else if (searchSupplierOperationComboBox.getSelectionModel().getSelectedItem() == "Payment Year") {
 			filteredList = Queries.queryResult(
 					"select distinct e.employee_name, s.supplier_name,p.payment_date,p.payment_amount "
 							+ " from employee e, supplier s, payment p, supplier_payment op, s_order so "
@@ -786,6 +786,9 @@ public class PaymentController implements Initializable {
 	private TableColumn<ArrayList<String>, String> employeePaymentDateColumn;
 	
 	@FXML
+	private TableColumn<ArrayList<String>, String> employeePaymentManagerName;
+	
+	@FXML
 	private Button clearEmployeeFieldsButton;
 
 	@FXML
@@ -832,47 +835,49 @@ public class PaymentController implements Initializable {
 	
 	String employeePaymentNewValue = "";
 	
-	ObservableList<String> EmployeeChoices = FXCollections.observableArrayList("- Select -","Employee Name", "Payment Month",
+	ObservableList<String> EmployeeChoices = FXCollections.observableArrayList("- Select -","Manager Name","Employee Name", "Payment Month",
 			"Payment Year");
 
 	public void employeePaymentFilterList() {
 		ArrayList<ArrayList<String>> filteredList = new ArrayList<>();
 		if (employeePaymentNewValue == null || employeePaymentNewValue.isEmpty() || employeePaymentNewValue.isBlank()) {
 			filteredList = Queries
-					.queryResult(
-							"select distinct e.employee_name,p.payment_date,p.payment_amount "
-									+ " from e_salary es,payment p, employee e "
-									+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.manager_Id",
+					.queryResult("select distinct e1.employee_name,e.employee_name,p.payment_date,p.payment_amount  \n"
+							+ "from e_salary es,payment p, employee e, employee e1 \n"
+							+ " where p.payment_Id=es.payment_Id and e1.employee_Id=es.manager_Id and e.employee_Id=es.Employee_ID;",
 							null);
 		} else if (employeeOperationComboBox.getSelectionModel().getSelectedItem() == "Employee Name") {
 			filteredList = Queries.queryResult(
-					"select distinct e.employee_name,p.payment_date,p.payment_amount "
-							+ " from e_salary es,payment p, employee e "
-							+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.manager_Id and  e.employee_name like ? ;",
+					"select distinct e1.employee_name,e.employee_name,p.payment_date,p.payment_amount  "
+							+ " from e_salary es,payment p, employee e, employee e1"
+							+ " where p.payment_Id=es.payment_Id and e1.employee_Id=es.manager_Id and e.employee_Id=es.Employee_ID and  e.employee_name like ? ;",
+					new ArrayList<>(Arrays.asList("%" + employeePaymentNewValue + "%")));
+		} else if (employeeOperationComboBox.getSelectionModel().getSelectedItem() == "Manager Name") {
+			filteredList = Queries.queryResult(
+					"select distinct e1.employee_name,e.employee_name,p.payment_date,p.payment_amount  "
+							+ " from e_salary es,payment p, employee e, employee e1"
+							+ " where p.payment_Id=es.payment_Id and e1.employee_Id=es.manager_Id and e.employee_Id=es.Employee_ID and  e1.employee_name like ? ;",
 					new ArrayList<>(Arrays.asList("%" + employeePaymentNewValue + "%")));
 		} else if (employeeOperationComboBox.getSelectionModel().getSelectedItem() == "Payment Month") {
-			filteredList = Queries.queryResult(
-					"select distinct e.employee_name,p.payment_date,p.payment_amount "
-							+ " from e_salary es,payment p, employee e "
-							+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.manager_Id and  month(p.payment_date) like ? ;",
+			filteredList = Queries.queryResult("select distinct e1.employee_name,e.employee_name,p.payment_date,p.payment_amount  "
+					+ " from e_salary es,payment p, employee e, employee e1"
+					+ " where p.payment_Id=es.payment_Id and e1.employee_Id=es.manager_Id and e.employee_Id=es.Employee_ID and  month(p.payment_date) like ? ;",
 					new ArrayList<>(Arrays.asList("%" + employeePaymentNewValue + "%")));
 		} else if (employeeOperationComboBox.getSelectionModel().getSelectedItem() == "Payment Year") {
-			filteredList = Queries.queryResult(
-					"select distinct e.employee_name,p.payment_date,p.payment_amount "
-							+ " from e_salary es,payment p, employee e "
-							+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.manager_Id and year(p.payment_date) like ? ;",
+			filteredList = Queries.queryResult("select distinct e1.employee_name,e.employee_name,p.payment_date,p.payment_amount  "
+					+ " from e_salary es,payment p, employee e, employee e1"
+					+ " where p.payment_Id=es.payment_Id and e1.employee_Id=es.manager_Id and e.employee_Id=es.Employee_ID and  year(p.payment_date) like ? ;",
 					new ArrayList<>(Arrays.asList("%" + employeePaymentNewValue + "%")));
 
 		} else {
 			ArrayList<String> parameters = new ArrayList<>();
-			while (parameters.size() < 3) {
+			while (parameters.size() < 4) {
 				parameters.add("%" + employeePaymentNewValue + "%");
 			}
-			filteredList = Queries.queryResult(
-					"select distinct e.employee_name,p.payment_date,p.payment_amount "
-							+ " from e_salary es,payment p, employee e "
-							+ " where  (p.payment_Id=es.payment_Id and e.employee_Id=es.manager_Id) and  (year(p.payment_date) like ? "
-							+ " or month(p.payment_date) like ? " + " or  e.employee_name like ?) ;",
+			filteredList = Queries.queryResult("select distinct e1.employee_name,e.employee_name,p.payment_date,p.payment_amount  "
+					+ " from e_salary es,payment p, employee e, employee e1"
+					+ " where( p.payment_Id=es.payment_Id and e1.employee_Id=es.manager_Id and e.employee_Id=es.Employee_ID) and  (year(p.payment_date) like ? "
+							+ " or month(p.payment_date) like ? " + " or  e.employee_name like ? or  e1.employee_name like ?) ;",
 					parameters);
 		}
 		employeePaymentTable.setItems(FXCollections.observableArrayList(filteredList));
@@ -1182,13 +1187,12 @@ public class PaymentController implements Initializable {
 
 		employeePaymentTable
 				.setItems(
-						FXCollections.observableArrayList(Queries.queryResult(
-								"select distinct e.employee_name,p.payment_date,p.payment_amount "
-										+ " from e_salary es,payment p, employee e "
-										+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.Employee_ID;",
+						FXCollections.observableArrayList(Queries.queryResult("select distinct e1.employee_name,e.employee_name,p.payment_date,p.payment_amount  \n"
+								+ "from e_salary es,payment p, employee e, employee e1 \n"
+								+ " where p.payment_Id=es.payment_Id and e1.employee_Id=es.manager_Id and e.employee_Id=es.Employee_ID;",
 								null)));
 
-		employeePaymentNameColumn.setCellValueFactory(
+		employeePaymentManagerName.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					
 					@Override
@@ -1202,13 +1206,27 @@ public class PaymentController implements Initializable {
 					}
 				});
 		
+		employeePaymentNameColumn.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
+					
+					@Override
+					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
+						ArrayList<String> x = p.getValue();
+						if (x != null && x.size() > 1) {
+							return new SimpleStringProperty(x.get(1));
+						} else {
+							return new SimpleStringProperty("");
+						}
+					}
+				});
+		
 		employeePaymentDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
 						ArrayList<String> x = p.getValue();
-						if (x != null && x.size() > 0) {
-							return new SimpleStringProperty(x.get(1));
+						if (x != null && x.size() > 2) {
+							return new SimpleStringProperty(x.get(2));
 						} else {
 							return new SimpleStringProperty("");
 						}
@@ -1220,8 +1238,8 @@ public class PaymentController implements Initializable {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
 						ArrayList<String> x = p.getValue();
-						if (x != null && x.size() > 0) {
-							return new SimpleStringProperty(x.get(2));
+						if (x != null && x.size() > 3) {
+							return new SimpleStringProperty(x.get(3));
 						} else {
 							return new SimpleStringProperty("");
 						}
@@ -1273,7 +1291,7 @@ public class PaymentController implements Initializable {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
 						ArrayList<String> x = p.getValue();
-						if (x != null && x.size() > 0) {
+						if (x != null && x.size() > 1) {
 							return new SimpleStringProperty(x.get(1));
 						} else {
 							return new SimpleStringProperty("");
@@ -1286,7 +1304,7 @@ public class PaymentController implements Initializable {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
 						ArrayList<String> x = p.getValue();
-						if (x != null && x.size() > 0) {
+						if (x != null && x.size() > 2) {
 							return new SimpleStringProperty(x.get(2));
 						} else {
 							return new SimpleStringProperty("");
@@ -1299,7 +1317,7 @@ public class PaymentController implements Initializable {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
 						ArrayList<String> x = p.getValue();
-						if (x != null && x.size() > 0) {
+						if (x != null && x.size() >3) {
 							return new SimpleStringProperty(x.get(3));
 						} else {
 							return new SimpleStringProperty("");
@@ -1351,7 +1369,7 @@ public class PaymentController implements Initializable {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
 						ArrayList<String> x = p.getValue();
-						if (x != null && x.size() > 0) {
+						if (x != null && x.size() > 1) {
 							return new SimpleStringProperty(x.get(1));
 						} else {
 							return new SimpleStringProperty("");
@@ -1364,7 +1382,7 @@ public class PaymentController implements Initializable {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
 						ArrayList<String> x = p.getValue();
-						if (x != null && x.size() > 0) {
+						if (x != null && x.size() > 2) {
 							return new SimpleStringProperty(x.get(2));
 						} else {
 							return new SimpleStringProperty("");
@@ -1377,7 +1395,7 @@ public class PaymentController implements Initializable {
 				@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
 						ArrayList<String> x = p.getValue();
-						if (x != null && x.size() > 0) {
+						if (x != null && x.size() > 3) {
 							return new SimpleStringProperty(x.get(3));
 						} else {
 							return new SimpleStringProperty("");
