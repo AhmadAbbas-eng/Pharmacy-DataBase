@@ -304,7 +304,7 @@ public class SelectProductController implements Initializable {
 					"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
 							+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,D.Drug_Pharmacetical_Category"
 							+ " from Drug D,Product P,Name_manu m "
-							+ "where D.Product_ID=P.Product_ID and P.product_name=m.product_name;",
+							+ "where D.Product_ID=P.Product_ID and P.product_name=m.product_name Group by(D.Drug_Scientific_Name);",
 					null));
 
 			commertialNameArrayList = Product.getProductData(
@@ -315,7 +315,7 @@ public class SelectProductController implements Initializable {
 					"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
 							+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,D.Drug_Pharmacetical_Category"
 							+ " from Drug D,Product P,Name_manu m "
-							+ "where D.Product_ID=P.Product_ID and P.product_name=m.product_name and P.product_name like ? ;",
+							+ "where D.Product_ID=P.Product_ID and P.product_name=m.product_name and P.product_name like ?  Group by(D.Drug_Scientific_Name);",
 					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
 
 			commertialNameArrayList = Product.getProductData(Queries.queryResult(
@@ -334,7 +334,7 @@ public class SelectProductController implements Initializable {
 					"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
 							+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,D.Drug_Pharmacetical_Category"
 							+ " from Drug D,Product P,Name_manu m "
-							+ "where D.Product_ID=P.Product_ID and P.product_name=m.product_name and D.Drug_Scientific_Name like ? ;",
+							+ "where D.Product_ID=P.Product_ID and P.product_name=m.product_name and D.Drug_Scientific_Name like ?  Group by(D.Drug_Scientific_Name);",
 					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
 
 		} else {
@@ -349,7 +349,7 @@ public class SelectProductController implements Initializable {
 					"select P.Product_ID, P.Product_Name,P.Product_Price,m.Product_Manufactrer,D.Drug_Scientific_Name,"
 							+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,D.Drug_Pharmacetical_Category"
 							+ " from Drug D,Product P,Name_manu m "
-							+ "where D.Product_ID=P.Product_ID and P.product_name=m.product_name and D.Drug_Scientific_Name like ? ;",
+							+ "where D.Product_ID=P.Product_ID and P.product_name=m.product_name and D.Drug_Scientific_Name like ? Group by(D.Drug_Scientific_Name);",
 					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
 
 		}
