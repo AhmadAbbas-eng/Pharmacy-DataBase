@@ -132,7 +132,7 @@ public class ReceivedOrderController implements Initializable {
 			Region page;
 			try {
 				page = FXMLLoader.load(getClass().getResource("SupplierOrder.fxml"));
-
+                SelectProductController.totalCost = 0.0;
 				MainPageController.pane.getChildren().removeAll();
 				MainPageController.pane.getChildren().setAll(page);
 				page.prefWidthProperty().bind(MainPageController.pane.widthProperty());

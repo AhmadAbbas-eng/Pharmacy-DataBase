@@ -89,6 +89,7 @@ public class SelectProductController implements Initializable {
 	private ImageView deleteIcon;
 
 	static double totalCost = 0.0;
+	
 	private SupplierOrderController caller;
 
 	public void deleteOnMousePressed() {
@@ -100,8 +101,6 @@ public class SelectProductController implements Initializable {
 			if (listOrder.getSelectionModel().getSelectedItem() != null) {
 				String order = listOrder.getSelectionModel().getSelectedItem();
 				String arr[] = order.split(",");
-				System.out.println("Q" + Double.parseDouble(arr[2].split("=")[1]) + " c"
-						+ Double.parseDouble(arr[3].split("=")[1]));
 				totalCost -= Double.parseDouble(arr[2].split("=")[1]) * Double.parseDouble(arr[3].split("=")[1]);
 				listOrder.getItems().remove(order);
 			} else {
