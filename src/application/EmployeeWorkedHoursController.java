@@ -27,6 +27,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
@@ -105,7 +107,7 @@ public class EmployeeWorkedHoursController implements Initializable {
 		blinkFade.play();
 	}
 
-	public void saveOnMousePressed(){
+	public void saveOnMousePressed() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
 		saveButton.setEffect(effect);
@@ -139,7 +141,7 @@ public class EmployeeWorkedHoursController implements Initializable {
 		saveButton.setEffect(effect);
 	}
 
-	public void addOnMousePressed(){
+	public void addOnMousePressed() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
 		addButton.setEffect(effect);
@@ -161,7 +163,9 @@ public class EmployeeWorkedHoursController implements Initializable {
 			alert.setTitle("Repeated Record");
 			alert.setHeaderText(null);
 			alert.setContentText("Record For This Date Already Exists");
+			((Stage) workedHoursTable.getScene().getWindow()).setAlwaysOnTop(false);
 			alert.showAndWait();
+			((Stage) workedHoursTable.getScene().getWindow()).setAlwaysOnTop(true);
 		}
 
 		else if (numOfHoursStr == null || numOfHoursStr.isEmpty() || numOfHoursStr.isBlank() || !checkNumOfHours
@@ -170,7 +174,9 @@ public class EmployeeWorkedHoursController implements Initializable {
 			alert.setTitle("Wrong Input Format");
 			alert.setHeaderText(null);
 			alert.setContentText("Number Of Hours Must Be A Nonnegative Real Number");
+			((Stage) workedHoursTable.getScene().getWindow()).setAlwaysOnTop(false);
 			alert.showAndWait();
+			((Stage) workedHoursTable.getScene().getWindow()).setAlwaysOnTop(true);
 		} else {
 			ArrayList<String> parameters = new ArrayList<>();
 			parameters.add(employee.getID() + "");
@@ -209,7 +215,7 @@ public class EmployeeWorkedHoursController implements Initializable {
 		filterData();
 	}
 
-	public void filterData(){
+	public void filterData() {
 		String dateCondition = "";
 		ArrayList<String> parameters = new ArrayList<>();
 		parameters.add(employee.getID() + "");
@@ -230,7 +236,7 @@ public class EmployeeWorkedHoursController implements Initializable {
 				+ "W.Employee_Worked_Hours, (E.Employee_Hourly_Paid*W.Employee_Worked_Hours) "
 				+ "from Work_hours W, Employee E " + "where E.Employee_ID=W.Employee_ID and E.Employee_ID= ? "
 				+ dateCondition + ";", parameters);
-		
+
 		workedHoursTable.setItems(FXCollections.observableArrayList(filteredList));
 		prevSelectedMonth = monthSearchSelector.getSelectionModel().getSelectedItem();
 		prevSelectedYear = yearSearchSelector.getSelectionModel().getSelectedItem();
@@ -247,7 +253,9 @@ public class EmployeeWorkedHoursController implements Initializable {
 			ButtonType continueButtonType = new ButtonType("Continue anyway");
 			ButtonType cancelButtonType = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 			alert.getButtonTypes().setAll(saveButtonType, continueButtonType, cancelButtonType);
+			((Stage) workedHoursTable.getScene().getWindow()).setAlwaysOnTop(false);
 			Optional<ButtonType> result = alert.showAndWait();
+			((Stage) workedHoursTable.getScene().getWindow()).setAlwaysOnTop(true);
 			if (result.get() == saveButtonType) {
 				saveOnMousePressed();
 				saveOnMouseReleased();
@@ -290,7 +298,7 @@ public class EmployeeWorkedHoursController implements Initializable {
 		yearAddSelector.setValue(currentYear);
 		String currentMonth = LocalDate.now().getMonth().toString();
 		monthAddSelector.setValue(currentMonth.charAt(0) + currentMonth.substring(1).toLowerCase());
-		
+
 		monthColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
@@ -364,7 +372,9 @@ public class EmployeeWorkedHoursController implements Initializable {
 				alert.setTitle("Wrong Input Format");
 				alert.setHeaderText(null);
 				alert.setContentText("Number Of Hours Must Be A Nonnegative Real Number");
+				((Stage) workedHoursTable.getScene().getWindow()).setAlwaysOnTop(false);
 				alert.showAndWait();
+				((Stage) workedHoursTable.getScene().getWindow()).setAlwaysOnTop(true);
 			} else {
 				if (!t.getOldValue().equals(t.getNewValue())) {
 					editedFlag = true;
