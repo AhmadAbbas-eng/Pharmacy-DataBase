@@ -88,7 +88,7 @@ public class DisposalController implements Initializable {
 
 	@FXML
 	private ImageView successIcon;
-	ObservableList<String> searchChoices = FXCollections.observableArrayList("Name", "Expired Month", "Expired Year",
+	ObservableList<String> searchChoices = FXCollections.observableArrayList("Select","Name", "Expired Month", "Expired Year",
 			"Production Month", "Production Year");
 
 	public void showAndFade(Node node) {
@@ -367,7 +367,7 @@ public class DisposalController implements Initializable {
 		} else if (stringToSearch == null || stringToSearch.isEmpty()
 				|| stringToSearch.isBlank() && expiredSelectionCheckBox.isSelected() == true) {
 			filteredList = Queries.queryResult(
-					"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
+					"SELECT P.product_ID,P.product_name,b.batch_production_date,b.bastch_expiry_date,b.batch_amount\r\n"
 							+ "from batch b,product p\r\n"
 							+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW()) \r\n"
 							+ "order by b.batch_expiry_date;",

@@ -283,8 +283,26 @@ public class SupplierOrderController implements Initializable {
 		} else {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Empty Fields");
-			alert.setHeaderText(null);
-			alert.setContentText("You Have To Fill Order Fields !!");
+			alert.setHeaderText("You Have To Fill Order Fields !!");
+			String alertString = "";
+			
+			if(managerTable.getSelectionModel().getSelectedItem() == null) {
+				alertString +="- Select A Manager \n";
+			}
+			
+			if(supplierTable.getSelectionModel().getSelectedItem() == null ) {
+				alertString +="- Select A Supplier \n";
+			}
+			
+			if(orderDatePicker.getValue() == null ) {
+				alertString +="- Select The Order Date \n";
+			}
+			
+			if(orderdProductsList.getItems().isEmpty() == true) {
+				alertString +="- Select Products To Order \n";
+			}
+
+			alert.setContentText(alertString);
 			alert.showAndWait();
 		}
 	}
