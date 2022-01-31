@@ -163,8 +163,8 @@ public class EmployeeWorkedHoursController implements Initializable {
 			alert.setTitle("Repeated Record");
 			alert.setHeaderText(null);
 			alert.setContentText("Record For This Date Already Exists");
-			alert.showAndWait();
 			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
+			alert.showAndWait();
 		}
 
 		else if (numOfHoursStr == null || numOfHoursStr.isEmpty() || numOfHoursStr.isBlank() || !checkNumOfHours
@@ -173,8 +173,8 @@ public class EmployeeWorkedHoursController implements Initializable {
 			alert.setTitle("Wrong Input Format");
 			alert.setHeaderText(null);
 			alert.setContentText("Number Of Hours Must Be A Nonnegative Real Number");
-			alert.showAndWait();
 			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
+			alert.showAndWait();
 		} else {
 			ArrayList<String> parameters = new ArrayList<>();
 			parameters.add(employee.getID() + "");
@@ -251,8 +251,8 @@ public class EmployeeWorkedHoursController implements Initializable {
 			ButtonType continueButtonType = new ButtonType("Continue anyway");
 			ButtonType cancelButtonType = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 			alert.getButtonTypes().setAll(saveButtonType, continueButtonType, cancelButtonType);
-			Optional<ButtonType> result = alert.showAndWait();
 			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
+			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == saveButtonType) {
 				saveOnMousePressed();
 				saveOnMouseReleased();
@@ -369,8 +369,8 @@ public class EmployeeWorkedHoursController implements Initializable {
 				alert.setTitle("Wrong Input Format");
 				alert.setHeaderText(null);
 				alert.setContentText("Number Of Hours Must Be A Nonnegative Real Number");
-				alert.showAndWait();
 				((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
+				alert.showAndWait();
 			} else {
 				if (!t.getOldValue().equals(t.getNewValue())) {
 					editedFlag = true;
