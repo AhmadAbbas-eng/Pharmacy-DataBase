@@ -117,7 +117,7 @@ public class SupplierOrderBatchController implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		searchOrderProductsComboBox.setItems(FXCollections.observableArrayList("-Select-", "Product Name", "Production Date",
+		searchOrderProductsComboBox.setItems(FXCollections.observableArrayList("-Specify Field-", "Product Name", "Production Date",
 				"Expiry Date", "Amount"));
 
 		productNameColumn.setCellValueFactory(

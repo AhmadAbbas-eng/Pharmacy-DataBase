@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="584.0" prefWidth="858.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ReceivedController">
    <children>
-      <TableView fx:id="recievedOrdersTable" layoutX="15.0" layoutY="45.0" prefHeight="520.0" prefWidth="832.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="45.0">
+      <TableView fx:id="recievedOrdersTable" layoutX="15.0" layoutY="45.0" prefHeight="520.0" prefWidth="832.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="65.0">
          <columns>
             <TableColumn fx:id="orderIDColumn" prefWidth="35.19998264312744" text="ID" />
             <TableColumn fx:id="orderByIDColumn" prefWidth="84.800048828125" text="Order By " />
@@ -26,12 +26,12 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <TextField fx:id="searchTextField" layoutX="28.0" layoutY="14.0" prefHeight="26.0" prefWidth="180.0" promptText="Search" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="13.0" />
-      <ImageView fx:id="backIcon" fitHeight="15.0" fitWidth="13.0" layoutX="9.0" layoutY="20.0" onMousePressed="#backOnAction" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="20.0">
+      <TextField fx:id="searchTextField" layoutX="28.0" layoutY="14.0" prefHeight="26.0" prefWidth="180.0" promptText="Search" stylesheets="@../../CSS/search.css" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="20.0" />
+      <ImageView fx:id="backIcon" fitHeight="15.0" fitWidth="13.0" layoutX="8.0" layoutY="28.0" onMousePressed="#backOnAction" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="28.0">
          <image>
             <Image url="@../../Icons/icons8-back-50.png" />
          </image>
       </ImageView>
-      <ComboBox fx:id="searchOperationComboBox" layoutX="223.0" layoutY="14.0" onAction="#filterList" prefWidth="150.0" promptText="- Search -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="223.0" AnchorPane.topAnchor="13.0" />
+      <ComboBox fx:id="searchOperationComboBox" layoutX="223.0" layoutY="14.0" onAction="#filterList" prefWidth="150.0" promptText="-Specify Field-" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="223.0" AnchorPane.topAnchor="20.0" />
    </children>
 </AnchorPane>

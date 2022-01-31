@@ -375,7 +375,7 @@ public class SelectProductController implements Initializable {
 		Batch.getBatchData();
 		Drug.getDrugData();
 		Product.getProductData();
-		searchOperationComboBox.setValue("Select");
+		searchOperationComboBox.setValue("-Specify Field-");
 		searchOperationComboBox.setItems(Choices);
 		scientificNameColumn.setCellValueFactory(new PropertyValueFactory<Drug, String>("scientificName"));
 		commercialNameColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("Name"));

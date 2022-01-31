@@ -135,6 +135,7 @@ public class SellController implements Initializable {
 			chooseCustomerController.setCaller(this);
 			Stage chooseCustomerStage = new Stage();
 			chooseCustomerStage.initModality(Modality.APPLICATION_MODAL);
+			chooseCustomerStage.setResizable(false);
 			Scene scene = new Scene(chooseCustomer);
 			chooseCustomerStage.setScene(scene);
 			chooseCustomerStage.show();

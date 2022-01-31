@@ -28,11 +28,6 @@
                         <Font name="System Bold" size="17.0" />
                      </font>
                   </Button>
-                  <Button fx:id="paymentButton" mnemonicParsing="false" onAction="#PaymentOnAction" prefHeight="38.0" prefWidth="133.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Payment">
-                     <font>
-                        <Font name="System Bold" size="17.0" />
-                     </font>
-                  </Button>
                   <Button fx:id="sellButton" mnemonicParsing="false" onAction="#SellOnAction" prefHeight="38.0" prefWidth="133.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="New Sell">
                      <font>
                         <Font name="System Bold" size="17.0" />
@@ -43,17 +38,27 @@
                         <Font name="System Bold" size="17.0" />
                      </font>
                   </Button>
+                  <Button fx:id="disposeButton" mnemonicParsing="false" onAction="#DisposeOnAction" prefHeight="38.0" prefWidth="133.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Dispose">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="paymentButton" mnemonicParsing="false" onAction="#PaymentOnAction" prefHeight="38.0" prefWidth="133.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Payment">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </Button>
                   <Button fx:id="ordersButton" mnemonicParsing="false" onAction="#OrdersOnAction" prefHeight="38.0" prefWidth="133.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Orders">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>
                   </Button>
-                  <Button fx:id="customersButton" mnemonicParsing="false" onAction="#CustomerOnAction" prefHeight="38.0" prefWidth="133.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Customers">
+                  <Button fx:id="productsButton" mnemonicParsing="false" onAction="#ProductsOnAction" prefHeight="38.0" prefWidth="133.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Storage">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>
                   </Button>
-                  <Button fx:id="productsButton" mnemonicParsing="false" onAction="#ProductsOnAction" prefHeight="38.0" prefWidth="133.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Storage">
+                  <Button fx:id="customersButton" mnemonicParsing="false" onAction="#CustomerOnAction" prefHeight="38.0" prefWidth="133.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Customers">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>
@@ -64,11 +69,6 @@
                      </font>
                   </Button>
                   <Button fx:id="supplierButton" mnemonicParsing="false" onAction="#SupplierOnAction" prefHeight="38.0" prefWidth="133.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Suppliers">
-                     <font>
-                        <Font name="System Bold" size="17.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="disposeButton" mnemonicParsing="false" onAction="#DisposeOnAction" prefHeight="38.0" prefWidth="133.0" stylesheets="@../../CSS/button%20(1)%20-%20Copy.css" text="Dispose">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>

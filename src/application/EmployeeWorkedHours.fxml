@@ -27,7 +27,7 @@
    <center>
       <AnchorPane prefHeight="503.0" prefWidth="639.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="workedHoursTable" layoutX="22.0" layoutY="65.0" prefHeight="223.0" prefWidth="572.0" style="-fx-background-color: transparent;" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="202.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="65.0">
+            <TableView fx:id="workedHoursTable" layoutX="22.0" layoutY="65.0" prefHeight="223.0" prefWidth="572.0" style="-fx-background-color: transparent;" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="202.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="65.0">
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
@@ -50,8 +50,8 @@
             <Label layoutX="297.0" layoutY="386.0" prefHeight="26.0" prefWidth="39.0" text="Year:" textFill="#1d6f84" AnchorPane.bottomAnchor="77.0" AnchorPane.leftAnchor="297.0" />
             <Label layoutX="29.0" layoutY="432.0" prefHeight="26.0" prefWidth="93.0" text="Num. of Hours:" textFill="#1d6f84" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="29.0" />
             <TextField fx:id="numOfHoursTextField" layoutX="122.0" layoutY="431.0" prefHeight="28.0" prefWidth="115.0" stylesheets="@../../CSS/textField.css" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="122.0" />
-            <ComboBox fx:id="monthSearchSelector" layoutX="32.0" layoutY="20.0" onAction="#confirmSave" prefHeight="28.0" prefWidth="115.0" promptText="Month" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="32.0" AnchorPane.topAnchor="20.0" />
-            <ComboBox fx:id="yearSearchSelector" layoutX="160.0" layoutY="20.0" onAction="#confirmSave" prefHeight="28.0" prefWidth="115.0" promptText="Year" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="160.0" AnchorPane.topAnchor="20.0" />
+            <ComboBox fx:id="monthSearchSelector" layoutX="32.0" layoutY="20.0" onAction="#confirmSave" prefHeight="28.0" prefWidth="115.0" promptText="Month" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="20.0" />
+            <ComboBox fx:id="yearSearchSelector" layoutX="160.0" layoutY="20.0" onAction="#confirmSave" prefHeight="28.0" prefWidth="115.0" promptText="Year" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="20.0" />
             <ComboBox fx:id="monthAddSelector" layoutX="122.0" layoutY="385.0" prefHeight="28.0" prefWidth="115.0" promptText="Month" stylesheets="@../../CSS/combobox.css" AnchorPane.bottomAnchor="77.0" AnchorPane.leftAnchor="122.0" />
             <ComboBox fx:id="yearAddSelector" layoutX="377.0" layoutY="385.0" prefHeight="28.0" prefWidth="115.0" promptText="Year" stylesheets="@../../CSS/combobox.css" AnchorPane.bottomAnchor="77.0" AnchorPane.leftAnchor="377.0" />
             <Label layoutX="26.0" layoutY="340.0" prefHeight="28.0" prefWidth="93.0" text="Add Record" textFill="#1d6f84" AnchorPane.bottomAnchor="122.0" AnchorPane.leftAnchor="26.0">

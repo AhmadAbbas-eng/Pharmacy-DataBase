@@ -15,7 +15,7 @@
 
 <AnchorPane prefHeight="544.0" prefWidth="736.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SellController">
    <children>
-      <Label layoutX="28.0" layoutY="21.0" prefHeight="28.0" prefWidth="107.0" text="Products:" textFill="#1d6f84" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="20.0">
+      <Label layoutX="28.0" layoutY="21.0" prefHeight="28.0" prefWidth="107.0" text="Products:" textFill="#1d6f84" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="20.0">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -94,7 +94,7 @@
             </HBox>
          </children>
       </VBox>
-      <Button fx:id="approveSellButton" layoutX="25.0" layoutY="487.6666666666667" mnemonicParsing="false" onAction="#approveOnAction" stylesheets="@../../CSS/button.css" text="Approve Selling" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="25.0" />
+      <Button fx:id="approveSellButton" layoutX="25.0" layoutY="487.6666666666667" mnemonicParsing="false" onAction="#approveOnAction" stylesheets="@../../CSS/button.css" text="Approve Selling" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="22.0" />
       <VBox layoutX="246.0" layoutY="355.0" prefHeight="85.0" prefWidth="265.0" AnchorPane.bottomAnchor="103.66666666666667" AnchorPane.leftAnchor="300.0">
          <children>
             <HBox prefHeight="100.0" prefWidth="296.0" spacing="3.0">
@@ -124,7 +124,7 @@
          </children>
       </VBox>
       <Button fx:id="chooseProductButton" layoutX="142.0" layoutY="21.0" mnemonicParsing="false" onAction="#chooseProductOnAction" prefWidth="130.0" stylesheets="@../../CSS/button.css" text="Add Product" AnchorPane.leftAnchor="142.0" AnchorPane.topAnchor="21.0" />
-      <ImageView fx:id="deleteProductButton" fitHeight="20.0" fitWidth="20.0" layoutX="688.0" layoutY="63.0" onMouseEntered="#deleteProductOnMouseEntered" onMouseExited="#deleteProductOnMouseExited" onMousePressed="#deleteProductOnMousePressed" onMouseReleased="#deleteProductOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="22.0">
+      <ImageView fx:id="deleteProductButton" fitHeight="20.0" fitWidth="20.0" layoutX="688.0" layoutY="63.0" onMouseEntered="#deleteProductOnMouseEntered" onMouseExited="#deleteProductOnMouseExited" onMousePressed="#deleteProductOnMousePressed" onMouseReleased="#deleteProductOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="63.0">
          <image>
             <Image url="@../../Icons/icons8-delete-60.png" />
          </image>
@@ -134,8 +134,8 @@
             <Image url="@../../Icons/icons8-delete-60.png" />
          </image>
       </ImageView>
-      <Label fx:id="soldLabel" layoutX="142.0" layoutY="492.0" prefHeight="17.0" prefWidth="100.0" text="Selling Approved" AnchorPane.bottomAnchor="34.66666666666667" AnchorPane.leftAnchor="142.0" />
-      <ImageView fx:id="soldIcon" fitHeight="15.0" fitWidth="15.0" layoutX="240.0" layoutY="493.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="240.0">
+      <Label fx:id="soldLabel" layoutX="142.0" layoutY="502.0" prefHeight="17.0" prefWidth="100.0" text="Selling Approved" AnchorPane.bottomAnchor="24.66666666666663" AnchorPane.leftAnchor="142.0" />
+      <ImageView fx:id="soldIcon" fitHeight="15.0" fitWidth="15.0" layoutX="239.0" layoutY="504.3333333333341" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="24.666666666665833" AnchorPane.leftAnchor="239.0">
          <image>
             <Image url="@../../Icons/icons8-done-24.png" />
          </image>

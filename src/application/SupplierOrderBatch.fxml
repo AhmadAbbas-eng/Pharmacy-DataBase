@@ -24,7 +24,7 @@
    <center>
       <AnchorPane prefHeight="508.0" prefWidth="767.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="orderProductsTable" layoutX="23.0" layoutY="81.0" prefHeight="294.0" prefWidth="573.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="70.0">
+            <TableView fx:id="orderProductsTable" layoutX="23.0" layoutY="81.0" prefHeight="294.0" prefWidth="573.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="65.0">
                <columns>
                   <TableColumn fx:id="productNameColumn" prefWidth="106.39996337890625" text="Product Name" />
                   <TableColumn fx:id="productionDateColumn" prefWidth="124.0" text="Production Date" />
@@ -35,8 +35,8 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <TextField fx:id="searchProductsTextField" layoutX="22.0" layoutY="24.0" prefHeight="26.0" prefWidth="179.0" promptText="Search" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="20.0" />
-            <ComboBox fx:id="searchOrderProductsComboBox" layoutX="221.0" layoutY="25.0" onAction="#filterList" prefWidth="150.0" promptText=" - Select -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="221.0" AnchorPane.topAnchor="20.0" />
+            <TextField fx:id="searchProductsTextField" layoutX="22.0" layoutY="24.0" prefHeight="26.0" prefWidth="179.0" promptText="Search" stylesheets="@../../CSS/search.css" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="20.0" />
+            <ComboBox fx:id="searchOrderProductsComboBox" layoutX="221.0" layoutY="25.0" onAction="#filterList" prefWidth="150.0" promptText="-Specify Field-" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="221.0" AnchorPane.topAnchor="20.0" />
          </children>
       </AnchorPane>
    </center>

@@ -204,7 +204,7 @@ public class PaymentController implements Initializable {
 	
 	String taxNewValue = "";
 
-	ObservableList<String> TaxChoices = FXCollections.observableArrayList("- Select -","Tax ID", "Manager Name", "Payment Month",
+	ObservableList<String> TaxChoices = FXCollections.observableArrayList("-Specify Field-","Tax ID", "Manager Name", "Payment Month",
 			"Payment Year");
 	
 	public void taxFilterList() { 
@@ -591,7 +591,7 @@ public class PaymentController implements Initializable {
 		supplierDataTable.setItems(FXCollections.observableArrayList(filteredList));
 	}
 
-	ObservableList<String> SupplierPaymentChoices = FXCollections.observableArrayList("- Select -","Supplier Name", "Manager Name",
+	ObservableList<String> SupplierPaymentChoices = FXCollections.observableArrayList("-Specify Field-","Supplier Name", "Manager Name",
 			"Payment Month", "Payment Year");
 
 	public void chequeSupplierOnAction(ActionEvent event) {
@@ -850,7 +850,7 @@ public class PaymentController implements Initializable {
 	
 	String employeePaymentNewValue = "";
 	
-	ObservableList<String> EmployeeChoices = FXCollections.observableArrayList("- Select -","Manager Name","Employee Name", "Payment Month",
+	ObservableList<String> EmployeeChoices = FXCollections.observableArrayList("-Specify Field-","Manager Name","Employee Name", "Payment Month",
 			"Payment Year");
 
 	public void employeePaymentFilterList() {
@@ -1061,7 +1061,7 @@ public class PaymentController implements Initializable {
 		}
 	}
 
-	ObservableList<String> Choices = FXCollections.observableArrayList("- Select -","Product Name", "Expired Month", "Expired Year",
+	ObservableList<String> Choices = FXCollections.observableArrayList("-Specify Field-","Product Name", "Expired Month", "Expired Year",
 			"Production Month", "Production Year", "Disposal Month", "Disposal Year");
 
 	// -----------------------------------------Disposal---------------------------------------------------------
@@ -1183,7 +1183,7 @@ public class PaymentController implements Initializable {
 		availableUntilDateEmployeeLabel.setOpacity(0);
 		chequeIDEmployeeLabel.setOpacity(0);
 		writingDateEmployeeLabel.setOpacity(0);
-		employeeOperationComboBox.setValue("select");
+		employeeOperationComboBox.setValue("-Specify Field-");
 		employeeOperationComboBox.setItems(EmployeeChoices);
 		employeeNameColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
 		employeeIDColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("iD"));
@@ -1271,7 +1271,7 @@ public class PaymentController implements Initializable {
 		});
 
 		// ----------------------------------------supplier----------------------------------------------------------
-		searchSupplierOperationComboBox.setValue("select");
+		searchSupplierOperationComboBox.setValue("-Specify Field-");
 		searchSupplierOperationComboBox.setItems(SupplierPaymentChoices);
 		bankNameSupplierTextField.setOpacity(0);
 		writingDateSupplier.setOpacity(0);
@@ -1354,7 +1354,7 @@ public class PaymentController implements Initializable {
 		});
 
 		// ------------------------------------------tax-----------------------------------------------------------------------
-		taxOperationComboBox.setValue("select");
+		taxOperationComboBox.setValue("-Specify Field-");
 		taxOperationComboBox.setItems(TaxChoices);
 		bankNameTaxTextField.setOpacity(0);
 		availableUntilDateTax.setOpacity(0);
