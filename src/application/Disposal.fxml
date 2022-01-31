@@ -14,7 +14,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.DisposalController">
    <children>
-      <TableView fx:id="toBeDisposedTable" layoutX="15.0" layoutY="50.0" prefHeight="286.0" prefWidth="570.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="63.60000000000002" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="50.0">
+      <TableView fx:id="toBeDisposedTable" layoutX="15.0" layoutY="50.0" prefHeight="286.0" prefWidth="570.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="63.60000000000002" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="65.0">
          <columns>
             <TableColumn fx:id="productIDColumn" prefWidth="75.0" text="Product ID" />
             <TableColumn fx:id="productNameColumn" prefWidth="103.4666976928711" text="Product Name" />
@@ -26,28 +26,28 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <TextField fx:id="searchTextField" layoutX="15.0" layoutY="14.0" promptText="Search" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="14.0" />
-      <ComboBox fx:id="searchOperationComboBox" layoutX="177.0" layoutY="14.0" onAction="#filterList" prefWidth="150.0" promptText="- Select -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="177.0" AnchorPane.topAnchor="14.0" />
-      <TextField fx:id="disposalCostTextField" layoutX="118.0" layoutY="352.0" promptText="Dissipation Cost" AnchorPane.bottomAnchor="22.399999999999977" AnchorPane.leftAnchor="118.0" />
-      <Button fx:id="disposeButton" layoutX="463.0" layoutY="352.0" mnemonicParsing="false" onAction="#disposeOnAction" prefHeight="26.0" prefWidth="112.0" stylesheets="@../../CSS/button.css" text="Dispose" AnchorPane.bottomAnchor="21.6" AnchorPane.rightAnchor="25.0" />
-      <CheckBox fx:id="expiredSelectionCheckBox" layoutX="342.0" layoutY="13.0" mnemonicParsing="false" onAction="#selectionOnAction" prefHeight="26.0" prefWidth="73.0" text="Expired" AnchorPane.leftAnchor="342.0" AnchorPane.topAnchor="13.0">
+      <TextField fx:id="searchTextField" layoutX="15.0" layoutY="14.0" promptText="Search" stylesheets="@../../CSS/search.css" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="20.0" />
+      <ComboBox fx:id="searchOperationComboBox" layoutX="189.0" layoutY="20.0" onAction="#filterList" prefWidth="150.0" promptText="-Specify Field-" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="189.0" AnchorPane.topAnchor="20.0" />
+      <TextField fx:id="disposalCostTextField" layoutX="118.0" layoutY="352.0" promptText="Dissipation Cost" stylesheets="@../../CSS/textField.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="126.0" />
+      <Button fx:id="disposeButton" layoutX="463.0" layoutY="352.0" mnemonicParsing="false" onAction="#disposeOnAction" prefHeight="26.0" prefWidth="112.0" stylesheets="@../../CSS/button.css" text="Dispose" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="22.0" />
+      <CheckBox fx:id="expiredSelectionCheckBox" layoutX="368.0" layoutY="21.0" mnemonicParsing="false" onAction="#selectionOnAction" prefHeight="26.0" prefWidth="73.0" text="Expired" AnchorPane.leftAnchor="368.0" AnchorPane.topAnchor="21.0">
          <font>
             <Font size="14.0" />
          </font>
       </CheckBox>
-      <TextField fx:id="amountToBeDisposed" layoutX="336.0" layoutY="350.0" prefHeight="26.0" prefWidth="64.0" promptText="Amount" AnchorPane.bottomAnchor="23.600000000000023" AnchorPane.leftAnchor="336.0" />
+      <TextField fx:id="amountToBeDisposed" layoutX="351.0" layoutY="352.0" prefHeight="26.0" prefWidth="64.0" promptText="Amount" stylesheets="@../../CSS/textField.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="351.0" />
       <ImageView fx:id="successIcon" fitHeight="15.0" fitWidth="15.0" layoutX="560.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0;">
          <image>
             <Image url="@../../Icons/icons8-done-24.png" />
          </image>
       </ImageView>
       <Label fx:id="success" layoutX="440.0" layoutY="19.0" style="-fx-opacity: 0;" text="Disposed Successfully" />
-      <Label layoutX="14.0" layoutY="355.0" text="Dissipation Cost" textFill="#1d6f84" AnchorPane.bottomAnchor="25.80000000000001" AnchorPane.leftAnchor="14.0">
+      <Label layoutX="33.0" layoutY="356.0" text="Dissipation Cost" textFill="#1d6f84" AnchorPane.bottomAnchor="24.666666666666686" AnchorPane.leftAnchor="22.0">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label fx:id="amountLabel" layoutX="284.0" layoutY="353.0" prefHeight="19.0" prefWidth="52.0" text="Amount" textFill="#1d6f84" AnchorPane.bottomAnchor="27.80000000000001" AnchorPane.leftAnchor="284.0">
+      <Label fx:id="amountLabel" layoutX="292.0" layoutY="354.0" prefHeight="19.0" prefWidth="52.0" text="Amount" textFill="#1d6f84" AnchorPane.bottomAnchor="24.666666666666686" AnchorPane.leftAnchor="292.0">
          <font>
             <Font size="13.0" />
          </font>

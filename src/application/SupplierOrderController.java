@@ -98,7 +98,7 @@ public class SupplierOrderController implements Initializable {
 	private double costValue;
 	private String stringToSearch = "";
 
-	ObservableList<String> Choices = FXCollections.observableArrayList("Select", "Supplier", "Manager");
+	ObservableList<String> Choices = FXCollections.observableArrayList("-Specify Field-", "Supplier", "Manager");
 
 	public void addOnMousePressed() {
 		ColorAdjust effect = new ColorAdjust();
@@ -326,7 +326,7 @@ public class SupplierOrderController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		searchOperationComboBox.setValue("Select");
+		searchOperationComboBox.setValue("-Specify Field-");
 		searchOperationComboBox.setItems(Choices);
 		supplierNameColumn.setCellValueFactory(new PropertyValueFactory<Supplier, String>("name"));
 		employeeNameColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));

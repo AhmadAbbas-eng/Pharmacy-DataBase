@@ -251,14 +251,14 @@ public class ReceivedOrderController implements Initializable {
 		ordersTable.setItems(FXCollections.observableArrayList(filteredList));
 	}
 
-	ObservableList<String> searchChoices = FXCollections.observableArrayList("Select", "Order Id", "Order From",
+	ObservableList<String> searchChoices = FXCollections.observableArrayList("-Specify Field-", "Order Id", "Order From",
 			"Order By", "Order Month", "Order Year");
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		SupplierOrder.getSupplierOrderData();
 
-		searchOperationComboBox.setValue("Select Order");
+		searchOperationComboBox.setValue("-Specify Field-");
 		searchOperationComboBox.setItems(searchChoices);
 
 		orderIDColumn.setCellValueFactory(new PropertyValueFactory<SupplierOrder, String>("ID"));

@@ -69,7 +69,7 @@ public class ReceivedController implements Initializable {
 	
 	private String stringToSearch="";
 	
-	ObservableList<String> searchChoices = FXCollections.observableArrayList("Select","Order Id", "Order By", "Order From",
+	ObservableList<String> searchChoices = FXCollections.observableArrayList("-Specify Field-","Order Id", "Order By", "Order From",
 			"Order Month", "Order Year", "Recieved Month", "Recieved Year", "Recieved By");
 
 	public void backOnAction() throws IOException {
@@ -145,7 +145,7 @@ public class ReceivedController implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		searchOperationComboBox.setValue("Select");
+		searchOperationComboBox.setValue("-Specify Field-");
 		searchOperationComboBox.setItems(searchChoices);
 		orderIDColumn.setCellValueFactory(new PropertyValueFactory<SupplierOrder, String>("iD"));
 		dateOfOrderColumn.setCellValueFactory(new PropertyValueFactory<SupplierOrder, String>("dateOfOrder"));

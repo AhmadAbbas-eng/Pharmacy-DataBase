@@ -10,11 +10,12 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="512.0" prefWidth="739.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SelectProductController">
    <children>
-      <TableView fx:id="scientificNameTable" layoutX="23.0" layoutY="53.0" onMousePressed="#scientificNameTableOnSelected" prefHeight="159.0" prefWidth="336.0" stylesheets="@../../CSS/table.css" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="53.0">
+      <TableView fx:id="scientificNameTable" layoutX="23.0" layoutY="53.0" onMousePressed="#scientificNameTableOnSelected" prefHeight="155.0" prefWidth="336.0" stylesheets="@../../CSS/table.css" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="60.0">
          <columns>
             <TableColumn fx:id="scientificNameColumn" prefWidth="265.5999755859375" text="Scientific Name" />
          </columns>
@@ -22,17 +23,16 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <ListView fx:id="listOrder" layoutX="21.0" layoutY="227.0" prefHeight="144.0" prefWidth="338.0" stylesheets="@../../CSS/list.css" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="228.0" AnchorPane.topAnchor="227.0" />
-      <TextField fx:id="searchTextField" layoutX="21.0" layoutY="14.0" prefHeight="24.0" prefWidth="202.0" promptText="Search" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="14.0" />
-      <TextField fx:id="quantityTextField" layoutX="629.0" layoutY="15.0" prefHeight="26.0" prefWidth="80.0" promptText="Quantity" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="629.0" AnchorPane.topAnchor="15.0" />
-      <TextField fx:id="costTextField" layoutX="473.0" layoutY="15.0" prefHeight="26.0" prefWidth="74.0" promptText="Cost/piece" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="473.0" AnchorPane.topAnchor="15.0" />
-      <ImageView fx:id="addDrugIcon" fitHeight="25.0" fitWidth="27.0" layoutX="369.0" layoutY="229.0" onMouseEntered="#addOnMouseEntered" onMouseExited="#addOnMouseExited" onMousePressed="#addOnMousePressed" onMouseReleased="#addOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="193.39999999999998" AnchorPane.topAnchor="228.4">
+      <ListView fx:id="listOrder" layoutX="21.0" layoutY="250.0" prefHeight="242.0" prefWidth="489.0" stylesheets="@../../CSS/list.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="228.0" AnchorPane.topAnchor="250.0" />
+      <TextField fx:id="searchTextField" layoutX="21.0" layoutY="14.0" prefHeight="24.0" prefWidth="202.0" promptText="Search" stylesheets="@../../CSS/search.css" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="20.0" />
+      <TextField fx:id="quantityTextField" layoutX="629.0" layoutY="15.0" prefHeight="26.0" prefWidth="80.0" promptText="Quantity" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="629.0" AnchorPane.topAnchor="20.0" />
+      <TextField fx:id="costTextField" layoutX="473.0" layoutY="15.0" prefHeight="26.0" prefWidth="74.0" promptText="Cost/piece" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="473.0" AnchorPane.topAnchor="20.0" />
+      <ImageView fx:id="addDrugIcon" fitHeight="25.0" fitWidth="27.0" layoutX="520.0" layoutY="243.0" onMouseEntered="#addOnMouseEntered" onMouseExited="#addOnMouseExited" onMousePressed="#addOnMousePressed" onMouseReleased="#addOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="194.0" AnchorPane.topAnchor="250.0">
          <image>
             <Image url="@../../Icons/icons8-add-48.png" />
          </image>
       </ImageView>
-      <Button fx:id="cancelButton" layoutX="472.0" layoutY="335.0" mnemonicParsing="false" onAction="#cancelButton" prefHeight="26.0" prefWidth="90.0" stylesheets="@../../CSS/button.css" text="cancel" AnchorPane.bottomAnchor="15.600000000000023" AnchorPane.rightAnchor="19.600000000000023" />
-      <TableView fx:id="commercialNameTable" layoutX="378.0" layoutY="55.0" prefHeight="155.0" prefWidth="336.0" stylesheets="@../../CSS/table.css" AnchorPane.leftAnchor="378.0" AnchorPane.topAnchor="55.0">
+      <TableView fx:id="commercialNameTable" layoutX="378.0" layoutY="55.0" prefHeight="155.0" prefWidth="336.0" stylesheets="@../../CSS/table.css" AnchorPane.leftAnchor="378.0" AnchorPane.topAnchor="60.0">
          <columns>
             <TableColumn fx:id="commercialNameColumn" prefWidth="266.40001220703124" text="Commercial Name" />
          </columns>
@@ -40,28 +40,33 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Label layoutX="471.0" layoutY="203.0" text="select the commerical name" textFill="#0d629c" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="203.0" />
-      <Button fx:id="confirmButton" layoutX="369.0" layoutY="335.0" mnemonicParsing="false" onAction="#addDrugList" prefHeight="26.0" prefWidth="90.0" stylesheets="@../../CSS/button.css" text="Save" AnchorPane.bottomAnchor="15.600000000000023" AnchorPane.rightAnchor="122.60000000000002" />
-      <ImageView fx:id="deleteIcon" fitHeight="25.0" fitWidth="27.0" layoutX="369.0" layoutY="253.0" onMouseEntered="#deleteOnMouseEntered" onMouseExited="#deleteOnMouseExited" onMousePressed="#deleteOnMousePressed" onMouseReleased="#deleteOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="193.39999999999998" AnchorPane.topAnchor="253.0">
+      <Label layoutX="471.0" layoutY="216.0" text="select the commerical name" textFill="#0d629c" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="216.0" />
+      <ImageView fx:id="deleteIcon" fitHeight="25.0" fitWidth="27.0" layoutX="520.0" layoutY="268.0" onMouseEntered="#deleteOnMouseEntered" onMouseExited="#deleteOnMouseExited" onMousePressed="#deleteOnMousePressed" onMouseReleased="#deleteOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="194.0" AnchorPane.topAnchor="275.0">
          <image>
             <Image url="@../../Icons/icons8-delete-60.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="addProductIcon" fitHeight="18.0" fitWidth="19.0" layoutX="688.0" layoutY="60.0" onMouseEntered="#addProductOnMouseEntered" onMouseExited="#addProductOnMouseExited" onMousePressed="#addProductOnMousePressed" onMouseReleased="#addProductOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="688.0" AnchorPane.topAnchor="60.0">
+      <ImageView fx:id="addProductIcon" fitHeight="18.0" fitWidth="19.0" layoutX="691.0" layoutY="65.0" onMouseEntered="#addProductOnMouseEntered" onMouseExited="#addProductOnMouseExited" onMousePressed="#addProductOnMousePressed" onMouseReleased="#addProductOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="691.0" AnchorPane.topAnchor="65.0">
          <image>
             <Image url="@../../Icons/icons8-add-48.png" />
          </image>
       </ImageView>
-      <ComboBox fx:id="searchOperationComboBox" layoutX="235.0" layoutY="15.0" onAction="#filterList" prefWidth="150.0" promptText="- Search -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="235.0" AnchorPane.topAnchor="14.0" />
-      <Label layoutX="397.0" layoutY="19.0" text="Cost/Piece" textFill="#1d6f84">
+      <ComboBox fx:id="searchOperationComboBox" layoutX="235.0" layoutY="15.0" onAction="#filterList" prefWidth="150.0" promptText="-Specify Field-" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="235.0" AnchorPane.topAnchor="20.0" />
+      <Label layoutX="397.0" layoutY="19.0" text="Cost/Piece" textFill="#1d6f84" AnchorPane.leftAnchor="397.0" AnchorPane.topAnchor="24.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="559.0" layoutY="18.0" text="Quantity" textFill="#1d6f84">
+      <Label layoutX="559.0" layoutY="24.0" text="Quantity" textFill="#1d6f84" AnchorPane.leftAnchor="559.0" AnchorPane.topAnchor="24.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
+      <HBox layoutX="519.0" layoutY="318.0" spacing="7.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="22.0">
+         <children>
+            <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#addDrugList" prefHeight="26.0" prefWidth="90.0" stylesheets="@../../CSS/button.css" text="Save" />
+            <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButton" prefHeight="26.0" prefWidth="90.0" stylesheets="@../../CSS/button.css" text="cancel" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

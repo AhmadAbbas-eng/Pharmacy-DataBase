@@ -68,7 +68,7 @@ public class UnReceivedController implements Initializable {
 	
 	private String stringToSearch="";
 
-	ObservableList<String> searchChoices = FXCollections.observableArrayList("Select", "Order Id", "Order From",
+	ObservableList<String> searchChoices = FXCollections.observableArrayList("-Specify Field-", "Order Id", "Order From",
 			"Order By", "Order Month", "Order Year");
 
 	public void backOnAction() {
@@ -141,7 +141,7 @@ public class UnReceivedController implements Initializable {
 			filteredList = SupplierOrder.getSupplierOrderData(Queries.queryResult(
 					"select * from S_Order where Recieved_By = '-1' " + "and Year(Date_Of_Order) like ? ;",
 					new ArrayList<>(Arrays.asList("%" + stringToSearch + "%"))));
-		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "Select") {
+		} else if (searchOperationComboBox.getSelectionModel().getSelectedItem() == "-Specify Field-") {
 			filteredList = SupplierOrder.getSupplierOrderData(Queries.queryResult(
 					"select * from S_Order where Recieved_By = '-1' and (Order_ID like ? or Year(Date_Of_Order) like ? "
 							+ " or month(Date_Of_Order) like ?  or supplier_ID like ? or Order_ID like ? ) ;",

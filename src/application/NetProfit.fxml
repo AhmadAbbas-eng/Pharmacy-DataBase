@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MonthlyNetProfitController">
    <children>
-      <LineChart fx:id="montlyNetProfitChart" layoutX="13.0" layoutY="261.0" prefHeight="125.0" prefWidth="572.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="261.0">
+      <LineChart fx:id="montlyNetProfitChart" layoutX="13.0" layoutY="261.0" prefHeight="125.0" prefWidth="572.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="261.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
@@ -17,7 +17,7 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </LineChart>
-      <TableView fx:id="netProfitTable" layoutX="14.0" layoutY="14.0" prefHeight="248.0" prefWidth="212.0" stylesheets="@../../CSS/table.css" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="374.0" AnchorPane.topAnchor="14.0">
+      <TableView fx:id="netProfitTable" layoutX="14.0" layoutY="14.0" prefHeight="248.0" prefWidth="212.0" stylesheets="@../../CSS/table.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="374.0" AnchorPane.topAnchor="0.0">
         <columns>
           <TableColumn fx:id="dateColumn" prefWidth="75.0" text="Date" />
           <TableColumn fx:id="netProfitColumn" prefWidth="75.0" text="Net Profit" />

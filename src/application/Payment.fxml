@@ -21,7 +21,7 @@
          <content>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="employeePaymentTable" layoutX="21.0" layoutY="47.0" prefHeight="186.0" prefWidth="760.0" stylesheets="@../../CSS/table.css" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="21.0" AnchorPane.topAnchor="47.0">
+                  <TableView fx:id="employeePaymentTable" layoutX="21.0" layoutY="47.0" prefHeight="179.0" prefWidth="847.0" stylesheets="@../../CSS/table.css" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="50.0">
                      <columns>
                         <TableColumn fx:id="employeePaymentManagerName" prefWidth="75.0" text="Manager Name" />
                         <TableColumn fx:id="employeePaymentNameColumn" prefWidth="187.20001220703125" text="Employee Name" />
@@ -32,13 +32,13 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <Label layoutX="22.0" layoutY="233.0" prefHeight="26.0" prefWidth="191.0" text="Add New Employee Payment" textFill="#1d6f84" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="233.0">
+                  <Label layoutX="22.0" layoutY="233.0" prefHeight="26.0" prefWidth="191.0" text="Add New Employee Payment" textFill="#1d6f84" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="233.0">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="searchEmployeePaymentTextField" layoutX="24.0" layoutY="12.0" prefHeight="26.0" prefWidth="157.0" promptText="Search" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="12.0" />
-                  <TableView fx:id="employeeTable" layoutX="43.0" layoutY="294.0" prefHeight="121.0" prefWidth="504.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="367.0" AnchorPane.topAnchor="298.0">
+                  <TextField fx:id="searchEmployeePaymentTextField" layoutX="24.0" layoutY="12.0" prefWidth="157.0" promptText="Search" stylesheets="@../../CSS/search.css" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="12.0" />
+                  <TableView fx:id="employeeTable" layoutX="43.0" layoutY="294.0" prefHeight="121.0" prefWidth="504.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="367.0" AnchorPane.topAnchor="305.0">
                      <columns>
                         <TableColumn fx:id="employeeIDColumn" prefWidth="187.20001220703125" text="Employee ID" />
                         <TableColumn fx:id="employeeNameColumn" prefWidth="345.60003662109375" text="Employee Name" />
@@ -47,13 +47,13 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <TextField fx:id="searchEmployeeTextField" layoutX="43.0" layoutY="265.0" promptText="Search" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="265.0" />
+                  <TextField fx:id="searchEmployeeTextField" layoutX="43.0" layoutY="265.0" promptText="Search" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="265.0" />
                   <CheckBox fx:id="chequeEmployeeCheckBox" layoutX="446.0" layoutY="268.0" mnemonicParsing="false" onAction="#chequeEmployeeOnAction" prefHeight="18.0" prefWidth="75.0" text="Cheque" AnchorPane.leftAnchor="446.0" AnchorPane.topAnchor="268.0">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </CheckBox>
-                  <HBox layoutX="575.0" layoutY="298.0" prefHeight="106.0" prefWidth="282.0" AnchorPane.rightAnchor="34.60000000000002" AnchorPane.topAnchor="298.0">
+                  <HBox layoutX="575.0" layoutY="298.0" prefHeight="106.0" prefWidth="282.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="298.0">
                      <children>
                         <VBox prefHeight="120.0" prefWidth="114.0" spacing="14.0">
                            <children>
@@ -89,15 +89,19 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <Button fx:id="addNewEmployeePaymentButton" layoutX="43.0" layoutY="408.0" mnemonicParsing="false" onAction="#addEmployeeOnAction" prefHeight="26.0" prefWidth="87.0" stylesheets="@../../CSS/button.css" text="Add" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="21.0" />
-                  <Button fx:id="clearEmployeeFieldsButton" layoutX="138.0" layoutY="408.0" mnemonicParsing="false" onAction="#clearEmployeeOnAction" prefHeight="26.0" prefWidth="87.0" stylesheets="@../../CSS/button.css" text="clear" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="140.0" />
-                  <ComboBox fx:id="employeeOperationComboBox" layoutX="200.0" layoutY="13.0" onAction="#employeePaymentFilterList" prefWidth="150.0" promptText="- Search -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="12.0" />
+                  <ComboBox fx:id="employeeOperationComboBox" layoutX="200.0" layoutY="13.0" onAction="#employeePaymentFilterList" prefWidth="150.0" promptText="-Specify Field-" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="12.0" />
                   <Label layoutX="205.0" layoutY="267.0" prefHeight="22.0" prefWidth="53.0" text="Amount" textFill="#1d6f84" AnchorPane.leftAnchor="202.0" AnchorPane.topAnchor="267.0">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
                   <TextField fx:id="amountEmployeeTextField" layoutX="220.0" layoutY="269.0" prefHeight="26.0" prefWidth="168.0" promptText="Amount" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="266.0" AnchorPane.topAnchor="265.0" />
+                  <HBox layoutX="246.0" layoutY="372.0" spacing="7.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="22.0">
+                     <children>
+                        <Button fx:id="addNewEmployeePaymentButton" mnemonicParsing="false" onAction="#addEmployeeOnAction" prefHeight="26.0" prefWidth="87.0" stylesheets="@../../CSS/button.css" text="Add" />
+                        <Button fx:id="clearEmployeeFieldsButton" mnemonicParsing="false" onAction="#clearEmployeeOnAction" prefHeight="26.0" prefWidth="87.0" stylesheets="@../../CSS/button.css" text="Clear" />
+                     </children>
+                  </HBox>
                </children>
             </AnchorPane>
          </content>
@@ -106,7 +110,7 @@
          <content>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="supplierPaymentTable" layoutX="21.0" layoutY="47.0" prefHeight="186.0" prefWidth="760.0" stylesheets="@../../CSS/table.css" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="21.0" AnchorPane.topAnchor="47.0">
+                  <TableView fx:id="supplierPaymentTable" layoutX="21.0" layoutY="47.0" prefHeight="179.0" prefWidth="847.0" stylesheets="@../../CSS/table.css" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="50.0">
                      <columns>
                         <TableColumn fx:id="supplierManagerNameColum" prefWidth="187.20001220703125" text="Manager Name" />
                         <TableColumn fx:id="supplierPaymentNameColumn" prefWidth="187.20001220703125" text=" Supplier Name" />
@@ -122,8 +126,8 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="searchSupplierPaymentTextField" layoutX="24.0" layoutY="12.0" prefHeight="26.0" prefWidth="157.0" promptText="Search" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="12.0" />
-                  <TableView fx:id="supplierDataTable" layoutX="21.0" layoutY="298.0" prefHeight="118.0" prefWidth="503.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="367.0" AnchorPane.topAnchor="298.0">
+                  <TextField fx:id="searchSupplierPaymentTextField" layoutX="24.0" layoutY="12.0" prefWidth="157.0" promptText="Search" stylesheets="@../../CSS/search.css" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="12.0" />
+                  <TableView fx:id="supplierDataTable" layoutX="21.0" layoutY="298.0" prefHeight="118.0" prefWidth="503.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="367.0" AnchorPane.topAnchor="305.0">
                      <columns>
                         <TableColumn fx:id="supplierNameColumn" prefWidth="187.20001220703125" text=" Supplier Name" />
                         <TableColumn fx:id="supplierDuesColumn" prefWidth="345.60003662109375" text="Dues" />
@@ -132,13 +136,13 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <TextField fx:id="searchSupplierTextField" layoutX="43.0" layoutY="265.0" promptText="Supplier Name" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="265.0" />
-                  <CheckBox fx:id="chequeSupplierCheckBox" layoutX="446.0" layoutY="266.0" mnemonicParsing="false" onAction="#chequeSupplierOnAction" prefHeight="18.0" prefWidth="75.0" text="Cheque" AnchorPane.leftAnchor="446.0" AnchorPane.topAnchor="266.0">
+                  <TextField fx:id="searchSupplierTextField" layoutX="43.0" layoutY="265.0" promptText="Supplier Name" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="265.0" />
+                  <CheckBox fx:id="chequeSupplierCheckBox" layoutX="446.0" layoutY="269.0" mnemonicParsing="false" onAction="#chequeSupplierOnAction" prefHeight="18.0" prefWidth="75.0" text="Cheque" AnchorPane.leftAnchor="446.0" AnchorPane.topAnchor="269.0">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </CheckBox>
-                  <HBox layoutX="579.0" layoutY="298.0" prefHeight="106.0" prefWidth="282.0" AnchorPane.rightAnchor="30.600000000000023" AnchorPane.topAnchor="298.0">
+                  <HBox layoutX="579.0" layoutY="298.0" prefHeight="106.0" prefWidth="282.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="298.0">
                      <children>
                         <VBox prefHeight="120.0" prefWidth="114.0" spacing="14.0">
                            <children>
@@ -174,15 +178,19 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <Button fx:id="addSupplierButton" layoutX="22.0" layoutY="418.0" mnemonicParsing="false" onAction="#addSupplierOnAction" prefHeight="26.0" prefWidth="87.0" stylesheets="@../../CSS/button.css" text="Add" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="21.0" />
-                  <Button fx:id="clearSupplierButton" layoutX="140.0" layoutY="418.0" mnemonicParsing="false" onAction="#clearSupplierOnAction" prefHeight="26.0" prefWidth="87.0" stylesheets="@../../CSS/button.css" text="clear" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="140.0" />
-                  <ComboBox fx:id="searchSupplierOperationComboBox" layoutX="194.0" layoutY="12.0" onAction="#supplierPaymentFilterList" prefWidth="150.0" promptText="- Search -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="12.0" />
-                  <Label layoutX="202.0" layoutY="269.0" prefHeight="22.0" prefWidth="52.0" text="Amount" textFill="#1d6f84" AnchorPane.leftAnchor="202.0" AnchorPane.topAnchor="269.0">
+                  <ComboBox fx:id="searchSupplierOperationComboBox" layoutX="194.0" layoutY="12.0" onAction="#supplierPaymentFilterList" prefWidth="150.0" promptText="-Specify Field-" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="12.0" />
+                  <Label layoutX="204.0" layoutY="268.0" prefHeight="22.0" prefWidth="52.0" text="Amount" textFill="#1d6f84" AnchorPane.leftAnchor="204.0" AnchorPane.topAnchor="268.0">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
                   <TextField fx:id="amountSupplierTextField" layoutX="266.0" layoutY="265.0" prefHeight="26.0" prefWidth="168.0" promptText="Amount" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="266.0" AnchorPane.topAnchor="265.0" />
+                  <HBox layoutX="346.0" layoutY="372.0" spacing="7.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="22.0">
+                     <children>
+                        <Button fx:id="addSupplierButton" mnemonicParsing="false" onAction="#addSupplierOnAction" prefHeight="26.0" prefWidth="87.0" stylesheets="@../../CSS/button.css" text="Add" />
+                        <Button fx:id="clearSupplierButton" mnemonicParsing="false" onAction="#clearSupplierOnAction" prefHeight="26.0" prefWidth="87.0" stylesheets="@../../CSS/button.css" text="Clear" />
+                     </children>
+                  </HBox>
                </children>
             </AnchorPane>
          </content>
@@ -191,7 +199,7 @@
          <content>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="taxTable" layoutX="21.0" layoutY="47.0" prefHeight="182.0" prefWidth="764.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="230.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="21.0" AnchorPane.topAnchor="47.0">
+                  <TableView fx:id="taxTable" layoutX="21.0" layoutY="47.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="230.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="50.0">
                      <columns>
                         <TableColumn fx:id="taxIDColumn" prefWidth="58.400054931640625" text="ID" />
                         <TableColumn fx:id="managerNametaxColumn" prefWidth="145.6000518798828" text="Manager Name" />
@@ -202,7 +210,7 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <Label layoutX="29.0" layoutY="228.0" prefHeight="26.0" prefWidth="138.0" text="Add New Paid Tax" textFill="#1d6f84" AnchorPane.bottomAnchor="204.79999999999998" AnchorPane.leftAnchor="21.0">
+                  <Label layoutX="29.0" layoutY="228.0" prefHeight="26.0" prefWidth="138.0" text="Add New Paid Tax" textFill="#1d6f84" AnchorPane.bottomAnchor="204.79999999999998" AnchorPane.leftAnchor="22.0">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -243,7 +251,7 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <HBox layoutX="40.0" layoutY="273.0" prefHeight="100.0" prefWidth="287.0" AnchorPane.bottomAnchor="86.19999999999999" AnchorPane.leftAnchor="21.0">
+                  <HBox layoutX="40.0" layoutY="273.0" prefHeight="100.0" prefWidth="287.0" AnchorPane.bottomAnchor="86.19999999999999" AnchorPane.leftAnchor="22.0">
                      <children>
                         <VBox prefHeight="100.0" prefWidth="115.0" spacing="14.0">
                            <children>
@@ -281,10 +289,14 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <Button fx:id="addTaxButton" layoutX="40.0" layoutY="407.0" mnemonicParsing="false" onAction="#addTaxOnAction" prefHeight="26.0" prefWidth="87.0" stylesheets="@../../CSS/button.css" text="Add" AnchorPane.bottomAnchor="25.79999999999999" AnchorPane.leftAnchor="21.0" />
-                  <Button fx:id="clearTaxButton" layoutX="140.0" layoutY="407.0" mnemonicParsing="false" onAction="#clearTaxOnAction" prefHeight="26.0" prefWidth="87.0" stylesheets="@../../CSS/button.css" text="Clear" AnchorPane.bottomAnchor="25.79999999999999" AnchorPane.leftAnchor="140.0" />
-                  <TextField fx:id="searchTaxTextField" layoutX="31.0" layoutY="11.0" prefHeight="26.0" prefWidth="165.0" promptText="Search" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="12.0" />
-                  <ComboBox fx:id="taxOperationComboBox" layoutX="206.0" layoutY="12.0" onAction="#taxFilterList" prefWidth="150.0" promptText="- Search -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="12.0" />
+                  <TextField fx:id="searchTaxTextField" layoutX="31.0" layoutY="11.0" prefWidth="157.0" promptText="Search" stylesheets="@../../CSS/search.css" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="12.0" />
+                  <ComboBox fx:id="taxOperationComboBox" layoutX="206.0" layoutY="12.0" onAction="#taxFilterList" prefWidth="150.0" promptText="-Specify Field-" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="12.0" />
+                  <HBox layoutX="234.0" layoutY="356.0" spacing="7.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="22.0">
+                     <children>
+                        <Button fx:id="addTaxButton" mnemonicParsing="false" onAction="#addTaxOnAction" prefHeight="26.0" prefWidth="87.0" stylesheets="@../../CSS/button.css" text="Add" />
+                        <Button fx:id="clearTaxButton" mnemonicParsing="false" onAction="#clearTaxOnAction" prefHeight="26.0" prefWidth="87.0" stylesheets="@../../CSS/button.css" text="Clear" />
+                     </children>
+                  </HBox>
                </children>
             </AnchorPane>
          </content>
@@ -293,7 +305,7 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="disposalTable" layoutX="21.0" layoutY="51.0" prefHeight="396.0" prefWidth="852.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="21.0" AnchorPane.topAnchor="51.0">
+                  <TableView fx:id="disposalTable" layoutX="21.0" layoutY="51.0" prefHeight="396.0" prefWidth="852.0" stylesheets="@../../CSS/table.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="50.0">
                     <columns>
                         <TableColumn fx:id="disposalProductName" prefWidth="87.99999618530273" text="Product Name" />
                         <TableColumn fx:id="disposalProductionDateColumn" prefWidth="75.0" text="Production Date" />
@@ -307,8 +319,8 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <TextField fx:id="searchDisposalTextField" layoutX="21.0" layoutY="14.0" promptText="Search" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="12.0" />
-                  <ComboBox fx:id="disposalOperationComboBox" layoutX="188.0" layoutY="14.0" onAction="#disposalFilterList" prefWidth="150.0" promptText="- Search -" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="12.0" />
+                  <TextField fx:id="searchDisposalTextField" layoutX="21.0" layoutY="14.0" prefWidth="157.0" promptText="Search" stylesheets="@../../CSS/search.css" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="12.0" />
+                  <ComboBox fx:id="disposalOperationComboBox" layoutX="188.0" layoutY="14.0" onAction="#disposalFilterList" prefWidth="150.0" promptText="-Specify Field-" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="12.0" />
                </children>
             </AnchorPane>
         </content>

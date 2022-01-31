@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -128,11 +129,17 @@
                            <image>
                               <Image url="@../../Icons/icons8-delete-60.png" />
                            </image>
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
                         </ImageView>
-                        <Label layoutX="10.0" layoutY="222.0" prefHeight="62.0" prefWidth="13.0" text="  *" textFill="RED">
+                        <Label layoutX="10.0" layoutY="222.0" prefHeight="57.0" prefWidth="13.0" text="  *" textFill="RED">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
+                           <VBox.margin>
+                              <Insets top="-5.0" />
+                           </VBox.margin>
                         </Label>
                      </children>
                   </VBox>
@@ -140,7 +147,7 @@
             </HBox>
             <Button fx:id="cancelButton" layoutX="120.0" layoutY="439.0" mnemonicParsing="false" onAction="#cancelButton" prefHeight="26.0" prefWidth="145.0" stylesheets="@../../CSS/button.css" text="Cancel" />
             <Label layoutX="347.0" layoutY="20.0" text="* Required" textFill="RED" />
-            <CheckBox fx:id="isManager" layoutX="25.0" layoutY="371.0" mnemonicParsing="false" text="Manager" textFill="#1d6f84">
+            <CheckBox fx:id="isManager" layoutX="18.0" layoutY="371.0" mnemonicParsing="false" text="Manager" textFill="#1d6f84">
                <font>
                   <Font size="14.0" />
                </font>
