@@ -32,7 +32,6 @@ import Relations.*;
  */
 public class CustomerPhoneController implements Initializable {
 
-
 	@FXML
 	private ListView<String> phoneList;
 
@@ -56,17 +55,17 @@ public class CustomerPhoneController implements Initializable {
 
 	@FXML
 	private ImageView savedIcon;
-	
+
 	private Customer customer;
-	
+
 	public void showAndFade(Node node) {
 
 		Timeline show = new Timeline(
 				new KeyFrame(Duration.seconds(0), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)),
 				new KeyFrame(Duration.seconds(0.5), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)),
 				new KeyFrame(Duration.seconds(1), new KeyValue(node.opacityProperty(), 1, Interpolator.DISCRETE)));
-		
-		FadeTransition fade = new FadeTransition(Duration.seconds(0.5), node);		
+
+		FadeTransition fade = new FadeTransition(Duration.seconds(0.5), node);
 		fade.setFromValue(1);
 		fade.setToValue(0);
 		SequentialTransition blinkFade = new SequentialTransition(node, show, fade);
@@ -79,9 +78,8 @@ public class CustomerPhoneController implements Initializable {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
 			alert.setContentText("Phone Number Already Exists");
-			((Stage) phoneList.getScene().getWindow()).setAlwaysOnTop(false);
 			alert.showAndWait();
-			((Stage) phoneList.getScene().getWindow()).setAlwaysOnTop(true);
+			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 		} else if ((editedPhone.getNewValue().replaceAll("-", "")).matches("[0-9]{10}")) {
 			phoneList.getItems().set(editedPhone.getIndex(), editedPhone.getNewValue().replaceAll("-", ""));
 		} else {
@@ -89,9 +87,8 @@ public class CustomerPhoneController implements Initializable {
 			alert.setTitle("Wrong Input Format");
 			alert.setHeaderText(null);
 			alert.setContentText("Phone Number Must Contain 10 Digits");
-			((Stage) phoneList.getScene().getWindow()).setAlwaysOnTop(false);
 			alert.showAndWait();
-			((Stage) phoneList.getScene().getWindow()).setAlwaysOnTop(true);
+			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 		}
 	}
 
@@ -103,9 +100,8 @@ public class CustomerPhoneController implements Initializable {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setHeaderText(null);
 				alert.setContentText("Phone Number Already Exists");
-				((Stage) phoneList.getScene().getWindow()).setAlwaysOnTop(false);
 				alert.showAndWait();
-				((Stage) phoneList.getScene().getWindow()).setAlwaysOnTop(true);
+				((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 			} else if ((phone.replaceAll("-", "")).matches("[0-9]{10}")) {
 				phoneList.getItems().add(phone.replaceAll("-", ""));
 				phoneTextField.setText("");
@@ -114,9 +110,8 @@ public class CustomerPhoneController implements Initializable {
 				alert.setTitle("Wrong Input Format");
 				alert.setHeaderText(null);
 				alert.setContentText("Phone Number Must Contain 10 Digits");
-				((Stage) phoneList.getScene().getWindow()).setAlwaysOnTop(false);
 				alert.showAndWait();
-				((Stage) phoneList.getScene().getWindow()).setAlwaysOnTop(true);
+				((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 			}
 		}
 	}
@@ -187,9 +182,8 @@ public class CustomerPhoneController implements Initializable {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
 			alert.setContentText("Phone Number Already Exists");
-			((Stage) phoneList.getScene().getWindow()).setAlwaysOnTop(false);
 			alert.showAndWait();
-			((Stage) phoneList.getScene().getWindow()).setAlwaysOnTop(true);
+			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 		} else if ((phone.replaceAll("-", "")).matches("[0-9]{10}")) {
 			phoneList.getItems().add(phone.replaceAll("-", ""));
 			phoneTextField.setText("");
@@ -198,9 +192,8 @@ public class CustomerPhoneController implements Initializable {
 			alert.setTitle("Wrong Input Format");
 			alert.setHeaderText(null);
 			alert.setContentText("Phone Number Must Contain 10 Digits");
-			((Stage) phoneList.getScene().getWindow()).setAlwaysOnTop(false);
 			alert.showAndWait();
-			((Stage) phoneList.getScene().getWindow()).setAlwaysOnTop(true);
+			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 		}
 
 	}

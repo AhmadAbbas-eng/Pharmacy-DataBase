@@ -163,9 +163,8 @@ public class EmployeeWorkedHoursController implements Initializable {
 			alert.setTitle("Repeated Record");
 			alert.setHeaderText(null);
 			alert.setContentText("Record For This Date Already Exists");
-			((Stage) workedHoursTable.getScene().getWindow()).setAlwaysOnTop(false);
 			alert.showAndWait();
-			((Stage) workedHoursTable.getScene().getWindow()).setAlwaysOnTop(true);
+			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 		}
 
 		else if (numOfHoursStr == null || numOfHoursStr.isEmpty() || numOfHoursStr.isBlank() || !checkNumOfHours
@@ -174,9 +173,8 @@ public class EmployeeWorkedHoursController implements Initializable {
 			alert.setTitle("Wrong Input Format");
 			alert.setHeaderText(null);
 			alert.setContentText("Number Of Hours Must Be A Nonnegative Real Number");
-			((Stage) workedHoursTable.getScene().getWindow()).setAlwaysOnTop(false);
 			alert.showAndWait();
-			((Stage) workedHoursTable.getScene().getWindow()).setAlwaysOnTop(true);
+			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 		} else {
 			ArrayList<String> parameters = new ArrayList<>();
 			parameters.add(employee.getID() + "");
@@ -253,9 +251,8 @@ public class EmployeeWorkedHoursController implements Initializable {
 			ButtonType continueButtonType = new ButtonType("Continue anyway");
 			ButtonType cancelButtonType = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 			alert.getButtonTypes().setAll(saveButtonType, continueButtonType, cancelButtonType);
-			((Stage) workedHoursTable.getScene().getWindow()).setAlwaysOnTop(false);
 			Optional<ButtonType> result = alert.showAndWait();
-			((Stage) workedHoursTable.getScene().getWindow()).setAlwaysOnTop(true);
+			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 			if (result.get() == saveButtonType) {
 				saveOnMousePressed();
 				saveOnMouseReleased();
@@ -372,9 +369,8 @@ public class EmployeeWorkedHoursController implements Initializable {
 				alert.setTitle("Wrong Input Format");
 				alert.setHeaderText(null);
 				alert.setContentText("Number Of Hours Must Be A Nonnegative Real Number");
-				((Stage) workedHoursTable.getScene().getWindow()).setAlwaysOnTop(false);
 				alert.showAndWait();
-				((Stage) workedHoursTable.getScene().getWindow()).setAlwaysOnTop(true);
+				((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 			} else {
 				if (!t.getOldValue().equals(t.getNewValue())) {
 					editedFlag = true;

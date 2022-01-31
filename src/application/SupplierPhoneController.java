@@ -55,10 +55,10 @@ public class SupplierPhoneController implements Initializable {
 
 	@FXML
 	private Label savedLabel;
-	
+
 	@FXML
 	private ImageView savedIcon;
-	
+
 	private Supplier supplier;
 
 	public void showAndFade(Node node) {
@@ -79,9 +79,8 @@ public class SupplierPhoneController implements Initializable {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
 			alert.setContentText("Phone Number Already Exists");
-			((Stage) phoneList.getScene().getWindow()).setAlwaysOnTop(false);
 			alert.showAndWait();
-			((Stage) phoneList.getScene().getWindow()).setAlwaysOnTop(true);
+			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 		} else if ((editedPhone.getNewValue().replaceAll("-", "")).matches("[0-9]{10}")) {
 			phoneList.getItems().set(editedPhone.getIndex(), editedPhone.getNewValue().replaceAll("-", ""));
 		} else {
@@ -89,9 +88,8 @@ public class SupplierPhoneController implements Initializable {
 			alert.setTitle("Wrong Input Format");
 			alert.setHeaderText(null);
 			alert.setContentText("Phone Number Must Contain 10 Digits");
-			((Stage) phoneList.getScene().getWindow()).setAlwaysOnTop(false);
 			alert.showAndWait();
-			((Stage) phoneList.getScene().getWindow()).setAlwaysOnTop(true);
+			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 		}
 	}
 
@@ -102,9 +100,8 @@ public class SupplierPhoneController implements Initializable {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setHeaderText(null);
 				alert.setContentText("Phone Number Already Exists");
-				((Stage) phoneList.getScene().getWindow()).setAlwaysOnTop(false);
 				alert.showAndWait();
-				((Stage) phoneList.getScene().getWindow()).setAlwaysOnTop(true);
+				((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 			} else if ((phone.replaceAll("-", "")).matches("[0-9]{10}")) {
 				phoneList.getItems().add(phone.replaceAll("-", ""));
 				phoneTextField.setText("");
@@ -113,9 +110,8 @@ public class SupplierPhoneController implements Initializable {
 				alert.setTitle("Wrong Input Format");
 				alert.setHeaderText(null);
 				alert.setContentText("Phone Number Must Contain 10 Digits");
-				((Stage) phoneList.getScene().getWindow()).setAlwaysOnTop(false);
 				alert.showAndWait();
-				((Stage) phoneList.getScene().getWindow()).setAlwaysOnTop(true);
+				((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 			}
 		}
 	}
@@ -185,9 +181,8 @@ public class SupplierPhoneController implements Initializable {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
 			alert.setContentText("Phone Number Already Exists");
-			((Stage) phoneList.getScene().getWindow()).setAlwaysOnTop(false);
 			alert.showAndWait();
-			((Stage) phoneList.getScene().getWindow()).setAlwaysOnTop(true);
+			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 		} else if ((phone.replaceAll("-", "")).matches("[0-9]{10}")) {
 			phoneList.getItems().add(phone.replaceAll("-", ""));
 			phoneTextField.setText("");
@@ -196,9 +191,8 @@ public class SupplierPhoneController implements Initializable {
 			alert.setTitle("Wrong Input Format");
 			alert.setHeaderText(null);
 			alert.setContentText("Phone Number Must Contain 10 Digits");
-			((Stage) phoneList.getScene().getWindow()).setAlwaysOnTop(false);
 			alert.showAndWait();
-			((Stage) phoneList.getScene().getWindow()).setAlwaysOnTop(true);
+			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 		}
 	}
 
