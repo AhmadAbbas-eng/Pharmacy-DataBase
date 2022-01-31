@@ -145,12 +145,32 @@ public class ComboBoxAutoComplete<T> {
 				answer = true;
 				String newName = fullName.getText().toString();
 				if (newName.isBlank() == false) {
-					if (caller instanceof AddProductController)
-						AddProductController.manufacturerObservableList.add(newName);
-					else if(caller instanceof ProductEditController)
-						ProductEditController.manufacturerObservableList.add(newName);
-					originalItems.add((T) newName);
-					confiemWindow.close();
+					if (caller instanceof AddProductController) {
+						if (AddProductController.manufacturerObservableList.indexOf(newName) == -1) {
+							AddProductController.manufacturerObservableList.add(newName);
+							originalItems.add((T) newName);
+							confiemWindow.close();
+						} else {
+							Alert alert = new Alert(Alert.AlertType.ERROR);
+							alert.setTitle("This Product Exists");
+							alert.setHeaderText(null);
+							alert.setContentText("You Have To Fill The Text Field With A New Product!");
+							alert.showAndWait();
+						}
+					} else if (caller instanceof ProductEditController) {
+						if (	ProductEditController.manufacturerObservableList.indexOf(newName) == -1) {
+							ProductEditController.manufacturerObservableList.add(newName);
+							originalItems.add((T) newName);
+							confiemWindow.close();
+						} else {
+							Alert alert = new Alert(Alert.AlertType.ERROR);
+							alert.setTitle("This Product Exists");
+							alert.setHeaderText(null);
+							alert.setContentText("You Have To Fill The Text Field With A New Product!");
+							alert.showAndWait();
+						}
+
+					}
 				} else {
 					Alert alert = new Alert(Alert.AlertType.ERROR);
 					alert.setTitle("Empty Field");
