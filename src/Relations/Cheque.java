@@ -167,7 +167,7 @@ public class Cheque {
 	 * @param path The path of file
 	 */
 	public static void report(String path) {
-		Queries.reportQuerey(
+		Queries.reportQuery(
 				"select c.cheque_ID as 'Cheque ID',e.employee_name as 'Employee Name',c.due_date_of_cashing as 'Due date of cashing',p.payment_amount as 'Payment Amount'\r\n"
 						+ "from employee e , cheque c, payment p\r\n"
 						+ "where  c.manager_ID=e.employee_ID and c.payment_ID=p.payment_ID ;",

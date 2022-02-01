@@ -378,7 +378,7 @@ public class EmployeeWorkedHoursController implements Initializable {
 				(t.getTableView().getItems().get(t.getTablePosition().getRow())).set(2, t.getNewValue());
 
 				(t.getTableView().getItems().get(t.getTablePosition().getRow())).set(3,
-						"" + (Double.parseDouble(t.getNewValue()) * employee.getHourlyPaid()));
+						"" + (Double.parseDouble(t.getNewValue()) * employee.getHourlyPaid1()));
 
 			}
 			workedHoursTable.refresh();

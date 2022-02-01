@@ -147,7 +147,7 @@ public class Batch {
 	 * @param path The path of file
 	 */
 	public static void report(String path) {
-		Queries.reportQuerey(
+		Queries.reportQuery(
 				"select p.product_name as 'Product Name',b.batch_production_date as 'Production Date',b.batch_expiry_date as 'Expire Date',b.batch_amount as 'amount'\r\n"
 						+ "from product p,batch b\r\n"
 						+ "where p.product_ID=b.product_Id and b.batch_production_date <> '1111-01-01';",

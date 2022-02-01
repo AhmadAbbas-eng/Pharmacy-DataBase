@@ -154,7 +154,7 @@ public class CustomerOrder {
 	 * @param path The path of file
 	 */
 	public static void report(String path) {
-		Queries.reportQuerey(
+		Queries.reportQuery(
 				"select c.customer_name as 'Customer Name',co.order_date as 'Order Date',e.employee_name as 'Employee name', p.product_name as 'Product Name'\r\n"
 						+ "from customer c,customer2order c2o,c_order co,c_order_batch cob,product p,employee e \r\n"
 						+ "where co.employee_Id=e.employee_Id and c.customer_NID=c2o.customer_NID and c2o.order_ID=co.order_ID and co.order_Id=cob.order_Id and p.product_Id=cob.product_ID;",

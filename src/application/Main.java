@@ -17,6 +17,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -29,6 +30,9 @@ public class Main extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setResizable(false);
 			primaryStage.setScene(scene);
+			primaryStage.getIcons().add(new Image("file:Icon.jpg"));
+			primaryStage.getIcons().add(new Image("file:Icon.jpg"));
+			
 			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -45,6 +49,7 @@ public class Main extends Application {
 //			e.printStackTrace();
 //		}
 		// Main.readingData();
+		System.out.println(Employee.decryptPassword("Omar", "0f11b32743353f6"));
 		launch(args);
 	}
 
