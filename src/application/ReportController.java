@@ -115,7 +115,7 @@ public class ReportController implements Initializable {
 			showAndFade(savedLabel);
 
 		} else if (reportType.getSelectionModel().getSelectedItem() == "Disposal") {
-			Queries.reportQuerey(
+			Queries.reportQuery(
 					"SELECT P.product_ID,P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
 							+ "from batch b,product p\r\n"
 							+ "where b.batch_amount>0 and b.product_ID=p.product_ID and b.batch_production_date <>'1111-01-01' and b.batch_expiry_date <DATE(NOW()) \r\n"

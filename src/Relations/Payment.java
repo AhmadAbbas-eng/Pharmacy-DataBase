@@ -119,6 +119,6 @@ public class Payment {
 	 * @param path The path of file
 	 */
 	public static void report(String path) {
-		Queries.reportQuerey("select * from payment;", path);
+		Queries.reportQuery("select * from payment;", path);
 	}
 }

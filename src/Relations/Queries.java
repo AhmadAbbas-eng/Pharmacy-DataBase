@@ -154,7 +154,7 @@ public class Queries {
 	 * @param query    the query we want to report
 	 * @param filePath path of the file we want to save into
 	 */
-	public static void reportQuerey(String query, String filePath) {
+	public static void reportQuery(String query, String filePath) {
 
 		try {
 			Connection tempConnection = dataBaseConnection(); // Create connection to the data base
@@ -173,7 +173,7 @@ public class Queries {
 
 			// Write the names of attributes on file
 			for (int i = 1; i <= size; i++) {
-				fileWriter.write(rsmd.getColumnName(i));
+				fileWriter.write(rsmd.getColumnLabel(i));
 				if (i != size)
 					fileWriter.write(",");
 				else
