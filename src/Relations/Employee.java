@@ -101,10 +101,12 @@ public class Employee {
 		this.dateOfWork = dateOfWork;
 	}
 
-	public double getHourlyPaid() {
+	public String getHourlyPaid() {
+		return hourlyPaid+"";
+	}
+	public double getHourlyPaid1() {
 		return hourlyPaid;
 	}
-
 	public void setHourlyPaid(double hourlyPaid) {
 		this.hourlyPaid = hourlyPaid;
 	}
