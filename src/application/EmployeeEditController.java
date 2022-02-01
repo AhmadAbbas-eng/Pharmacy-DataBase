@@ -8,7 +8,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
-import javafx.util.converter.DoubleStringConverter;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.fxml.Initializable;
@@ -38,7 +37,7 @@ public class EmployeeEditController implements Initializable {
 	private TableColumn<Employee, String> idColumn;
 
 	@FXML
-	private TableColumn<Employee, Double> hourlyPaidColumn;
+	private TableColumn<Employee, String> hourlyPaidColumn;
 
 	@FXML
 	private TableColumn<Employee, String> isActiveColumn;
@@ -155,7 +154,7 @@ public class EmployeeEditController implements Initializable {
 		addPhone.setEffect(effect);
 	}
 
-	public void saveOnMousePressed(){
+	public void saveOnMousePressed() {
 		if (employee != null) {
 			ColorAdjust effect = new ColorAdjust();
 			effect.setBrightness(0.8);
@@ -170,8 +169,8 @@ public class EmployeeEditController implements Initializable {
 			parameters.add(employeeTable.getItems().get(0).getIsActive());
 			parameters.add(employee.getID() + "");
 			Queries.queryUpdate("update Employee set Employee_Name=?" + " , Employee_National_ID=? "
-					+ " , Employee_Hourly_Paid=? " + " , Employee_password=? " + " , isManager=? "
-					+ " , isActive=? " + " where Employee_ID=? ;", parameters);
+					+ " , Employee_Hourly_Paid=? " + " , Employee_password=? " + " , isManager=? " + " , isActive=? "
+					+ " where Employee_ID=? ;", parameters);
 
 			Employee.getEmployeeData();
 			caller.saveEdits();
@@ -342,7 +341,7 @@ public class EmployeeEditController implements Initializable {
 		idColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("ID"));
 		nidColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("NID"));
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
-		hourlyPaidColumn.setCellValueFactory(new PropertyValueFactory<Employee, Double>("hourlyPaid"));
+		hourlyPaidColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("hourlyPaid"));
 		isManagerColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("isManager"));
 		isActiveColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("isActive"));
 		passwordColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("password"));
@@ -355,8 +354,7 @@ public class EmployeeEditController implements Initializable {
 		employeeTable.setEditable(true);
 		nidColumn.setCellFactory(TextFieldTableCell.<Employee>forTableColumn());
 		nameColumn.setCellFactory(TextFieldTableCell.<Employee>forTableColumn());
-		hourlyPaidColumn
-				.setCellFactory(TextFieldTableCell.<Employee, Double>forTableColumn(new DoubleStringConverter()));
+		hourlyPaidColumn.setCellFactory(TextFieldTableCell.<Employee>forTableColumn());
 
 		isManagerColumn.setCellFactory(TextFieldTableCell.<Employee>forTableColumn());
 		isActiveColumn.setCellFactory(TextFieldTableCell.<Employee>forTableColumn());
@@ -435,8 +433,19 @@ public class EmployeeEditController implements Initializable {
 			employeeTable.refresh();
 		});
 
-		hourlyPaidColumn.setOnEditCommit((CellEditEvent<Employee, Double> t) -> {
-			((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow())).setHourlyPaid(t.getNewValue());
+		hourlyPaidColumn.setOnEditCommit((CellEditEvent<Employee, String> t) -> {
+			Double hourlyPaid = Double.parseDouble(t.getOldValue());
+			try {
+				hourlyPaid = Double.parseDouble(t.getNewValue());
+			} catch (NumberFormatException e) {
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setTitle("Wrong Input Format");
+				alert.setHeaderText(null);
+				alert.setContentText("Hourly Paid Value Must Be A Numeric Value");
+				alert.showAndWait();
+				employeeTable.refresh();
+			}
+			((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow())).setHourlyPaid(hourlyPaid);
 		});
 		passwordColumn.setOnEditCommit((CellEditEvent<Employee, String> t) -> {
 			((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow())).setPassword(t.getNewValue());
