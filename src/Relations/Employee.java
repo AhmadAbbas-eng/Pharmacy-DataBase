@@ -18,7 +18,6 @@ public class Employee {
 
 	private static ArrayList<Employee> data = new ArrayList<Employee>();
 	private static ObservableList<Employee> dataList;
-	private static int maxID = 0;
 	private static boolean access = true;
 	private static int currentID = 0;
 	private static String EmployeeName;
@@ -195,9 +194,7 @@ public class Employee {
 		return Integer.parseInt(Queries.queryResult("select max(employee_ID) from employee;", null).get(0).get(0));
 	}
 
-	public static void setMaxID(int maxID) {
-		Employee.maxID = maxID;
-	}
+	
 
 	public static boolean isAccess() {
 		return access;
@@ -238,7 +235,6 @@ public class Employee {
 			getEmployeePhone(temp);
 			data.add(temp);
 		}
-		maxID = Integer.parseInt(Queries.queryResult("select max(employee_ID) from employee;", null).get(0).get(0));
 		dataList = FXCollections.observableArrayList(data);
 	}
 
