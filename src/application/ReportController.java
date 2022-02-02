@@ -191,6 +191,8 @@ public class ReportController implements Initializable {
 				fileWriter.write(tableData.get(i).get(0) + "," + tableData.get(i).get(1) + "\n");
 			}
 			fileWriter.close();
+			showAndFade(saveIcon);
+			showAndFade(savedLabel);
 		}
 	}
 
