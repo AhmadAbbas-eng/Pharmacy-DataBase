@@ -192,7 +192,7 @@ public class Employee {
 	}
 
 	public static int getMaxID() {
-		return maxID;
+		return Integer.parseInt(Queries.queryResult("select max(employee_ID) from employee;", null).get(0).get(0));
 	}
 
 	public static void setMaxID(int maxID) {
@@ -301,10 +301,10 @@ public class Employee {
 	public static void insertEmployee(String name, String nID, LocalDate dateOfWork, double hourlyPaid,
 			ArrayList<String> phones, String password, String isManager, String isActive) {
 		Queries.queryUpdate("insert into Employee values (?, ?, ?, ?, ?, ?, ?, ?);",
-				new ArrayList<>(Arrays.asList((++maxID) + "", name, nID, dateOfWork.toString(), hourlyPaid + "",
+				new ArrayList<>(Arrays.asList((getMaxID()+1) + "", name, nID, dateOfWork.toString(), hourlyPaid + "",
 						encryptPassword(name, password), isManager, isActive)));
 		if (phones != null) {
-			insertEmployeePhone(phones, maxID);
+			insertEmployeePhone(phones, getMaxID());
 		}
 	}
 

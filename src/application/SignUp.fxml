@@ -80,7 +80,7 @@
                   </VBox>
                   <VBox prefHeight="316.0" prefWidth="222.0" spacing="15.0">
                      <children>
-                        <TextField fx:id="nationalIDTextFeild" prefHeight="26.0" prefWidth="210.0" promptText="National ID(xxxxxxxxxx)" stylesheets="@../../CSS/textField.css" />
+                        <TextField fx:id="nationalIDTextField" prefHeight="26.0" prefWidth="210.0" promptText="National ID(xxxxxxxxxx)" stylesheets="@../../CSS/textField.css" />
                         <TextField fx:id="employeeNameTextField" prefHeight="26.0" prefWidth="210.0" promptText="Name(only characters)" stylesheets="@../../CSS/textField.css" />
                         <TextField fx:id="hourlyPaidTextField" prefHeight="26.0" prefWidth="210.0" promptText="Hourly Paid(a number)" stylesheets="@../../CSS/textField.css" />
                         <DatePicker fx:id="dateOfWorkPicker" prefHeight="26.0" prefWidth="286.0" promptText="Date" stylesheets="@../../CSS/datePicker.css" />
