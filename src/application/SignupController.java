@@ -227,13 +227,15 @@ public class SignupController implements Initializable {
 
 						Employee temp = new Employee(Employee.getMaxID(), employeeNameTextField.getText(),
 								nationalIDTextField.getText(), dateOfWorkPicker.getValue(),
-								Double.parseDouble(hourlyPaidTextField.getText()), phones, passwordTextField.getText(),
+								Double.parseDouble(hourlyPaidTextField.getText()), phones,
+								Employee.encryptPassword(employeeNameTextField.getText(), passwordTextField.getText()),
 								ismanager, "true");
 
 						Employee.getData().add(temp);
 						Employee.insertEmployee(employeeNameTextField.getText(), nationalIDTextField.getText(),
 								dateOfWorkPicker.getValue(), Double.parseDouble(hourlyPaidTextField.getText()), phones,
-								passwordTextField.getText(), ismanager, "true");
+								Employee.encryptPassword(employeeNameTextField.getText(), passwordTextField.getText()),
+								ismanager, "true");
 
 						Stage stage = (Stage) addNewUserButton.getScene().getWindow();
 						stage.close();

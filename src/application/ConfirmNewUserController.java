@@ -53,7 +53,7 @@ public class ConfirmNewUserController {
 
 	}
 
-	public void confirm(ActionEvent event){
+	public void confirm(ActionEvent event) {
 
 		ArrayList<Employee> filteredList = new ArrayList<>();
 		if (idTextField.getText().isBlank() == false && passwordPasswordField.getText().isBlank() == false) {
@@ -70,10 +70,13 @@ public class ConfirmNewUserController {
 					alert.setContentText("This User ID is Not Available!!");
 					alert.showAndWait();
 				} else {
+					String name = Queries.queryResult("select employee_name from Employee where Employee_ID = ?",
+							new ArrayList<>(Arrays.asList(idTextField.getText()))).get(0).get(0);
 					filteredList = Employee.getEmployeeData(Queries.queryResult(
 							"select * from Employee where Employee_ID = ? "
 									+ " and Employee_password = ? order by Employee_ID;",
-							new ArrayList<>(Arrays.asList(idTextField.getText(), passwordPasswordField.getText()))));
+							new ArrayList<>(Arrays.asList(idTextField.getText(),
+									Employee.encryptPassword(name, passwordPasswordField.getText())))));
 
 					if (filteredList.isEmpty() == true) {
 						Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -85,8 +88,8 @@ public class ConfirmNewUserController {
 						filteredList = Employee.getEmployeeData(Queries.queryResult(
 								"select * from Employee where Employee_ID = ? and isManager = "
 										+ "'true' and Employee_password = ? order by Employee_ID;",
-								new ArrayList<>(
-										Arrays.asList(idTextField.getText(), passwordPasswordField.getText()))));
+								new ArrayList<>(Arrays.asList(idTextField.getText(),
+										Employee.encryptPassword(name, passwordPasswordField.getText())))));
 
 						if (filteredList.isEmpty() == true) {
 							Alert alert = new Alert(Alert.AlertType.ERROR);
