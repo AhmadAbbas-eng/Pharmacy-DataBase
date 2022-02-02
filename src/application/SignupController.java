@@ -225,7 +225,7 @@ public class SignupController implements Initializable {
 							ismanager = "true";
 						}
 
-						Employee temp = new Employee(Employee.getMaxID(), employeeNameTextField.getText(),
+						Employee temp = new Employee(Employee.getMaxID()+1, employeeNameTextField.getText(),
 								nationalIDTextField.getText(), dateOfWorkPicker.getValue(),
 								Double.parseDouble(hourlyPaidTextField.getText()), phones,
 								Employee.encryptPassword(employeeNameTextField.getText(), passwordTextField.getText()),
