@@ -3,9 +3,6 @@ package Relations;
 import java.util.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * Customer class where Customer's operations are occurred
@@ -14,17 +11,11 @@ import lombok.Setter;
  * @author Aseel Sabri
  *
  */
-
-@Data
 public class Customer {
 
-	@Getter
-	@Setter
 	private static ArrayList<Customer> data = new ArrayList<Customer>();
-	@Getter
-	@Setter
 	private static ObservableList<Customer> dataList;
-	private String NID;
+	private String nationalID;
 	private String name;
 	private double debt;
 	private ArrayList<String> phones;
@@ -33,14 +24,14 @@ public class Customer {
 	 * Allocates a {@code Customer} object and initializes it to represent the
 	 * specified parameters.
 	 * 
-	 * @param NID The national ID of the Customer.
+	 * @param nationalID The national ID of the Customer.
 	 * @param name       Customer name.
 	 * @param debt       Customer debts to the Pharmacy.
 	 * @param phones     The list of Customer's phones.
 	 */
 	public Customer(String nationalID, String name, double debt, ArrayList<String> phones) {
 		super();
-		this.NID = nationalID;
+		this.nationalID = nationalID;
 		this.name = name;
 		this.debt = debt;
 		this.phones = phones;
@@ -48,9 +39,65 @@ public class Customer {
 
 	public Customer(String nID, String name, double debt) {
 		super();
-		NID = nID;
+		nationalID = nID;
 		this.name = name;
 		this.debt = debt;
+	}
+
+	public String getNID() {
+		return getNationalID();
+	}
+
+	public String getNationalID() {
+		return nationalID;
+	}
+
+	public void setNID(String nID) {
+		setNationalID(nID);
+	}
+
+	public void setNationalID(String nID) {
+		nationalID = nID;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public double getDebt() {
+		return debt;
+	}
+
+	public void setDebt(double debt) {
+		this.debt = debt;
+	}
+
+	public ArrayList<String> getPhones() {
+		return phones;
+	}
+
+	public void setPhones(ArrayList<String> phones) {
+		this.phones = phones;
+	}
+
+	public void addPhone(String phone) {
+		this.phones.add(phone);
+	}
+
+	public static ArrayList<Customer> getData() {
+		return Customer.data;
+	}
+
+	public static ObservableList<Customer> getDataList() {
+		return dataList;
+	}
+
+	public static void setDataList(ObservableList<Customer> dataList) {
+		Customer.dataList = dataList;
 	}
 
 	/**
@@ -93,7 +140,7 @@ public class Customer {
 	public static void getCustomerPhone(Customer customer) {
 		ArrayList<ArrayList<String>> phonesSet = Queries.queryResult(
 				"select Phone from Customer_Phone where Customer_NID=? ;",
-				new ArrayList<>(Arrays.asList(customer.getNID())));
+				new ArrayList<>(Arrays.asList(customer.getNationalID())));
 
 		ArrayList<String> phones = new ArrayList<String>();
 
@@ -117,7 +164,7 @@ public class Customer {
 	public void clearCustomerPhones() {
 		for (int i = 0; i < getPhones().size(); i++) {
 			Queries.queryUpdate("delete from Customer_Phone where Customer_NID=? ;",
-					new ArrayList<>(Arrays.asList(getNID())));
+					new ArrayList<>(Arrays.asList(getNationalID())));
 		}
 	}
 

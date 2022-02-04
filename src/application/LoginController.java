@@ -78,7 +78,7 @@ public class LoginController {
 						} else {
 
 							Employee.setCurrentID(num);
-							Employee.setAccess(Boolean.parseBoolean(filteredList.get(0).getIsManager()));
+							Employee.setAccess(Boolean.parseBoolean(filteredList.get(0).isManager()));
 							Employee.setEmployeeName(filteredList.get(0).getName());
 							Stage stage = (Stage) logInButton.getScene().getWindow();
 							stage.close();

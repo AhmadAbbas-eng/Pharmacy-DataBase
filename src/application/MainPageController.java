@@ -108,7 +108,7 @@ public class MainPageController implements Initializable {
 	public void ReportOnAction(ActionEvent e) throws IOException {
 		choosenButtonLabel.setText("Reports");
 
-		if (Employee.isAccess()) {
+		if (Employee.hasAccess()) {
 			Region page = FXMLLoader.load(getClass().getResource("Reports.fxml"));
 			contentArea.getChildren().removeAll();
 			page.setMinHeight(0);
@@ -188,7 +188,7 @@ public class MainPageController implements Initializable {
 
 	public void EmployeesOnAction(ActionEvent e) throws IOException {
 		choosenButtonLabel.setText("Employees");
-		if (Employee.isAccess()) {
+		if (Employee.hasAccess()) {
 			Region page = FXMLLoader.load(getClass().getResource("Employee.fxml"));
 			contentArea.getChildren().removeAll();
 			page.setMinHeight(0);
@@ -208,7 +208,7 @@ public class MainPageController implements Initializable {
 
 	public void SupplierOnAction(ActionEvent e) throws IOException {
 		choosenButtonLabel.setText("Suppliers");
-		if (Employee.isAccess()) {
+		if (Employee.hasAccess()) {
 			Region page = FXMLLoader.load(getClass().getResource("Supplier.fxml"));
 			contentArea.getChildren().removeAll();
 			page.setMinHeight(0);
@@ -230,7 +230,7 @@ public class MainPageController implements Initializable {
 
 	public void PaymentOnAction(ActionEvent e) throws IOException {
 		choosenButtonLabel.setText("Payment");
-		if (Employee.isAccess()) {
+		if (Employee.hasAccess()) {
 			Region page = FXMLLoader.load(getClass().getResource("Payment.fxml"));
 			contentArea.getChildren().removeAll();
 			page.setMinHeight(0);

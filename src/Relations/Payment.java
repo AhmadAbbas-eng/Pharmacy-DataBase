@@ -4,9 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * Payment class here where all Payments' operations are occurred
@@ -15,13 +14,10 @@ import lombok.Setter;
  * @author Loor Sawalhi
  *
  */
-
-@Data
 public class Payment {
-	
-	@Getter
-	@Setter
+
 	private static ArrayList<Payment> data = new ArrayList<Payment>();
+	private static ObservableList<Payment> dataList;
 	private int ID;
 	private LocalDate date;
 	private double amount;
@@ -44,8 +40,52 @@ public class Payment {
 		this.method = method;
 	}
 
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
+	}
+
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
+	public double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+
+	public String getMethod() {
+		return method;
+	}
+
+	public void setMethod(String method) {
+		this.method = method;
+	}
+
+	public static ArrayList<Payment> getData() {
+		return Payment.data;
+	}
+
 	public static int getMaxID() {
 		return Integer.parseInt(Queries.queryResult("select max(payment_ID) from payment;", null).get(0).get(0));
+	}
+
+	public static ObservableList<Payment> getDataList() {
+		return dataList;
+	}
+
+	public static void setDataList(ObservableList<Payment> dataList) {
+		Payment.dataList = dataList;
 	}
 
 	/**
@@ -65,6 +105,7 @@ public class Payment {
 					Double.parseDouble(table.get(i).get(2)), table.get(i).get(3));
 			data.add(temp);
 		}
+		dataList = FXCollections.observableArrayList(data);
 	}
 
 	public static void insertPayment(LocalDate date, double amount, String method) {
