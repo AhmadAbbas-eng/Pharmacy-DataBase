@@ -148,7 +148,7 @@ public class SupplierController implements Initializable {
 	}
 
 	public void saveOnMousePressed() {
-		if (Employee.isAccess()) {
+		if (Employee.hasAccess()) {
 			ColorAdjust effect = new ColorAdjust();
 			effect.setBrightness(0.8);
 			saveSupplier.setEffect(effect);
@@ -162,7 +162,7 @@ public class SupplierController implements Initializable {
 	}
 
 	public void saveOnMouseReleased() {
-		if (Employee.isAccess()) {
+		if (Employee.hasAccess()) {
 			ColorAdjust effect = new ColorAdjust();
 			effect.setBrightness(0);
 			saveSupplier.setEffect(effect);
@@ -170,7 +170,7 @@ public class SupplierController implements Initializable {
 	}
 
 	public void saveOnMouseEntered() {
-		if (Employee.isAccess()) {
+		if (Employee.hasAccess()) {
 			ColorAdjust effect = new ColorAdjust();
 			effect.setBrightness(0.4);
 			saveSupplier.setEffect(effect);
@@ -178,7 +178,7 @@ public class SupplierController implements Initializable {
 	}
 
 	public void saveOnMouseExited() {
-		if (Employee.isAccess()) {
+		if (Employee.hasAccess()) {
 			ColorAdjust effect = new ColorAdjust();
 			effect.setBrightness(0);
 			saveSupplier.setEffect(effect);
@@ -193,7 +193,7 @@ public class SupplierController implements Initializable {
 			alert.showAndWait();
 			return;
 		}
-		if (Employee.isAccess()) {
+		if (Employee.hasAccess()) {
 			try {
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("SupplierPhones.fxml"));
 				Parent contactInfo = (Parent) loader.load();
@@ -231,7 +231,7 @@ public class SupplierController implements Initializable {
 	}
 
 	public void addOnMousePressed() {
-		if (!Employee.isAccess()) {
+		if (!Employee.hasAccess()) {
 			return;
 		}
 		ColorAdjust effect = new ColorAdjust();
@@ -255,7 +255,7 @@ public class SupplierController implements Initializable {
 	}
 
 	public void addOnMouseReleased() {
-		if (!Employee.isAccess()) {
+		if (!Employee.hasAccess()) {
 			return;
 		}
 		ColorAdjust effect = new ColorAdjust();
@@ -264,7 +264,7 @@ public class SupplierController implements Initializable {
 	}
 
 	public void addOnMouseEntered() {
-		if (!Employee.isAccess()) {
+		if (!Employee.hasAccess()) {
 			return;
 		}
 		ColorAdjust effect = new ColorAdjust();
@@ -273,7 +273,7 @@ public class SupplierController implements Initializable {
 	}
 
 	public void addOnMouseExited() {
-		if (!Employee.isAccess()) {
+		if (!Employee.hasAccess()) {
 			return;
 		}
 		ColorAdjust effect = new ColorAdjust();
@@ -286,11 +286,11 @@ public class SupplierController implements Initializable {
 		fieldSelector.setItems(FXCollections.observableArrayList("-Specify Field-", "ID", "Name", "Address"));
 		fieldSelector.setValue("-Specify Field-");
 		idColumn.setCellValueFactory(new PropertyValueFactory<Supplier, String>("ID"));
-		nameColumn.setCellValueFactory(new PropertyValueFactory<Supplier, String>("sname"));
+		nameColumn.setCellValueFactory(new PropertyValueFactory<Supplier, String>("name"));
 		addressColumn.setCellValueFactory(new PropertyValueFactory<Supplier, String>("address"));
 		emailColumn.setCellValueFactory(new PropertyValueFactory<Supplier, String>("email"));
 		duesColumn.setCellValueFactory(new PropertyValueFactory<Supplier, Double>("dues"));
-		if (Employee.isAccess()) {
+		if (Employee.hasAccess()) {
 			emailColumn.setEditable(true);
 			supplierTable.setEditable(true);
 			emailColumn.setCellFactory(TextFieldTableCell.<Supplier>forTableColumn());

@@ -5,7 +5,6 @@ module Database {
 	requires java.desktop;
 	requires java.management;
 	requires javafx.graphics;
-	requires lombok;
 	exports application;
 	exports Relations;
 
