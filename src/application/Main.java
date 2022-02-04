@@ -31,8 +31,6 @@ public class Main extends Application {
 			primaryStage.setResizable(false);
 			primaryStage.setScene(scene);
 			primaryStage.getIcons().add(new Image("file:Icon.jpg"));
-			primaryStage.getIcons().add(new Image("file:Icon.jpg"));
-			
 			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
