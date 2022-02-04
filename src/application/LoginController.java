@@ -18,6 +18,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -87,9 +88,8 @@ public class LoginController {
 							stage2.setScene(new Scene(root1, 1100, 620));
 							stage2.setMinWidth(1110);
 							stage2.setMinHeight(650);
-
+							stage2.getIcons().add(new Image("file:Icon.jpg"));
 							stage2.setOnCloseRequest(e -> {
-								// Platform.setImplicitExit(false);
 								Platform.exit();
 								System.exit(0);
 							});
@@ -132,6 +132,7 @@ public class LoginController {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("ConfirmNewUser.fxml"));
 			Parent root1 = (Parent) loader.load();
 			Stage stage2 = new Stage();
+			stage2.getIcons().add(new Image("file:Icon.jpg"));
 			stage2.setScene(new Scene(root1));
 			stage2.setResizable(false);
 			stage2.show();

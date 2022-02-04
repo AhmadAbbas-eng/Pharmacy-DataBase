@@ -20,8 +20,7 @@ public class Batch {
 	private LocalDate productionDate;
 	private LocalDate expiryDate;
 	private int amount;
-	Date a;
-
+	
 	/**
 	 * Allocates a {@code Batch} object and initializes it to represent the
 	 * specified parameters.
