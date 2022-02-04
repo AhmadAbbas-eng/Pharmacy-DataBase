@@ -3,6 +3,9 @@ package Relations;
 import java.util.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Customer class where Customer's operations are occurred
@@ -11,9 +14,15 @@ import javafx.collections.ObservableList;
  * @author Aseel Sabri
  *
  */
+
+@Data
 public class Customer {
 
+	@Getter
+	@Setter
 	private static ArrayList<Customer> data = new ArrayList<Customer>();
+	@Getter
+	@Setter
 	private static ObservableList<Customer> dataList;
 	private String nationalID;
 	private String name;
@@ -42,62 +51,6 @@ public class Customer {
 		nationalID = nID;
 		this.name = name;
 		this.debt = debt;
-	}
-
-	public String getNID() {
-		return getNationalID();
-	}
-
-	public String getNationalID() {
-		return nationalID;
-	}
-
-	public void setNID(String nID) {
-		setNationalID(nID);
-	}
-
-	public void setNationalID(String nID) {
-		nationalID = nID;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public double getDebt() {
-		return debt;
-	}
-
-	public void setDebt(double debt) {
-		this.debt = debt;
-	}
-
-	public ArrayList<String> getPhones() {
-		return phones;
-	}
-
-	public void setPhones(ArrayList<String> phones) {
-		this.phones = phones;
-	}
-
-	public void addPhone(String phone) {
-		this.phones.add(phone);
-	}
-
-	public static ArrayList<Customer> getData() {
-		return Customer.data;
-	}
-
-	public static ObservableList<Customer> getDataList() {
-		return dataList;
-	}
-
-	public static void setDataList(ObservableList<Customer> dataList) {
-		Customer.dataList = dataList;
 	}
 
 	/**

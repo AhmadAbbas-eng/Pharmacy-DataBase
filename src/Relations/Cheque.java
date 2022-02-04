@@ -3,8 +3,8 @@ package Relations;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
+import lombok.Data;
 
 /**
  * Cheque class represents all Cheques' operations
@@ -13,9 +13,9 @@ import javafx.collections.ObservableList;
  * @author Ahmad Abbas
  *
  */
+
+@Data
 public class Cheque {
-	private static ArrayList<Cheque> data = new ArrayList<Cheque>();
-	private static ObservableList<Cheque> dataList;
 	private String ID;
 	private String name;
 	private LocalDate dateOFWriting;
@@ -43,95 +43,6 @@ public class Cheque {
 		this.dateOfCashing = dateOfCashing;
 		this.paymentID = paymentID;
 		this.managerID = managerID;
-	}
-
-	public String getID() {
-		return ID;
-	}
-
-	public void setID(String iD) {
-		ID = iD;
-	}
-
-	public String getBankName() {
-		return getName();
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setBankName(String name) {
-		setName(name);
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public LocalDate getDateOFWriting() {
-		return dateOFWriting;
-	}
-
-	public void setDateOFWriting(LocalDate dateOFWriting) {
-		this.dateOFWriting = dateOFWriting;
-	}
-
-	public LocalDate getDateOfCashing() {
-		return dateOfCashing;
-	}
-
-	public void setDateOfCashing(LocalDate dateOfCashing) {
-		this.dateOfCashing = dateOfCashing;
-	}
-
-	public int getPaymentID() {
-		return paymentID;
-	}
-
-	public void setPaymentID(int paymentID) {
-		this.paymentID = paymentID;
-	}
-
-	public int getManagerID() {
-		return managerID;
-	}
-
-	public void setManagerID(int managerID) {
-		this.managerID = managerID;
-	}
-
-	public static ArrayList<Cheque> getData() {
-		return Cheque.data;
-	}
-
-	public static ObservableList<Cheque> getDataList() {
-		return Cheque.dataList;
-	}
-
-	public static void setDataList(ObservableList<Cheque> dataList) {
-		Cheque.dataList = dataList;
-	}
-
-	/**
-	 * Read from data base and fill the ArrayList
-	 * 
-	 */
-	public static void getChequeData() {
-
-		data.clear();
-		ArrayList<ArrayList<String>> table = Queries.queryResult("select * from Cheque;", null);
-
-		for (int i = 0; i < table.size(); i++) {
-
-			LocalDate writingDate = LocalDate.parse(table.get(i).get(2));
-			LocalDate cashingDate = LocalDate.parse(table.get(i).get(3));
-			Cheque temp = new Cheque(table.get(i).get(0), table.get(i).get(1), writingDate, cashingDate,
-					Integer.parseInt(table.get(i).get(4)), Integer.parseInt(table.get(i).get(5)));
-
-			data.add(temp);
-		}
-		dataList = FXCollections.observableArrayList(data);
 	}
 
 	/**

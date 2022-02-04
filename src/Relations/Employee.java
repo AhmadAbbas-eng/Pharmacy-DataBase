@@ -6,6 +6,9 @@ import java.util.Arrays;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Employee class here where all Drugs' operations are occurred
@@ -14,12 +17,24 @@ import javafx.collections.ObservableList;
  * @author Ahmad Abbas
  *
  */
+
+@Data
 public class Employee {
 
+	@Getter
+	@Setter
 	private static ArrayList<Employee> data = new ArrayList<Employee>();
+	@Getter
+	@Setter
 	private static ObservableList<Employee> dataList;
+	@Getter
+	@Setter
 	private static boolean access = true;
+	@Getter
+	@Setter
 	private static int currentID = 0;
+	@Getter
+	@Setter
 	private static String EmployeeName;
 	private int ID;
 	private String name;
@@ -60,160 +75,15 @@ public class Employee {
 		this.isActive = isActive;
 	}
 
-	public int getID() {
-		return ID;
-	}
-
-	public void setID(int iD) {
-		ID = iD;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getNID() {
-		return getNationalID();
-	}
-
-	public String getNationalID() {
-		return nationalID;
-	}
-
-	public void setNID(String nID) {
-		setNationalID(nID);
-	}
-
-	public void setNationalID(String nID) {
-		nationalID = nID;
-	}
-
-	public LocalDate getDateOfWork() {
-		return dateOfWork;
-	}
-
-	public void setDateOfWork(LocalDate dateOfWork) {
-		this.dateOfWork = dateOfWork;
-	}
-
 	public String getHourlyPaid() {
 		return hourlyPaid+"";
 	}
 	public double getHourlyPaid1() {
 		return hourlyPaid;
 	}
-	public void setHourlyPaid(double hourlyPaid) {
-		this.hourlyPaid = hourlyPaid;
-	}
-
-	public double getPaid() {
-		return paid;
-	}
-
-	public void setPaid(double paid) {
-		this.paid = paid;
-	}
-
-	public ArrayList<String> getPhones() {
-		return phones;
-	}
-
-	public void setPhones(ArrayList<String> phones) {
-		this.phones = phones;
-	}
-
-	public void addPhone(String phone) {
-		this.phones.add(phone);
-	}
-
-	public static ArrayList<Employee> getData() {
-		return Employee.data;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String isManager() {
-		return isManager;
-	}
-
-	public void setManager(String isManager) {
-		this.isManager = isManager;
-	}
-
-	public static ObservableList<Employee> getDataList() {
-		return dataList;
-	}
-
-	public static void setDataList(ObservableList<Employee> dataList) {
-		Employee.dataList = dataList;
-	}
-
-	public static boolean hasAccess() {
-		return access;
-	}
-
-	public static void setAccess(boolean access) {
-		Employee.access = access;
-	}
-
-	public String getIsManager() {
-		return isManager;
-	}
-
-	public void setIsManager(String isManager) {
-		this.isManager = isManager;
-	}
-
-	public String getIsActive() {
-		return isActive;
-	}
-
-	public void setIsActive(String isActive) {
-		this.isActive = isActive;
-	}
-
-	public static int getCurrentID() {
-		return currentID;
-	}
-
-	public static void setCurrentID(int currentID) {
-		Employee.currentID = currentID;
-	}
-
+	
 	public static int getMaxID() {
 		return Integer.parseInt(Queries.queryResult("select max(employee_ID) from employee;", null).get(0).get(0));
-	}
-
-	
-
-	public static boolean isAccess() {
-		return access;
-	}
-
-	public String isActive() {
-		return isActive;
-	}
-
-	public static void setData(ArrayList<Employee> data) {
-		Employee.data = data;
-	}
-
-	public static String getEmployeeName() {
-		return EmployeeName;
-	}
-
-	public static void setEmployeeName(String employeeName) {
-		EmployeeName = employeeName;
 	}
 
 	/**

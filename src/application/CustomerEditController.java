@@ -309,7 +309,7 @@ public class CustomerEditController implements Initializable {
 		}
 		customerTable.setItems(FXCollections.observableArrayList(customer));
 
-		if (Employee.hasAccess() && customer != null) {
+		if (Employee.isAccess() && customer != null) {
 			nidColumn.setEditable(true);
 			nameColumn.setEditable(true);
 			customerTable.setEditable(true);

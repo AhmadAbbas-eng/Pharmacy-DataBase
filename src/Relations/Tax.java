@@ -4,8 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Tax class where all Tax' operations are occurred
@@ -13,10 +14,13 @@ import javafx.collections.ObservableList;
  * @version 26 January 2022
  * @author Loor Sawalhi
  */
+
+@Data
 public class Tax {
 
+	@Getter
+	@Setter
 	private static ArrayList<Tax> data = new ArrayList<Tax>();
-	private static ObservableList<Tax> dataList;
 	private String ID;
 	private LocalDate date;
 	private double value;
@@ -34,42 +38,6 @@ public class Tax {
 		ID = iD;
 		this.date = date;
 		this.value = value;
-	}
-
-	public String getID() {
-		return ID;
-	}
-
-	public void setID(String iD) {
-		ID = iD;
-	}
-
-	public LocalDate getDate() {
-		return date;
-	}
-
-	public void setDate(LocalDate date) {
-		this.date = date;
-	}
-
-	public double getValue() {
-		return value;
-	}
-
-	public void setValue(double value) {
-		this.value = value;
-	}
-
-	public static ArrayList<Tax> getData() {
-		return Tax.data;
-	}
-
-	public static ObservableList<Tax> getDataList() {
-		return dataList;
-	}
-
-	public static void setDataList(ObservableList<Tax> dataList) {
-		Tax.dataList = dataList;
 	}
 
 	public static void insertTax(String ID, LocalDate date, double value) {
@@ -93,8 +61,6 @@ public class Tax {
 
 			data.add(temp);
 		}
-
-		dataList = FXCollections.observableArrayList(data);
 	}
 
 	/**

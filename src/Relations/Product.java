@@ -5,6 +5,9 @@ import java.util.Arrays;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Product class here where all Products' operations are occurred
@@ -13,9 +16,15 @@ import javafx.collections.ObservableList;
  * @author Aseel Sabri
  *
  */
+
+@Data
 public class Product {
 
+	@Getter
+	@Setter
 	private static ArrayList<Product> data = new ArrayList<Product>();
+	@Getter
+	@Setter
 	private static ObservableList<Product> dataList;
 	private int ID;
 	private String Name;
@@ -39,56 +48,8 @@ public class Product {
 		this.setManufacturer(manufacturer);
 	}
 
-	public static ArrayList<Product> getData() {
-		return Product.data;
-	}
-
-	public static ObservableList<Product> getDataList() {
-		return dataList;
-	}
-
-	public static void setDataList(ObservableList<Product> dataList) {
-		Product.dataList = dataList;
-	}
-
 	public static int getMaxID() {
 		return Integer.parseInt(Queries.queryResult("select max(product_ID) from product;", null).get(0).get(0));
-	}
-
-	public int getID() {
-		return ID;
-	}
-
-	public void setID(int iD) {
-		ID = iD;
-	}
-
-	public String getName() {
-		return Name;
-	}
-
-	public void setName(String name) {
-		Name = name;
-	}
-
-	public double getPrice() {
-		return Price;
-	}
-
-	public void setPrice(double price) {
-		Price = price;
-	}
-
-	public static void setData(ArrayList<Product> data) {
-		Product.data = data;
-	}
-
-	public String getManufacturer() {
-		return manufacturer;
-	}
-
-	public void setManufacturer(String manufacturer) {
-		this.manufacturer = manufacturer;
 	}
 
 	/**

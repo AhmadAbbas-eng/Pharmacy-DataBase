@@ -5,6 +5,9 @@ import java.util.Arrays;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Supplier class here where all Suppliers' operations are occurred
@@ -13,9 +16,15 @@ import javafx.collections.ObservableList;
  * @author Loor Sawalhi
  *
  */
+
+@Data
 public class Supplier {
 
+	@Getter
+	@Setter
 	private static ArrayList<Supplier> data = new ArrayList<Supplier>();
+	@Getter
+	@Setter
 	private static ObservableList<Supplier> dataList;
 	private int ID;
 	private String name;
@@ -45,84 +54,8 @@ public class Supplier {
 		this.phones = phones;
 	}
 
-	public int getID() {
-		return ID;
-	}
-
-	public void setID(int iD) {
-		ID = iD;
-	}
-
-	public String getSname() {
-		return name;
-	}
-
-	public void setSname(String sname) {
-		this.name = sname;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public double getDues() {
-		return dues;
-	}
-
-	public void setDues(double dues) {
-		this.dues = dues;
-	}
-
-	public ArrayList<String> getPhones() {
-		return phones;
-	}
-
-	public void setPhones(ArrayList<String> phones) {
-		this.phones = phones;
-	}
-
-	public void addPhone(String phone) {
-		this.phones.add(phone);
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public static void setData(ArrayList<Supplier> data) {
-		Supplier.data = data;
-	}
-
-	public static ArrayList<Supplier> getData() {
-		return Supplier.data;
-	}
-
-	public static ObservableList<Supplier> getDataList() {
-		return dataList;
-	}
-
 	public static int getMaxID() {
 		return Integer.parseInt(Queries.queryResult("select max(supplier_ID) from supplier;", null).get(0).get(0));
-	}
-	
-	public static void setDataList(ObservableList<Supplier> dataList) {
-		Supplier.dataList = dataList;
 	}
 
 	/**
