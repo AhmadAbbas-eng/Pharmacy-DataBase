@@ -109,7 +109,7 @@ public class PayingOffController implements Initializable {
 
 	public void selectCustomerOnAction() {
 		if (customerTable.getSelectionModel().getSelectedItem() != null) {
-			customerNIDLabel.setText(customerTable.getSelectionModel().getSelectedItem().getNationalID());
+			customerNIDLabel.setText(customerTable.getSelectionModel().getSelectedItem().getNID());
 		}
 		else {
 			Alert alert = new Alert(Alert.AlertType.ERROR);

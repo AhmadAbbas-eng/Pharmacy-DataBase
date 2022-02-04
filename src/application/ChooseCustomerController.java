@@ -96,7 +96,7 @@ public class ChooseCustomerController implements Initializable {
 
 	public void selectCustomerOnAction() {
 		if (customerTable.getSelectionModel().getSelectedItem() != null) {
-			caller.setCustomerNID(customerTable.getSelectionModel().getSelectedItem().getNationalID());
+			caller.setCustomerNID(customerTable.getSelectionModel().getSelectedItem().getNID());
 			showAndFade(addedIcon);
 			showAndFade(addedLabel);
 		} else {

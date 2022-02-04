@@ -27,7 +27,7 @@ public class Supplier {
 	@Setter
 	private static ObservableList<Supplier> dataList;
 	private int ID;
-	private String name;
+	private String sname;
 	private String address;
 	private String email;
 	private double dues;
@@ -38,7 +38,7 @@ public class Supplier {
 	 * specified parameters.
 	 * 
 	 * @param sid     The ID of the supplier.
-	 * @param sname   The name of the supplier.
+	 * @param sname   The sname of the supplier.
 	 * @param address The address of the supplier.
 	 * @param email   The email of the supplier.
 	 * @param dues    The dues of the supplier.
@@ -47,7 +47,7 @@ public class Supplier {
 	public Supplier(int sid, String sname, String address, String email, double dues, ArrayList<String> phones) {
 		super();
 		this.ID = sid;
-		this.name = sname;
+		this.sname = sname;
 		this.address = address;
 		this.email = email;
 		this.dues = dues;

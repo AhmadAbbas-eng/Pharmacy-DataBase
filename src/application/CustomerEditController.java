@@ -169,7 +169,7 @@ public class CustomerEditController implements Initializable {
 			effect.setBrightness(0.8);
 			saveCustomer.setEffect(effect);
 			ArrayList<String> parameters = new ArrayList<>();
-			parameters.add(customerTable.getItems().get(0).getNationalID());
+			parameters.add(customerTable.getItems().get(0).getNID());
 			parameters.add(customerTable.getItems().get(0).getName());
 			parameters.add("" + customerTable.getItems().get(0).getDebt());
 			parameters.add(customerNID);
@@ -178,7 +178,7 @@ public class CustomerEditController implements Initializable {
 			
 			Customer.getCustomerData();
 			caller.saveEdits();
-			customerNID = customer.getNationalID();
+			customerNID = customer.getNID();
 		}
 
 	}
@@ -305,7 +305,7 @@ public class CustomerEditController implements Initializable {
 		this.caller = caller;
 		this.customer = customer;
 		if (customer != null) {
-			customerNID = customer.getNationalID();
+			customerNID = customer.getNID();
 		}
 		customerTable.setItems(FXCollections.observableArrayList(customer));
 
@@ -335,9 +335,9 @@ public class CustomerEditController implements Initializable {
 				alert.setHeaderText(null);
 				alert.setContentText("Custemer with this National ID already exists");
 				alert.showAndWait();
-				((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNationalID(t.getOldValue());
+				((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNID(t.getOldValue());
 			} else if (t.getNewValue().matches("[0-9]{9}") || t.getNewValue().equals("0")) {
-				((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNationalID(t.getNewValue());
+				((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNID(t.getNewValue());
 			} else {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle("Wrong Input Format");
@@ -345,7 +345,7 @@ public class CustomerEditController implements Initializable {
 				alert.setContentText("National ID Must Be 9 Digits");
 				alert.showAndWait();
 
-				((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNationalID(t.getOldValue());
+				((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNID(t.getOldValue());
 			}
 			customerTable.refresh();
 		});
