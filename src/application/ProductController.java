@@ -171,7 +171,7 @@ public class ProductController implements Initializable {
 	}
 
 	public void editOnMousePressed() {
-		if (!Employee.hasAccess()) {
+		if (!Employee.isAccess()) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Access Denied");
 			alert.setContentText("You Do Not Have Access To Edit This Table");
@@ -206,7 +206,7 @@ public class ProductController implements Initializable {
 	}
 
 	public void editOnMouseReleased() {
-		if (!Employee.hasAccess()) {
+		if (!Employee.isAccess()) {
 			return;
 		}
 		ColorAdjust effect = new ColorAdjust();
@@ -215,7 +215,7 @@ public class ProductController implements Initializable {
 	}
 
 	public void editOnMouseEntered() {
-		if (!Employee.hasAccess()) {
+		if (!Employee.isAccess()) {
 			return;
 		}
 		ColorAdjust effect = new ColorAdjust();
@@ -224,7 +224,7 @@ public class ProductController implements Initializable {
 	}
 
 	public void editOnMouseExited() {
-		if (!Employee.hasAccess()) {
+		if (!Employee.isAccess()) {
 			return;
 		}
 		ColorAdjust effect = new ColorAdjust();

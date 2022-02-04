@@ -128,7 +128,7 @@ public class ReceivedOrderController implements Initializable {
 
 	public void newOrderOnMousePressed() {
 
-		if (Employee.hasAccess()) {
+		if (Employee.isAccess()) {
 			Region page;
 			try {
 				page = FXMLLoader.load(getClass().getResource("SupplierOrder.fxml"));
@@ -157,7 +157,7 @@ public class ReceivedOrderController implements Initializable {
 
 	public void receivedOrdersOnAction(ActionEvent event) {
 		// contentArea
-		if (Employee.hasAccess()) {
+		if (Employee.isAccess()) {
 			Region page;
 			try {
 				page = FXMLLoader.load(getClass().getResource("RecievedOrders.fxml"));

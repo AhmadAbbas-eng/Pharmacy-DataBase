@@ -6,6 +6,9 @@ import java.util.Arrays;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * SupplierOrder class represents the relation between the suppliers' and their
@@ -15,9 +18,15 @@ import javafx.collections.ObservableList;
  * @author Loor Sawalhi
  *
  */
-public class SupplierOrder {
 
+@Data
+public class SupplierOrder {
+	
+	@Getter
+	@Setter
 	private static ArrayList<SupplierOrder> data = new ArrayList<SupplierOrder>();
+	@Getter
+	@Setter
 	private static ObservableList<SupplierOrder> dataList;
 	private int ID;
 	private LocalDate dateOfOrder;
@@ -57,102 +66,10 @@ public class SupplierOrder {
 		this.recDate = recDate;
 	}
 
-	public int getSupplierID() {
-		return supplierID;
-	}
-
-	public void setSupplierID(int supplierID) {
-		this.supplierID = supplierID;
-	}
-
-	public int getID() {
-		return ID;
-	}
-
-	public void setID(int iD) {
-		ID = iD;
-	}
-
-	public LocalDate getDateOfOrder() {
-		return dateOfOrder;
-	}
-
-	public void setDateOfOrder(LocalDate dateOfOrder) {
-		this.dateOfOrder = dateOfOrder;
-	}
-
-	public double getCost() {
-		return cost;
-	}
-
-	public void setCost(double cost) {
-		this.cost = cost;
-	}
-
-	public double getDiscount() {
-		return discount;
-	}
-
-	public void setDiscount(double discount) {
-		this.discount = discount;
-	}
-
-	public LocalDate getDueDateOfPayment() {
-		return dueDateOfPayment;
-	}
-
-	public void setDueDateOfPayment(LocalDate dueDateOfPayment) {
-		this.dueDateOfPayment = dueDateOfPayment;
-	}
-
-	public int getSipplierID() {
-		return supplierID;
-	}
-
-	public void setSipplierID(int supplierID) {
-		this.supplierID = supplierID;
-	}
-
-	public int getManagerID() {
-		return managerID;
-	}
-
-	public void setManagerID(int managerID) {
-		this.managerID = managerID;
-	}
-
-	public int getRecievedBy() {
-		return recievedBy;
-	}
-
-	public void setRecievedBy(int recievedBy) {
-		this.recievedBy = recievedBy;
-	}
-
-	public LocalDate getRecDate() {
-		return recDate;
-	}
-
-	public void setRecDate(LocalDate recDate) {
-		this.recDate = recDate;
-	}
-
-	public static ArrayList<SupplierOrder> getData() {
-		return SupplierOrder.data;
-	}
-
 	public static int getMaxID() {
 		return Integer.parseInt(Queries.queryResult("select max(order_Id) from s_order;", null).get(0).get(0));
 	}
-
-	public static ObservableList<SupplierOrder> getDataList() {
-		return dataList;
-	}
-
-	public static void setDataList(ObservableList<SupplierOrder> dataList) {
-		SupplierOrder.dataList = dataList;
-	}
-
+	
 	/**
 	 * Read from data base and fill the ArrayList
 	 * 

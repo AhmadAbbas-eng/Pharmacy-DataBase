@@ -3,8 +3,7 @@ package Relations;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import lombok.Data;
 
 /**
  * Batch class where Batch table data have been read and manipulated
@@ -12,9 +11,9 @@ import javafx.collections.ObservableList;
  * @version 26 January 2022
  * @author Aseel Sabri
  */
+
+@Data
 public class Batch {
-	private static ArrayList<Batch> data = new ArrayList<Batch>(); // ArrayList to Store data
-	private static ObservableList<Batch> dataList; // Observable ArrayList to show data
 	private int ID;
 	private LocalDate productionDate;
 	private LocalDate expiryDate;
@@ -35,75 +34,6 @@ public class Batch {
 		this.productionDate = productionDate;
 		this.expiryDate = expiryDate;
 		this.amount = amount;
-	}
-
-	public int getID() {
-		return ID;
-	}
-
-	public void setID(int iD) {
-		ID = iD;
-	}
-
-	public LocalDate getProductionDate() {
-		return productionDate;
-	}
-
-	public void setProductionDate(LocalDate productionDate) {
-		this.productionDate = productionDate;
-	}
-
-	public LocalDate getExpiryDate() {
-		return expiryDate;
-	}
-
-	public void setExpiryDate(LocalDate expiryDate) {
-		this.expiryDate = expiryDate;
-	}
-
-	public int getAmount() {
-		return amount;
-	}
-
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
-
-	public static ArrayList<Batch> getData() {
-		return Batch.data;
-	}
-
-	public static ObservableList<Batch> getDataList() {
-		return Batch.dataList;
-	}
-
-	public static void setDataList(ObservableList<Batch> dataList) {
-		Batch.dataList = dataList;
-	}
-
-	/**
-	 * Read from data base and fill the ArrayList
-	 */
-	public static void getBatchData() {
-
-		// Clear data to read it again
-		data.clear();
-		ArrayList<ArrayList<String>> table = Queries.queryResult("select * from Batch;", null);
-
-		// Get each row of data and fill ArrayList data
-		for (int i = 0; i < table.size(); i++) {
-
-			LocalDate proDate = LocalDate.parse(table.get(i).get(1));
-			LocalDate expDate = LocalDate.parse(table.get(i).get(2));
-
-			// Create temporary object to add on data
-			Batch temp = new Batch(Integer.parseInt(table.get(i).get(0)), proDate, expDate,
-					Integer.parseInt(table.get(i).get(3)));
-			data.add(temp);
-		}
-
-		// Fill the observable arrayList
-		dataList = FXCollections.observableArrayList(data);
 	}
 
 	/**

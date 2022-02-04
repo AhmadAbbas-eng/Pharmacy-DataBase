@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javafx.collections.ObservableList;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * SupplierOrderBatch represents the details of each supplier's order
@@ -12,9 +14,14 @@ import javafx.collections.ObservableList;
  * @version 26 January 2022
  * @author Loor Sawalhi
  */
+
+@Data
 public class SupplierOrderBatch {
+	@Getter
+	@Setter
 	private static ArrayList<SupplierOrderBatch> data = new ArrayList<SupplierOrderBatch>();
-	private static ObservableList<SupplierOrderBatch> dataList;
+	@Getter
+	@Setter
 	private int orderID;
 	private int productID;
 	private LocalDate productionDate;
@@ -38,62 +45,6 @@ public class SupplierOrderBatch {
 		this.productionDate = productionDate;
 		this.expiryDate = expiryDate;
 		this.amount = amount;
-	}
-
-	public int getOrderID() {
-		return orderID;
-	}
-
-	public void setOrderID(int oID) {
-		orderID = oID;
-	}
-
-	public int getProductID() {
-		return productID;
-	}
-
-	public void setProductID(int pID) {
-		productID = pID;
-	}
-
-	public LocalDate getProductionDate() {
-		return productionDate;
-	}
-
-	public void setProductionDate(LocalDate productionDate) {
-		this.productionDate = productionDate;
-	}
-
-	public LocalDate getExpiryDate() {
-		return expiryDate;
-	}
-
-	public void setExpiryDate(LocalDate expiryDate) {
-		this.expiryDate = expiryDate;
-	}
-
-	public int getAmount() {
-		return amount;
-	}
-
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
-
-	public static ObservableList<SupplierOrderBatch> getDataList() {
-		return dataList;
-	}
-
-	public static void setDataList(ObservableList<SupplierOrderBatch> dataList) {
-		SupplierOrderBatch.dataList = dataList;
-	}
-
-	public static ArrayList<SupplierOrderBatch> getData() {
-		return data;
-	}
-
-	public static void setData(ArrayList<SupplierOrderBatch> data) {
-		SupplierOrderBatch.data = data;
 	}
 
 	/**

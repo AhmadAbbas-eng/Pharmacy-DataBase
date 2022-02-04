@@ -5,6 +5,8 @@ import java.util.Arrays;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * Drug class inherits Product Class and here where all Drugs' operations are
@@ -14,6 +16,9 @@ import javafx.collections.ObservableList;
  * @author Aseel Sabri
  *
  */
+
+@Data
+@EqualsAndHashCode(callSuper=false)
 public class Drug extends Product {
 	private static ArrayList<Drug> data = new ArrayList<Drug>();
 	private static ObservableList<Drug> dataList;
@@ -50,70 +55,6 @@ public class Drug extends Product {
 		this.dosage = dosage;
 		this.category = category;
 		this.dosageForm = dosageForm;
-		this.pharmaceuticalCategory = pharmaceticalCategory;
-	}
-
-	public String getScientificName() {
-		return scientificName;
-	}
-
-	public void setScientificName(String scientificName) {
-		this.scientificName = scientificName;
-	}
-
-	public String getRiskPregnency() {
-		return getRiskPregnancy();
-	}
-
-	public String getRiskPregnancy() {
-		return riskPregnancy;
-	}
-
-	public void setRiskPregnency(String riskPregnency) {
-		setRiskPregnancy(riskPregnency);
-	}
-
-	public void setRiskPregnancy(String riskPregnency) {
-		this.riskPregnancy = riskPregnency;
-	}
-
-	public String getDosage() {
-		return dosage;
-	}
-
-	public void setDosage(String dosage) {
-		this.dosage = dosage;
-	}
-
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	public String getDosageForm() {
-		return dosageForm;
-	}
-
-	public void setDosageForm(String dosageForm) {
-		this.dosageForm = dosageForm;
-	}
-
-	public String getPharmaceticalCategory() {
-		return getPharmaceuticalCategory();
-	}
-
-	public String getPharmaceuticalCategory() {
-		return pharmaceuticalCategory;
-	}
-
-	public void setPharmaceticalCategory(String pharmaceticalCategory) {
-		setPharmaceuticalCategory(pharmaceticalCategory);
-	}
-
-	public void setPharmaceuticalCategory(String pharmaceticalCategory) {
 		this.pharmaceuticalCategory = pharmaceticalCategory;
 	}
 

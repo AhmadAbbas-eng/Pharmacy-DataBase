@@ -1,13 +1,11 @@
 package application;
 
 import java.io.IOException;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
-import Relations.Batch;
 import Relations.Drug;
 import Relations.Product;
 import Relations.Queries;
@@ -371,7 +369,6 @@ public class SelectProductController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		Batch.getBatchData();
 		Drug.getDrugData();
 		Product.getProductData();
 		searchOperationComboBox.setValue("-Specify Field-");

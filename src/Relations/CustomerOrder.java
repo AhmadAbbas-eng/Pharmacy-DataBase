@@ -4,9 +4,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 /**
  * CustomerOrder class represents the relation between the customers' and their
  * orders
@@ -18,7 +15,6 @@ import javafx.collections.ObservableList;
 public class CustomerOrder {
 
 	private static ArrayList<CustomerOrder> data = new ArrayList<CustomerOrder>();
-	private static ObservableList<CustomerOrder> dataList;
 	private int ID;
 	private LocalDate date;
 	private double price;
@@ -80,14 +76,6 @@ public class CustomerOrder {
 		return CustomerOrder.data;
 	}
 
-	public static ObservableList<CustomerOrder> getDataList() {
-		return dataList;
-	}
-
-	public static void setDataList(ObservableList<CustomerOrder> dataList) {
-		CustomerOrder.dataList = dataList;
-	}
-
 	public static int getMaxID() {
 		return Integer.parseInt(Queries.queryResult("select max(order_ID) from c_order;", null).get(0).get(0));
 	}
@@ -122,7 +110,6 @@ public class CustomerOrder {
 
 			data.add(temp);
 		}
-		dataList = FXCollections.observableArrayList(data);
 	}
 
 	public static void insertCustomerOrder(String date, double price, double discount, double paid, int employeeID,
