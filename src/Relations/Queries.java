@@ -8,9 +8,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import com.mysql.jdbc.Connection;
-//import com.mysql.jdbc.PreparedStatement;
-
 import javafx.scene.control.Alert;
 
 /**
