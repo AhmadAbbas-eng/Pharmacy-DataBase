@@ -161,7 +161,7 @@ public class EmployeeEditController implements Initializable {
 			saveEmployee.setEffect(effect);
 			ArrayList<String> parameters = new ArrayList<>();
 			parameters.add(employeeTable.getItems().get(0).getName());
-			parameters.add(employeeTable.getItems().get(0).getNationalID());
+			parameters.add(employeeTable.getItems().get(0).getNID());
 			parameters.add(employeeTable.getItems().get(0).getHourlyPaid() + "");
 			parameters.add(Employee.encryptPassword(employeeTable.getItems().get(0).getName(),
 					employeeTable.getItems().get(0).getPassword()));
@@ -368,10 +368,10 @@ public class EmployeeEditController implements Initializable {
 				alert.setContentText("Employee with This National ID Already Exists");
 				alert.showAndWait();
 				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
-						.setNationalID(t.getOldValue());
+						.setNID(t.getOldValue());
 			} else if (t.getNewValue().matches("[0-9]{9}")) {
 				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
-						.setNationalID(t.getNewValue());
+						.setNID(t.getNewValue());
 			} else {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle("Wrong Input Format");
@@ -379,7 +379,7 @@ public class EmployeeEditController implements Initializable {
 				alert.setContentText("National ID Must Be 9 Digits");
 				alert.showAndWait();
 				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
-						.setNationalID(t.getOldValue());
+						.setNID(t.getOldValue());
 			}
 			employeeTable.refresh();
 		});

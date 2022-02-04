@@ -104,7 +104,7 @@ public class CustomerProductsController implements Initializable {
 		String searchCondition = "";
 		ArrayList<ArrayList<String>> filteredList = new ArrayList<>();
 		ArrayList<String> parameters = new ArrayList<>();
-		parameters.add(customer.getNationalID());
+		parameters.add(customer.getNID());
 		String nonDrugsQuery = "select P.Product_Name, COB.Batch_Production_Date, COB.Batch_Expiry_Date,\r\n"
 				+ "CO.Order_Date, E.Employee_Name, COB.Order_amount\r\n"
 				+ "from Product P, Batch B, C_Order_Batch COB, C_Order CO, Customer2Order C2O, Employee E\r\n"

@@ -24,7 +24,7 @@ public class Customer {
 	@Getter
 	@Setter
 	private static ObservableList<Customer> dataList;
-	private String nationalID;
+	private String NID;
 	private String name;
 	private double debt;
 	private ArrayList<String> phones;
@@ -33,14 +33,14 @@ public class Customer {
 	 * Allocates a {@code Customer} object and initializes it to represent the
 	 * specified parameters.
 	 * 
-	 * @param nationalID The national ID of the Customer.
+	 * @param NID The national ID of the Customer.
 	 * @param name       Customer name.
 	 * @param debt       Customer debts to the Pharmacy.
 	 * @param phones     The list of Customer's phones.
 	 */
 	public Customer(String nationalID, String name, double debt, ArrayList<String> phones) {
 		super();
-		this.nationalID = nationalID;
+		this.NID = nationalID;
 		this.name = name;
 		this.debt = debt;
 		this.phones = phones;
@@ -48,7 +48,7 @@ public class Customer {
 
 	public Customer(String nID, String name, double debt) {
 		super();
-		nationalID = nID;
+		NID = nID;
 		this.name = name;
 		this.debt = debt;
 	}
@@ -93,7 +93,7 @@ public class Customer {
 	public static void getCustomerPhone(Customer customer) {
 		ArrayList<ArrayList<String>> phonesSet = Queries.queryResult(
 				"select Phone from Customer_Phone where Customer_NID=? ;",
-				new ArrayList<>(Arrays.asList(customer.getNationalID())));
+				new ArrayList<>(Arrays.asList(customer.getNID())));
 
 		ArrayList<String> phones = new ArrayList<String>();
 
@@ -117,7 +117,7 @@ public class Customer {
 	public void clearCustomerPhones() {
 		for (int i = 0; i < getPhones().size(); i++) {
 			Queries.queryUpdate("delete from Customer_Phone where Customer_NID=? ;",
-					new ArrayList<>(Arrays.asList(getNationalID())));
+					new ArrayList<>(Arrays.asList(getNID())));
 		}
 	}
 

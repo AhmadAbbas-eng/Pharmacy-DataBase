@@ -346,7 +346,7 @@ public class SupplierOrderController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		searchOperationComboBox.setValue("-Specify Field-");
 		searchOperationComboBox.setItems(Choices);
-		supplierNameColumn.setCellValueFactory(new PropertyValueFactory<Supplier, String>("name"));
+		supplierNameColumn.setCellValueFactory(new PropertyValueFactory<Supplier, String>("sname"));
 		employeeNameColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
 		nationalIDColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("NID"));
 		int max = SupplierOrder.getMaxID() + 1;

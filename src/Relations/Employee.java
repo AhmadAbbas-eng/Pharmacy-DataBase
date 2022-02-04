@@ -38,7 +38,7 @@ public class Employee {
 	private static String EmployeeName;
 	private int ID;
 	private String name;
-	private String nationalID;
+	private String NID;
 	private LocalDate dateOfWork;
 	private double hourlyPaid;
 	private double paid;
@@ -53,7 +53,7 @@ public class Employee {
 	 * 
 	 * @param iD         The id of the employee.
 	 * @param name       The name of the employee.
-	 * @param nationalID The national id ID of the employee.
+	 * @param NID The national id ID of the employee.
 	 * @param dateOfWork The date of work of the employee.
 	 * @param hourlyPaid The hour wage of the employee.
 	 * @param phones     The list of phones of the employee.
@@ -66,7 +66,7 @@ public class Employee {
 		super();
 		ID = iD;
 		this.name = name;
-		this.nationalID = nationalID;
+		this.NID = nationalID;
 		this.dateOfWork = dateOfWork;
 		this.hourlyPaid = hourlyPaid;
 		this.phones = phones;

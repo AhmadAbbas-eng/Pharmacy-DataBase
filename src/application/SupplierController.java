@@ -286,7 +286,7 @@ public class SupplierController implements Initializable {
 		fieldSelector.setItems(FXCollections.observableArrayList("-Specify Field-", "ID", "Name", "Address"));
 		fieldSelector.setValue("-Specify Field-");
 		idColumn.setCellValueFactory(new PropertyValueFactory<Supplier, String>("ID"));
-		nameColumn.setCellValueFactory(new PropertyValueFactory<Supplier, String>("name"));
+		nameColumn.setCellValueFactory(new PropertyValueFactory<Supplier, String>("sname"));
 		addressColumn.setCellValueFactory(new PropertyValueFactory<Supplier, String>("address"));
 		emailColumn.setCellValueFactory(new PropertyValueFactory<Supplier, String>("email"));
 		duesColumn.setCellValueFactory(new PropertyValueFactory<Supplier, Double>("dues"));
