@@ -52,25 +52,31 @@ public class EmployeeWorkedHoursController implements Initializable {
 	private TableColumn<ArrayList<String>, String> monthColumn;
 
 	@FXML
+	private TableColumn<ArrayList<String>, String> yearColumn;
+
+	@FXML
+	private TableColumn<ArrayList<String>, String> numOfHoursColumn;
+
+	@FXML
+	private TableColumn<ArrayList<String>, String> hourlyPaidColumn;
+
+	@FXML
+	private TableColumn<ArrayList<String>, String> salaryColumn;
+
+	@FXML
 	private ComboBox<String> monthAddSelector;
 
 	@FXML
 	private ComboBox<String> monthSearchSelector;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> numOfHoursColumn;
-
-	@FXML
 	private TextField numOfHoursTextField;
 
 	@FXML
-	private TableColumn<ArrayList<String>, String> salaryColumn;
+	private TextField hourlyPaidTextField;
 
 	@FXML
 	private Label title;
-
-	@FXML
-	private TableColumn<ArrayList<String>, String> yearColumn;
 
 	@FXML
 	private ComboBox<String> yearSearchSelector;
@@ -92,6 +98,7 @@ public class EmployeeWorkedHoursController implements Initializable {
 
 	private Employee employee;
 	private boolean editedFlag = false;
+	private boolean ignoreActionFlag = false;
 	private String prevSelectedMonth = "All Months";
 	private String prevSelectedYear = "All Years";
 
@@ -121,6 +128,7 @@ public class EmployeeWorkedHoursController implements Initializable {
 					+ " where Employee_ID=? and Worked_Month=? and Worked_Year=? ;", parameters);
 
 		}
+		editedFlag = false;
 	}
 
 	public void saveOnMouseReleased() {
@@ -146,14 +154,22 @@ public class EmployeeWorkedHoursController implements Initializable {
 		effect.setBrightness(0.8);
 		addButton.setEffect(effect);
 		String numOfHoursStr = numOfHoursTextField.getText();
+		String hourlyPaidStr = hourlyPaidTextField.getText();
 		double numOfHours = 0.0;
+		double hourlyPaid = 0.0;
 		int month = monthAddSelector.getSelectionModel().getSelectedIndex() + 1;
 		int year = yearAddSelector.getSelectionModel().getSelectedItem();
 		boolean checkNumOfHours = true;
+		boolean checkHourlyPaid = true;
 		try {
 			numOfHours = Double.parseDouble(numOfHoursStr);
 		} catch (NumberFormatException e) {
 			checkNumOfHours = false;
+		}
+		try {
+			hourlyPaid = Double.parseDouble(hourlyPaidStr);
+		} catch (NumberFormatException e) {
+			checkHourlyPaid = false;
 		}
 		if (Queries.queryResult(
 				"select * from Work_Hours " + " where Worked_Year=? " + " and Worked_Month=? "
@@ -175,13 +191,24 @@ public class EmployeeWorkedHoursController implements Initializable {
 			alert.setContentText("Number Of Hours Must Be A Nonnegative Real Number");
 			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 			alert.showAndWait();
+		} else if (hourlyPaidStr == null || hourlyPaidStr.isEmpty() || hourlyPaidStr.isBlank() || !checkHourlyPaid
+				|| hourlyPaid <= 0) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Wrong Input Format");
+			alert.setHeaderText(null);
+			alert.setContentText("Hourly Paid Must Be A Positive Real Number");
+			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
+			alert.showAndWait();
 		} else {
 			ArrayList<String> parameters = new ArrayList<>();
 			parameters.add(employee.getID() + "");
 			parameters.add(month + "");
 			parameters.add(year + "");
 			parameters.add(numOfHoursStr);
-			Queries.queryUpdate("Insert into Work_Hours Values(?, ?, ?, ?) ;", parameters);
+			parameters.add(hourlyPaidStr);
+			Queries.queryUpdate("Insert into Work_Hours "
+					+ " (Employee_ID, Worked_Month, Worked_Year, Employee_Worked_Hours, Employee_Hourly_Paid)"
+					+ " Values(?, ?, ?, ?, ?) ;", parameters);
 			filterData();
 			numOfHoursTextField.setText("");
 			showAndFade(addedIcon);
@@ -211,6 +238,7 @@ public class EmployeeWorkedHoursController implements Initializable {
 		this.employee = employee;
 		title.setText(employee.getName() + " Worked Hours");
 		filterData();
+		hourlyPaidTextField.setText(employee.getHourlyPaid());
 	}
 
 	public void filterData() {
@@ -230,10 +258,9 @@ public class EmployeeWorkedHoursController implements Initializable {
 			parameters.add(yearSearchSelector.getSelectionModel().getSelectedItem());
 		}
 
-		ArrayList<ArrayList<String>> filteredList = Queries.queryResult("select W.Worked_Month,W.Worked_Year, "
-				+ "W.Employee_Worked_Hours, (E.Employee_Hourly_Paid*W.Employee_Worked_Hours) "
-				+ "from Work_hours W, Employee E " + "where E.Employee_ID=W.Employee_ID and E.Employee_ID= ? "
-				+ dateCondition + ";", parameters);
+		ArrayList<ArrayList<String>> filteredList = Queries.queryResult("select Worked_Month,Worked_Year, "
+				+ "Employee_Worked_Hours, Employee_Hourly_Paid, (Employee_Hourly_Paid*Employee_Worked_Hours) "
+				+ "from Work_hours " + "where Employee_ID= ? " + dateCondition + ";", parameters);
 
 		workedHoursTable.setItems(FXCollections.observableArrayList(filteredList));
 		prevSelectedMonth = monthSearchSelector.getSelectionModel().getSelectedItem();
@@ -241,8 +268,12 @@ public class EmployeeWorkedHoursController implements Initializable {
 	}
 
 	public void confirmSave() {
-		if (editedFlag && (monthSearchSelector.getSelectionModel().getSelectedItem() != prevSelectedMonth
-				|| yearSearchSelector.getSelectionModel().getSelectedItem() != prevSelectedYear)) {
+		if (ignoreActionFlag) {
+			ignoreActionFlag = false;
+			return;
+		}
+		if (editedFlag && (!monthSearchSelector.getSelectionModel().getSelectedItem().equals(prevSelectedMonth)
+				|| !yearSearchSelector.getSelectionModel().getSelectedItem().equals(prevSelectedYear))) {
 			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 			alert.setTitle("Unsaved Edited Data");
 			alert.setHeaderText(null);
@@ -262,8 +293,12 @@ public class EmployeeWorkedHoursController implements Initializable {
 				filterData();
 				editedFlag = false;
 			} else {
-				monthSearchSelector.setValue(prevSelectedMonth);
-				yearSearchSelector.setValue(prevSelectedYear);
+				ignoreActionFlag = true;
+				if (!monthSearchSelector.getSelectionModel().getSelectedItem().equals(prevSelectedMonth)) {
+					monthSearchSelector.setValue(prevSelectedMonth);
+				} else {
+					yearSearchSelector.setValue(prevSelectedYear);
+				}
 			}
 		} else {
 			filterData();
@@ -336,13 +371,26 @@ public class EmployeeWorkedHoursController implements Initializable {
 					}
 				});
 
-		salaryColumn.setCellValueFactory(
+		hourlyPaidColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
 						ArrayList<String> x = p.getValue();
 						if (x != null && x.size() > 3) {
 							return new SimpleStringProperty(x.get(3));
+						} else {
+							return new SimpleStringProperty("-");
+						}
+					}
+				});
+
+		salaryColumn.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
+						ArrayList<String> x = p.getValue();
+						if (x != null && x.size() > 4) {
+							return new SimpleStringProperty(x.get(4));
 						} else {
 							return new SimpleStringProperty("-");
 						}
@@ -377,8 +425,9 @@ public class EmployeeWorkedHoursController implements Initializable {
 				}
 				(t.getTableView().getItems().get(t.getTablePosition().getRow())).set(2, t.getNewValue());
 
-				(t.getTableView().getItems().get(t.getTablePosition().getRow())).set(3,
-						"" + (Double.parseDouble(t.getNewValue()) * employee.getHourlyPaid1()));
+				(t.getTableView().getItems().get(t.getTablePosition().getRow())).set(4,
+						"" + (Double.parseDouble(t.getNewValue()) * Double
+								.parseDouble(t.getTableView().getItems().get(t.getTablePosition().getRow()).get(3))));
 
 			}
 			workedHoursTable.refresh();
