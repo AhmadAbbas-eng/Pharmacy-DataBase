@@ -31,7 +31,7 @@
             <Insets />
          </opaqueInsets>
       </TableView>
-      <TextField fx:id="searchBox" layoutX="19.0" layoutY="20.0" promptText="Search ..." stylesheets="@../../CSS/search.css" AnchorPane.leftAnchor="22.0" />
+      <TextField fx:id="searchBox" layoutX="19.0" layoutY="20.0" promptText="Search" stylesheets="@../../CSS/search.css" AnchorPane.leftAnchor="22.0" />
       <ComboBox fx:id="fieldSelector" layoutX="188.0" layoutY="20.0" prefWidth="150.0" promptText="-Specify Field-" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="188.0" />
       <Button fx:id="selectButton" layoutX="28.0" layoutY="221.0" mnemonicParsing="false" onAction="#selectCustomerOnAction" stylesheets="@../../CSS/button.css" text="Select Customer" />
       <Line endX="429.0" endY="4.57763671875E-5" layoutX="143.0" layoutY="263.0" startX="-100.0" startY="3.0517578125E-5" stroke="#1d6f84" />

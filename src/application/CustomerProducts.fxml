@@ -45,7 +45,7 @@
                </columns>
             </TableView>
             <ComboBox fx:id="fieldSelector" layoutX="188.0" layoutY="20.0" onAction="#filterList" prefWidth="150.0" promptText="-Specify Field-" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="188.0" AnchorPane.topAnchor="20.0" />
-            <TextField fx:id="searchBox" layoutX="19.0" layoutY="20.0" promptText="Search ..." stylesheets="@../../CSS/search.css" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="20.0" />
+            <TextField fx:id="searchBox" layoutX="19.0" layoutY="20.0" promptText="Search" stylesheets="@../../CSS/search.css" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="20.0" />
             <HBox alignment="CENTER_LEFT" layoutX="372.0" layoutY="20.0" prefHeight="28.0" prefWidth="264.0" spacing="20.0" AnchorPane.leftAnchor="372.0" AnchorPane.topAnchor="20.0">
                <children>
                   <CheckBox fx:id="isDrug" lineSpacing="100.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#drugSelection" text="Drug" textFill="#1d6f84">
