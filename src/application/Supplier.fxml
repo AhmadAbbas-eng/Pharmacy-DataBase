@@ -27,7 +27,7 @@
             <Insets />
          </opaqueInsets>
       </TableView>
-      <TextField fx:id="searchBox" layoutX="19.0" layoutY="20.0" promptText="Search ..." stylesheets="@../../CSS/search.css" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="20.0" />
+      <TextField fx:id="searchBox" layoutX="19.0" layoutY="20.0" promptText="Search" stylesheets="@../../CSS/search.css" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="20.0" />
       <ComboBox fx:id="fieldSelector" layoutX="188.0" layoutY="20.0" onAction="#confirmSave" prefWidth="150.0" promptText="-Specify Field-" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="188.0" AnchorPane.topAnchor="20.0" />
       <Button fx:id="showInfoButton" layoutX="32.0" layoutY="395.0" mnemonicParsing="false" onAction="#showOnAction" onMousePressed="#showOnMousePressed" stylesheets="@../../CSS/button.css" text="Show Phone Numbers" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="22.0" />
       <ImageView fx:id="addButton" fitHeight="20.0" fitWidth="20.0" layoutX="605.0" layoutY="91.0" onMouseEntered="#addOnMouseEntered" onMouseExited="#addOnMouseExited" onMousePressed="#addOnMousePressed" onMouseReleased="#addOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="85.0">

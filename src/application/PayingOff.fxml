@@ -75,7 +75,7 @@
             <Insets />
          </opaqueInsets>
       </TableView>
-      <TextField fx:id="searchBox" layoutX="32.0" layoutY="30.0" promptText="Search ..." stylesheets="@../../CSS/search.css" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="20.0" />
+      <TextField fx:id="searchBox" layoutX="32.0" layoutY="30.0" promptText="Search" stylesheets="@../../CSS/search.css" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="20.0" />
       <ComboBox fx:id="fieldSelector" layoutX="197.0" layoutY="20.0" prefWidth="150.0" promptText="-Specify Field-" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="188.0" AnchorPane.topAnchor="20.0" />
       <Label fx:id="customerNIDLabel" layoutX="135.0" layoutY="259.0" prefHeight="28.0" prefWidth="87.0" text="-" textFill="#1d6f84" AnchorPane.bottomAnchor="259.0" AnchorPane.leftAnchor="135.0">
          <font>

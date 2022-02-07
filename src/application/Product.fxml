@@ -32,7 +32,7 @@
             <Insets />
          </opaqueInsets>
       </TableView>
-      <TextField fx:id="searchBox" layoutX="22.0" layoutY="28.0" promptText="Search ..." stylesheets="@../../CSS/search.css" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="20.0" />
+      <TextField fx:id="searchBox" layoutX="22.0" layoutY="28.0" promptText="Search" stylesheets="@../../CSS/search.css" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="20.0" />
       <ComboBox fx:id="fieldSelector" layoutX="205.0" layoutY="28.0" onAction="#filterList" prefWidth="150.0" promptText="-Specify Field-" stylesheets="@../../CSS/combobox.css" AnchorPane.leftAnchor="188.0" AnchorPane.topAnchor="20.0" />
       <ImageView fx:id="editButton" fitHeight="25.0" fitWidth="20.0" layoutX="618.0" layoutY="76.0" onMouseEntered="#editOnMouseEntered" onMouseExited="#editOnMouseExited" onMousePressed="#editOnMousePressed" onMouseReleased="#editOnMouseReleased" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="70.0">
          <image>

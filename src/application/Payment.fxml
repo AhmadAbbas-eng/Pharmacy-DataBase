@@ -47,7 +47,7 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <TextField fx:id="searchEmployeeTextField" layoutX="43.0" layoutY="265.0" promptText="Search" stylesheets="@../../CSS/textField.css" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="265.0" />
+                  <TextField fx:id="searchEmployeeTextField" layoutX="43.0" layoutY="265.0" promptText="Search" stylesheets="@../../CSS/search.css" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="265.0" />
                   <CheckBox fx:id="chequeEmployeeCheckBox" layoutX="446.0" layoutY="268.0" mnemonicParsing="false" onAction="#chequeEmployeeOnAction" prefHeight="18.0" prefWidth="75.0" text="Cheque" AnchorPane.leftAnchor="446.0" AnchorPane.topAnchor="268.0">
                      <font>
                         <Font size="14.0" />
