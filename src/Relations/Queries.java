@@ -21,7 +21,7 @@ public class Queries {
 
 	// All information needed to connect the date base with java
 	private static String userName = "root";
-	private static String password = "root123";
+	private static String password = "k2m36htg";
 	private static String host = "127.0.0.1";
 	private static String port = "3306";
 	private static String dataBaseName = "Pharmacy";
@@ -67,7 +67,6 @@ public class Queries {
 			// Declare the ArrayList to add result on it
 			ArrayList<ArrayList<String>> table = new ArrayList<ArrayList<String>>();
 			Connection tempConnection = dataBaseConnection(); // Creates connection to data base
-			// System.out.println(SQL);
 			PreparedStatement preparedStatement;
 			preparedStatement = tempConnection.prepareStatement(statment);
 			// pass parameters to the query
@@ -111,7 +110,6 @@ public class Queries {
 		try {
 			tempConnection = dataBaseConnection();
 			// Creates connection to data base
-			// System.out.println(SQL);
 			// Creates the statement that which executes the query
 			PreparedStatement preparedStatement = tempConnection.prepareStatement(statment);
 

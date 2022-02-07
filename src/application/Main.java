@@ -47,7 +47,6 @@ public class Main extends Application {
 //			e.printStackTrace();
 //		}
 		// Main.readingData();
-		System.out.println(Employee.decryptPassword("Omar", "0f11b32743353f6"));
 		launch(args);
 	}
 
