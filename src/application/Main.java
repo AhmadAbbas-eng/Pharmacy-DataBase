@@ -6,13 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
-import Relations.Cheque;
-import Relations.Customer;
-import Relations.CustomerOrder;
-import Relations.Employee;
-import Relations.Payment;
 import Relations.Queries;
-import Relations.Tax;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -38,27 +33,7 @@ public class Main extends Application {
 	}
 
 	public static void main(String[] args) {
-//		generateS_order();
-//		c_order_generate();
-//		try {
-//			payment();
-//		} catch (ClassNotFoundException | SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		// Main.readingData();
 		launch(args);
-	}
-
-	public static void readingData() {
-		Cheque.getChequeData();
-		Customer.getCustomerData();
-		CustomerOrder.getCustomerOrderData();
-
-		Employee.getEmployeeData();
-		Payment.getPaymentData();
-
-		Tax.getTaxData();
 	}
 
 	public static void generateS_order() {
@@ -121,7 +96,6 @@ public class Main extends Application {
 			Queries.queryUpdate("INSERT INTO `s_order_batch` VALUES (" + s + ");\n", null);
 
 		}
-		System.out.println("done");
 	}
 
 	public static void c_order_generate() {
@@ -209,7 +183,6 @@ public class Main extends Application {
 		for (String s : customer2order) {
 			Queries.queryUpdate("INSERT INTO `customer2order` VALUES(" + s + ");", null);
 		}
-		System.out.println("done");
 	}
 
 	public static void payment() throws ClassNotFoundException, SQLException {
@@ -323,8 +296,6 @@ public class Main extends Application {
 		for (String s : supplier) {
 			Queries.queryUpdate("INSERT INTO `supplier_payment` VALUES(" + s + ");", null);
 		}
-		System.out.println("done");
-		System.gc();
 	}
 
 }
