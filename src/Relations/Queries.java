@@ -97,7 +97,6 @@ public class Queries {
 			executionResult.close();
 			return table;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
 			return null;
 		}
 
@@ -120,12 +119,11 @@ public class Queries {
 				}
 			}
 
-			System.out.println(preparedStatement);
+			//System.out.println(preparedStatement);
 			preparedStatement.executeUpdate(); // Get the results on execution on result set
 			tempConnection.close();
 		} catch (SQLException e) {
 			String arr[] = statment.split(" ");
-
 			StringBuilder warning = new StringBuilder();
 			StringBuilder massege = new StringBuilder();
 			if (arr[0].toLowerCase().equals("insert")) {
@@ -155,13 +153,13 @@ public class Queries {
 			Connection tempConnection = dataBaseConnection(); // Create connection to the data base
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss"); // format date as current date
 			LocalDateTime now = LocalDateTime.now();
-			FileWriter fileWriter;
-			fileWriter = new FileWriter(filePath + dtf.format(now) + ".csv");
+			
 			// Write on the path the user asked
-			// for
+			FileWriter fileWriter = new FileWriter(filePath + dtf.format(now) + ".csv");
 			System.out.println(query);
-			Statement creation = tempConnection.createStatement(); // Creates the statement that which executes the
-																	// query
+			
+			// Creates the statement that which executes the query
+			Statement creation = tempConnection.createStatement(); 
 			ResultSet executioResult = creation.executeQuery(query); // Get the results on execution on result set
 			ResultSetMetaData rsmd = executioResult.getMetaData(); // Create meta data of the result to get its size
 			int size = rsmd.getColumnCount(); // The number of columns of the result
