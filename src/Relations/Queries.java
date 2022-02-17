@@ -27,7 +27,7 @@ public class Queries {
 
 	// All information needed to connect the date base with java
 	private static String userName = "root";
-	private static String password = "root123";
+	private static String password = "k2m36htg";
 	private static String host = "127.0.0.1";
 	private static String port = "3306";
 	private static String dataBaseName = "Pharmacy";
