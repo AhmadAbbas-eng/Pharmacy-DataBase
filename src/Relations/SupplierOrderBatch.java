@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
  * SupplierOrderBatch represents the details of each supplier's order
  * 
  * @version 26 January 2022
+ * @author Ahmad Abbas
  * @author Loor Sawalhi
  */
 public class SupplierOrderBatch {

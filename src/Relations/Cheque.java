@@ -10,7 +10,7 @@ import javafx.collections.ObservableList;
  * Cheque class represents all Cheques' operations
  * 
  * @version 26 January 2022
- * @author Ahmad Abbas
+ * @author Loor Sawalhi
  *
  */
 public class Cheque {

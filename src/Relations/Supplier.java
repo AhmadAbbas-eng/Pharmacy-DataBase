@@ -10,7 +10,7 @@ import javafx.collections.ObservableList;
  * Supplier class here where all Suppliers' operations are occurred
  * 
  * @version 26 January 2022
- * @author Loor Sawalhi
+ * @author Ahmad Abbas
  *
  */
 public class Supplier {
