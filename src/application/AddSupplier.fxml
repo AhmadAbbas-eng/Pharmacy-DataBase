@@ -81,7 +81,7 @@
             </ImageView>
          </children>
       </HBox>
-      <ListView fx:id="phoneList" layoutX="386.0" layoutY="107.0" prefHeight="143.0" prefWidth="152.0" stylesheets="@../../CSS/list.css" />
+      <ListView fx:id="phoneList" editable="true" layoutX="386.0" layoutY="107.0" onEditCommit="#listOnEditCommit" prefHeight="143.0" prefWidth="152.0" stylesheets="@../../CSS/list.css" />
       <Label fx:id="errorLabel" layoutX="210.0" layoutY="20.0" prefHeight="25.0" prefWidth="333.0" textFill="RED" wrapText="true" />
       <Label fx:id="phoneErrorLabel" alignment="TOP_LEFT" layoutX="297.0" layoutY="107.0" prefHeight="143.0" prefWidth="80.0" textFill="RED" wrapText="true">
          <font>
