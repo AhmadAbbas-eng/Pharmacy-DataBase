@@ -75,11 +75,11 @@ public class SoldProductsController implements Initializable {
 		parameters.add(productID);
 		String query = "select COB.Batch_Production_Date, COB.Batch_Expiry_Date,\r\n"
 				+ "CO.Order_Date, E.Employee_Name, C.Customer_Name, COB.Order_amount\r\n"
-				+ "from Customer C, Batch B, C_Order_Batch COB, C_Order CO, Customer2Order C2O, Employee E\r\n"
+				+ "from Customer C, Batch B, C_Order_Batch COB, C_Order CO, Employee E\r\n"
 				+ "where B.Product_ID=? \r\n" + "and COB.Product_ID=B.Product_ID\r\n"
 				+ "and COB.Batch_Production_Date=B.Batch_Production_Date\r\n"
-				+ "and COB.Batch_Expiry_Date=B.Batch_Expiry_Date\r\n" + "and C.Customer_NID=C2O.Customer_NID\r\n"
-				+ "and COB.Order_ID=CO.Order_ID and C2O.Order_ID=CO.Order_ID\r\n" + "and CO.Employee_ID=E.Employee_ID ";
+				+ "and COB.Batch_Expiry_Date=B.Batch_Expiry_Date\r\n"
+				+ "and COB.Order_ID=CO.Order_ID \r\n" + "and CO.Employee_ID=E.Employee_ID ";
 
 		if (stringToSearch != null && !stringToSearch.isEmpty() && !stringToSearch.isBlank()) {
 			parameters.add("%" + stringToSearch + "%");
