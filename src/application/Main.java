@@ -32,7 +32,10 @@ public class Main extends Application {
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		generateS_order();
+		c_order_generate();
+		payment();
 		launch(args);
 	}
 
@@ -142,12 +145,13 @@ public class Main extends Application {
 					m--;
 				}
 				c_order_string.append(total + "," + (int) (0.1 * total) + "," + employeeID);
-				c_order.add(c_order_string.toString());
+				
 
 				if (flag) {
 					customer2order.add(0 + "," + cOrderId);
 					income.add(incomeID + "," + (total - (int) (0.1 * total)) + ",'" + orderDate.toString() + "',"
 							+ employeeID + ",0");
+					c_order_string.append(",0");
 				} else {
 
 					ArrayList<ArrayList<String>> customers = Queries
@@ -156,7 +160,9 @@ public class Main extends Application {
 					customer2order.add(customers.get(index).get(0) + "," + cOrderId);
 					income.add(incomeID + "," + (total - (int) (0.1 * total)) + ",'" + orderDate.toString() + "',"
 							+ employeeID + "," + customers.get(index).get(0));
+					c_order_string.append(","+customers.get(index).get(0));
 				}
+				c_order.add(c_order_string.toString());
 				cOrderId++;
 				incomeID++;
 				n--;
@@ -180,9 +186,9 @@ public class Main extends Application {
 			Queries.queryUpdate("INSERT INTO `c_order_batch` VALUES(" + s + ");", null);
 		}
 
-		for (String s : customer2order) {
+		/*for (String s : customer2order) {
 			Queries.queryUpdate("INSERT INTO `customer2order` VALUES(" + s + ");", null);
-		}
+		}*/
 	}
 
 	public static void payment() throws ClassNotFoundException, SQLException {
