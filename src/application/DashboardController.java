@@ -231,7 +231,6 @@ public class DashboardController implements Initializable {
 			label.setStyle("-fx-font-size: 10; -fx-font-weight: bold;");
 
 			label.setTextFill(Color.DARKGRAY);
-
 			label.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
 			return label;
 		}
@@ -346,6 +345,7 @@ public class DashboardController implements Initializable {
 				.bind(Bindings.format("-fx-font-size: %.2fpt; -fx-margin: 0px; -fx-font-weight: bold; ",
 						expiredLabel.widthProperty().divide(5)));
 
+		
 		LocalDate current_date = LocalDate.now();
 		if (years.indexOf(current_date.getYear() + "") == -1) {
 			years.add(current_date.getYear() + "");
@@ -505,7 +505,7 @@ public class DashboardController implements Initializable {
 
 		outOfStockTable.setItems(FXCollections.observableArrayList(Queries.queryResult("select P.product_name\r\n"
 				+ "		from product p where p.product_id not in(\r\n" + " select b.product_id\r\n"
-				+ "		from batch b\r\n" + "		where  b.batch_amount>0\r\n" + "		);", null)));
+				+ "		from batch b\r\n" + "		where  b.batch_amount>0\r\n" + ");", null)));
 
 		int numc = 0, productNum = 0, outOfStock = 0;
 		ArrayList<ArrayList<String>> numberOfExpiredProductsArrayList = Queries.queryResult("SELECT count(*)\r\n"
@@ -543,7 +543,6 @@ public class DashboardController implements Initializable {
 		if (todaysTotalDiscountArrayList.get(0).get(0) == null) {
 			totalDiscountLabel.setText("0.0");
 		} else {
-			System.out.println(todaysTotalDiscountArrayList.toString());
 			totalDiscountLabel.setText(todaysTotalDiscountArrayList.get(0).get(0));
 			Double.parseDouble(todaysTotalDiscountArrayList.get(0).get(0));
 		}
