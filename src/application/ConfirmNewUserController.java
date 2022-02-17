@@ -100,8 +100,6 @@ public class ConfirmNewUserController {
 						} else {
 							Stage stage1 = (Stage) confirmButton.getScene().getWindow();
 							stage1.close();
-							Stage stage = (Stage) confirmButton.getScene().getWindow();
-							stage.close();
 							FXMLLoader loader = new FXMLLoader(getClass().getResource("SignUp.fxml"));
 							Parent root1 = (Parent) loader.load();
 							Stage stage2 = new Stage();
