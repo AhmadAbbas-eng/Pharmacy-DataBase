@@ -170,7 +170,7 @@ public class EmployeeController implements Initializable {
 	}
 
 	public void saveEdits() {
-		employeeTable.setItems(Employee.getDataList());
+		filterList();
 	}
 
 	public void filterList() {
@@ -242,8 +242,7 @@ public class EmployeeController implements Initializable {
 		passwordColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("password"));
 		isManagerColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("isManager"));
 		isActiveColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("isActive"));
-		Employee.getEmployeeData();
-		employeeTable.setItems(Employee.getDataList());
+		filterList();
 		searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
 			stringToSearch = newValue;
 			filterList();

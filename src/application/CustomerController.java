@@ -20,7 +20,7 @@ import Relations.Customer;
 import Relations.Queries;
 
 /**
- *  
+ * 
  * @version 30 January 2022
  * @author Aseel Sabri
  *
@@ -81,9 +81,9 @@ public class CustomerController implements Initializable {
 
 		} else {
 			parameters.add("%" + stringToSearch + "%");
-			filteredList = Customer.getCustomerData(Queries
-					.queryResult("select * from Customer where (Customer_Name like ? " + " or Customer_NID like ? )"
-							+ debtCondition + " order by Customer_name;", parameters));
+			filteredList = Customer
+					.getCustomerData(Queries.queryResult("select * from Customer where (Customer_Name like ? "
+							+ " or Customer_NID like ? )" + debtCondition + " order by Customer_name;", parameters));
 		}
 		customerTable.setItems(FXCollections.observableArrayList(filteredList));
 	}
@@ -175,7 +175,7 @@ public class CustomerController implements Initializable {
 	}
 
 	public void saveEdits() {
-		customerTable.setItems(Customer.getDataList());
+		filterList();
 		customerTable.refresh();
 	}
 
@@ -186,9 +186,8 @@ public class CustomerController implements Initializable {
 		nidColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("NID"));
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
 		debtColumn.setCellValueFactory(new PropertyValueFactory<Customer, Double>("debt"));
-		Customer.getCustomerData();
-		customerTable.setItems(Customer.getDataList());
-		
+		filterList();
+
 		searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
 			stringToSearch = newValue;
 			filterList();

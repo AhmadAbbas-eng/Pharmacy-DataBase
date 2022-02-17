@@ -247,15 +247,7 @@ public class EmployeeEditController implements Initializable {
 			Employee.insertEmployee(name, NID, dateOfWork.getValue(), hourlyPaid, new ArrayList<>(phoneList.getItems()),
 					password, isManager.isSelected() ? "true" : "false", "true");
 
-			Employee.getData()
-					.add(new Employee(Employee.getMaxID(), name, NID, dateOfWork.getValue(), hourlyPaid,
-							new ArrayList<>(phoneList.getItems()), password, isManager.isSelected() ? "true" : "false",
-							"true"));
-
-			Employee.getDataList()
-					.add(new Employee(Employee.getMaxID(), name, NID, dateOfWork.getValue(), hourlyPaid,
-							new ArrayList<>(phoneList.getItems()), password, isManager.isSelected() ? "true" : "false",
-							"true"));
+			caller.saveEdits();
 
 			nidTextField.setText("");
 			nameTextField.setText("");
