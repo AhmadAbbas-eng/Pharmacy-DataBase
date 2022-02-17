@@ -135,7 +135,6 @@ public class SupplierController implements Initializable {
 						prevStringToSearch = stringToSearch;
 						fieldSelector.setValue(prevSelectedFeild);
 					} else {
-						System.err.println("ZFTTT");
 						searchBoxFlag = false;
 						searchBox.setText(prevStringToSearch);
 					}

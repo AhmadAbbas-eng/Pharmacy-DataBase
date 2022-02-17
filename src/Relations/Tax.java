@@ -88,9 +88,7 @@ public class Tax {
 
 		for (int i = 0; i < table.size(); i++) {
 			LocalDate taxDate = LocalDate.parse(table.get(i).get(1));
-			System.out.println(table.get(i).get(0) + " " + taxDate + " " + Double.parseDouble(table.get(i).get(2)));
 			Tax temp = new Tax(table.get(i).get(0), taxDate, Double.parseDouble(table.get(i).get(2)));
-
 			data.add(temp);
 		}
 
