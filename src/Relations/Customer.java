@@ -33,23 +33,15 @@ public class Customer {
 		this.phones = phones;
 	}
 
-	public Customer(String nID, String name, double debt) {
+	public Customer(String nationalID, String name, double debt) {
 		super();
-		nationalID = nID;
+		this.nationalID = nationalID;
 		this.name = name;
 		this.debt = debt;
 	}
 
-	public String getNID() {
-		return getNationalID();
-	}
-
 	public String getNationalID() {
 		return nationalID;
-	}
-
-	public void setNID(String nID) {
-		setNationalID(nID);
 	}
 
 	public void setNationalID(String nID) {
@@ -85,7 +77,7 @@ public class Customer {
 	}
 
 	/**
-	 * Fill the an ArrayList from specific ArrayList<ArrayList<String>> entry
+	 * Fill an ArrayList from specific ArrayList<ArrayList<String>> entry
 	 * 
 	 * @param table ArrayList<ArrayList<String>> to fill data with
 	 * @return ArrayList<Customer> of data
