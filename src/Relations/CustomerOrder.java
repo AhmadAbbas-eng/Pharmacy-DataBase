@@ -127,11 +127,8 @@ public class CustomerOrder {
 
 	public static void insertCustomerOrder(String date, double price, double discount, double paid, int employeeID,
 			String customerNID) {
-		Queries.queryUpdate("Insert into C_order values (? ,?, ?, ?, ?); ", new ArrayList<>(
-				Arrays.asList((getMaxID() + 1) + "", date, price + "", discount + "", employeeID + "")));
-
-		Queries.queryUpdate("Insert into customer2order values(?, ?);",
-				new ArrayList<>(Arrays.asList(customerNID, (getMaxID()) + "")));
+		Queries.queryUpdate("Insert into C_order values (? ,?, ?, ?, ?, ?); ", new ArrayList<>(
+				Arrays.asList((getMaxID() + 1) + "", date, price + "", discount + "", employeeID + "", customerNID)));
 
 		Queries.queryUpdate("update Customer set Customer_Debt=customer_Debt+ ? where customer_nid=? ;",
 				new ArrayList<>(Arrays.asList((price - discount - paid) + "", customerNID)));
@@ -155,9 +152,10 @@ public class CustomerOrder {
 	 */
 	public static void report(String path) {
 		Queries.reportQuery(
-				"select c.customer_name as 'Customer Name',co.order_date as 'Order Date',e.employee_name as 'Employee name', p.product_name as 'Product Name'\r\n"
-						+ "from customer c,customer2order c2o,c_order co,c_order_batch cob,product p,employee e \r\n"
-						+ "where co.employee_Id=e.employee_Id and c.customer_NID=c2o.customer_NID and c2o.order_ID=co.order_ID and co.order_Id=cob.order_Id and p.product_Id=cob.product_ID;",
+				"select C.Customer_Name as 'Customer Name',CO.Order_Date as 'Order Date',E.Employee_Name As 'Employee name', p.product_name as 'Product Name'\r\n"
+						+ "from Customer C, C_Order CO, C_Order_Batch COB, Product P, Employee E \r\n"
+						+ "where CO.Employee_ID=E.Employee_ID and C.Customer_NID=CO.customer_NID "
+						+ " and CO.Order_ID=COB.Order_ID and P.Product_ID=COB.Product_ID;",
 				path);
 	}
 }
