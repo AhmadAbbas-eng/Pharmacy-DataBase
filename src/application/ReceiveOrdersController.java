@@ -259,7 +259,7 @@ public class ReceiveOrdersController implements Initializable {
 				root1 = (Parent) loader.load();
 
 				AddBatchController addBatchController = loader.getController();
-				addBatchController.setProduct(orderedProducts.get(counter).getProductID(), ProductName, this);
+				addBatchController.setProduct(orderedProducts.get(counter).getProductID(), this);
 				Stage stage2 = new Stage();
 				stage2.setScene(new Scene(root1));
 				stage2.setResizable(false);
