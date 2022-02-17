@@ -12,7 +12,7 @@ Product_Manufactrer varchar(32)
 
 create table Product(
 Product_ID int,
-Product_Name varchar(32) not null unique,/*ask Prof.Bassem */
+Product_Name varchar(32) not null unique,
 Product_Price REAL not null,
 Primary Key ( product_ID),
 FOREIGN KEY (Product_name) References Name_Manu(Product_Name) ON UPDATE CASCADE
@@ -156,14 +156,16 @@ Supplier_Phone varchar(16),
 PRIMARY KEY (Supplier_ID,Supplier_Phone),
 FOREIGN KEY(Supplier_ID) REFERENCES Supplier(Supplier_ID)  ON DELETE CASCADE ON UPDATE CASCADE
 );
-
+select * from customer;
 create table C_Order(
 Order_ID  int primary key,
 Order_Date Date,
 Order_Price real,
 Order_Discount real,
 Employee_ID int,
-foreign key(Employee_ID) REFERENCES Employee(Employee_ID) ON UPDATE CASCADE
+Customer_NID varchar(16) default 0,
+FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) ON UPDATE CASCADE,
+FOREIGN KEY (Customer_NID) REFERENCES Customer(Customer_NID)  ON UPDATE CASCADE
 );
 
 create table C_Order_Batch(
@@ -177,14 +179,6 @@ foreign key(Order_ID) REFERENCES C_Order(Order_ID) ON UPDATE CASCADE,
 foreign key(Product_ID) REFERENCES Batch(Product_ID) ON UPDATE CASCADE,
 foreign key(Batch_Production_Date) REFERENCES Batch(Batch_Production_Date) ON UPDATE CASCADE,
 foreign key(Batch_Expiry_Date) REFERENCES Batch(Batch_Expiry_Date) ON UPDATE CASCADE);
-
-Create table Customer2Order(
-Customer_NID varchar(16), #
-Order_ID  int,
-PRIMARY KEY(Customer_NID,Order_ID),
-FOREIGN KEY (Customer_NID) REFERENCES Customer(Customer_NID)  ON UPDATE CASCADE,
-FOREIGN KEY (Order_ID) REFERENCES C_Order(Order_ID)  ON UPDATE CASCADE
-);
 
 create table E_Salary(
 Manager_ID  int,
@@ -242,4 +236,12 @@ foreign key(Product_ID) REFERENCES Batch(Product_ID) ON UPDATE CASCADE,
 foreign key(Batch_Production_Date) REFERENCES Batch(Batch_Production_Date) ON UPDATE CASCADE,
 foreign key(Batch_Expiry_Date) REFERENCES Batch(Batch_Expiry_Date) ON UPDATE CASCADE
 );
-
+INSERT INTO `name_manu` VALUES ('ADCEF','Pharmacare plc'),('ALGONAL','Birzeit pharmaceutical company'),('Allow','Jerusalem Pharmaceuticals'),('Amycin T','Jerusalem Pharmaceuticals'),('BILTRICIDE','BAYER SCHERING PHARMA AG'),('CANDIVAST','Jerusalem Pharmaceuticals'),('Clobed','Jerusalem Pharmaceuticals'),('Diclofen','Jerusalem Pharmaceuticals'),('DOXORUBICIN','EBEWE PHARMA'),('ELYZOL VAG.PESSARIES','Alpharma aps'),('Ezomax','Pharmacare plc'),('FLATIDYL','Cairo eygept'),('FluAminic','Pharmacare plc'),('FLUPHENAZINE BPC','Birzeit pharmaceutical company'),('GLORION','Hikma'),('HYZAAR','MERCK SHARP'),('IPRAVENT RESPIRATOR','Birzeit pharmaceutical company'),('MAGNACEF','Ram pharmetical industrial '),('shamboo','Clear'),('SPIRIT VITACIN','Birzeit pharmaceutical company'),('Tailol','Pharmacare plc');
+INSERT INTO `product` VALUES (1,'ALGONAL',5),(2,'BILTRICIDE',10),(3,'CANDIVAST',15),(4,'DOXORUBICIN',20),(5,'ELYZOL VAG.PESSARIES',25),(6,'FLATIDYL',27),(7,'GLORION',26),(8,'HYZAAR',16),(9,'MAGNACEF',75),(10,'Allow',96),(11,'Amycin T',15),(12,'Diclofen',25),(13,'Clobed',21),(14,'Ezomax',15),(15,'ADCEF',13),(16,'FluAminic',89),(17,'Tailol',5),(18,'FLUPHENAZINE BPC',78),(19,'IPRAVENT RESPIRATOR',75),(20,'SPIRIT VITACIN',15),(111,'shamboo',10);
+INSERT INTO `drug` VALUES (1,'Codeine','A','150','Analgesics','Tablet ','Controlled'),(2,'Tylenol','A','250','Antacids','Powder','Danger'),(3,'Motrin','C','100','Antianxiety ','Liquid','Controlled'),(4,'Zithromax','C','50','Antiarrhythmics','Spray','Controlled'),(5,'Claritin','A','750','Antibacterials','cream','Danger'),(6,'Aspirin','A','825','Antibacterials','Tablet ','Danger'),(7,'Mucinex','B','575','Anticoagulants ','Powder','Controlled'),(8,'Vicodin','C','250','Anticonvulsants','Liquid','Controlled'),(9,'Lipitor','C','25','Anticonvulsants','Spray','Controlled'),(10,'Benadryl','B','230','Antidiarrheals','cream','non'),(11,'Mucinex','B','20','Antidiarrheals','Tablet ','non'),(12,'desloratadine','A','275','Antihypertensives','Powder','non'),(13,'Dextromethorphan','C','235','Antihypertensives','Liquid','non'),(14,'Dextromethorphan','B','575','Antacids','Spray','non'),(15,'Lipitor','A','250','Antianxiety ','cream','non'),(16,'Benadryl','B','25','Antiarrhythmics','Tablet ','non'),(17,'Mucinex','A','230','Antibacterials','Powder','non'),(18,'desloratadine','C','20','Antibacterials','Liquid','non'),(19,'Esomeprazole','C','275','Anticoagulants ','Spray','non'),(20,'Pseidoephedrine','A','235','Anticonvulsants','cream','non');
+INSERT INTO `supplier` VALUES (1,'Jerusalem Pharmaceuticals','Al-Beriah','599',0),(2,'Pharmacare plc','Ramallah','598',0),(3,'Birzeit pharmaceutical company','Birzeit','597',0),(4,'Ram pharmetical industrial ','Al Ram','596',0),(5,'Al Salam Drugstore','Ramallah','22975687',0),(6,'Nazzal drugstore','Ramallah','2295255990',0);
+INSERT INTO `supplier_phone` VALUES (1,'0591234567'),(2,'0591234560'),(2,'0591234561'),(3,'0591234562'),(4,'0591234563'),(5,'0591234564'),(6,'0591234565'),(6,'0591234566');
+INSERT INTO `customer` VALUES ('0','sporadic sales',0),('406498130','Loor Wael',0),('406498131','Aseel Sabri',0),('406498132','Ahmad Abbas ',0),('406498133','Kareem Afaneh ',0),('406498134','Adam Abbas',0),('406498135','Ayman Sawalhi',0),('406498136','Wael Dirbas',0),('406498137','Naser Imad ',0),('406498138','Khalil Alwneh',0),('406498139','Ahmad Tayseer',0);
+INSERT INTO `customer_phone` VALUES ('406498130','0591234570'),('406498131','0591234569'),('406498132','0591234568'),('406498133','0591234577'),('406498134','0591234565'),('406498134','0591234566'),('406498135','0591234564'),('406498136','0591234563'),('406498137','0591234562'),('406498138','0591234560'),('406498138','0591234561'),('406498139','0591234567');
+INSERT INTO `employee` VALUES (-1,'none','0000000000','2016-09-01',0,'000000000',0,0),(1,'Yahya','1111111111','2016-09-01',30,'0ea1a525f3193d3','true','true'),(2,'Ahmad','2222222222','2018-09-01',25,'0d517b2202c536a','false','true'),(3,'Omar','3333333333','2020-10-10',20,'0f11b32743353f6','false','true');
+INSERT INTO `employee_phone` VALUES (1,'0598141006'),(1,'0598151007'),(2,'0597161007'),(3,'0595731010');
