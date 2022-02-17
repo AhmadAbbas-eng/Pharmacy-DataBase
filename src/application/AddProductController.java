@@ -40,34 +40,14 @@ import javafx.util.Duration;
  */
 public class AddProductController implements Initializable {
 
-	ArrayList<ArrayList<String>> product;
-
 	@FXML
 	private Tooltip manufacturerToolTip;
 
 	@FXML
 	private ComboBox<String> maufacturerComboBox;
-
-	@FXML
-	private TableView<ArrayList<String>> productTable;
-
-	@FXML
-	private TableColumn<ArrayList<String>, String> idColumn;
-
-	@FXML
-	private TableColumn<ArrayList<String>, String> nameColumn;
-
-	@FXML
-	private TableColumn<ArrayList<String>, String> priceColumn;
-
-	@FXML
-	private TableColumn<ArrayList<String>, String> dosageFormColumn;
-
+	
 	@FXML
 	private ImageView addProduct;
-
-	@FXML
-	private ImageView saveProduct;
 
 	@FXML
 	private TextField dosageTextField;
@@ -98,12 +78,6 @@ public class AddProductController implements Initializable {
 
 	@FXML
 	private TextField priceTextField;
-
-	@FXML
-	private ImageView savedIcon;
-
-	@FXML
-	private Label savedLabel;
 
 	@FXML
 	private TextField scientificNameTextField;

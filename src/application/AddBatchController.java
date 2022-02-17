@@ -1,20 +1,16 @@
 package application;
 
-import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.ResourceBundle;
+
 import Relations.Batch;
 import Relations.Queries;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 /**
@@ -23,7 +19,7 @@ import javafx.stage.Stage;
  * @author Ahmad Abbas
  * 
  */
-public class AddBatchController implements Initializable {
+public class AddBatchController {
 
 	@FXML
 	private Button addButton;
@@ -37,12 +33,8 @@ public class AddBatchController implements Initializable {
 	@FXML
 	private DatePicker productionDateDatePicker;
 
-	@FXML
-	private Label productNameLabel;
-
-	private String product;
 	private int productID = 1;
-	ListView<Batch> batchlist;
+
 	private ReceiveOrdersController caller;
 
 	/**
@@ -52,10 +44,9 @@ public class AddBatchController implements Initializable {
 	 * @param name   The name of the product
 	 * @param caller The controller which receives orders
 	 */
-	public void setProduct(int id, String name, ReceiveOrdersController caller) {
+	public void setProduct(int id, ReceiveOrdersController caller) {
 		setPid(id);
-		this.product = name;
-		this.caller = caller;
+		this.caller = caller;		
 	}
 
 	public void cancelButton(ActionEvent event) {
@@ -67,8 +58,7 @@ public class AddBatchController implements Initializable {
 
 		// Check the values of text fields and assign entered data
 		if (productionDateDatePicker.getValue() != null && expiryDateDatePicker.getValue() != null) {
-			if (productionDateDatePicker.getValue().compareTo(expiryDateDatePicker.getValue()) > 0
-					|| productionDateDatePicker.getValue().compareTo(expiryDateDatePicker.getValue()) == 0
+			if (productionDateDatePicker.getValue().compareTo(expiryDateDatePicker.getValue()) >= 0
 					|| productionDateDatePicker.getValue().compareTo(LocalDate.now()) > 0
 					|| expiryDateDatePicker.getValue().compareTo(LocalDate.now()) <= 0) {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -108,22 +98,9 @@ public class AddBatchController implements Initializable {
 			alert.showAndWait();
 		}
 	}
-
-	public int getPid() {
-		return productID;
-	}
-
+	
 	public void setPid(int pid) {
 		this.productID = pid;
 	}
 
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		if (product == null) {
-			productNameLabel.setText("");
-		} else {
-			productNameLabel.setText(product);
-		}
-
-	}
 }
