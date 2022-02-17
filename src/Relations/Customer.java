@@ -1,8 +1,6 @@
 package Relations;
 
 import java.util.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 /**
  * Customer class where Customer's operations are occurred
@@ -13,8 +11,6 @@ import javafx.collections.ObservableList;
  */
 public class Customer {
 
-	private static ArrayList<Customer> data = new ArrayList<Customer>();
-	private static ObservableList<Customer> dataList;
 	private String nationalID;
 	private String name;
 	private double debt;
@@ -86,36 +82,6 @@ public class Customer {
 
 	public void addPhone(String phone) {
 		this.phones.add(phone);
-	}
-
-	public static ArrayList<Customer> getData() {
-		return Customer.data;
-	}
-
-	public static ObservableList<Customer> getDataList() {
-		return dataList;
-	}
-
-	public static void setDataList(ObservableList<Customer> dataList) {
-		Customer.dataList = dataList;
-	}
-
-	/**
-	 * Read from data base and fill the ArrayList
-	 * 
-	 */
-	public static void getCustomerData() {
-		data.clear();
-		ArrayList<ArrayList<String>> table = Queries.queryResult("select * from Customer order by Customer_name;",
-				null);
-
-		for (int i = 0; i < table.size(); i++) {
-			Customer temp = new Customer(table.get(i).get(0), table.get(i).get(1),
-					Double.parseDouble(table.get(i).get(2)), null);
-			getCustomerPhone(temp);
-			data.add(temp);
-		}
-		dataList = FXCollections.observableArrayList(data);
 	}
 
 	/**

@@ -176,7 +176,6 @@ public class CustomerEditController implements Initializable {
 			Queries.queryUpdate("update Customer set Customer_NID=? , Customer_Name=? , Customer_debt=? "
 					+ " where Customer_NID=? ;", parameters);
 			
-			Customer.getCustomerData();
 			caller.saveEdits();
 			customerNID = customer.getNationalID();
 		}
@@ -228,8 +227,7 @@ public class CustomerEditController implements Initializable {
 			alert.showAndWait();
 		} else {
 			Customer.insertCustomer(NID, name, 0, new ArrayList<>(phoneList.getItems()));
-			Customer.getData().add(new Customer(NID, name, 0, new ArrayList<>(phoneList.getItems())));
-			Customer.getDataList().add(new Customer(NID, name, 0, new ArrayList<>(phoneList.getItems())));
+			caller.saveEdits();
 			showAndFade(addedIcon);
 			showAndFade(addedLabel);
 			NIDtextField.setText("");
