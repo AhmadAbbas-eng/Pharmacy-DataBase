@@ -42,8 +42,8 @@ public class CustomersReportController implements Initializable {
 
 		CustomerTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
 				"select c.customer_name as 'Customer Name',co.order_date as 'Order Date',e.employee_name as 'Employee name', p.product_name as 'Product Name'\r\n"
-						+ "from customer c,customer2order c2o,c_order co,c_order_batch cob,product p,employee e \r\n"
-						+ "where co.employee_Id=e.employee_Id and c.customer_NID=c2o.customer_NID and c2o.order_ID=co.order_ID and co.order_Id=cob.order_Id and p.product_Id=cob.product_ID;",
+						+ "from customer c, c_order co,c_order_batch cob,product p,employee e \r\n"
+						+ "where co.employee_Id=e.employee_Id and c.customer_NID=co.customer_NID and co.order_Id=cob.order_Id and p.product_Id=cob.product_ID;",
 				null)));
 
 		customerNameColumn.setCellValueFactory(
@@ -59,26 +59,26 @@ public class CustomersReportController implements Initializable {
 					}
 				});
 
-		employeeNameColumn.setCellValueFactory(
+		orderDateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
 						ArrayList<String> x = p.getValue();
 						if (x != null && x.size() > 1) {
-							return new SimpleStringProperty(x.get(2));
+							return new SimpleStringProperty(x.get(1));
 						} else {
 							return new SimpleStringProperty("-");
 						}
 					}
 				});
 
-		orderDateColumn.setCellValueFactory(
+		employeeNameColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(TableColumn.CellDataFeatures<ArrayList<String>, String> p) {
 						ArrayList<String> x = p.getValue();
 						if (x != null && x.size() > 2) {
-							return new SimpleStringProperty(x.get(1));
+							return new SimpleStringProperty(x.get(2));
 						} else {
 							return new SimpleStringProperty("-");
 						}

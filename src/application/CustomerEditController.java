@@ -322,7 +322,7 @@ public class CustomerEditController implements Initializable {
 		addedLabel.setOpacity(0);
 		phoneList.setEditable(true);
 		phoneList.setCellFactory(TextFieldListCell.forListView());
-		nidColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("NID"));
+		nidColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("nationalID"));
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
 		debtColumn.setCellValueFactory(new PropertyValueFactory<Customer, Double>("debt"));
 		nidColumn.setOnEditCommit((CellEditEvent<Customer, String> t) -> {

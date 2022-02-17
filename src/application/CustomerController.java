@@ -86,6 +86,7 @@ public class CustomerController implements Initializable {
 							+ " or Customer_NID like ? )" + debtCondition + " order by Customer_name;", parameters));
 		}
 		customerTable.setItems(FXCollections.observableArrayList(filteredList));
+		customerTable.refresh();
 	}
 
 	public void showProductsOnAction() {
@@ -183,7 +184,7 @@ public class CustomerController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 
 		fieldSelector.setItems(FXCollections.observableArrayList("-Specify Field-", "National ID", "Name"));
-		nidColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("NID"));
+		nidColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("nationalID"));
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
 		debtColumn.setCellValueFactory(new PropertyValueFactory<Customer, Double>("debt"));
 		filterList();
