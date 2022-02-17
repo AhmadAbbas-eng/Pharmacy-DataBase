@@ -107,12 +107,12 @@ public class CustomerProductsController implements Initializable {
 		parameters.add(customer.getNationalID());
 		String nonDrugsQuery = "select P.Product_Name, COB.Batch_Production_Date, COB.Batch_Expiry_Date,\r\n"
 				+ "CO.Order_Date, E.Employee_Name, COB.Order_amount\r\n"
-				+ "from Product P, Batch B, C_Order_Batch COB, C_Order CO, Customer2Order C2O, Employee E\r\n"
-				+ "where C2O.Customer_NID=? \r\n" + "and P.Product_ID not in (select D.Product_ID from Drug D)\r\n"
+				+ "from Product P, Batch B, C_Order_Batch COB, C_Order CO, Employee E\r\n"
+				+ "where CO.Customer_NID=? \r\n" + "and P.Product_ID not in (select D.Product_ID from Drug D)\r\n"
 				+ "and P.Product_ID=B.Product_ID and COB.Product_ID=B.Product_ID\r\n"
 				+ "and COB.Batch_Production_Date=B.Batch_Production_Date "
 				+ "and COB.Batch_Expiry_Date=B.Batch_Expiry_Date \r\n"
-				+ "and COB.Order_ID=CO.Order_ID and C2O.Order_ID=CO.Order_ID\r\n" + "and CO.Employee_ID=E.Employee_ID ";
+				+ "and COB.Order_ID=CO.Order_ID \r\n" + "and CO.Employee_ID=E.Employee_ID ";
 
 		if (isDanger.isSelected()) {
 			drugCondition = " and D.Drug_Pharmacetical_Category='Danger'";
@@ -121,12 +121,12 @@ public class CustomerProductsController implements Initializable {
 		}
 		String drugsQuery = "select P.Product_Name, COB.Batch_Production_Date, COB.Batch_Expiry_Date,\r\n"
 				+ "CO.Order_Date, E.Employee_Name, COB.Order_amount, D.Drug_Pharmacetical_Category\r\n"
-				+ "from Product P, Batch B, C_Order_Batch COB, C_Order CO, Customer2Order C2O, Employee E, Drug D\r\n"
-				+ "where C2O.Customer_NID=? \r\n"
+				+ "from Product P, Batch B, C_Order_Batch COB, C_Order CO, Employee E, Drug D\r\n"
+				+ "where CO.Customer_NID=? \r\n"
 				+ "and P.Product_ID=B.Product_ID and COB.Product_ID=B.Product_ID and P.Product_ID = D.Product_ID\r\n "
 				+ "and COB.Batch_Production_Date=B.Batch_Production_Date "
 				+ "and COB.Batch_Expiry_Date=B.Batch_Expiry_Date \r\n"
-				+ "and COB.Order_ID=CO.Order_ID and C2O.Order_ID=CO.Order_ID\r\n" + "and CO.Employee_ID=E.Employee_ID "
+				+ "and COB.Order_ID=CO.Order_ID " + "and CO.Employee_ID=E.Employee_ID "
 				+ drugCondition;
 
 		if (stringToSearch != null && !stringToSearch.isEmpty() && !stringToSearch.isBlank()) {
