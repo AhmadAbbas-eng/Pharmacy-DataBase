@@ -33,9 +33,9 @@ public class Main extends Application {
 	}
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
-		generateS_order();
-		c_order_generate();
-		payment();
+//		generateS_order();
+//		c_order_generate();
+//		payment();
 		launch(args);
 	}
 
