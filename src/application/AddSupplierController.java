@@ -1,24 +1,25 @@
 package application;
 
-import java.util.ArrayList;
-
-import Relations.Supplier;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldListCell;
+import javafx.fxml.Initializable;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+import Relations.*;
 
 /**
  * 
  * @version 30 January 2022
  * @author Ahmad Abbas
  *
- */	
-public class AddSupplierController {
+ */
+public class AddSupplierController implements Initializable {
 
 	SupplierController caller;
 
@@ -147,7 +148,7 @@ public class AddSupplierController {
 			alert.showAndWait();
 		} else {
 			Supplier.insertSupplier(name, address, email, dues, new ArrayList<>(phoneList.getItems()));
-			
+
 			caller.filterData();
 			nameTextField.setText("");
 			addressTextField.setText("");
@@ -223,4 +224,11 @@ public class AddSupplierController {
 	public void setCaller(SupplierController caller) {
 		this.caller = caller;
 	}
+
+	@Override
+	public void initialize(URL url, ResourceBundle rb) {
+		phoneList.setEditable(true);
+		phoneList.setCellFactory(TextFieldListCell.forListView());
+	}
+
 }
