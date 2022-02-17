@@ -28,8 +28,7 @@ import javafx.stage.Window;
 /**
  * 
  * @version 30 January 2022
- * @author Ahmad Abbas
- * @author Aseel Sabri
+ * @author Loor Sawalhi
  * 
  */
 public class ComboBoxAutoComplete<T> {

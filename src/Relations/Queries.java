@@ -27,7 +27,7 @@ public class Queries {
 
 	// All information needed to connect the date base with java
 	private static String userName = "root";
-	private static String password = "k2m36htg";
+	private static String password = "root123";
 	private static String host = "127.0.0.1";
 	private static String port = "3306";
 	private static String dataBaseName = "Pharmacy";
@@ -125,11 +125,12 @@ public class Queries {
 				}
 			}
 
-			//System.out.println(preparedStatement);
+			System.out.println(preparedStatement);
 			preparedStatement.executeUpdate(); // Get the results on execution on result set
 			tempConnection.close();
 		} catch (SQLException e) {
-			String arr[] = statment.split(" ");
+			System.out.println(e.getMessage());
+			/*String arr[] = statment.split(" ");
 			StringBuilder warning = new StringBuilder();
 			StringBuilder massege = new StringBuilder();
 			if (arr[0].toLowerCase().equals("insert")) {
@@ -143,7 +144,7 @@ public class Queries {
 			alert.setTitle(warning.toString());
 			alert.setHeaderText(massege.toString());
 			alert.setContentText("Reasons:\n1-Duplicate Data entry\n2-Data too long\n3-Wrong input fromat");
-			alert.showAndWait();
+			alert.showAndWait();*/
 		}
 	}
 

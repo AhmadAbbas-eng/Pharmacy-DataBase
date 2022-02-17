@@ -23,8 +23,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.ColorAdjust;
@@ -88,9 +86,8 @@ public class AddProductController implements Initializable {
 	@FXML
 	private Label addedLabel;
 
-	static boolean answer = false;
 	static ObservableList<String> manufacturerObservableList = FXCollections.observableArrayList();
-	String filter = "";
+	
 	ArrayList<ArrayList<String>> manufacturerName = null;
 
 	public void addProductOnMousePressed() {
@@ -233,7 +230,6 @@ public class AddProductController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		manufacturerName = Queries.queryResult("select distinct product_manufactrer\n" + "from name_manu;", null);
-
 		setManufacturerNames();
 		maufacturerComboBox.setTooltip(manufacturerToolTip);
 		maufacturerComboBox.setItems(manufacturerObservableList);
