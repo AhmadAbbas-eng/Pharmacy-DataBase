@@ -160,9 +160,10 @@ public class ReceiveOrdersController implements Initializable {
 				if (costTextField.getText().isBlank() == false) {
 
 					Queries.queryUpdate(
-							"update s_order set Recieved_by=? , Recieved_Date=? , order_cost =?  where order_id=? ;",
+							"update s_order set Recieved_by=? , Recieved_Date=? , order_cost =?,due_date_for_payment=?  where order_id=? ;",
 							new ArrayList<>(Arrays.asList(Employee.getCurrentID() + "",
 									receivedDatePicker.getValue().toString(), costTextField.getText(),
+									payDueDatePicker.getValue().toString(),
 									supplierOrder.getID() + "")));
 
 					Queries.queryUpdate(
@@ -171,9 +172,10 @@ public class ReceiveOrdersController implements Initializable {
 									supplierOrder.getSupplierID() + "")));
 
 				} else {
-					Queries.queryUpdate("update s_order set Recieved_by=? , Recieved_Date=? where order_id=? ;",
+					Queries.queryUpdate("update s_order set Recieved_by=? , Recieved_Date=?,due_date_for_payment=? where order_id=? ;",
 							new ArrayList<>(Arrays.asList(Employee.getCurrentID() + "",
-									receivedDatePicker.getValue().toString(), supplierOrder.getID() + "")));
+									receivedDatePicker.getValue().toString(),
+									payDueDatePicker.getValue().toString(),supplierOrder.getID() + "")));
 				}
 				counter = 0;
 				while (data.size() > counter) {
