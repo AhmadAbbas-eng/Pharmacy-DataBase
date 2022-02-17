@@ -22,6 +22,8 @@ import javafx.scene.control.Alert;
  * 
  * @version 12 January 2022
  * @author Ahmad Abbas
+ * @author Aseel Sabri
+ * @author Loor Sawalhi
  */
 public class Queries {
 
