@@ -294,7 +294,7 @@ public class ChooseCustomerController implements Initializable {
 		addedIcon.setOpacity(0);
 		addedLabel.setOpacity(0);
 		fieldSelector.setItems(FXCollections.observableArrayList("-Specify Field-", "National ID", "Name"));
-		nidColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("NID"));
+		nidColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("nationalID"));
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
 		debtColumn.setCellValueFactory(new PropertyValueFactory<Customer, Double>("debt"));
 		filterList();

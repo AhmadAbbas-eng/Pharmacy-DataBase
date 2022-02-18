@@ -169,7 +169,7 @@ public class PayingOffController implements Initializable {
 		paidLabel.setOpacity(0);
 		dateLabel.setText(LocalDate.now().toString());
 		fieldSelector.setItems(FXCollections.observableArrayList("-Specify Field-", "National ID", "Name"));
-		nidColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("NID"));
+		nidColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("nationalID"));
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
 		debtColumn.setCellValueFactory(new PropertyValueFactory<Customer, Double>("debt"));
 		filterList();
