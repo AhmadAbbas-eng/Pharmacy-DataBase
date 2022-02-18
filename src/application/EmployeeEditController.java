@@ -95,7 +95,7 @@ public class EmployeeEditController implements Initializable {
 
 	public void phoneTextOnEnter(KeyEvent e) {
 		if (e.getCode() == KeyCode.ENTER) {
-			String phone = phoneTextField.getText();
+			String phone = phoneTextField.getText().trim();
 			if (phoneList.getItems().contains(phone.replaceAll("-", ""))) {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setHeaderText(null);
@@ -118,7 +118,7 @@ public class EmployeeEditController implements Initializable {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
 		addPhone.setEffect(effect);
-		String phone = phoneTextField.getText();
+		String phone = phoneTextField.getText().trim();
 		if (phoneList.getItems().contains(phone.replaceAll("-", ""))) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
@@ -207,13 +207,13 @@ public class EmployeeEditController implements Initializable {
 		effect.setBrightness(0.8);
 		addEmployee.setEffect(effect);
 		Double hourlyPaid = 0.0;
-		String NID = nidTextField.getText();
-		String name = nameTextField.getText();
-		String password = passwordTextField.getText();
-		String date = dateOfWork.getValue().toString();
+		String NID = nidTextField.getText().trim();
+		String name = nameTextField.getText().trim();
+		String password = passwordTextField.getText().trim();
+		String date = dateOfWork.getValue().toString().trim();
 		Boolean checkHourlyPaid = true;
 		try {
-			hourlyPaid = Double.parseDouble(hourlyPaidTextField.getText());
+			hourlyPaid = Double.parseDouble(hourlyPaidTextField.getText().trim());
 		} catch (NumberFormatException e) {
 			checkHourlyPaid = false;
 		}
@@ -279,14 +279,14 @@ public class EmployeeEditController implements Initializable {
 	}
 
 	public void listOnEditCommit(ListView.EditEvent<String> editedPhone) {
-		if (phoneList.getItems().contains(editedPhone.getNewValue().replaceAll("-", "")) && !editedPhone.getNewValue()
-				.replaceAll("-", "").equals(phoneList.getItems().get(editedPhone.getIndex()))) {
+		if (phoneList.getItems().contains(editedPhone.getNewValue().trim().replaceAll("-", "")) && !editedPhone
+				.getNewValue().trim().replaceAll("-", "").equals(phoneList.getItems().get(editedPhone.getIndex()))) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
 			alert.setContentText("Phone Number Already Exists");
 			alert.showAndWait();
-		} else if ((editedPhone.getNewValue().replaceAll("-", "")).matches("[0-9]{10}")) {
-			phoneList.getItems().set(editedPhone.getIndex(), editedPhone.getNewValue().replaceAll("-", ""));
+		} else if ((editedPhone.getNewValue().trim().replaceAll("-", "")).matches("[0-9]{10}")) {
+			phoneList.getItems().set(editedPhone.getIndex(), editedPhone.getNewValue().trim().replaceAll("-", ""));
 		} else {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Wrong Input Format");
@@ -353,17 +353,17 @@ public class EmployeeEditController implements Initializable {
 		passwordColumn.setCellFactory(TextFieldTableCell.<Employee>forTableColumn());
 		nidColumn.setOnEditCommit((CellEditEvent<Employee, String> t) -> {
 			if ((Queries.queryResult("select * from Customer where Employee_NID=? ;",
-					new ArrayList<>(Arrays.asList(t.getNewValue())))).size() != 0
-					&& !t.getOldValue().equals(t.getNewValue())) {
+					new ArrayList<>(Arrays.asList(t.getNewValue().trim())))).size() != 0
+					&& !t.getOldValue().trim().equals(t.getNewValue().trim())) {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setHeaderText(null);
 				alert.setContentText("Employee with This National ID Already Exists");
 				alert.showAndWait();
 				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
-						.setNationalID(t.getOldValue());
-			} else if (t.getNewValue().matches("[0-9]{9}")) {
+						.setNationalID(t.getOldValue().trim());
+			} else if (t.getNewValue().trim().matches("[0-9]{9}")) {
 				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
-						.setNationalID(t.getNewValue());
+						.setNationalID(t.getNewValue().trim());
 			} else {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle("Wrong Input Format");
@@ -371,16 +371,16 @@ public class EmployeeEditController implements Initializable {
 				alert.setContentText("National ID Must Be 9 Digits");
 				alert.showAndWait();
 				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
-						.setNationalID(t.getOldValue());
+						.setNationalID(t.getOldValue().trim());
 			}
 			employeeTable.refresh();
 		});
 
 		nameColumn.setOnEditCommit((CellEditEvent<Employee, String> t) -> {
-			if (t.getNewValue().matches("[a-z[A-Z]\\s]+")) {
-				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow())).setName(t.getNewValue());
+			if (t.getNewValue().trim().matches("[a-z[A-Z]\\s]+")) {
+				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow())).setName(t.getNewValue().trim());
 			} else {
-				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow())).setName(t.getOldValue());
+				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow())).setName(t.getOldValue().trim());
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle("Wrong Input Format");
 				alert.setHeaderText(null);
@@ -391,13 +391,13 @@ public class EmployeeEditController implements Initializable {
 		});
 
 		isManagerColumn.setOnEditCommit((CellEditEvent<Employee, String> t) -> {
-			if (t.getNewValue().toLowerCase().equals("true") || t.getNewValue().toLowerCase().equals("false")) {
+			if (t.getNewValue().trim().toLowerCase().equals("true") || t.getNewValue().trim().toLowerCase().equals("false")) {
 				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
-						.setIsManager(t.getNewValue());
+						.setIsManager(t.getNewValue().trim());
 
 			} else {
 				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
-						.setIsManager(t.getOldValue());
+						.setIsManager(t.getOldValue().trim());
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle("Wrong Input Format");
 				alert.setHeaderText(null);
@@ -408,13 +408,13 @@ public class EmployeeEditController implements Initializable {
 		});
 
 		isActiveColumn.setOnEditCommit((CellEditEvent<Employee, String> t) -> {
-			if (t.getNewValue().toLowerCase().equals("true") || t.getNewValue().toLowerCase().equals("false")) {
+			if (t.getNewValue().trim().toLowerCase().equals("true") || t.getNewValue().toLowerCase().equals("false")) {
 				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
-						.setIsActive(t.getNewValue());
+						.setIsActive(t.getNewValue().trim());
 
 			} else {
 				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
-						.setIsActive(t.getOldValue());
+						.setIsActive(t.getOldValue().trim());
 
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle("Wrong Input Format");
@@ -426,9 +426,9 @@ public class EmployeeEditController implements Initializable {
 		});
 
 		hourlyPaidColumn.setOnEditCommit((CellEditEvent<Employee, String> t) -> {
-			Double hourlyPaid = Double.parseDouble(t.getOldValue());
+			Double hourlyPaid = Double.parseDouble(t.getOldValue().trim());
 			try {
-				hourlyPaid = Double.parseDouble(t.getNewValue());
+				hourlyPaid = Double.parseDouble(t.getNewValue().trim());
 			} catch (NumberFormatException e) {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle("Wrong Input Format");
@@ -440,7 +440,7 @@ public class EmployeeEditController implements Initializable {
 			((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow())).setHourlyPaid(hourlyPaid);
 		});
 		passwordColumn.setOnEditCommit((CellEditEvent<Employee, String> t) -> {
-			((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow())).setPassword(t.getNewValue());
+			((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow())).setPassword(t.getNewValue().trim());
 		});
 		employeeTable.refresh();
 	}

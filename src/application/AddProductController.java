@@ -95,19 +95,19 @@ public class AddProductController implements Initializable {
 		effect.setBrightness(0.8);
 		addProduct.setEffect(effect);
 		Double price = 0.0;
-		String name = nameTextField.getText();
-		String scientificName = scientificNameTextField.getText();
-		String pregnencyCategory = pregnencyCategorySelector.getSelectionModel().getSelectedItem();
-		String pharmaceticalCategory = pharmaceticalCategorySelector.getSelectionModel().getSelectedItem();
+		String name = nameTextField.getText().trim();
+		String scientificName = scientificNameTextField.getText().trim();
+		String pregnencyCategory = pregnencyCategorySelector.getSelectionModel().getSelectedItem().trim();
+		String pharmaceticalCategory = pharmaceticalCategorySelector.getSelectionModel().getSelectedItem().trim();
 		if (pharmaceticalCategory == null) {
 			pharmaceticalCategory = "non";
 		}
-		String drugCategory = drugCategoryTextField.getText();
-		String dosage = dosageTextField.getText();
-		String dosageForm = dosageFormTextField.getText();
+		String drugCategory = drugCategoryTextField.getText().trim();
+		String dosage = dosageTextField.getText().trim();
+		String dosageForm = dosageFormTextField.getText().trim();
 		Boolean checkPrice = true;
 		try {
-			price = Double.parseDouble(priceTextField.getText());
+			price = Double.parseDouble(priceTextField.getText().trim());
 		} catch (NumberFormatException e) {
 			checkPrice = false;
 		}
@@ -121,14 +121,14 @@ public class AddProductController implements Initializable {
 		}
 
 		else if (checkPrice && price > 0 && name != null && !name.isBlank() && !name.isEmpty()
-				&& maufacturerComboBox.getSelectionModel().getSelectedItem() != null) {
+				&& maufacturerComboBox.getSelectionModel().getSelectedItem().trim() != null) {
 			if (isDrug.isSelected()) {
 				if (scientificName != null && !scientificName.isBlank() && !scientificName.isEmpty()
 						&& pregnencyCategory != null && drugCategory != null && !drugCategory.isBlank()
 						&& !drugCategory.isEmpty() && dosage != null && !dosage.isBlank() && !dosage.isEmpty()
 						&& dosageForm != null && !dosageForm.isBlank() && !dosageForm.isEmpty()) {
 					Queries.queryUpdate("Insert into Name_Manu values(?, ?);", new ArrayList<>(
-							Arrays.asList(name, maufacturerComboBox.getSelectionModel().getSelectedItem())));
+							Arrays.asList(name, maufacturerComboBox.getSelectionModel().getSelectedItem().trim())));
 					Drug.insertDrug(name, price, scientificName, pregnencyCategory, dosage, drugCategory, dosageForm,
 							pharmaceticalCategory);
 					showAndFade(addedLabel);
@@ -151,7 +151,7 @@ public class AddProductController implements Initializable {
 				}
 			} else {
 				Queries.queryUpdate("Insert into Name_Manu values(?, ?);", new ArrayList<>(
-						Arrays.asList(name, maufacturerComboBox.getSelectionModel().getSelectedItem())));
+						Arrays.asList(name, maufacturerComboBox.getSelectionModel().getSelectedItem().trim())));
 				Product.insertProduct(name, price);
 				showAndFade(addedLabel);
 				showAndFade(addedIcon);

@@ -211,11 +211,11 @@ public class SupplierOrderController implements Initializable {
 			} else {
 				double Discount = 0.0;
 				if (discountTextField.getText().isBlank() == false) {
-					Discount = Double.parseDouble(discountTextField.getText());
+					Discount = Double.parseDouble(discountTextField.getText().trim());
 				}
 
 				SupplierOrder insertOrder = new SupplierOrder(SupplierOrder.getMaxID(), orderDatePicker.getValue(),
-						Double.parseDouble(costLabel.getText()), Discount, LocalDate.parse("1111-01-01"),
+						Double.parseDouble(costLabel.getText().trim()), Discount, LocalDate.parse("1111-01-01"),
 						supplierTable.getSelectionModel().getSelectedItem().getID(),
 						managerTable.getSelectionModel().getSelectedItem().getID(), -1, LocalDate.parse("1111-01-01"));
 
@@ -228,7 +228,7 @@ public class SupplierOrderController implements Initializable {
 
 				SupplierOrder.getData().add(insertOrder);// new order
 
-				SupplierOrder.insertSupplierOrder(orderDatePicker.getValue(), Double.parseDouble(costLabel.getText()),
+				SupplierOrder.insertSupplierOrder(orderDatePicker.getValue(), Double.parseDouble(costLabel.getText().trim()),
 						Discount, LocalDate.parse("1111-01-01"),
 						supplierTable.getSelectionModel().getSelectedItem().getID(),
 						managerTable.getSelectionModel().getSelectedItem().getID(), -1, LocalDate.parse("1111-01-01"));

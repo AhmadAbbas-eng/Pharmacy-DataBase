@@ -67,7 +67,7 @@ public class CustomerProductsController implements Initializable {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
-		title.setText(customer.getName() + " Bought Products");
+		title.setText(customer.getName().trim() + " Bought Products");
 		filterList();
 	}
 
@@ -104,7 +104,7 @@ public class CustomerProductsController implements Initializable {
 		String searchCondition = "";
 		ArrayList<ArrayList<String>> filteredList = new ArrayList<>();
 		ArrayList<String> parameters = new ArrayList<>();
-		parameters.add(customer.getNationalID());
+		parameters.add(customer.getNationalID().trim());
 		String nonDrugsQuery = "select P.Product_Name, COB.Batch_Production_Date, COB.Batch_Expiry_Date,\r\n"
 				+ "CO.Order_Date, E.Employee_Name, COB.Order_amount\r\n"
 				+ "from Product P, Batch B, C_Order_Batch COB, C_Order CO, Employee E\r\n"

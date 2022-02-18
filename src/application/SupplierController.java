@@ -295,10 +295,10 @@ public class SupplierController implements Initializable {
 			emailColumn.setCellFactory(TextFieldTableCell.<Supplier>forTableColumn());
 		}
 		emailColumn.setOnEditCommit((CellEditEvent<Supplier, String> t) -> {
-			if (!t.getOldValue().equals(t.getNewValue())) {
+			if (!t.getOldValue().equals(t.getNewValue().trim())) {
 				editedFlag = true;
 			}
-			((Supplier) t.getTableView().getItems().get(t.getTablePosition().getRow())).setEmail(t.getNewValue());
+			((Supplier) t.getTableView().getItems().get(t.getTablePosition().getRow())).setEmail(t.getNewValue().trim());
 
 		});
 

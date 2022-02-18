@@ -162,7 +162,7 @@ public class ReceiveOrdersController implements Initializable {
 					Queries.queryUpdate(
 							"update s_order set Recieved_by=? , Recieved_Date=? , order_cost =?,due_date_for_payment=?  where order_id=? ;",
 							new ArrayList<>(Arrays.asList(Employee.getCurrentID() + "",
-									receivedDatePicker.getValue().toString(), costTextField.getText(),
+									receivedDatePicker.getValue().toString(), costTextField.getText().trim(),
 									payDueDatePicker.getValue().toString(),
 									supplierOrder.getID() + "")));
 
@@ -180,8 +180,8 @@ public class ReceiveOrdersController implements Initializable {
 				counter = 0;
 				while (data.size() > counter) {
 
-					String pID = data.get(counter).get(0);
-					String Amount = data.get(counter).get(4);
+					String pID = data.get(counter).get(0).trim();
+					String Amount = data.get(counter).get(4).trim();
 					Queries.queryUpdate("delete from S_Order_Batch"
 							+ " where order_ID = ? and product_id = ? and Batch_Production_Date = '1111-01-01';",
 							new ArrayList<>(Arrays.asList(supplierOrder.getID() + "", pID)));
@@ -190,7 +190,7 @@ public class ReceiveOrdersController implements Initializable {
 							"update Batch set batch_amount = batch_amount + ?"
 									+ " where product_id = ? and Batch_Production_Date = ?  and Batch_Expiry_Date = ?;",
 							new ArrayList<>(
-									Arrays.asList(Amount, pID, data.get(counter).get(2), data.get(counter).get(3))));
+									Arrays.asList(Amount, pID, data.get(counter).get(2).trim(), data.get(counter).get(3))));
 
 					Queries.queryUpdate(
 							"insert into S_Order_Batch (Order_ID ,Product_ID ,Batch_Production_Date,Batch_Expiry_Date,Batch_amount)"
@@ -360,7 +360,7 @@ public class ReceiveOrdersController implements Initializable {
 					productsEntered.add(ProductId);
 					productsEntered.add(ProductName);
 					productsEntered.add(
-							productsBatchColumn.getSelectionModel().getSelectedItem().getProductionDate().toString());
+							productsBatchColumn.getSelectionModel().getSelectedItem().getProductionDate().toString().trim());
 
 					productsEntered
 							.add(productsBatchColumn.getSelectionModel().getSelectedItem().getExpiryDate().toString());
@@ -383,13 +383,13 @@ public class ReceiveOrdersController implements Initializable {
 						alert.setContentText("You Have To Enter The New Quantity!");
 						alert.showAndWait();
 					} else {
-						int Qtemp = Integer.parseInt(quantityTextField.getText());
+						int Qtemp = Integer.parseInt(quantityTextField.getText().trim());
 						productsEntered.add(ProductId);
 						productsEntered.add(ProductName);
 						productsEntered.add(productsBatchColumn.getSelectionModel().getSelectedItem()
 								.getProductionDate().toString());
 						productsEntered.add(
-								productsBatchColumn.getSelectionModel().getSelectedItem().getExpiryDate().toString());
+								productsBatchColumn.getSelectionModel().getSelectedItem().getExpiryDate().toString().trim());
 						productsEntered.add(Qtemp + "");
 
 						if (orderedProducts.size() > counter && productsEntered.isEmpty() == false) {

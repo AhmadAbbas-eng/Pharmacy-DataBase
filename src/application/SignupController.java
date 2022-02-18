@@ -74,8 +74,8 @@ public class SignupController implements Initializable {
 	private TextField phoneTextField;
 
 	public void listOnEditCommit(ListView.EditEvent<String> editedPhone) {
-		if (editedPhone.getNewValue().matches("[0-9]{10}")) {
-			phoneList.getItems().set(editedPhone.getIndex(), editedPhone.getNewValue());
+		if (editedPhone.getNewValue().trim().matches("[0-9]{10}")) {
+			phoneList.getItems().set(editedPhone.getIndex(), editedPhone.getNewValue().trim());
 		} else {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Wrong Input");
@@ -87,7 +87,7 @@ public class SignupController implements Initializable {
 
 	public void textOnEnter(KeyEvent e) {
 		if (e.getCode() == KeyCode.ENTER) {
-			String phone = phoneTextField.getText();
+			String phone = phoneTextField.getText().trim();
 			if (phone.matches("[0-9]{10}")) {
 				phoneList.getItems().add(phone);
 				phoneTextField.setText("");
@@ -131,7 +131,7 @@ public class SignupController implements Initializable {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
 		addPhone.setEffect(effect);
-		String phone = phoneTextField.getText();
+		String phone = phoneTextField.getText().trim();
 		if (phone.matches("[0-9]{10}")) {
 			phoneList.getItems().add(phone);
 			phoneTextField.setText("");
@@ -186,11 +186,11 @@ public class SignupController implements Initializable {
 		if (employeeNameTextField.getText().isBlank() == false && nationalIDTextField.getText().isBlank() == false
 				&& dateOfWorkPicker.getValue().toString().isBlank() == false
 				&& hourlyPaidTextField.getText().isBlank() == false && passwordTextField.getText().isBlank() == false) {
-			if (nationalIDTextField.getText().matches("[0-9]{9}")) {
+			if (nationalIDTextField.getText().trim().matches("[0-9]{9}")) {
 				ArrayList<Employee> List = new ArrayList<>();
 				List = Employee.getEmployeeData(Queries.queryResult(
 						"select * from Employee where Employee_National_ID = ? order by Employee_ID;",
-						new ArrayList<>(Arrays.asList(nationalIDTextField.getText()))));
+						new ArrayList<>(Arrays.asList(nationalIDTextField.getText().trim()))));
 				if (List.isEmpty() == false) {
 					Alert alert = new Alert(Alert.AlertType.ERROR);
 					alert.setTitle("Wrong Input");
@@ -199,7 +199,7 @@ public class SignupController implements Initializable {
 					alert.showAndWait();
 				} else {
 					try {
-						Double num = Double.parseDouble(hourlyPaidTextField.getText());
+						Double num = Double.parseDouble(hourlyPaidTextField.getText().trim());
 						if (num < 0) {
 							flag = true;
 						}
@@ -227,13 +227,13 @@ public class SignupController implements Initializable {
 
 						Employee temp = new Employee(Employee.getMaxID()+1, employeeNameTextField.getText(),
 								nationalIDTextField.getText(), dateOfWorkPicker.getValue(),
-								Double.parseDouble(hourlyPaidTextField.getText()), phones,
+								Double.parseDouble(hourlyPaidTextField.getText().trim()), phones,
 								Employee.encryptPassword(employeeNameTextField.getText(), passwordTextField.getText()),
 								ismanager, "true");
 
 						Employee.getData().add(temp);
 						Employee.insertEmployee(employeeNameTextField.getText(), nationalIDTextField.getText(),
-								dateOfWorkPicker.getValue(), Double.parseDouble(hourlyPaidTextField.getText()), phones,
+								dateOfWorkPicker.getValue(), Double.parseDouble(hourlyPaidTextField.getText().trim()), phones,
 								Employee.encryptPassword(employeeNameTextField.getText(), passwordTextField.getText()),
 								ismanager, "true");
 

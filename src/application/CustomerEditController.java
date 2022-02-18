@@ -86,7 +86,7 @@ public class CustomerEditController implements Initializable {
 
 	private Customer customer;
 	private String customerNID = "";
-	
+
 	public void showAndFade(Node node) {
 
 		Timeline show = new Timeline(
@@ -102,7 +102,7 @@ public class CustomerEditController implements Initializable {
 
 	public void phoneTextOnEnter(KeyEvent e) {
 		if (e.getCode() == KeyCode.ENTER) {
-			String phone = phoneTextField.getText();
+			String phone = phoneTextField.getText().trim();
 
 			if (phoneList.getItems().contains(phone.replaceAll("-", ""))) {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -126,7 +126,7 @@ public class CustomerEditController implements Initializable {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
 		addPhone.setEffect(effect);
-		String phone = phoneTextField.getText();
+		String phone = phoneTextField.getText().trim();
 
 		if (phoneList.getItems().contains(phone.replaceAll("-", ""))) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -169,15 +169,15 @@ public class CustomerEditController implements Initializable {
 			effect.setBrightness(0.8);
 			saveCustomer.setEffect(effect);
 			ArrayList<String> parameters = new ArrayList<>();
-			parameters.add(customerTable.getItems().get(0).getNationalID());
-			parameters.add(customerTable.getItems().get(0).getName());
+			parameters.add(customerTable.getItems().get(0).getNationalID().trim());
+			parameters.add(customerTable.getItems().get(0).getName().trim());
 			parameters.add("" + customerTable.getItems().get(0).getDebt());
 			parameters.add(customerNID);
 			Queries.queryUpdate("update Customer set Customer_NID=? , Customer_Name=? , Customer_debt=? "
 					+ " where Customer_NID=? ;", parameters);
-			
+
 			caller.saveEdits();
-			customerNID = customer.getNationalID();
+			customerNID = customer.getNationalID().trim();
 		}
 
 	}
@@ -206,20 +206,19 @@ public class CustomerEditController implements Initializable {
 		}
 	}
 
-	public void addCustomerOnMousePressed(){
+	public void addCustomerOnMousePressed() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
 		addCustomer.setEffect(effect);
-		String NID = NIDtextField.getText();
-		String name = nameTextField.getText();
+		String NID = NIDtextField.getText().trim();
+		String name = nameTextField.getText().trim();
 		if ((Queries.queryResult("select * from Customer where Customer_NID=?;", new ArrayList<>(Arrays.asList(NID))))
 				.size() != 0) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
 			alert.setContentText("Custemer With This National ID Already Exists");
 			alert.showAndWait();
-		}
-		else if (!NID.matches("[0-9]{9}") || !name.matches("[a-z[A-Z]\\s]+")) {
+		} else if (!NID.matches("[0-9]{9}") || !name.matches("[a-z[A-Z]\\s]+")) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Wrong Input Format");
 			alert.setHeaderText("Wrong Input Format");
@@ -256,13 +255,13 @@ public class CustomerEditController implements Initializable {
 	}
 
 	public void listOnEditCommit(ListView.EditEvent<String> editedPhone) {
-		if (phoneList.getItems().contains(editedPhone.getNewValue().replaceAll("-", "")) && !editedPhone.getNewValue()
-				.replaceAll("-", "").equals(phoneList.getItems().get(editedPhone.getIndex()))) {
+		if (phoneList.getItems().contains(editedPhone.getNewValue().trim().replaceAll("-", "")) && !editedPhone
+				.getNewValue().trim().replaceAll("-", "").equals(phoneList.getItems().get(editedPhone.getIndex()))) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
 			alert.setContentText("Phone Number Already Exists");
 			alert.showAndWait();
-		} else if ((editedPhone.getNewValue().replaceAll("-", "")).matches("[0-9]{10}")) {
+		} else if ((editedPhone.getNewValue().trim().replaceAll("-", "")).matches("[0-9]{10}")) {
 			phoneList.getItems().set(editedPhone.getIndex(), editedPhone.getNewValue().replaceAll("-", ""));
 		} else {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -327,15 +326,17 @@ public class CustomerEditController implements Initializable {
 		debtColumn.setCellValueFactory(new PropertyValueFactory<Customer, Double>("debt"));
 		nidColumn.setOnEditCommit((CellEditEvent<Customer, String> t) -> {
 			if ((Queries.queryResult("select * from Customer where Customer_NID=? ;",
-					new ArrayList<>(Arrays.asList(t.getNewValue())))).size() != 0
-					&& !t.getOldValue().equals(t.getNewValue())) {
+					new ArrayList<>(Arrays.asList(t.getNewValue().trim())))).size() != 0
+					&& !t.getOldValue().equals(t.getNewValue().trim())) {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setHeaderText(null);
 				alert.setContentText("Custemer with this National ID already exists");
 				alert.showAndWait();
-				((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNationalID(t.getOldValue());
-			} else if (t.getNewValue().matches("[0-9]{9}") || t.getNewValue().equals("0")) {
-				((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNationalID(t.getNewValue());
+				((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+						.setNationalID(t.getOldValue().trim());
+			} else if (t.getNewValue().trim().matches("[0-9]{9}") || t.getNewValue().trim().equals("0")) {
+				((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+						.setNationalID(t.getNewValue().trim());
 			} else {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle("Wrong Input Format");
@@ -343,16 +344,19 @@ public class CustomerEditController implements Initializable {
 				alert.setContentText("National ID Must Be 9 Digits");
 				alert.showAndWait();
 
-				((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNationalID(t.getOldValue());
+				((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+						.setNationalID(t.getOldValue().trim());
 			}
 			customerTable.refresh();
 		});
 
 		nameColumn.setOnEditCommit((CellEditEvent<Customer, String> t) -> {
-			if (t.getNewValue().matches("[a-z[A-Z]\\s]+")) {
-				((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setName(t.getNewValue());
+			if (t.getNewValue().trim().matches("[a-z[A-Z]\\s]+")) {
+				((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+						.setName(t.getNewValue().trim());
 			} else {
-				((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow())).setName(t.getOldValue());
+				((Customer) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+						.setName(t.getOldValue().trim());
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle("Wrong Input Format");
 				alert.setHeaderText(null);
