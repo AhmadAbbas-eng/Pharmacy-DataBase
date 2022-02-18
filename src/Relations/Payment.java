@@ -77,7 +77,7 @@ public class Payment {
 	}
 
 	public static int getMaxID() {
-		return Integer.parseInt(Queries.queryResult("select max(payment_ID) from payment;", null).get(0).get(0));
+		return Integer.parseInt(Queries.queryResult("select ifnull(max(payment_ID),0) from payment;", null).get(0).get(0));
 	}
 
 	public static ObservableList<Payment> getDataList() {

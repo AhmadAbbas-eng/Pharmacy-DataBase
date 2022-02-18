@@ -191,7 +191,7 @@ public class Employee {
 	}
 
 	public static int getMaxID() {
-		return Integer.parseInt(Queries.queryResult("select max(employee_ID) from employee;", null).get(0).get(0));
+		return Integer.parseInt(Queries.queryResult("select ifnull(max(employee_ID),0) from employee;", null).get(0).get(0));
 	}
 
 	

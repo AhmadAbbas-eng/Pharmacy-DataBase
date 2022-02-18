@@ -143,7 +143,8 @@ public class SupplierOrder {
 	}
 
 	public static int getMaxID() {
-		return Integer.parseInt(Queries.queryResult("select max(order_Id) from s_order;", null).get(0).get(0));
+		return Integer
+				.parseInt(Queries.queryResult("select ifnull(max(order_Id),0) from s_order;", null).get(0).get(0));
 	}
 
 	public static ObservableList<SupplierOrder> getDataList() {
@@ -204,8 +205,8 @@ public class SupplierOrder {
 	public static void insertSupplierOrder(LocalDate dateOfOrder, double cost, double discount,
 			LocalDate dueDateOfPayment, int supplierID, int managerID, int recievedBy, LocalDate recDate) {
 		Queries.queryUpdate("Insert into s_order values(?, ?, ?, ?, ?, ?, ?, ?, ?);",
-				new ArrayList<>(Arrays.asList((getMaxID() + 1) + "", dateOfOrder.toString(), cost + "",
-						discount + "", dueDateOfPayment.toString(), supplierID + "", managerID + "", recievedBy + "",
+				new ArrayList<>(Arrays.asList((getMaxID() + 1) + "", dateOfOrder.toString(), cost + "", discount + "",
+						dueDateOfPayment.toString(), supplierID + "", managerID + "", recievedBy + "",
 						recDate.toString())));
 	}
 
