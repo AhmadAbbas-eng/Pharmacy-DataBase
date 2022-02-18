@@ -30,7 +30,7 @@ public class LoginController {
 
 	@FXML
 	private Button cancelButton;
- 
+
 	@FXML
 	private Button logInButton;
 
@@ -68,6 +68,7 @@ public class LoginController {
 														"select employee_name from Employee where Employee_ID = ?;",
 														new ArrayList<>(Arrays.asList(employeeIDTextField.getText().trim())))
 														.get(0).get(0), passwordTextField.getText())))));
+			
 
 						if (filteredList.isEmpty() == true) {
 							Alert alert = new Alert(Alert.AlertType.ERROR);
