@@ -147,16 +147,16 @@ public class ProductEditController implements Initializable {
 			effect.setBrightness(0.8);
 			saveProduct.setEffect(effect);
 			Queries.queryUpdate("update Name_Manu set Product_Name=? where Product_Name=? ;",
-					new ArrayList<>(Arrays.asList(productTable.getItems().get(0).get(1), oldName)));
+					new ArrayList<>(Arrays.asList(productTable.getItems().get(0).get(1).trim(), oldName)));
 
 			Queries.queryUpdate("update Product set Product_Price=? where Product_ID=? ;",
-					new ArrayList<>(Arrays.asList(productTable.getItems().get(0).get(2), product.get(0).get(0))));
+					new ArrayList<>(Arrays.asList(productTable.getItems().get(0).get(2).trim(), product.get(0).get(0).trim())));
 			if (productTable.getItems().get(0).size() > 8) {
 				Queries.queryUpdate("update Drug set Drug_Dosage_Form=? where Product_ID=? ;",
-						new ArrayList<>(Arrays.asList(productTable.getItems().get(0).get(8), product.get(0).get(0))));
+						new ArrayList<>(Arrays.asList(productTable.getItems().get(0).get(8).trim(), product.get(0).get(0).trim())));
 			}
 
-			oldName = productTable.getItems().get(0).get(1);
+			oldName = productTable.getItems().get(0).get(1).trim();
 			caller.saveEdits();
 			showAndFade(savedLabel);
 			showAndFade(savedIcon);
@@ -192,19 +192,19 @@ public class ProductEditController implements Initializable {
 		effect.setBrightness(0.8);
 		addProduct.setEffect(effect);
 		Double price = 0.0;
-		String name = nameTextField.getText();
-		String scientificName = scientificNameTextField.getText();
-		String pregnencyCategory = pregnencyCategorySelector.getSelectionModel().getSelectedItem();
-		String pharmaceticalCategory = pharmaceticalCategorySelector.getSelectionModel().getSelectedItem();
+		String name = nameTextField.getText().trim();
+		String scientificName = scientificNameTextField.getText().trim();
+		String pregnencyCategory = pregnencyCategorySelector.getSelectionModel().getSelectedItem().trim();
+		String pharmaceticalCategory = pharmaceticalCategorySelector.getSelectionModel().getSelectedItem().trim();
 		if (pharmaceticalCategory == null) {
 			pharmaceticalCategory = "non";
 		}
-		String drugCategory = drugCategoryTextField.getText();
-		String dosage = dosageTextField.getText();
-		String dosageForm = dosageFormTextField.getText();
+		String drugCategory = drugCategoryTextField.getText().trim();
+		String dosage = dosageTextField.getText().trim();
+		String dosageForm = dosageFormTextField.getText().trim();
 		Boolean checkPrice = true;
 		try {
-			price = Double.parseDouble(priceTextField.getText());
+			price = Double.parseDouble(priceTextField.getText().trim());
 		} catch (NumberFormatException e) {
 			checkPrice = false;
 		}
@@ -298,7 +298,7 @@ public class ProductEditController implements Initializable {
 		this.product = product;
 		if (product != null) {
 			productTable.setItems(FXCollections.observableArrayList(product));
-			oldName = productTable.getItems().get(0).get(1);
+			oldName = productTable.getItems().get(0).get(1).trim();
 		}
 	}
 
@@ -319,8 +319,8 @@ public class ProductEditController implements Initializable {
 
 	public void setManufacturerNames() {
 		for (int i = 0; i < manufacturerName.size(); ++i) {
-			if (manufacturerObservableList.indexOf(manufacturerName.get(i).get(0)) == -1) {
-				manufacturerObservableList.add(manufacturerName.get(i).get(0));
+			if (manufacturerObservableList.indexOf(manufacturerName.get(i).get(0).trim()) == -1) {
+				manufacturerObservableList.add(manufacturerName.get(i).get(0).trim());
 			}
 		}
 	}
@@ -399,7 +399,7 @@ public class ProductEditController implements Initializable {
 		nameColumn.setCellFactory(TextFieldTableCell.<ArrayList<String>>forTableColumn());
 
 		nameColumn.setOnEditCommit((CellEditEvent<ArrayList<String>, String> t) -> {
-			(t.getTableView().getItems().get(t.getTablePosition().getRow())).set(1, t.getNewValue());
+			(t.getTableView().getItems().get(t.getTablePosition().getRow())).set(1, t.getNewValue().trim());
 			productTable.refresh();
 		});
 
@@ -407,8 +407,8 @@ public class ProductEditController implements Initializable {
 		priceColumn.setCellFactory(TextFieldTableCell.<ArrayList<String>>forTableColumn());
 
 		priceColumn.setOnEditCommit((CellEditEvent<ArrayList<String>, String> t) -> {
-			if (t.getNewValue().matches("[0-9]+")) {
-				(t.getTableView().getItems().get(t.getTablePosition().getRow())).set(2, t.getNewValue());
+			if (t.getNewValue().trim().matches("[0-9]+")) {
+				(t.getTableView().getItems().get(t.getTablePosition().getRow())).set(2, t.getNewValue().trim());
 			} else {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle("Wrong Input Format");
@@ -423,14 +423,14 @@ public class ProductEditController implements Initializable {
 		dosageFormColumn.setCellFactory(TextFieldTableCell.<ArrayList<String>>forTableColumn());
 
 		dosageFormColumn.setOnEditCommit((CellEditEvent<ArrayList<String>, String> t) -> {
-			if (t.getOldValue().equals("-")) {
+			if (t.getOldValue().trim().equals("-")) {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle("Wrong Input Format");
 				alert.setHeaderText(null);
 				alert.setContentText("Selected Product Cannot Have Dosage Form");
 				alert.showAndWait();
 			} else {
-				(t.getTableView().getItems().get(t.getTablePosition().getRow())).set(8, t.getNewValue());
+				(t.getTableView().getItems().get(t.getTablePosition().getRow())).set(8, t.getNewValue().trim());
 			}
 			productTable.refresh();
 		});

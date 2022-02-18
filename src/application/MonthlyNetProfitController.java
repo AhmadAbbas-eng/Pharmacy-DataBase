@@ -97,8 +97,8 @@ public class MonthlyNetProfitController implements Initializable {
 
 		if (minimunMonthArrayList.get(0).get(0) != null) {
 
-			startMonth = Integer.parseInt(minimunMonthArrayList.get(0).get(0).substring(5, 7));
-			startYear = Integer.parseInt(minimunMonthArrayList.get(0).get(0).substring(0, 4));
+			startMonth = Integer.parseInt(minimunMonthArrayList.get(0).get(0).substring(5, 7).trim());
+			startYear = Integer.parseInt(minimunMonthArrayList.get(0).get(0).substring(0, 4).trim());
 		} else {
 			startMonth = currentMonth;
 			startYear = currentYear;

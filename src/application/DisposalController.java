@@ -131,7 +131,7 @@ public class DisposalController implements Initializable {
 	public void disposeOnAction(ActionEvent e){
 		if (toBeDisposedTable.getSelectionModel().getSelectedItem() != null) {
 			if (expiredSelectionCheckBox.isSelected()) {
-				if (disposalCostTextField.getText().isBlank()) {
+				if (disposalCostTextField.getText().trim().isBlank()) {
 					Alert alert = new Alert(Alert.AlertType.ERROR);
 					alert.setTitle(null);
 					alert.setHeaderText(null);
@@ -140,7 +140,7 @@ public class DisposalController implements Initializable {
 				} else {
 					boolean flag = false;
 					try {
-						Double num = Double.parseDouble(disposalCostTextField.getText());
+						Double num = Double.parseDouble(disposalCostTextField.getText().trim());
 						if (num < 0) {
 							flag = true;
 							Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -160,24 +160,24 @@ public class DisposalController implements Initializable {
 					}
 					if (flag == false) {
 						Payment.insertPayment(java.time.LocalDate.now(),
-								Double.parseDouble(disposalCostTextField.getText()), "Cash");
+								Double.parseDouble(disposalCostTextField.getText().trim()), "Cash");
 						Queries.queryUpdate(
 								"insert into drug_disposal (Disposal_amount,Disposal_date,Employee_ID,Payment_ID,Product_ID ,Batch_Production_Date"
 										+ ",Batch_Expiry_Date) values(?,?,?,?,?,?,?)",
 								new ArrayList<String>(Arrays.asList(
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(4).toString(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(4).toString().trim(),
 										java.time.LocalDate.now().toString(), Employee.getCurrentID() + "",
 										Payment.getMaxID() + "",
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString(),
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString(),
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString())));
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString().trim(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString().trim(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString().trim())));
 
 						Queries.queryUpdate(
 								"update batch set batch_amount = 0 where Batch_Production_Date=? and Batch_Expiry_Date=? and Product_ID=?",
 								new ArrayList<String>(Arrays.asList(
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString(),
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString(),
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString())));
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString().trim(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString().trim(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString().trim())));
 
 						showAndFade(success);
 						showAndFade(successIcon);
@@ -190,8 +190,8 @@ public class DisposalController implements Initializable {
 					}
 				}
 			} else {
-				if (disposalCostTextField.getText().isBlank() == true
-						|| amountToBeDisposed.getText().isBlank() == true) {
+				if (disposalCostTextField.getText().trim().isBlank() == true
+						|| amountToBeDisposed.getText().trim().isBlank() == true) {
 					Alert alert = new Alert(Alert.AlertType.ERROR);
 					alert.setTitle(null);
 					alert.setHeaderText(null);
@@ -200,13 +200,13 @@ public class DisposalController implements Initializable {
 				} else {
 					boolean flag = false;
 					try {
-						int num2 = Integer.parseInt(amountToBeDisposed.getText());
+						int num2 = Integer.parseInt(amountToBeDisposed.getText().trim());
 						int quantity=Integer.parseInt(Queries.queryResult("select Batch_Amount from batch"
 								+ " where product_ID=? and batch_production_date=? and batch_expiry_date=?",
 								new ArrayList<String>(Arrays.asList(
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString(),
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString(),
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString()))).get(0).get(0));
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString().trim(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString().trim(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString().trim()))).get(0).get(0));
 						if (num2 < 0) {
 							flag = true;
 							Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -224,7 +224,7 @@ public class DisposalController implements Initializable {
 						}
 						else {
 							try {
-								Double num = Double.parseDouble(disposalCostTextField.getText());
+								Double num = Double.parseDouble(disposalCostTextField.getText().trim());
 								if (num < 0) {
 									flag = true;
 									Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -254,23 +254,23 @@ public class DisposalController implements Initializable {
 
 					if (flag == false) {
 						Payment.insertPayment(java.time.LocalDate.now(),
-								Double.parseDouble(disposalCostTextField.getText()), "Cash");
+								Double.parseDouble(disposalCostTextField.getText().trim()), "Cash");
 						Queries.queryUpdate(
 								"insert into drug_disposal (Disposal_amount,Disposal_date,Employee_ID,Payment_ID,Product_ID ,Batch_Production_Date"
 										+ ",Batch_Expiry_Date) values(?,?,?,?,?,?,?)",
-								new ArrayList<String>(Arrays.asList(amountToBeDisposed.getText(),
+								new ArrayList<String>(Arrays.asList(amountToBeDisposed.getText().trim(),
 										java.time.LocalDate.now().toString(), Employee.getCurrentID() + "",
 										Payment.getMaxID() + "",
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString(),
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString(),
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString())));
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString().trim(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString().trim(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString().trim())));
 
 						Queries.queryUpdate(
 								"update batch set batch_amount = batch_amount - ? where Batch_Production_Date=? and Batch_Expiry_Date=? and Product_ID=?",
-								new ArrayList<String>(Arrays.asList(amountToBeDisposed.getText(),
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString(),
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString(),
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString())));
+								new ArrayList<String>(Arrays.asList(amountToBeDisposed.getText().trim(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString().trim(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString().trim(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString().trim())));
 
 						showAndFade(success);
 						showAndFade(successIcon);
