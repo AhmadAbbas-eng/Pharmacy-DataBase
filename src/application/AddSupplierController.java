@@ -57,13 +57,13 @@ public class AddSupplierController implements Initializable {
 			String phone = phoneTextField.getText().trim();
 
 			// Check the existence of the number
-			if (phoneList.getItems().contains(phone.replaceAll("-", ""))) {
+			if (phoneList.getItems().contains(phone.replaceAll("(-|\\s)", ""))) {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setHeaderText(null);
 				alert.setContentText("Phone Number Already Exists");
 				alert.showAndWait();
-			} else if ((phone.replaceAll("-", "")).matches("[0-9]{10}")) {
-				phoneList.getItems().add(phone.replaceAll("-", ""));
+			} else if ((phone.replaceAll("(-|\\s)", "")).matches("[0-9]{10}")) {
+				phoneList.getItems().add(phone.replaceAll("(-|\\s)", ""));
 				phoneTextField.setText("");
 			} else {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -81,13 +81,13 @@ public class AddSupplierController implements Initializable {
 		addPhone.setEffect(effect);
 		String phone = phoneTextField.getText().trim();
 
-		if (phoneList.getItems().contains(phone.replaceAll("-", ""))) {
+		if (phoneList.getItems().contains(phone.replaceAll("(-|\\s)", ""))) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
 			alert.setContentText("Phone Number Already Exists");
 			alert.showAndWait();
-		} else if ((phone.replaceAll("-", "")).matches("[0-9]{10}")) {
-			phoneList.getItems().add(phone.replaceAll("-", ""));
+		} else if ((phone.replaceAll("(-|\\s)", "")).matches("[0-9]{10}")) {
+			phoneList.getItems().add(phone.replaceAll("(-|\\s)", ""));
 			phoneTextField.setText("");
 		} else {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -178,14 +178,16 @@ public class AddSupplierController implements Initializable {
 	}
 
 	public void listOnEditCommit(ListView.EditEvent<String> editedPhone) {
-		if (phoneList.getItems().contains(editedPhone.getNewValue().trim().replaceAll("-", "")) && !editedPhone.getNewValue()
-				.trim().replaceAll("-", "").equals(phoneList.getItems().get(editedPhone.getIndex()))) {
+		if (phoneList.getItems().contains(editedPhone.getNewValue().trim().replaceAll("(-|\\s)", ""))
+				&& !editedPhone.getNewValue().trim().replaceAll("(-|\\s)", "")
+						.equals(phoneList.getItems().get(editedPhone.getIndex()))) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
 			alert.setContentText("Phone Number Already Exists");
 			alert.showAndWait();
-		} else if ((editedPhone.getNewValue().trim().replaceAll("-", "")).matches("[0-9]{10}")) {
-			phoneList.getItems().set(editedPhone.getIndex(), editedPhone.getNewValue().trim().replaceAll("-", ""));
+		} else if ((editedPhone.getNewValue().trim().replaceAll("(-|\\s)", "")).matches("[0-9]{10}")) {
+			phoneList.getItems().set(editedPhone.getIndex(),
+					editedPhone.getNewValue().trim().replaceAll("(-|\\s)", ""));
 		} else {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Wrong Input Format");
