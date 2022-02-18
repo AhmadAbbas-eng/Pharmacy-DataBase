@@ -132,21 +132,18 @@ public class Queries {
 			tempConnection.close();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			/*String arr[] = statment.split(" ");
-			StringBuilder warning = new StringBuilder();
-			StringBuilder massege = new StringBuilder();
-			if (arr[0].toLowerCase().equals("insert")) {
-				warning.append("Adding Error");
-				massege.append("Can't add enrty");
-			} else if (arr[0].toLowerCase().equals("update")) {
-				warning.append("Updating Error");
-				massege.append("Can't update ");
-			}
-			Alert alert = new Alert(Alert.AlertType.ERROR);
-			alert.setTitle(warning.toString());
-			alert.setHeaderText(massege.toString());
-			alert.setContentText("Reasons:\n1-Duplicate Data entry\n2-Data too long\n3-Wrong input fromat");
-			alert.showAndWait();*/
+			/*
+			 * String arr[] = statment.split(" "); StringBuilder warning = new
+			 * StringBuilder(); StringBuilder massege = new StringBuilder(); if
+			 * (arr[0].toLowerCase().equals("insert")) { warning.append("Adding Error");
+			 * massege.append("Can't add enrty"); } else if
+			 * (arr[0].toLowerCase().equals("update")) { warning.append("Updating Error");
+			 * massege.append("Can't update "); } Alert alert = new
+			 * Alert(Alert.AlertType.ERROR); alert.setTitle(warning.toString());
+			 * alert.setHeaderText(massege.toString()); alert.
+			 * setContentText("Reasons:\n1-Duplicate Data entry\n2-Data too long\n3-Wrong input fromat"
+			 * ); alert.showAndWait();
+			 */
 		}
 	}
 
@@ -162,13 +159,13 @@ public class Queries {
 			Connection tempConnection = dataBaseConnection(); // Create connection to the data base
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss"); // format date as current date
 			LocalDateTime now = LocalDateTime.now();
-			
+
 			// Write on the path the user asked
 			FileWriter fileWriter = new FileWriter(filePath + dtf.format(now) + ".csv");
 			System.out.println(query);
-			
+
 			// Creates the statement that which executes the query
-			Statement creation = tempConnection.createStatement(); 
+			Statement creation = tempConnection.createStatement();
 			ResultSet executioResult = creation.executeQuery(query); // Get the results on execution on result set
 			ResultSetMetaData rsmd = executioResult.getMetaData(); // Create meta data of the result to get its size
 			int size = rsmd.getColumnCount(); // The number of columns of the result
@@ -210,23 +207,16 @@ public class Queries {
 
 	public static double getNetProfit(int month, int year) {
 		ArrayList<String> parameters = new ArrayList<>();
-		parameters.add("%" + year + "%");
-		parameters.add("%" + month + "%");
-		parameters.add("%" + year + "%");
-		parameters.add("%" + month + "%");
-		if (queryResult("select sum(I.income_amount)\r\n" + "-(select sum(p.payment_amount)\r\n"
-				+ "from payment p where year(p.payment_Date) like ? and month(p.payment_Date) like ?)\r\n"
-				+ "from income I where year(i.income_Date) like ? and month(i.income_Date) like ?;", parameters).get(0)
-						.get(0) == null) {
-			return 0.0;
-		}
-		return Double.parseDouble(queryResult("select sum(I.income_amount)\r\n" + "-(select sum(p.payment_amount)\r\n"
-				+ "from payment p where year(p.payment_Date) like ? and month(p.payment_Date) like ?)\r\n"
-				+ "from income I where year(i.income_Date) like ? and month(i.income_Date) like ?;", parameters).get(0)
-						.get(0));
+		parameters.add(year + "");
+		parameters.add(month + "");
+		parameters.add(year + "");
+		parameters.add(month + "");
+		return Double.parseDouble(
+				queryResult("select ifnull(sum(I.income_amount),0)\r\n" + "-(select ifnull(sum(p.payment_amount),0)\r\n"
+						+ "from payment p where year(p.payment_Date)=? and month(p.payment_Date)=?)\r\n"
+						+ "from income I where year(i.income_Date)=? and month(i.income_Date)=?;", parameters).get(0)
+								.get(0));
 	}
-
-
 
 	/**
 	 * expiryDate: to get drugs with close expire date
@@ -247,7 +237,7 @@ public class Queries {
 	 * 
 	 * @return ArrayList<ArrayList<String>> contains all data of the batches
 	 */
-	public static ArrayList<ArrayList<String>> amountToFinish(){
+	public static ArrayList<ArrayList<String>> amountToFinish() {
 		return queryResult("SELECT P.product_name,b.batch_production_date,b.batch_expiry_date,b.batch_amount\r\n"
 				+ "from batch b,product p,drug d\r\n"
 				+ "where b.batch_amount>0 and b.product_ID=p.product_ID and d.product_ID=p.product_Id and b.batch_production_date <>'1111-01-01' \r\n"
