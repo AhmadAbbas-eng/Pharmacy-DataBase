@@ -194,8 +194,8 @@ public class ProductEditController implements Initializable {
 		Double price = 0.0;
 		String name = nameTextField.getText().trim();
 		String scientificName = scientificNameTextField.getText().trim();
-		String pregnencyCategory = pregnencyCategorySelector.getSelectionModel().getSelectedItem().trim();
-		String pharmaceticalCategory = pharmaceticalCategorySelector.getSelectionModel().getSelectedItem().trim();
+		String pregnencyCategory = pregnencyCategorySelector.getSelectionModel().getSelectedItem();
+		String pharmaceticalCategory = pharmaceticalCategorySelector.getSelectionModel().getSelectedItem();
 		if (pharmaceticalCategory == null) {
 			pharmaceticalCategory = "non";
 		}

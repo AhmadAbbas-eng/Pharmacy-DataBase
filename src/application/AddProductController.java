@@ -43,7 +43,7 @@ public class AddProductController implements Initializable {
 
 	@FXML
 	private ComboBox<String> maufacturerComboBox;
-	
+
 	@FXML
 	private ImageView addProduct;
 
@@ -87,7 +87,7 @@ public class AddProductController implements Initializable {
 	private Label addedLabel;
 
 	static ObservableList<String> manufacturerObservableList = FXCollections.observableArrayList();
-	
+
 	ArrayList<ArrayList<String>> manufacturerName = null;
 
 	public void addProductOnMousePressed() {
@@ -97,8 +97,8 @@ public class AddProductController implements Initializable {
 		Double price = 0.0;
 		String name = nameTextField.getText().trim();
 		String scientificName = scientificNameTextField.getText().trim();
-		String pregnencyCategory = pregnencyCategorySelector.getSelectionModel().getSelectedItem().trim();
-		String pharmaceticalCategory = pharmaceticalCategorySelector.getSelectionModel().getSelectedItem().trim();
+		String pregnencyCategory = pregnencyCategorySelector.getSelectionModel().getSelectedItem();
+		String pharmaceticalCategory = pharmaceticalCategorySelector.getSelectionModel().getSelectedItem();
 		if (pharmaceticalCategory == null) {
 			pharmaceticalCategory = "non";
 		}
@@ -121,14 +121,14 @@ public class AddProductController implements Initializable {
 		}
 
 		else if (checkPrice && price > 0 && name != null && !name.isBlank() && !name.isEmpty()
-				&& maufacturerComboBox.getSelectionModel().getSelectedItem().trim() != null) {
+				&& maufacturerComboBox.getSelectionModel().getSelectedItem() != null) {
 			if (isDrug.isSelected()) {
 				if (scientificName != null && !scientificName.isBlank() && !scientificName.isEmpty()
 						&& pregnencyCategory != null && drugCategory != null && !drugCategory.isBlank()
 						&& !drugCategory.isEmpty() && dosage != null && !dosage.isBlank() && !dosage.isEmpty()
 						&& dosageForm != null && !dosageForm.isBlank() && !dosageForm.isEmpty()) {
 					Queries.queryUpdate("Insert into Name_Manu values(?, ?);", new ArrayList<>(
-							Arrays.asList(name, maufacturerComboBox.getSelectionModel().getSelectedItem().trim())));
+							Arrays.asList(name, maufacturerComboBox.getSelectionModel().getSelectedItem())));
 					Drug.insertDrug(name, price, scientificName, pregnencyCategory, dosage, drugCategory, dosageForm,
 							pharmaceticalCategory);
 					showAndFade(addedLabel);
@@ -151,7 +151,7 @@ public class AddProductController implements Initializable {
 				}
 			} else {
 				Queries.queryUpdate("Insert into Name_Manu values(?, ?);", new ArrayList<>(
-						Arrays.asList(name, maufacturerComboBox.getSelectionModel().getSelectedItem().trim())));
+						Arrays.asList(name, maufacturerComboBox.getSelectionModel().getSelectedItem())));
 				Product.insertProduct(name, price);
 				showAndFade(addedLabel);
 				showAndFade(addedIcon);
