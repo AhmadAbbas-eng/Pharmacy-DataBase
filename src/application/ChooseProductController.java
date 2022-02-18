@@ -602,6 +602,7 @@ public class ChooseProductController implements Initializable {
 		}
 		productTable.getItems().clear();
 		productTable.setItems(FXCollections.observableArrayList(filteredList));
+		productTable.refresh();
 	}
 
 	public void getChosenProducts(ObservableList<ArrayList<String>> chosenProducts, SellController caller) {
@@ -748,7 +749,7 @@ public class ChooseProductController implements Initializable {
 		filterProductList();
 
 		searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
-			this.stringToSearch = newValue;
+			this.stringToSearch = newValue.trim();
 			filterProductList();
 
 		});
