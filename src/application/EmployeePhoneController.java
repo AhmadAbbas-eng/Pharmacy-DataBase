@@ -73,15 +73,17 @@ public class EmployeePhoneController implements Initializable {
 	}
 
 	public void listOnEditCommit(ListView.EditEvent<String> editedPhone) {
-		if (phoneList.getItems().contains(editedPhone.getNewValue().replaceAll("-", "").replaceAll(" ", "")) && !editedPhone.getNewValue()
-				.replaceAll("-", "").replaceAll(" ", "").equals(phoneList.getItems().get(editedPhone.getIndex()))) {
+		if (phoneList.getItems().contains(editedPhone.getNewValue().replaceAll("(-|\\s)", "").replaceAll(" ", ""))
+				&& !editedPhone.getNewValue().replaceAll("(-|\\s)", "").replaceAll(" ", "")
+						.equals(phoneList.getItems().get(editedPhone.getIndex()))) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
 			alert.setContentText("Phone Number Already Exists");
 			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 			alert.showAndWait();
-		} else if ((editedPhone.getNewValue().replaceAll("-", "").replaceAll(" ", "")).matches("[0-9]{10}")) {
-			phoneList.getItems().set(editedPhone.getIndex(), editedPhone.getNewValue().replaceAll("-", "").replaceAll(" ", ""));
+		} else if ((editedPhone.getNewValue().replaceAll("(-|\\s)", "").replaceAll(" ", "")).matches("[0-9]{10}")) {
+			phoneList.getItems().set(editedPhone.getIndex(),
+					editedPhone.getNewValue().replaceAll("(-|\\s)", "").replaceAll(" ", ""));
 		} else {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Wrong Input Format");
@@ -95,14 +97,14 @@ public class EmployeePhoneController implements Initializable {
 	public void textOnEnter(KeyEvent e) {
 		if (e.getCode() == KeyCode.ENTER) {
 			String phone = phoneTextField.getText();
-			if (phoneList.getItems().contains(phone.replaceAll("-", "").replaceAll(" ", ""))) {
+			if (phoneList.getItems().contains(phone.replaceAll("(-|\\s)", "").replaceAll(" ", ""))) {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setHeaderText(null);
 				alert.setContentText("Phone Number Already Exists");
 				((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 				alert.showAndWait();
-			} else if ((phone.replaceAll("-", "").replaceAll(" ", "")).matches("[0-9]{10}")) {
-				phoneList.getItems().add(phone.replaceAll("-", "").replaceAll(" ", ""));
+			} else if ((phone.replaceAll("(-|\\s)", "").replaceAll(" ", "")).matches("[0-9]{10}")) {
+				phoneList.getItems().add(phone.replaceAll("(-|\\s)", "").replaceAll(" ", ""));
 				phoneTextField.setText("");
 			} else {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -174,14 +176,14 @@ public class EmployeePhoneController implements Initializable {
 		effect.setBrightness(0.8);
 		addPhone.setEffect(effect);
 		String phone = phoneTextField.getText();
-		if (phoneList.getItems().contains(phone.replaceAll("-", "").replaceAll(" ", ""))) {
+		if (phoneList.getItems().contains(phone.replaceAll("(-|\\s)", "").replaceAll(" ", ""))) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
 			alert.setContentText("Phone Number Already Exists");
 			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 			alert.showAndWait();
-		} else if (phone.replaceAll("-", "").replaceAll(" ", "").matches("[0-9]{10}")) {
-			phoneList.getItems().add(phone.replaceAll("-", ""));
+		} else if (phone.replaceAll("(-|\\s)", "").replaceAll(" ", "").matches("[0-9]{10}")) {
+			phoneList.getItems().add(phone.replaceAll("(-|\\s)", ""));
 			phoneTextField.setText("");
 		} else {
 			Alert alert = new Alert(Alert.AlertType.ERROR);

@@ -96,13 +96,13 @@ public class EmployeeEditController implements Initializable {
 	public void phoneTextOnEnter(KeyEvent e) {
 		if (e.getCode() == KeyCode.ENTER) {
 			String phone = phoneTextField.getText().trim();
-			if (phoneList.getItems().contains(phone.replaceAll("-", ""))) {
+			if (phoneList.getItems().contains(phone.replaceAll("(-|\\s)", ""))) {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setHeaderText(null);
 				alert.setContentText("Phone Number Already Exists");
 				alert.showAndWait();
-			} else if ((phone.replaceAll("-", "")).matches("[0-9]{10}")) {
-				phoneList.getItems().add(phone.replaceAll("-", ""));
+			} else if ((phone.replaceAll("(-|\\s)", "")).matches("[0-9]{10}")) {
+				phoneList.getItems().add(phone.replaceAll("(-|\\s)", ""));
 				phoneTextField.setText("");
 			} else {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -119,13 +119,13 @@ public class EmployeeEditController implements Initializable {
 		effect.setBrightness(0.8);
 		addPhone.setEffect(effect);
 		String phone = phoneTextField.getText().trim();
-		if (phoneList.getItems().contains(phone.replaceAll("-", ""))) {
+		if (phoneList.getItems().contains(phone.replaceAll("(-|\\s)", ""))) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
 			alert.setContentText("Phone Number Already Exists");
 			alert.showAndWait();
-		} else if (phone.replaceAll("-", "").matches("[0-9]{10}")) {
-			phoneList.getItems().add(phone.replaceAll("-", ""));
+		} else if (phone.replaceAll("(-|\\s)", "").matches("[0-9]{10}")) {
+			phoneList.getItems().add(phone.replaceAll("(-|\\s)", ""));
 			phoneTextField.setText("");
 		} else {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -279,14 +279,16 @@ public class EmployeeEditController implements Initializable {
 	}
 
 	public void listOnEditCommit(ListView.EditEvent<String> editedPhone) {
-		if (phoneList.getItems().contains(editedPhone.getNewValue().trim().replaceAll("-", "")) && !editedPhone
-				.getNewValue().trim().replaceAll("-", "").equals(phoneList.getItems().get(editedPhone.getIndex()))) {
+		if (phoneList.getItems().contains(editedPhone.getNewValue().trim().replaceAll("(-|\\s)", ""))
+				&& !editedPhone.getNewValue().trim().replaceAll("(-|\\s)", "")
+						.equals(phoneList.getItems().get(editedPhone.getIndex()))) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
 			alert.setContentText("Phone Number Already Exists");
 			alert.showAndWait();
-		} else if ((editedPhone.getNewValue().trim().replaceAll("-", "")).matches("[0-9]{10}")) {
-			phoneList.getItems().set(editedPhone.getIndex(), editedPhone.getNewValue().trim().replaceAll("-", ""));
+		} else if ((editedPhone.getNewValue().trim().replaceAll("(-|\\s)", "")).matches("[0-9]{10}")) {
+			phoneList.getItems().set(editedPhone.getIndex(),
+					editedPhone.getNewValue().trim().replaceAll("(-|\\s)", ""));
 		} else {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Wrong Input Format");
@@ -378,9 +380,11 @@ public class EmployeeEditController implements Initializable {
 
 		nameColumn.setOnEditCommit((CellEditEvent<Employee, String> t) -> {
 			if (t.getNewValue().trim().matches("[a-z[A-Z]\\s]+")) {
-				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow())).setName(t.getNewValue().trim());
+				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+						.setName(t.getNewValue().trim());
 			} else {
-				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow())).setName(t.getOldValue().trim());
+				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+						.setName(t.getOldValue().trim());
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle("Wrong Input Format");
 				alert.setHeaderText(null);
@@ -391,7 +395,8 @@ public class EmployeeEditController implements Initializable {
 		});
 
 		isManagerColumn.setOnEditCommit((CellEditEvent<Employee, String> t) -> {
-			if (t.getNewValue().trim().toLowerCase().equals("true") || t.getNewValue().trim().toLowerCase().equals("false")) {
+			if (t.getNewValue().trim().toLowerCase().equals("true")
+					|| t.getNewValue().trim().toLowerCase().equals("false")) {
 				((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
 						.setIsManager(t.getNewValue().trim());
 
@@ -440,7 +445,8 @@ public class EmployeeEditController implements Initializable {
 			((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow())).setHourlyPaid(hourlyPaid);
 		});
 		passwordColumn.setOnEditCommit((CellEditEvent<Employee, String> t) -> {
-			((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow())).setPassword(t.getNewValue().trim());
+			((Employee) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+					.setPassword(t.getNewValue().trim());
 		});
 		employeeTable.refresh();
 	}

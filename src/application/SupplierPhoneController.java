@@ -74,15 +74,15 @@ public class SupplierPhoneController implements Initializable {
 	}
 
 	public void listOnEditCommit(ListView.EditEvent<String> editedPhone) {
-		if (phoneList.getItems().contains(editedPhone.getNewValue().replaceAll("-", "")) && !editedPhone.getNewValue()
-				.replaceAll("-", "").equals(phoneList.getItems().get(editedPhone.getIndex()))) {
+		if (phoneList.getItems().contains(editedPhone.getNewValue().replaceAll("(-|\\s)", "")) && !editedPhone
+				.getNewValue().replaceAll("(-|\\s)", "").equals(phoneList.getItems().get(editedPhone.getIndex()))) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
 			alert.setContentText("Phone Number Already Exists");
 			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 			alert.showAndWait();
-		} else if ((editedPhone.getNewValue().replaceAll("-", "")).matches("[0-9]{10}")) {
-			phoneList.getItems().set(editedPhone.getIndex(), editedPhone.getNewValue().replaceAll("-", ""));
+		} else if ((editedPhone.getNewValue().replaceAll("(-|\\s)", "")).matches("[0-9]{10}")) {
+			phoneList.getItems().set(editedPhone.getIndex(), editedPhone.getNewValue().replaceAll("(-|\\s)", ""));
 		} else {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Wrong Input Format");
@@ -96,14 +96,14 @@ public class SupplierPhoneController implements Initializable {
 	public void textOnEnter(KeyEvent e) {
 		if (e.getCode() == KeyCode.ENTER) {
 			String phone = phoneTextField.getText();
-			if (phoneList.getItems().contains(phone.replaceAll("-", ""))) {
+			if (phoneList.getItems().contains(phone.replaceAll("(-|\\s)", ""))) {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setHeaderText(null);
 				alert.setContentText("Phone Number Already Exists");
 				((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 				alert.showAndWait();
-			} else if ((phone.replaceAll("-", "")).matches("[0-9]{10}")) {
-				phoneList.getItems().add(phone.replaceAll("-", ""));
+			} else if ((phone.replaceAll("(-|\\s)", "")).matches("[0-9]{10}")) {
+				phoneList.getItems().add(phone.replaceAll("(-|\\s)", ""));
 				phoneTextField.setText("");
 			} else {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -177,14 +177,14 @@ public class SupplierPhoneController implements Initializable {
 		addPhone.setEffect(effect);
 		String phone = phoneTextField.getText();
 
-		if (phoneList.getItems().contains(phone.replaceAll("-", ""))) {
+		if (phoneList.getItems().contains(phone.replaceAll("(-|\\s)", ""))) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
 			alert.setContentText("Phone Number Already Exists");
 			((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 			alert.showAndWait();
-		} else if ((phone.replaceAll("-", "")).matches("[0-9]{10}")) {
-			phoneList.getItems().add(phone.replaceAll("-", ""));
+		} else if ((phone.replaceAll("(-|\\s)", "")).matches("[0-9]{10}")) {
+			phoneList.getItems().add(phone.replaceAll("(-|\\s)", ""));
 			phoneTextField.setText("");
 		} else {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
