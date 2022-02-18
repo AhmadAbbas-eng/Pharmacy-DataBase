@@ -109,7 +109,7 @@ public class ChooseCustomerController implements Initializable {
 
 	public void phoneTextOnEnter(KeyEvent e) {
 		if (e.getCode() == KeyCode.ENTER) {
-			String phone = phoneTextField.getText();
+			String phone = phoneTextField.getText().trim();
 
 			if (phoneList.getItems().contains(phone.replaceAll("-", ""))) {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -133,7 +133,7 @@ public class ChooseCustomerController implements Initializable {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
 		addPhone.setEffect(effect);
-		String phone = phoneTextField.getText();
+		String phone = phoneTextField.getText().trim();
 
 		if (phoneList.getItems().contains(phone.replaceAll("-", ""))) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -175,8 +175,8 @@ public class ChooseCustomerController implements Initializable {
 		effect.setBrightness(0.8);
 		addCustomer.setEffect(effect);
 		Double debt = 0.0;
-		String NID = NIDtextField.getText();
-		String name = nameTextField.getText();
+		String NID = NIDtextField.getText().trim();
+		String name = nameTextField.getText().trim();
 		ArrayList<String> parameter = new ArrayList<>();
 		parameter.add(NID);
 
@@ -220,14 +220,14 @@ public class ChooseCustomerController implements Initializable {
 	}
 
 	public void listOnEditCommit(ListView.EditEvent<String> editedPhone) {
-		if (phoneList.getItems().contains(editedPhone.getNewValue().replaceAll("-", "")) && !editedPhone.getNewValue()
-				.replaceAll("-", "").equals(phoneList.getItems().get(editedPhone.getIndex()))) {
+		if (phoneList.getItems().contains(editedPhone.getNewValue().trim().replaceAll("-", "")) && !editedPhone
+				.getNewValue().trim().replaceAll("-", "").equals(phoneList.getItems().get(editedPhone.getIndex()))) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
 			alert.setContentText("Phone Number Already Exists");
 			alert.showAndWait();
-		} else if ((editedPhone.getNewValue().replaceAll("-", "")).matches("[0-9]{10}")) {
-			phoneList.getItems().set(editedPhone.getIndex(), editedPhone.getNewValue().replaceAll("-", ""));
+		} else if ((editedPhone.getNewValue().trim().replaceAll("-", "")).matches("[0-9]{10}")) {
+			phoneList.getItems().set(editedPhone.getIndex(), editedPhone.getNewValue().trim().replaceAll("-", ""));
 		} else {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Wrong Input Format");
@@ -299,7 +299,7 @@ public class ChooseCustomerController implements Initializable {
 		debtColumn.setCellValueFactory(new PropertyValueFactory<Customer, Double>("debt"));
 		filterList();
 		searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
-			stringToSearch = newValue;
+			stringToSearch = newValue.trim();
 			filterList();
 		});
 
