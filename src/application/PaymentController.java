@@ -304,7 +304,7 @@ public class PaymentController implements Initializable {
 								new ArrayList<>(Arrays.asList(chequeIDTaxTextField.getText().toString()))));
 						if (List2.isEmpty() == true) {
 							try {
-								Double num = Double.parseDouble(amountTaxTextField.getText());
+								Double num = Double.parseDouble(amountTaxTextField.getText().trim());
 								if (num <= 0) {
 									flag = true;
 								}
@@ -317,13 +317,13 @@ public class PaymentController implements Initializable {
 							}
 							if (flag == false) {
 								Payment.insertPayment(java.time.LocalDate.now(),
-										Double.parseDouble(amountTaxTextField.getText()), "Cheque");
+										Double.parseDouble(amountTaxTextField.getText().trim()), "Cheque");
 								
 								Cheque.insertCheque(chequeIDTaxTextField.getText(), bankNameTaxTextField.getText(), writingDateTax.getValue(),
 										availableUntilDateTax.getValue(), Payment.getMaxID(), Employee.getCurrentID());
 								
 								Tax.insertTax(taxIDTextField.getText().toString(), java.time.LocalDate.now(),
-										Double.parseDouble(amountTaxTextField.getText()));
+										Double.parseDouble(amountTaxTextField.getText().trim()));
 								
 								Queries.queryUpdate(
 										"insert into taxes_payment (payment_id, tax_id, manager_id) "
@@ -380,7 +380,7 @@ public class PaymentController implements Initializable {
 					boolean flag = false;
 					try {
 
-						Double num = Double.parseDouble(amountTaxTextField.getText());
+						Double num = Double.parseDouble(amountTaxTextField.getText().trim());
 						if (num <= 0) {
 							flag = true;
 						}
@@ -388,11 +388,11 @@ public class PaymentController implements Initializable {
 						flag = true;
 					}
 					if (!flag) {
-						Payment.insertPayment(java.time.LocalDate.now(), Double.parseDouble(amountTaxTextField.getText()),
+						Payment.insertPayment(java.time.LocalDate.now(), Double.parseDouble(amountTaxTextField.getText().trim()),
 								"Cash");
 						
 						Tax.insertTax(taxIDTextField.getText().toString(), java.time.LocalDate.now(),
-								Double.parseDouble(amountTaxTextField.getText()));
+								Double.parseDouble(amountTaxTextField.getText().trim()));
 						
 						Queries.queryUpdate(
 								"insert into taxes_payment " + " (payment_id, tax_id, manager_id)"
@@ -655,7 +655,7 @@ public class PaymentController implements Initializable {
 						if (List2.isEmpty() == true) {
 
 							try {
-								Double num = Double.parseDouble(amountSupplierTextField.getText());
+								Double num = Double.parseDouble(amountSupplierTextField.getText().trim());
 								if (num <= 0) {
 									flag = true;
 								}
@@ -668,7 +668,7 @@ public class PaymentController implements Initializable {
 							}
 							if (!flag) {
 								Payment.insertPayment(java.time.LocalDate.now(),
-										Double.parseDouble(amountSupplierTextField.getText()), "Cheque");
+										Double.parseDouble(amountSupplierTextField.getText().trim()), "Cheque");
 
 								Cheque.insertCheque(chequeIDSupplierTextField.getText(), bankNameSupplierTextField.getText(),
 										writingDateSupplier.getValue(), availablUntilDateSupplier.getValue(), Payment.getMaxID(),
@@ -727,7 +727,7 @@ public class PaymentController implements Initializable {
 
 				boolean flag = false;
 				try {
-					Double num = Double.parseDouble(amountSupplierTextField.getText());
+					Double num = Double.parseDouble(amountSupplierTextField.getText().trim());
 					if (num <= 0) {
 						flag = true;
 					}
@@ -735,7 +735,7 @@ public class PaymentController implements Initializable {
 					flag = true;
 				}
 				if (!flag) {
-					Payment.insertPayment(java.time.LocalDate.now(), Double.parseDouble(amountSupplierTextField.getText()),
+					Payment.insertPayment(java.time.LocalDate.now(), Double.parseDouble(amountSupplierTextField.getText().trim()),
 							"Cash");
 					
 					Queries.queryUpdate(
@@ -940,6 +940,7 @@ public class PaymentController implements Initializable {
 	public void addEmployeeOnAction(ActionEvent event)  {
 		if (amountEmployeeTextField.getText().isBlank() == false
 				&& employeeTable.getSelectionModel().getSelectedItem() != null) {
+			
 			if (chequeEmployeeCheckBox.isSelected() == true) {
 				if (employeeChequeIDTextField.getText().isBlank() == false && employeeBankNameTextField.getText().isBlank() == false
 						&& employeeAvailableUntilDatePicker.getValue() != null && employeeWritindDatePicker.getValue() != null) {
@@ -958,7 +959,7 @@ public class PaymentController implements Initializable {
 						
 						if (List2.isEmpty() == true) {
 							try {
-								Double amount = Double.parseDouble(amountEmployeeTextField.getText());
+								Double amount = Double.parseDouble(amountEmployeeTextField.getText().trim());
 								if (amount <= 0) {
 									flag = true;
 								}
@@ -971,7 +972,7 @@ public class PaymentController implements Initializable {
 							}
 							if (flag == false) {
 								Payment.insertPayment(java.time.LocalDate.now(),
-										Double.parseDouble(amountEmployeeTextField.getText()), "Cheque");
+										Double.parseDouble(amountEmployeeTextField.getText().trim()), "Cheque");
 								
 								Cheque.insertCheque(employeeChequeIDTextField.getText(), employeeBankNameTextField.getText(),
 										employeeWritindDatePicker.getValue(), employeeAvailableUntilDatePicker.getValue(), Payment.getMaxID(),
@@ -1020,7 +1021,7 @@ public class PaymentController implements Initializable {
 
 				boolean flag = false;
 				try {
-					Double num = Double.parseDouble(amountEmployeeTextField.getText());
+					Double num = Double.parseDouble(amountEmployeeTextField.getText().trim());
 					if (num <= 0) {
 						flag = true;
 					}
@@ -1028,7 +1029,7 @@ public class PaymentController implements Initializable {
 					flag = true;
 				}
 				if (flag == false) {
-					Payment.insertPayment(java.time.LocalDate.now(), Double.parseDouble(amountEmployeeTextField.getText()),
+					Payment.insertPayment(java.time.LocalDate.now(), Double.parseDouble(amountEmployeeTextField.getText().trim()),
 							"Cash");
 					
 					Queries.queryUpdate("insert into E_salary (manager_id, employee_id, payment_id) Values (?, ?, ?) ;",
@@ -1169,7 +1170,7 @@ public class PaymentController implements Initializable {
 				});
 
 		searchDisposalTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			disposalNewValue = newValue;
+			disposalNewValue = newValue.trim();
 			disposalFilterList();
 
 		});
@@ -1191,6 +1192,7 @@ public class PaymentController implements Initializable {
 				.getEmployeeData(Queries.queryResult("select * from Employee where employee_id <> -1 ;", null))));
 
 		searchEmployeeTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+			newValue = newValue.trim();
 			ArrayList<Employee> filteredList = new ArrayList<>();
 			if (newValue == null || newValue.isEmpty() || newValue.isBlank()) {
 				filteredList = Employee.getEmployeeData(
@@ -1266,7 +1268,7 @@ public class PaymentController implements Initializable {
 				});
 
 		searchEmployeePaymentTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			employeePaymentNewValue = newValue;
+			employeePaymentNewValue = newValue.trim();
 			employeePaymentFilterList();
 		});
 
@@ -1344,12 +1346,12 @@ public class PaymentController implements Initializable {
 					}
 				});
 		searchSupplierPaymentTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			supplierPaymentNewValue = newValue;
+			supplierPaymentNewValue = newValue.trim();
 			supplierPaymentFilterList();
 		});
 
 		searchSupplierTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			supplierNewValue = newValue;
+			supplierNewValue = newValue.trim();
 			supplierFilterList();
 		});
 
@@ -1423,7 +1425,7 @@ public class PaymentController implements Initializable {
 				});
 
 		searchTaxTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			taxNewValue = newValue;
+			taxNewValue = newValue.trim();
 			taxFilterList();
 		});
 		

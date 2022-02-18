@@ -101,7 +101,7 @@ public class SelectProductController implements Initializable {
 			if (listOrder.getSelectionModel().getSelectedItem() != null) {
 				String order = listOrder.getSelectionModel().getSelectedItem();
 				String arr[] = order.split(",");
-				totalCost -= Double.parseDouble(arr[2].split("=")[1]) * Double.parseDouble(arr[3].split("=")[1]);
+				totalCost -= Double.parseDouble(arr[2].split("=")[1].trim()) * Double.parseDouble(arr[3].split("=")[1].trim());
 				listOrder.getItems().remove(order);
 			} else {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -151,7 +151,6 @@ public class SelectProductController implements Initializable {
 			stage2.setResizable(false);
 			stage2.show();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -162,8 +161,8 @@ public class SelectProductController implements Initializable {
 		addDrugIcon.setEffect(effect);
 		try {
 
-			double Cost = Double.parseDouble(costTextField.getText().toString());
-			int Quantity = Integer.parseInt(quantityTextField.getText().toString());
+			double Cost = Double.parseDouble(costTextField.getText().trim());
+			int Quantity = Integer.parseInt(quantityTextField.getText().trim());
 
 			if (commercialNameTable.getSelectionModel().getSelectedItem() != null) {
 				if (Quantity > 0 && Cost > 0) {
@@ -177,9 +176,9 @@ public class SelectProductController implements Initializable {
 							String[] idTemp = data[0].split("=");
 
 							if (commercialNameTable.getSelectionModel().getSelectedItem().getID() == Integer
-									.parseInt(idTemp[1])) {
+									.parseInt(idTemp[1].trim())) {
 								String[] quantityTemp = data[2].split("=");
-								Quantity += Integer.parseInt(quantityTemp[1]);
+								Quantity += Integer.parseInt(quantityTemp[1].trim());
 								listOrder.getSelectionModel().select(i);
 								String toDelete = listOrder.getSelectionModel().getSelectedItem();
 								listOrder.getItems().remove(toDelete);
@@ -382,7 +381,7 @@ public class SelectProductController implements Initializable {
 		commercialNameTable.setItems(Product.getDataList());
 
 		searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			stringToSearch = newValue;
+			stringToSearch = newValue.trim();
 			filterList();
 
 		});

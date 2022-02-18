@@ -80,8 +80,8 @@ public class UnReceivedController implements Initializable {
 		MainPageController.pane.getChildren().setAll(page);
 		page.prefWidthProperty().bind(MainPageController.pane.widthProperty());
 		page.prefHeightProperty().bind(MainPageController.pane.heightProperty());
-} catch (IOException e) {
-			// TODO Auto-generated catch block
+
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -172,7 +172,7 @@ public class UnReceivedController implements Initializable {
 				Queries.queryResult("select * from S_Order where Recieved_By = '-1';", null))));
 
 		searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			stringToSearch=newValue;
+			stringToSearch=newValue.trim();
 			filterList();
 		});
 	}
