@@ -58,10 +58,10 @@ public class ConfirmNewUserController {
 		ArrayList<Employee> filteredList = new ArrayList<>();
 		if (idTextField.getText().isBlank() == false && passwordPasswordField.getText().isBlank() == false) {
 			try {
-				Integer.parseInt(idTextField.getText());
+				Integer.parseInt(idTextField.getText().trim());
 				filteredList = Employee.getEmployeeData(
 						Queries.queryResult("select * from Employee where Employee_ID = ? order by Employee_ID;",
-								new ArrayList<>(Arrays.asList(idTextField.getText()))));
+								new ArrayList<>(Arrays.asList(idTextField.getText().trim()))));
 
 				if (filteredList.isEmpty() == true) {
 					Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -71,11 +71,11 @@ public class ConfirmNewUserController {
 					alert.showAndWait();
 				} else {
 					String name = Queries.queryResult("select employee_name from Employee where Employee_ID = ?",
-							new ArrayList<>(Arrays.asList(idTextField.getText()))).get(0).get(0);
+							new ArrayList<>(Arrays.asList(idTextField.getText().trim()))).get(0).get(0);
 					filteredList = Employee.getEmployeeData(Queries.queryResult(
 							"select * from Employee where Employee_ID = ? "
 									+ " and Employee_password = ? order by Employee_ID;",
-							new ArrayList<>(Arrays.asList(idTextField.getText(),
+							new ArrayList<>(Arrays.asList(idTextField.getText().trim(),
 									Employee.encryptPassword(name, passwordPasswordField.getText())))));
 
 					if (filteredList.isEmpty() == true) {
@@ -88,7 +88,7 @@ public class ConfirmNewUserController {
 						filteredList = Employee.getEmployeeData(Queries.queryResult(
 								"select * from Employee where Employee_ID = ? and isManager = "
 										+ "'true' and Employee_password = ? order by Employee_ID;",
-								new ArrayList<>(Arrays.asList(idTextField.getText(),
+								new ArrayList<>(Arrays.asList(idTextField.getText().trim(),
 										Employee.encryptPassword(name, passwordPasswordField.getText())))));
 
 						if (filteredList.isEmpty() == true) {

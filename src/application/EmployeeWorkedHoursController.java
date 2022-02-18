@@ -122,8 +122,8 @@ public class EmployeeWorkedHoursController implements Initializable {
 			ArrayList<String> parameters = new ArrayList<>();
 			parameters.add(workedHoursTable.getItems().get(i).get(2));
 			parameters.add(employee.getID() + "");
-			parameters.add(workedHoursTable.getItems().get(i).get(0));
-			parameters.add(workedHoursTable.getItems().get(i).get(1));
+			parameters.add(workedHoursTable.getItems().get(i).get(0).trim());
+			parameters.add(workedHoursTable.getItems().get(i).get(1).trim());
 			Queries.queryUpdate("Update Work_Hours set Employee_Worked_Hours=? "
 					+ " where Employee_ID=? and Worked_Month=? and Worked_Year=? ;", parameters);
 
@@ -153,8 +153,8 @@ public class EmployeeWorkedHoursController implements Initializable {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
 		addButton.setEffect(effect);
-		String numOfHoursStr = numOfHoursTextField.getText();
-		String hourlyPaidStr = hourlyPaidTextField.getText();
+		String numOfHoursStr = numOfHoursTextField.getText().trim();
+		String hourlyPaidStr = hourlyPaidTextField.getText().trim();
 		double numOfHours = 0.0;
 		double hourlyPaid = 0.0;
 		int month = monthAddSelector.getSelectionModel().getSelectedIndex() + 1;
@@ -406,7 +406,7 @@ public class EmployeeWorkedHoursController implements Initializable {
 			boolean checkNumOfHours = true;
 			double numOfHours = 0.0;
 			try {
-				numOfHours = Double.parseDouble(t.getNewValue());
+				numOfHours = Double.parseDouble(t.getNewValue().trim());
 
 			} catch (NumberFormatException e) {
 				checkNumOfHours = false;
