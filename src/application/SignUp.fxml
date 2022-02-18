@@ -43,35 +43,35 @@
             <Button fx:id="addNewUserButton" layoutX="120.0" layoutY="404.0" mnemonicParsing="false" onAction="#addUser" prefHeight="26.0" prefWidth="145.0" stylesheets="@../../CSS/button.css" text="Add New User" />
             <HBox layoutX="18.0" layoutY="55.0" prefHeight="316.0" prefWidth="384.0">
                <children>
-                  <VBox prefHeight="280.0" prefWidth="121.0" spacing="22.0">
+                  <VBox prefHeight="280.0" prefWidth="121.0" spacing="21.0">
                      <children>
-                        <Label text="National ID" textFill="#1d6f84">
+                        <Label prefHeight="22.0" prefWidth="70.0" text="National ID" textFill="#1d6f84">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label text="Name" textFill="#1d6f84">
+                        <Label prefHeight="23.0" text="Name" textFill="#1d6f84">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label text="Hourly Paid" textFill="#1d6f84">
+                        <Label prefHeight="22.0" prefWidth="72.0" text="Hourly Paid" textFill="#1d6f84">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="20.0" prefWidth="122.0" text="Date of Work" textFill="#1d6f84">
+                        <Label prefHeight="23.0" prefWidth="121.0" text="Date of Work" textFill="#1d6f84">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label text="Phone" textFill="#1d6f84">
+                        <Label prefHeight="23.0" text="Phone" textFill="#1d6f84">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="34.0" prefWidth="28.0" />
-                        <Label layoutX="10.0" layoutY="180.0" text="Password" textFill="#1d6f84">
+                        <Label prefHeight="40.0" prefWidth="28.0" />
+                        <Label layoutX="10.0" layoutY="180.0" prefHeight="23.0" prefWidth="59.0" text="Password" textFill="#1d6f84">
                            <font>
                               <Font size="14.0" />
                            </font>
