@@ -24,11 +24,11 @@
             <TableColumn fx:id="priceColumn" minWidth="70.0" prefWidth="70.0" text="Price" />
             <TableColumn fx:id="manufacturerColumn" minWidth="200.0" prefWidth="200.0" text="Manufacturer" />
             <TableColumn fx:id="scientificNameColumn" minWidth="200.0" prefWidth="200.0" text="Scientific Name" />
-            <TableColumn fx:id="pregnencyCategoryColumn" minWidth="150.0" prefWidth="150.0" text="Risk Pregnency Category" />
+            <TableColumn fx:id="pregnencyCategoryColumn" minWidth="150.0" prefWidth="150.0" text="Risk Pregnancy Category" />
             <TableColumn fx:id="dosageColumn" minWidth="110.0" prefWidth="110.0" text="Dosage" />
             <TableColumn fx:id="categoryColumn" minWidth="100.0" prefWidth="100.0" text="Drug Category" />
             <TableColumn fx:id="dosageFormColumn" minWidth="80.0" prefWidth="90.0" text="Dosage Form" />
-            <TableColumn fx:id="pharmaceticalCategoryColumn" minWidth="150.0" prefWidth="150.0" text="Pharmacetical Category" />
+            <TableColumn fx:id="pharmaceticalCategoryColumn" minWidth="150.0" prefWidth="150.0" text="Pharmaceutical Category" />
          </columns>
          <opaqueInsets>
             <Insets />

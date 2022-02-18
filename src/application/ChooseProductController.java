@@ -129,7 +129,7 @@ public class ChooseProductController implements Initializable {
 
 	public void addProductOnAction() {
 		int numOfChosenProducts = (chosenProducts == null ? 0 : chosenProducts.size());
-		String amountStr = amountTextField.getText();
+		String amountStr = amountTextField.getText().trim();
 
 		if (batchTable.getSelectionModel().getSelectedItem() == null) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -143,11 +143,11 @@ public class ChooseProductController implements Initializable {
 			alert.setHeaderText(null);
 			alert.setContentText("Amount Must Be Specified");
 			alert.showAndWait();
-		} else if (!amountStr.matches("[1-9][0-9]*")) {
+		} else if (!amountStr.matches("[0-9][0-9]*") || Integer.parseInt(amountStr) < 1) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Wrong Input Format");
 			alert.setHeaderText(null);
-			alert.setContentText("Amount Must Be An Integer Number");
+			alert.setContentText("Amount Must Be A Positive Integer Number");
 			alert.showAndWait();
 		} else if (Integer.parseInt(amountStr) > batchTable.getSelectionModel().getSelectedItem().getAmount()) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -209,7 +209,7 @@ public class ChooseProductController implements Initializable {
 		blinkFade.play();
 	}
 
-	public void filterBatchList(){
+	public void filterBatchList() {
 		ArrayList<Batch> batch = new ArrayList<>();
 		ArrayList<String> parameters = new ArrayList<>();
 		if (productTable.getSelectionModel().getSelectedItem() != null) {
@@ -282,7 +282,7 @@ public class ChooseProductController implements Initializable {
 			isControlled.setSelected(false);
 			isDanger.setSelected(false);
 			if (fieldSelector.getSelectionModel().getSelectedItem() != null && fieldSelector.getSelectionModel()
-					.getSelectedItem().matches("(Scientific Name|Risk Pregnency Category|Drug Category)")) {
+					.getSelectedItem().matches("(Scientific Name|Risk Pregnancy Category|Drug Category)")) {
 				fieldSelector.setValue("-Specify Field-");
 			}
 		}
@@ -434,8 +434,7 @@ public class ChooseProductController implements Initializable {
 								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
 								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
 								+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
-								+ " and D.Drug_Pharmacetical_Category='Danger'"
-								+ " and NM.Product_Manufactrer like ?;",
+								+ " and D.Drug_Pharmacetical_Category='Danger'" + " and NM.Product_Manufactrer like ?;",
 						parameters);
 
 			} else { // Controlled Drugs
@@ -467,8 +466,7 @@ public class ChooseProductController implements Initializable {
 								+ "D.Drug_Risk_Pregnency_Category,D.Drug_Dosage,D.Drug_Category,D.Drug_Dosage_Form,"
 								+ "D.Drug_Pharmacetical_Category from Drug D,Product P,Name_manu m"
 								+ " where D.Product_ID=P.Product_ID and P.product_name=m.product_name"
-								+ " and D.Drug_Pharmacetical_Category='Danger'"
-								+ " and D.Drug_Scientific_Name like ?;",
+								+ " and D.Drug_Pharmacetical_Category='Danger'" + " and D.Drug_Scientific_Name like ?;",
 						parameters);
 
 			} else { // Controlled Drugs
@@ -482,7 +480,7 @@ public class ChooseProductController implements Initializable {
 						parameters);
 
 			}
-		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Risk Pregnency Category") {
+		} else if (fieldSelector.getSelectionModel().getSelectedItem() == "Risk Pregnancy Category") {
 			isDrug.setSelected(true);
 			if (!isDanger.isSelected() && !isControlled.isSelected()) { // All Drugs
 				filteredList.addAll(Queries.queryResult(
@@ -616,7 +614,7 @@ public class ChooseProductController implements Initializable {
 		addedIcon.setOpacity(0);
 		addedLabel.setOpacity(0);
 		fieldSelector.setItems(FXCollections.observableArrayList("-Specify Field-", "Product ID", "Product Name",
-				"Manufacturer", "Scientific Name", "Risk Pregnency Category", "Drug Category"));
+				"Manufacturer", "Scientific Name", "Risk Pregnancy Category", "Drug Category"));
 		idColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
 					@Override

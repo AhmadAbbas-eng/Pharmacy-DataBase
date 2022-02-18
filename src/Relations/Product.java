@@ -36,7 +36,7 @@ public class Product {
 		ID = iD;
 		Name = name;
 		Price = price;
-		this.setManufacturer(manufacturer);
+		this.manufacturer = manufacturer;
 	}
 
 	public static ArrayList<Product> getData() {
@@ -52,7 +52,11 @@ public class Product {
 	}
 
 	public static int getMaxID() {
-		return Integer.parseInt(Queries.queryResult("select max(product_ID) from product;", null).get(0).get(0));
+		try {
+			return Integer.parseInt(Queries.queryResult("select max(product_ID) from product;", null).get(0).get(0));
+		} catch (Exception e) {
+			return 0;
+		}
 	}
 
 	public int getID() {
@@ -132,7 +136,7 @@ public class Product {
 
 	public static void insertProduct(String name, double price) {
 		Queries.queryUpdate("Insert into Product values (?, ?, ?);",
-				new ArrayList<>(Arrays.asList((getMaxID()+1) + "", name, price + "")));
+				new ArrayList<>(Arrays.asList((getMaxID() + 1) + "", name, price + "")));
 	}
 
 	/**
@@ -141,8 +145,10 @@ public class Product {
 	 * @param path The path of file
 	 */
 	public static void report(String path) {
-		Queries.reportQuery("select P.Product_ID as 'Product ID', P.Product_Name as 'Product Name',P.Product_Price as 'Product Price',m.Product_Manufactrer as 'Product Manufactrer'\r\n"
-				+ "from product p,Name_manu m\r\n" + "where P.product_name=m.product_name;", path);
+		Queries.reportQuery(
+				"select P.Product_ID as 'Product ID', P.Product_Name as 'Product Name',P.Product_Price as 'Product Price',m.Product_Manufactrer as 'Product Manufactrer'\r\n"
+						+ "from product p,Name_manu m\r\n" + "where P.product_name=m.product_name;",
+				path);
 	}
 
 }

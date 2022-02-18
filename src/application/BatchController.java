@@ -50,27 +50,27 @@ public class BatchController implements Initializable {
 
 	String productID;
 
-	public void setProductID(String productID) {
+	public void setProductID(String productID, String productName) {
 		this.productID = productID;
-		title.setText("Batch For Product " + productID);
-			filterData();
-			ArrayList<String> parameters = new ArrayList<>();
-			parameters.add(productID);
-			ArrayList<ArrayList<String>> totalAmount = Queries.queryResult(
-					"select sum(Batch_Amount) from Batch where Product_ID=? group by(Product_ID) ;", parameters);
+		title.setText("Batch For " + productName);
+		filterData();
+		ArrayList<String> parameters = new ArrayList<>();
+		parameters.add(productID);
+		ArrayList<ArrayList<String>> totalAmount = Queries
+				.queryResult("select sum(Batch_Amount) from Batch where Product_ID=? ;", parameters);
 
-			if (totalAmount.size() > 0 && totalAmount.get(0).size() > 0) {
-				totalQuantityLable.setText(totalAmount.get(0).get(0));
-			} else {
-				totalQuantityLable.setText("0");
-			}	
+		if (totalAmount.size() > 0 && totalAmount.get(0).size() > 0 && totalAmount.get(0).get(0) != null) {
+			totalQuantityLable.setText(totalAmount.get(0).get(0));
+		} else {
+			totalQuantityLable.setText("0");
+		}
 	}
 
 	/**
 	 * Filtering the data to show depending on search text field
 	 * 
 	 */
-	public void filterData(){
+	public void filterData() {
 		ArrayList<String> parameters = new ArrayList<>();
 		parameters.add(productID);
 		if (datePicker.getValue() == null || datePicker.getValue().toString().isBlank()
@@ -83,22 +83,20 @@ public class BatchController implements Initializable {
 
 		} else {
 			String date = datePicker.getValue().toString();
+			parameters.add(date);
 			if (dateSelector.getSelectionModel().getSelectedItem().equals("Expires On")) {
-				parameters.add(date);
 				batchTable.setItems(FXCollections.observableArrayList(Batch.getBatchData(Queries.queryResult(
 						"select * from Batch where Product_ID=? and Batch_Production_Date<>'1111-01-01' "
 								+ " and Batch_Expiry_Date=? and Batch_Amount>0 order by Batch_Expiry_Date;",
 						parameters))));
 
 			} else if (dateSelector.getSelectionModel().getSelectedItem().equals("Expires Before")) {
-				parameters.add(date);
 				batchTable.setItems(FXCollections.observableArrayList(Batch.getBatchData(Queries.queryResult(
 						"select * from Batch where Product_ID=? and Batch_Production_Date<>'1111-01-01' "
 								+ " and Batch_Expiry_Date<? and Batch_Amount>0 order by Batch_Expiry_Date;",
 						parameters))));
 
 			} else { // Expires After
-				parameters.add(date);
 				batchTable.setItems(FXCollections.observableArrayList(Batch.getBatchData(Queries.queryResult(
 						"select * from Batch where Product_ID=? and Batch_Production_Date<>'1111-01-01' "
 								+ " and Batch_Expiry_Date>? and Batch_Amount>0 order by Batch_Expiry_Date;",

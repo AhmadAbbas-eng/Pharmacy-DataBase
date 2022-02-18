@@ -123,6 +123,14 @@ public class ProductEditController implements Initializable {
 	@FXML
 	private ComboBox<String> maufacturerComboBox;
 
+	static boolean answer = false;
+
+	String filter = "";
+
+	ArrayList<ArrayList<String>> manufacturerName = null;
+
+	static ObservableList<String> manufacturerObservableList = FXCollections.observableArrayList();
+
 	public void drugSelection() {
 		if (isDrug.isSelected()) {
 			drugInfoHBox.setOpacity(1);
@@ -148,6 +156,7 @@ public class ProductEditController implements Initializable {
 						new ArrayList<>(Arrays.asList(productTable.getItems().get(0).get(8), product.get(0).get(0))));
 			}
 
+			oldName = productTable.getItems().get(0).get(1);
 			caller.saveEdits();
 			showAndFade(savedLabel);
 			showAndFade(savedIcon);
@@ -178,14 +187,6 @@ public class ProductEditController implements Initializable {
 		}
 	}
 
-	static boolean answer = false;
-
-	String filter = "";
-
-	ArrayList<ArrayList<String>> manufacturerName = null;
-
-	static ObservableList<String> manufacturerObservableList = FXCollections.observableArrayList();
-
 	public void addProductOnMousePressed() {
 		ColorAdjust effect = new ColorAdjust();
 		effect.setBrightness(0.8);
@@ -212,7 +213,7 @@ public class ProductEditController implements Initializable {
 				.size() != 0) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
-			alert.setContentText("Product with this name already exists!");
+			alert.setContentText("Product With This Name Already Exists!");
 			alert.showAndWait();
 		}
 
@@ -243,7 +244,7 @@ public class ProductEditController implements Initializable {
 					Alert alert = new Alert(Alert.AlertType.ERROR);
 					alert.setTitle(null);
 					alert.setHeaderText(null);
-					alert.setContentText("Fill all required fields");
+					alert.setContentText("Fill All Required Fields");
 					alert.showAndWait();
 				}
 			} else {
@@ -269,7 +270,7 @@ public class ProductEditController implements Initializable {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle(null);
 			alert.setHeaderText(null);
-			alert.setContentText("Fill all required fields");
+			alert.setContentText("Fill All Required Fields");
 			alert.showAndWait();
 		}
 	}
@@ -401,14 +402,9 @@ public class ProductEditController implements Initializable {
 			(t.getTableView().getItems().get(t.getTablePosition().getRow())).set(1, t.getNewValue());
 			productTable.refresh();
 		});
-		nameColumn.setOnEditStart((CellEditEvent<ArrayList<String>, String> t) -> {
-			oldName = t.getOldValue();
-		});
 
 		priceColumn.setEditable(true);
 		priceColumn.setCellFactory(TextFieldTableCell.<ArrayList<String>>forTableColumn());
-		priceColumn.setOnEditStart((CellEditEvent<ArrayList<String>, String> t) -> {
-		});
 
 		priceColumn.setOnEditCommit((CellEditEvent<ArrayList<String>, String> t) -> {
 			if (t.getNewValue().matches("[0-9]+")) {
