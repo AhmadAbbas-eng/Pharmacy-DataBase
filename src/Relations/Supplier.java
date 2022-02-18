@@ -118,9 +118,10 @@ public class Supplier {
 	}
 
 	public static int getMaxID() {
-		return Integer.parseInt(Queries.queryResult("select max(supplier_ID) from supplier;", null).get(0).get(0));
+		return Integer
+				.parseInt(Queries.queryResult("select ifnull(max(supplier_ID),0) from supplier;", null).get(0).get(0));
 	}
-	
+
 	public static void setDataList(ObservableList<Supplier> dataList) {
 		Supplier.dataList = dataList;
 	}
@@ -142,7 +143,7 @@ public class Supplier {
 			getSupplierPhone(temp);
 			data.add(temp);
 		}
-		
+
 		dataList = FXCollections.observableArrayList(data);
 	}
 
@@ -152,7 +153,7 @@ public class Supplier {
 	 * @param table ArrayList<ArrayList<String>> to fill data with
 	 * @return ArrayList<Supplier> of data
 	 */
-	public static ArrayList<Supplier> getSupplierData(ArrayList<ArrayList<String>> table){
+	public static ArrayList<Supplier> getSupplierData(ArrayList<ArrayList<String>> table) {
 
 		ArrayList<Supplier> tempData = new ArrayList<Supplier>();
 
@@ -167,7 +168,7 @@ public class Supplier {
 		return tempData;
 	}
 
-	public static void getSupplierPhone(Supplier supplier){
+	public static void getSupplierPhone(Supplier supplier) {
 		ArrayList<ArrayList<String>> phonesSet = Queries.queryResult(
 				"select Supplier_Phone from Supplier_Phone where Supplier_ID=? ;",
 				new ArrayList<>(Arrays.asList(supplier.getID() + "")));
@@ -203,7 +204,7 @@ public class Supplier {
 	public static void insertSupplier(String sname, String address, String email, double dues,
 			ArrayList<String> phones) {
 		Queries.queryUpdate("insert into Supplier values (?, ?, ?, ?, ?);",
-				new ArrayList<>(Arrays.asList((getMaxID()+1) + "", sname, address, email, dues + "")));
+				new ArrayList<>(Arrays.asList((getMaxID() + 1) + "", sname, address, email, dues + "")));
 		if (phones != null) {
 			insertSupplierPhone(phones, getMaxID());
 		}

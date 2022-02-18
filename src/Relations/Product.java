@@ -52,11 +52,8 @@ public class Product {
 	}
 
 	public static int getMaxID() {
-		try {
-			return Integer.parseInt(Queries.queryResult("select max(product_ID) from product;", null).get(0).get(0));
-		} catch (Exception e) {
-			return 0;
-		}
+		return Integer
+				.parseInt(Queries.queryResult("select ifnull(max(product_ID),0) from product;", null).get(0).get(0));
 	}
 
 	public int getID() {

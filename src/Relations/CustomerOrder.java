@@ -73,7 +73,7 @@ public class CustomerOrder {
 	}
 
 	public static int getMaxID() {
-		return Integer.parseInt(Queries.queryResult("select max(order_ID) from c_order;", null).get(0).get(0));
+		return Integer.parseInt(Queries.queryResult("select ifnull(max(order_ID),0) from c_order;", null).get(0).get(0));
 	}
 
 	public int getEmployeeID() {
