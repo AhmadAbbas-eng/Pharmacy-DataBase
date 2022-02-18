@@ -48,10 +48,10 @@ public class LoginController {
 			ArrayList<Employee> filteredList = new ArrayList<>();
 			if (employeeIDTextField.getText().isBlank() == false && passwordTextField.getText().isBlank() == false) {
 				try {
-					int num = Integer.parseInt(employeeIDTextField.getText());
+					int num = Integer.parseInt(employeeIDTextField.getText().trim());
 					filteredList = Employee.getEmployeeData(
 							Queries.queryResult("select * from Employee where Employee_ID = ? and isActive = 'true';",
-									new ArrayList<>(Arrays.asList(employeeIDTextField.getText()))));
+									new ArrayList<>(Arrays.asList(employeeIDTextField.getText().trim()))));
 
 					if (filteredList.isEmpty() == true) {
 						Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -63,10 +63,10 @@ public class LoginController {
 					} else {
 						filteredList = Employee.getEmployeeData(Queries
 								.queryResult("select * from Employee where Employee_ID = ? and Employee_Password= ?;",
-										new ArrayList<>(Arrays.asList(employeeIDTextField.getText(),
+										new ArrayList<>(Arrays.asList(employeeIDTextField.getText().trim(),
 												Employee.encryptPassword(Queries.queryResult(
 														"select employee_name from Employee where Employee_ID = ?;",
-														new ArrayList<>(Arrays.asList(employeeIDTextField.getText())))
+														new ArrayList<>(Arrays.asList(employeeIDTextField.getText().trim())))
 														.get(0).get(0), passwordTextField.getText())))));
 
 						if (filteredList.isEmpty() == true) {
