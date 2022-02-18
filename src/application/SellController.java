@@ -386,7 +386,6 @@ public class SellController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 		soldIcon.setOpacity(0);
 		soldLabel.setOpacity(0);
-		CustomerOrder.getCustomerOrderData();
 		dateLabel.setText(LocalDate.now().toString());
 		idColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<ArrayList<String>, String>, ObservableValue<String>>() {
