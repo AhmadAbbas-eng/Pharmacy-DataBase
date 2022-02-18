@@ -120,7 +120,7 @@ public class PayingOffController implements Initializable {
 	}
 
 	public void approveOnAction() {
-		String paidStr = paidTextField.getText();
+		String paidStr = paidTextField.getText().trim();
 		double paidAmount = 0.0;
 		boolean checkPaid = true;
 		try {
@@ -128,7 +128,7 @@ public class PayingOffController implements Initializable {
 		} catch (NumberFormatException e) {
 			checkPaid = false;
 		}
-		if (customerNIDLabel.getText().equals("-")) {
+		if (customerNIDLabel.getText().trim().equals("-")) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Missing Info");
 			alert.setHeaderText(null);
