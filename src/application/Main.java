@@ -36,8 +36,7 @@ public class Main extends Application {
 //		generateS_order();
 //		c_order_generate();
 //		payment();
-		System.out.println(Integer.parseInt(" 1"));
-		//launch(args);
+		launch(args);
 	}
 
 	public static void generateS_order() {
