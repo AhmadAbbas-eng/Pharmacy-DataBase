@@ -69,12 +69,8 @@ public class Drug extends Product {
 		return riskPregnancy;
 	}
 
-	public void setRiskPregnency(String riskPregnency) {
-		setRiskPregnancy(riskPregnency);
-	}
-
-	public void setRiskPregnancy(String riskPregnency) {
-		this.riskPregnancy = riskPregnency;
+	public void setRiskPregnancy(String riskPregnancy) {
+		this.riskPregnancy = riskPregnancy;
 	}
 
 	public String getDosage() {
@@ -101,16 +97,8 @@ public class Drug extends Product {
 		this.dosageForm = dosageForm;
 	}
 
-	public String getPharmaceticalCategory() {
-		return getPharmaceuticalCategory();
-	}
-
 	public String getPharmaceuticalCategory() {
 		return pharmaceuticalCategory;
-	}
-
-	public void setPharmaceticalCategory(String pharmaceticalCategory) {
-		setPharmaceuticalCategory(pharmaceticalCategory);
 	}
 
 	public void setPharmaceuticalCategory(String pharmaceticalCategory) {
@@ -179,9 +167,10 @@ public class Drug extends Product {
 	public static void insertDrug(String name, double price, String scientificName, String riskPregnency, String dosage,
 			String category, String dosageForm, String pharmaceticalCategory) {
 		Queries.queryUpdate("Insert into Product values(?, ?, ?);",
-				new ArrayList<>(Arrays.asList((getMaxID()+1) + "", name, price + "")));
+				new ArrayList<>(Arrays.asList((getMaxID() + 1) + "", name, price + "")));
 
-		Queries.queryUpdate("Insert into Drug values (?, ?, ?, ?, ?, ?,?);", new ArrayList<>(Arrays
-				.asList(getMaxID() + "", scientificName, riskPregnency,dosage, category, dosageForm, pharmaceticalCategory)));
+		Queries.queryUpdate("Insert into Drug values (?, ?, ?, ?, ?, ?,?);",
+				new ArrayList<>(Arrays.asList(getMaxID() + "", scientificName, riskPregnency, dosage, category,
+						dosageForm, pharmaceticalCategory)));
 	}
 }

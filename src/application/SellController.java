@@ -162,8 +162,8 @@ public class SellController implements Initializable {
 	}
 
 	public void approveOnAction() {
-		String paidStr = paidTextField.getText();
-		String discountStr = discountTextField.getText();
+		String paidStr = paidTextField.getText().trim();
+		String discountStr = discountTextField.getText().trim();
 		double paidAmount = 0.0;
 		double discount = 0.0;
 		boolean checkPaid = true;
@@ -353,7 +353,7 @@ public class SellController implements Initializable {
 		}
 		double costAfterDiscount = totalCost;
 		totalCostLabel.setText("" + totalCost);
-		String discountStr = discountTextField.getText();
+		String discountStr = discountTextField.getText().trim();
 		if (discountStr != null && !discountStr.isBlank() && !discountStr.isEmpty()) {
 			try {
 				discount = Double.parseDouble(discountStr);
@@ -506,7 +506,7 @@ public class SellController implements Initializable {
 				double totalCost = Double.parseDouble(totalCostLabel.getText());
 				double discount = 0.0;
 				double costAfterDiscount = totalCost;
-				String discountStr = discountTextField.getText();
+				String discountStr = discountTextField.getText().trim();
 				if (discountStr != null && !discountStr.isBlank() && !discountStr.isEmpty()) {
 					try {
 						discount = Double.parseDouble(discountStr);
