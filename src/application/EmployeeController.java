@@ -244,7 +244,7 @@ public class EmployeeController implements Initializable {
 		isActiveColumn.setCellValueFactory(new PropertyValueFactory<Employee, String>("isActive"));
 		filterList();
 		searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
-			stringToSearch = newValue;
+			stringToSearch = newValue.trim();
 			filterList();
 		});
 

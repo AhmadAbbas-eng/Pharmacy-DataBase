@@ -186,7 +186,7 @@ public class SupplierOrderBatchController implements Initializable{
 
 
 		searchProductsTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			this.stringToSearch = newValue;
+			this.stringToSearch = newValue.trim();
 			filterList();
 		});
 
