@@ -477,13 +477,13 @@ public class SellController implements Initializable {
 					+ " and Batch_Production_Date=? and Batch_Expiry_Date=? ;", parameters);
 			boolean checkAmount = true;
 			try {
-				Integer.parseInt(t.getNewValue());
+				Integer.parseInt(t.getNewValue().trim());
 			} catch (NumberFormatException e) {
 				checkAmount = false;
 			}
 			if (checkAmount && amount.size() > 0
-					&& Integer.parseInt(t.getNewValue()) <= Integer.parseInt(amount.get(0).get(0))) {
-				(t.getTableView().getItems().get(t.getTablePosition().getRow())).set(5, t.getNewValue());
+					&& Integer.parseInt(t.getNewValue().trim()) <= Integer.parseInt(amount.get(0).get(0))) {
+				(t.getTableView().getItems().get(t.getTablePosition().getRow())).set(5, t.getNewValue().trim());
 			} else if (!checkAmount) {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle("Wrong Input Format");
@@ -502,7 +502,7 @@ public class SellController implements Initializable {
 
 		discountTextField.focusedProperty().addListener((observable, oldValue, newValue) -> {
 			if (!discountTextField.isFocused()) {
-				double totalCost = Double.parseDouble(totalCostLabel.getText());
+				double totalCost = Double.parseDouble(totalCostLabel.getText().trim());
 				double discount = 0.0;
 				double costAfterDiscount = totalCost;
 				String discountStr = discountTextField.getText().trim();
