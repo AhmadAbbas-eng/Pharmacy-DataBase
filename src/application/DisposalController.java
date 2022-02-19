@@ -505,7 +505,7 @@ public class DisposalController implements Initializable {
 				});
 
 		searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			stringToSearch = newValue;
+			stringToSearch = newValue.trim();
 			filterList();
 		});
 
