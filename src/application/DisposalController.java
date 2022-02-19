@@ -165,19 +165,19 @@ public class DisposalController implements Initializable {
 								"insert into drug_disposal (Disposal_amount,Disposal_date,Employee_ID,Payment_ID,Product_ID ,Batch_Production_Date"
 										+ ",Batch_Expiry_Date) values(?,?,?,?,?,?,?)",
 								new ArrayList<String>(Arrays.asList(
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(4).toString().trim(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(4).toString(),
 										java.time.LocalDate.now().toString(), Employee.getCurrentID() + "",
 										Payment.getMaxID() + "",
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString().trim(),
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString().trim(),
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString().trim())));
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString())));
 
 						Queries.queryUpdate(
 								"update batch set batch_amount = 0 where Batch_Production_Date=? and Batch_Expiry_Date=? and Product_ID=?",
 								new ArrayList<String>(Arrays.asList(
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString().trim(),
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString().trim(),
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString().trim())));
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString())));
 
 						showAndFade(success);
 						showAndFade(successIcon);
@@ -204,9 +204,9 @@ public class DisposalController implements Initializable {
 						int quantity=Integer.parseInt(Queries.queryResult("select Batch_Amount from batch"
 								+ " where product_ID=? and batch_production_date=? and batch_expiry_date=?",
 								new ArrayList<String>(Arrays.asList(
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString().trim(),
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString().trim(),
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString().trim()))).get(0).get(0));
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString()))).get(0).get(0));
 						if (num2 < 0) {
 							flag = true;
 							Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -261,16 +261,16 @@ public class DisposalController implements Initializable {
 								new ArrayList<String>(Arrays.asList(amountToBeDisposed.getText().trim(),
 										java.time.LocalDate.now().toString(), Employee.getCurrentID() + "",
 										Payment.getMaxID() + "",
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString().trim(),
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString().trim(),
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString().trim())));
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString())));
 
 						Queries.queryUpdate(
 								"update batch set batch_amount = batch_amount - ? where Batch_Production_Date=? and Batch_Expiry_Date=? and Product_ID=?",
 								new ArrayList<String>(Arrays.asList(amountToBeDisposed.getText().trim(),
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString().trim(),
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString().trim(),
-										toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString().trim())));
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(2).toString(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(3).toString(),
+										toBeDisposedTable.getSelectionModel().getSelectedItem().get(0).toString())));
 
 						showAndFade(success);
 						showAndFade(successIcon);

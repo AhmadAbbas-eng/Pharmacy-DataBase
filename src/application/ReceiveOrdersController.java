@@ -360,7 +360,7 @@ public class ReceiveOrdersController implements Initializable {
 					productsEntered.add(ProductId);
 					productsEntered.add(ProductName);
 					productsEntered.add(
-							productsBatchColumn.getSelectionModel().getSelectedItem().getProductionDate().toString().trim());
+							productsBatchColumn.getSelectionModel().getSelectedItem().getProductionDate().toString());
 
 					productsEntered
 							.add(productsBatchColumn.getSelectionModel().getSelectedItem().getExpiryDate().toString());
@@ -389,7 +389,7 @@ public class ReceiveOrdersController implements Initializable {
 						productsEntered.add(productsBatchColumn.getSelectionModel().getSelectedItem()
 								.getProductionDate().toString());
 						productsEntered.add(
-								productsBatchColumn.getSelectionModel().getSelectedItem().getExpiryDate().toString().trim());
+								productsBatchColumn.getSelectionModel().getSelectedItem().getExpiryDate().toString());
 						productsEntered.add(Qtemp + "");
 
 						if (orderedProducts.size() > counter && productsEntered.isEmpty() == false) {
