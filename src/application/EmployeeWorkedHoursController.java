@@ -122,8 +122,8 @@ public class EmployeeWorkedHoursController implements Initializable {
 			ArrayList<String> parameters = new ArrayList<>();
 			parameters.add(workedHoursTable.getItems().get(i).get(2));
 			parameters.add(employee.getID() + "");
-			parameters.add(workedHoursTable.getItems().get(i).get(0).trim());
-			parameters.add(workedHoursTable.getItems().get(i).get(1).trim());
+			parameters.add(workedHoursTable.getItems().get(i).get(0));
+			parameters.add(workedHoursTable.getItems().get(i).get(1));
 			Queries.queryUpdate("Update Work_Hours set Employee_Worked_Hours=? "
 					+ " where Employee_ID=? and Worked_Month=? and Worked_Year=? ;", parameters);
 
