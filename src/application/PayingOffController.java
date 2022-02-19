@@ -100,7 +100,7 @@ public class PayingOffController implements Initializable {
 		} else {
 			parameters.add("%" + stringToSearch + "%");
 			filteredList = Customer.getCustomerData(Queries
-					.queryResult("select * from Customer where Customer_Name like ? " + " or Customer_NID like ? "
+					.queryResult("select * from Customer where (Customer_Name like ? " + " or Customer_NID like ?) "
 							+ " and Customer_Debt>0 " + " order by Customer_name;", parameters));
 		}
 		customerTable.setItems(FXCollections.observableArrayList(filteredList));
@@ -175,7 +175,7 @@ public class PayingOffController implements Initializable {
 		filterList();
 		
 		searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
-			stringToSearch = newValue;
+			stringToSearch = newValue.trim();
 			filterList();
 		});
 
