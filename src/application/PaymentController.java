@@ -406,6 +406,15 @@ public class PaymentController implements Initializable {
 								null)));
 						taxIDTextField.clear();
 						amountTaxTextField.clear();
+						bankNameTaxTextField.setOpacity(0);
+						availableUntilDateTax.setOpacity(0);
+						writingDateTax.setOpacity(0);
+						chequeIDTaxTextField.setOpacity(0);
+						availableUnitlTaxLabel.setOpacity(0);
+						bankNameTaxLabel.setOpacity(0);
+						writindDateTaxLabel.setOpacity(0);
+						chequeTaxLabel.setOpacity(0);
+
 					} else {
 						Alert alert = new Alert(Alert.AlertType.ERROR);
 						alert.setTitle(null);
@@ -700,6 +709,14 @@ public class PaymentController implements Initializable {
 								availablUntilDateSupplier.setValue(null);
 								writingDateSupplier.setValue(null);
 								chequeSupplierCheckBox.setSelected(false);
+								bankNameSupplierTextField.setOpacity(0);
+								writingDateSupplier.setOpacity(0);
+								availablUntilDateSupplier.setOpacity(0);
+								chequeIDSupplierTextField.setOpacity(0);
+								supplierAvailableUntilLabel.setOpacity(0);
+								supplierWritingDateLabel.setOpacity(0);
+								supplierBankNameLabel.setOpacity(0);
+								supplierChequeIDLabel.setOpacity(0);
 							} else {
 								Alert alert = new Alert(Alert.AlertType.ERROR);
 								alert.setTitle(null);
@@ -984,10 +1001,10 @@ public class PaymentController implements Initializable {
 										new ArrayList<>(Arrays.asList(Employee.getCurrentID() + "",
 												employeeTable.getSelectionModel().getSelectedItem().getID() + "",
 												Payment.getMaxID() + "")));
-								employeePaymentTable.setItems(FXCollections.observableArrayList(Queries.queryResult(
-										"select distinct e.employee_name,p.payment_date,p.payment_amount "
-												+ " from e_salary es,payment p, employee e "
-												+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.Employee_ID",
+								employeePaymentTable
+								.setItems(FXCollections.observableArrayList(Queries.queryResult("select distinct e1.employee_name,e.employee_name,p.payment_date,p.payment_amount  \n"
+										+ "from e_salary es,payment p, employee e, employee e1 \n"
+										+ " where p.payment_Id=es.payment_Id and e1.employee_Id=es.manager_Id and e.employee_Id=es.Employee_ID and  e.employee_id <> -1 and  e1.employee_id <> -1;",
 										null)));
 							}else {
 								Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -1002,6 +1019,14 @@ public class PaymentController implements Initializable {
 							employeeWritindDatePicker.setValue(null);
 							employeeAvailableUntilDatePicker.setValue(null);
 							chequeEmployeeCheckBox.setSelected(false);
+							employeeBankNameTextField.setOpacity(0);
+							employeeWritindDatePicker.setOpacity(0);
+							employeeAvailableUntilDatePicker.setOpacity(0);
+							employeeChequeIDTextField.setOpacity(0);
+							bankNameLabel.setOpacity(0);
+							availableUntilDateEmployeeLabel.setOpacity(0);
+							chequeIDEmployeeLabel.setOpacity(0);
+							writingDateEmployeeLabel.setOpacity(0);
 						} else {
 							Alert alert = new Alert(Alert.AlertType.ERROR);
 							alert.setTitle(null);
@@ -1038,10 +1063,9 @@ public class PaymentController implements Initializable {
 									Payment.getMaxID() + "")));
 					
 					employeePaymentTable
-							.setItems(FXCollections.observableArrayList(Queries.queryResult(
-									"select distinct e.employee_name,p.payment_date,p.payment_amount "
-											+ " from e_salary es,payment p, employee e "
-											+ " where p.payment_Id=es.payment_Id and e.employee_Id=es.Employee_ID;",
+							.setItems(FXCollections.observableArrayList(Queries.queryResult("select distinct e1.employee_name,e.employee_name,p.payment_date,p.payment_amount  \n"
+									+ "from e_salary es,payment p, employee e, employee e1 \n"
+									+ " where p.payment_Id=es.payment_Id and e1.employee_Id=es.manager_Id and e.employee_Id=es.Employee_ID and  e.employee_id <> -1 and  e1.employee_id <> -1;",
 									null)));
 					amountEmployeeTextField.clear();
 				} else {
@@ -1210,7 +1234,7 @@ public class PaymentController implements Initializable {
 				.setItems(
 						FXCollections.observableArrayList(Queries.queryResult("select distinct e1.employee_name,e.employee_name,p.payment_date,p.payment_amount  \n"
 								+ "from e_salary es,payment p, employee e, employee e1 \n"
-								+ " where p.payment_Id=es.payment_Id and e1.employee_Id=es.manager_Id and e.employee_Id=es.Employee_ID;",
+								+ " where p.payment_Id=es.payment_Id and e1.employee_Id=es.manager_Id and e.employee_Id=es.Employee_ID and  e.employee_id <> -1 and  e1.employee_id <> -1;",
 								null)));
 
 		employeePaymentManagerName.setCellValueFactory(
@@ -1273,6 +1297,14 @@ public class PaymentController implements Initializable {
 		});
 
 		// ----------------------------------------supplier----------------------------------------------------------
+		bankNameSupplierTextField.setOpacity(0);
+		writingDateSupplier.setOpacity(0);
+		availablUntilDateSupplier.setOpacity(0);
+		chequeIDSupplierTextField.setOpacity(0);
+		supplierAvailableUntilLabel.setOpacity(0);
+		supplierWritingDateLabel.setOpacity(0);
+		supplierBankNameLabel.setOpacity(0);
+		supplierChequeIDLabel.setOpacity(0);
 		searchSupplierOperationComboBox.setValue("-Specify Field-");
 		searchSupplierOperationComboBox.setItems(SupplierPaymentChoices);
 		bankNameSupplierTextField.setOpacity(0);
