@@ -343,6 +343,14 @@ public class PaymentController implements Initializable {
 								writingDateTax.setValue(null);
 								availableUntilDateTax.setValue(null);
 								chequeTaxCheckBox.setSelected(false);
+								bankNameTaxTextField.setOpacity(0);
+								availableUntilDateTax.setOpacity(0);
+								writingDateTax.setOpacity(0);
+								chequeIDTaxTextField.setOpacity(0);
+								availableUnitlTaxLabel.setOpacity(0);
+								bankNameTaxLabel.setOpacity(0);
+								writindDateTaxLabel.setOpacity(0);
+								chequeTaxLabel.setOpacity(0);
 							}
 							else {
 								Alert alert = new Alert(Alert.AlertType.ERROR);
