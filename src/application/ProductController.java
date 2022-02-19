@@ -683,7 +683,7 @@ public class ProductController implements Initializable {
 		filterList();
 
 		searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
-			this.stringToSearch = newValue;
+			this.stringToSearch = newValue.trim();
 			filterList();
 
 		});

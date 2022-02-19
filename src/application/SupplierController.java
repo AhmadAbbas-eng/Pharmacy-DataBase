@@ -306,8 +306,8 @@ public class SupplierController implements Initializable {
 
 		searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (searchBoxFlag) {
-				stringToSearch = newValue;
-				prevStringToSearch = oldValue;
+				stringToSearch = newValue.trim();
+				prevStringToSearch = oldValue.trim();
 				confirmSave();
 			} else {
 				searchBoxFlag = true;

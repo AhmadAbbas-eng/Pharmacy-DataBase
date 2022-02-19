@@ -190,7 +190,7 @@ public class CustomerController implements Initializable {
 		filterList();
 
 		searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
-			stringToSearch = newValue;
+			stringToSearch = newValue.trim();
 			filterList();
 		});
 

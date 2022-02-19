@@ -356,7 +356,7 @@ public class SupplierOrderController implements Initializable {
 				Queries.queryResult("select * from Employee where isManager = 'true' and isActive = 'true';", null))));
 
 		searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			stringToSearch = newValue;
+			stringToSearch = newValue.trim();
 			filterList();
 		});
 

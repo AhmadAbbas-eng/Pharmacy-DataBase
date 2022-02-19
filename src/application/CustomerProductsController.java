@@ -264,7 +264,7 @@ public class CustomerProductsController implements Initializable {
 				});
 
 		searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
-			this.stringToSearch = newValue;
+			this.stringToSearch = newValue.trim();
 			filterList();
 		});
 
