@@ -160,7 +160,7 @@ public class ReceivedController implements Initializable {
 				Queries.queryResult("select * from S_Order where Recieved_By <> '-1' order by Order_ID;", null))));
 
 		searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			stringToSearch=newValue;
+			stringToSearch=newValue.trim();
 			filterList();
 			
 		});

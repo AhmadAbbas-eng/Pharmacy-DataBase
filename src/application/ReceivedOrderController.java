@@ -271,7 +271,7 @@ public class ReceivedOrderController implements Initializable {
 		ordersTable.setItems(SupplierOrder.getDataList());
 
 		searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			stringToSearch = newValue;
+			stringToSearch = newValue.trim();
 			filterList();
 		});
 
