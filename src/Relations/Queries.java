@@ -131,19 +131,18 @@ public class Queries {
 			preparedStatement.executeUpdate(); // Get the results on execution on result set
 			tempConnection.close();
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			/*
-			 * String arr[] = statment.split(" "); StringBuilder warning = new
-			 * StringBuilder(); StringBuilder massege = new StringBuilder(); if
-			 * (arr[0].toLowerCase().equals("insert")) { warning.append("Adding Error");
-			 * massege.append("Can't add enrty"); } else if
-			 * (arr[0].toLowerCase().equals("update")) { warning.append("Updating Error");
-			 * massege.append("Can't update "); } Alert alert = new
-			 * Alert(Alert.AlertType.ERROR); alert.setTitle(warning.toString());
-			 * alert.setHeaderText(massege.toString()); alert.
-			 * setContentText("Reasons:\n1-Duplicate Data entry\n2-Data too long\n3-Wrong input fromat"
-			 * ); alert.showAndWait();
-			 */
+		
+			  String arr[] = statment.split(" "); StringBuilder warning = new
+			  StringBuilder(); StringBuilder massege = new StringBuilder(); if
+			  (arr[0].toLowerCase().equals("insert")) { warning.append("Adding Error");
+			  massege.append("Can't add enrty"); } else if
+			  (arr[0].toLowerCase().equals("update")) { warning.append("Updating Error");
+			  massege.append("Can't update "); } Alert alert = new
+			  Alert(Alert.AlertType.ERROR); alert.setTitle(warning.toString());
+			  alert.setHeaderText(massege.toString()); alert.
+			  setContentText("Reasons:\n1-Duplicate Data entry\n2-Data too long\n3-Wrong input fromat"
+			  ); alert.showAndWait();
+			
 		}
 	}
 
