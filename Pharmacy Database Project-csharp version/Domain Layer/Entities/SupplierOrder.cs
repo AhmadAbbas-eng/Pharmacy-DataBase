@@ -7,7 +7,7 @@ namespace Domain_Layer.Entities;
 public class SupplierOrder
 {
     [Key]
-    public int OrderID { get; set; }
+    public int OrderId { get; set; }
 
     [Required]
     public DateTime DateOfOrder { get; set; }
@@ -18,20 +18,17 @@ public class SupplierOrder
     public float OrderDiscount { get; set; }
 
     public DateTime DueDateForPayment { get; set; }
-
-    [ForeignKey("Supplier")]
+    
     public int SupplierId { get; set; }
     public virtual Supplier Supplier { get; set; }
 
-    [ForeignKey("Manager")]
     public int ManagerId { get; set; }
     public virtual Employee Manager { get; set; }
 
-    [ForeignKey("Receiver")]
-    public int RecievedBy { get; set; }
-    public virtual Employee Receiver { get; set; }
+    public int ReceiverId { get; set; }
+    public DateTime? ReceivedDate { get; set; }
 
-    public DateTime? RecievedDate { get; set; }
+    public virtual Employee Receiver { get; set; }
 
     public virtual ICollection<SupplierOrderBatch> SupplierOrderBatches { get; set; }
 }

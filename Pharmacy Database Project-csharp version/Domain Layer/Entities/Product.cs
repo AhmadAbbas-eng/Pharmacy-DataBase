@@ -12,7 +12,6 @@ public class Product
     }
     
     [Key] 
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
     public int ProductId { get; set; }
     
     [Required(ErrorMessage = "The Name cannot be empty or null")]
@@ -27,12 +26,7 @@ public class Product
     [StringLength(100, MinimumLength = 2, ErrorMessage = "Manufacturer Name must be between 2 and 100 characters.")]
     public string Manufacturer { get; set; }
     
-    [ForeignKey("Product_Name")]
-    public NameManu NameManu { get; set; }
+    public NameMenu NameMenu { get; set; }
     public ICollection<Batch> Batches { get; set; }
     public Drug Drug { get; set; }
-    public virtual ICollection<SupplierOrderBatch> SupplierOrderBatches { get; set; }
-    public virtual ICollection<CustomerOrderBatch> CustomerOrderBatches { get; set; }
-    public virtual ICollection<DrugDisposal> DrugDisposals { get; set; }
-
 }

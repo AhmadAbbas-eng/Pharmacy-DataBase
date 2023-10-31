@@ -3,11 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain_Layer.Entities;
 
-[Table("Employee")]
 public class Employee
 {
     [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int EmployeeId { get; set; }
 
     [Required]
@@ -38,9 +36,12 @@ public class Employee
     public virtual ICollection<EmployeePhone> EmployeePhones { get; set; }
     public virtual ICollection<WorkHours> WorkHours { get; set; }
     public virtual ICollection<Cheque> Cheques { get; set; }
+    public virtual ICollection<CustomerOrder> CustomerOrders { get; set; }
     public virtual ICollection<SupplierOrder> ManagedSupplierOrders { get; set; }
     public virtual ICollection<SupplierOrder> ReceivedSupplierOrders { get; set; }
-    public virtual ICollection<EmployeeSalary> EmployeesSalaries { get; set; }
+    public virtual ICollection<EmployeeSalary> ReceiverEmployeeSalaries { get; set; }
+    public virtual ICollection<EmployeeSalary> PayeeEmployeeSalaries { get; set; }
+
     public virtual ICollection<TaxesPayment> TaxesPayments { get; set; }
     public virtual ICollection<SupplierPayment> ManagedSupplierPayments { get; set; }
     public virtual ICollection<Income> Incomes { get; set; }

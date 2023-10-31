@@ -17,13 +17,11 @@ public class CustomerOrder
 
     public float Discount { get; set; }
 
-    [ForeignKey("Employee")]
     public int EmployeeId { get; set; }
     public virtual Employee Employee { get; set; }
 
-    [ForeignKey("Customer")]
-    public string CustomerId { get; set; }
+    public int CustomerId { get; set; }
     public virtual Customer Customer { get; set; }
 
-    public virtual ICollection<CustomerOrderBatch> C_Order_Batches { get; set; }
+    public virtual ICollection<CustomerOrderBatch> CustomerOrderBatches { get; set; }
 }

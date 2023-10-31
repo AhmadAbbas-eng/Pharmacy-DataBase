@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain_Layer.Entities;
 
-[Table("Payment")]
 public class Payment
 {
     [Key]
@@ -21,9 +20,9 @@ public class Payment
     [StringLength(16)]
     public string PaymentMethod { get; set; }
 
-    public ICollection<Cheque> Cheques { get; set; }
-    public ICollection<EmployeeSalary> EmployeesSalaries { get; set; }
-    public ICollection<TaxesPayment> TaxesPayments { get; set; }
-    public ICollection<SupplierPayment> SupplierPayments { get; set; }
-    public ICollection<DrugDisposal> DrugDisposals { get; set; }
+    public virtual ICollection<Cheque> Cheques { get; set; }
+    public virtual ICollection<EmployeeSalary> EmployeesSalaries { get; set; }
+    public virtual ICollection<TaxesPayment> TaxesPayments { get; set; }
+    public virtual ICollection<SupplierPayment> SupplierPayments { get; set; }
+    public virtual ICollection<DrugDisposal> DrugDisposals { get; set; }
 }

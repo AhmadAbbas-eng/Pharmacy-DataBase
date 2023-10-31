@@ -3,11 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain_Layer.Entities;
 
-[Table("Drug")]
-public class Drug
+public class Drug : Product
 {
     [Key]
-    [ForeignKey("Product")]
     public int ProductId { get; set; }
 
     [Required]

@@ -4,10 +4,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain_Layer.Entities;
 
 
-[Table("Name_Manu")]
-public class NameManu
+public class NameMenu
 {
     [Key]
+    public int ProductId { get; set; }
+    
     [Required]
     [StringLength(32)]
     public string ProductName { get; set; }

@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain_Layer.Entities;
 
-[Table("Supplier")]
 public class Supplier
 {
     [Key]
@@ -25,7 +24,7 @@ public class Supplier
     [DefaultValue(0.0f)]
     public double Dues { get; set; } = 0.0;
 
-    public ICollection<SupplierOrder> SupplierOrders { get; set; }
-    public ICollection<SupplierPhone> SupplierPhones { get; set; }
+    public virtual ICollection<SupplierOrder> SupplierOrders { get; set; }
+    public virtual ICollection<SupplierPhone> SupplierPhones { get; set; }
     public virtual ICollection<SupplierPayment> SupplierPayments { get; set; }
 }

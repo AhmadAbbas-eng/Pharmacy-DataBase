@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain_Layer.Entities;
 
-[Table("Tax")]
 public class Tax
 {
     [Key]

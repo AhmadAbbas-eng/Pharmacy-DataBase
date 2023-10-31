@@ -18,12 +18,9 @@ public class Cheque
     public DateTime DueDateOfCashing { get; set; }
 
     [Required]
-    [ForeignKey("Payment")]
     public int PaymentId { get; set; }
 
     [Required]
-    [ForeignKey("Manager")]
-
     public int ManagerId { get; set; }
 
     public virtual Payment Payment { get; set; }
