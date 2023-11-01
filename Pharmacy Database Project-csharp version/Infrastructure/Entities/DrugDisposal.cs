@@ -1,18 +1,14 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Domain_Layer.Entities;
+namespace Infrastructure.Entities;
 
 public class DrugDisposal
 {
-    [Key]
-    public int DisposalId { get; set; }
+    [Key] public int DisposalId { get; set; }
 
-    [Required]
-    public int Amount { get; set; }
+    [Required] public int Amount { get; set; }
 
-    [Required]
-    public DateTime DisposalDate { get; set; }
+    [Required] public DateTime DisposalDate { get; set; }
 
     public int EmployeeId { get; set; }
     public virtual Employee Employee { get; set; }

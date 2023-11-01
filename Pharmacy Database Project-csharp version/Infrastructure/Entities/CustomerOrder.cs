@@ -1,19 +1,14 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Domain_Layer.Entities;
 
-namespace Domain_Layer.Entities;
+namespace Infrastructure.Entities;
 
 public class CustomerOrder
 {
-    [Key]
-    public int OrderId { get; set; }
+    [Key] public int OrderId { get; set; }
 
-    [Required]
-    public DateTime OrderDate { get; set; }
+    [Required] public DateTime OrderDate { get; set; }
 
-    [Required]
-    public float Price { get; set; }
+    [Required] public float Price { get; set; }
 
     public float Discount { get; set; }
 

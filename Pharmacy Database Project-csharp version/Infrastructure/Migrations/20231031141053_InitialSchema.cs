@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Domain_Layer.Migrations
+namespace Infrastructure.Migrations
 {
     public partial class InitialSchema : Migration
     {

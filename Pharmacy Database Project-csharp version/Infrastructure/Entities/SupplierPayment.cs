@@ -1,8 +1,4 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Domain_Layer.Entities;
-
+namespace Infrastructure.Entities;
 
 public class SupplierPayment
 {

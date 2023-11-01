@@ -1,7 +1,7 @@
-using Domain_Layer.Entities;
+using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Domain_Layer;
+namespace Infrastructure;
 
 public class PharmacyDbContext : DbContext
 {
@@ -45,10 +45,11 @@ public class PharmacyDbContext : DbContext
         {
             var connectionString =
                 @"Server=localhost, 11433;Database=PharmacyEFMigrations;User Id=sa;Password=Itsmine123!;";
-            
+
             optionsBuilder.UseSqlServer(connectionString);
         }
     }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<NameMenu>(
@@ -251,7 +252,7 @@ public class PharmacyDbContext : DbContext
         {
             taxesPayment.HasKey(tp => new { tp.PaymentId, tp.ManagerId, tp.TaxId });
         });
-        
+
         modelBuilder.Entity<CustomerOrderBatch>(cob => { cob.HasKey(c => new { c.OrderId, c.BatchId }); });
 
         modelBuilder.Entity<SupplierOrderBatch>(sob => { sob.HasKey(s => new { s.OrderId, s.BatchId }); });
@@ -260,17 +261,17 @@ public class PharmacyDbContext : DbContext
         {
             workHours.HasKey(w => new { w.EmployeeId, w.WorkedMonth, w.WorkedYear });
         });
-        
+
         modelBuilder.Entity<EmployeePhone>(employeePhone =>
         {
             employeePhone.HasKey(e => new { e.EmployeeId, e.Phone });
         });
-        
+
         modelBuilder.Entity<CustomerPhone>(customerPhone =>
         {
             customerPhone.HasKey(e => new { e.CustomerId, e.Phone });
         });
-        
+
         modelBuilder.Entity<SupplierPhone>(supplierPhone =>
         {
             supplierPhone.HasKey(s => new { s.SupplierId, s.Phone });
@@ -281,9 +282,6 @@ public class PharmacyDbContext : DbContext
             empSalary.HasKey(es => new { es.PaymentId, es.ManagerId, es.EmployeeId });
         });
 
-        modelBuilder.Entity<SupplierPayment>(sp =>
-        {
-            sp.HasKey(s => new { s.SupplierId, s.PaymentId, s.ManagerId });
-        });
+        modelBuilder.Entity<SupplierPayment>(sp => { sp.HasKey(s => new { s.SupplierId, s.PaymentId, s.ManagerId }); });
     }
 }
