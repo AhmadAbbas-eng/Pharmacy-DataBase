@@ -1,4 +1,6 @@
-﻿namespace Domain.Models;
+﻿using Domain.Repositories.Interface;
+
+namespace Domain.Models;
 
 public class SupplierDomain
 {
@@ -9,4 +11,5 @@ public class SupplierDomain
     public string? Email { get; set; }
     
     public double Dues { get; set; } = 0.0;
+    public ICollection<SupplierPhoneDomain> SupplierPhones { get; set; }
 }

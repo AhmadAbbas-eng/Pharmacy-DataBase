@@ -18,19 +18,19 @@ public class ProductRepository : IProductRepository
     }
 
     
-    public int GetTotalAmountByProductId(int productId)
+    public async Task<int> GetTotalAmountByProductIdAsync(int productId)
     {
-        return _context.Batches.Where(b => b.ProductId == productId)
-            .Sum(b => b.Amount);
+        return await _context.Batches.Where(b => b.ProductId == productId)
+            .SumAsync(b => b.Amount);
     }
 
-    public List<ProductDomian> GetOutOfStockProducts()
+    public async Task<List<ProductDomian>> GetOutOfStockProductsAsync()
     {
 
-        var outOfStockDbProducts = _context.Products
+        var outOfStockDbProducts = await _context.Products
             .Where(p => 
-                !(_context.Batches.Where(b => b.ProductId == p.ProductId).Sum(b => b.Amount) > 0))
-            .ToList();
+                _context.Batches.Where(b => b.ProductId == p.ProductId).Sum(b => b.Amount) <= 0)
+            .ToListAsync();
         
         var outOfStockProducts = _mapper.Map<List<ProductDomian>>(outOfStockDbProducts);
         return outOfStockProducts;

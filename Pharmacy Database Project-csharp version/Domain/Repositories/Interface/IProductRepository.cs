@@ -4,7 +4,7 @@ namespace Domain.Repositories.Interface;
 
 public interface IProductRepository
 {
-    int GetTotalAmountByProductId(int productId);
-    List<ProductDomian> GetOutOfStockProducts();
+    Task<int> GetTotalAmountByProductIdAsync(int productId);
+    Task<List<ProductDomian>> GetOutOfStockProductsAsync();
     Task<double> CalculateAverageProductPriceAsync();
 }

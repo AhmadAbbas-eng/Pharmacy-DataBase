@@ -2,13 +2,18 @@
 
 namespace Domain.Repositories.Interface;
 
-public interface IRepository<T>
+public interface IRepository<TModel, TId> 
 {
-    T GetById(int id, params Expression<Func<T, object>>[] includeProperties);
-    IEnumerable<T> GetAll();
-    void Add(T entity);
-    void Update(T entity);
-    void Delete(T entity);
-    IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
+    TModel GetById(TId id, params Expression<Func<TModel, object>>[] includeProperties);
+    Task<TModel> GetByIdAsync(TId id, params Expression<Func<TModel, object>>[] includeProperties);
+    IEnumerable<TModel> GetAll();
+    Task<IEnumerable<TModel>> GetAllAsync();
+    void Add(TModel entity);
+    Task AddAsync(TModel entity);
+    void Update(TModel entity);
+    void Delete(TModel entity);
+    IEnumerable<TModel> Find(Expression<Func<TModel, bool>> predicate);
+    Task<IEnumerable<TModel>> FindAsync(Expression<Func<TModel, bool>> predicate);
     void Save();
+    Task SaveAsync();
 }

@@ -15,12 +15,12 @@ public class NameMenuRepository : INameMenuRepository
         _mapper = mapper;
     }
     
-    public IEnumerable<string> GetAllDistinctManufacturers()
+    public async Task<IEnumerable<string>> GetAllDistinctManufacturersAsync()
     {
-        return _context.NameMenus
+        return await _context.NameMenus
             .Select(nm => nm.ProductManufacturer)
             .Distinct()
-            .ToList();
+            .ToListAsync();
     }
     
     public async Task UpdateManufacturerNameAsync(string oldName, string newName)

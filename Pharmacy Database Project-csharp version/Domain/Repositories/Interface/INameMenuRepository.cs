@@ -2,6 +2,6 @@
 
 public interface INameMenuRepository
 {
-    IEnumerable<string> GetAllDistinctManufacturers();
+    Task<IEnumerable<string>> GetAllDistinctManufacturersAsync();
     Task UpdateManufacturerNameAsync(string oldName, string newName);
 }

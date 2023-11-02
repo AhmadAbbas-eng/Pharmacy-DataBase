@@ -16,11 +16,11 @@ public class PaymentRepository : IPaymentRepository
         _mapper = mapper;
     }
     
-    public IEnumerable<PendingPayment> GetPendingPayments()
+    public async Task<IEnumerable<PendingPayment>> GetPendingPaymentsAsync()
     {
         DateTime thirtyDaysFromNow = DateTime.Now.AddDays(30);
     
-        var pendingPayments = _context.SupplierOrders
+        var pendingPayments = await _context.SupplierOrders
             .Include(o => o.Supplier) 
             .Where(o => o.DueDateForPayment <= thirtyDaysFromNow)
             .ToListAsync();
