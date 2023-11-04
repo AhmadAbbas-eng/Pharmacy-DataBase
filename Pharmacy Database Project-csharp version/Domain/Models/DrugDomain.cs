@@ -1,8 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Domain.Models;
 
-public class DrugDomain : ProductDomian
+public class DrugDomain : ProductDomain
 {
-    public int ProductId { get; set; }
+    [Key] public int ProductId { get; set; }
     
     public string DrugScientificName { get; set; }
     

@@ -242,6 +242,8 @@ public class PharmacyDbContext : DbContext
 
         modelBuilder.Entity<Tax>(tax =>
         {
+            tax.Property(t => t.TaxId).ValueGeneratedOnAdd();
+            
             tax.HasMany<TaxesPayment>(t => t.TaxesPayments)
                 .WithOne(tp => tp.Tax)
                 .HasForeignKey(tp => tp.TaxId)

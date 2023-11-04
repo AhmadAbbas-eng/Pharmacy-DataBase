@@ -1,6 +1,6 @@
 namespace Domain.Models;
 
-public class DomainWorkHours
+public class WorkHoursDomain
 {
     public int EmployeeId { get; set; }
     public string Name { get; set; }
@@ -11,6 +11,4 @@ public class DomainWorkHours
     public double WorkedHours { get; set; }
 
     public double HourlyPaid { get; set; }
-    
-
 }

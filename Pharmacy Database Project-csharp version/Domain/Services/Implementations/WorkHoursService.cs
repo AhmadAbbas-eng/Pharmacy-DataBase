@@ -6,9 +6,9 @@ namespace Domain.Services.Implementations;
 
 public class WorkHoursService : IWorkHoursService
 {
-    private readonly IRepository<DomainWorkHours, int> _workHoursRepository;
-
-    public WorkHoursService(IRepository<DomainWorkHours, int> workHoursRepository)
+    private readonly IRepository<WorkHoursDomain, int> _workHoursRepository;
+    
+    public WorkHoursService(IRepository<WorkHoursDomain, int> workHoursRepository)
     {
         _workHoursRepository = workHoursRepository;
     }
@@ -19,7 +19,7 @@ public class WorkHoursService : IWorkHoursService
         return workHours.Sum(wh => wh.WorkedHours * wh.HourlyPaid);
     }
 
-    public async Task<IEnumerable<DomainWorkHours>> GenerateMonthlyWorkReportsAsync(int month, int year)
+    public async Task<IEnumerable<WorkHoursDomain>> GenerateMonthlyWorkReportsAsync(int month, int year)
     {
         var workHours = await _workHoursRepository.FindAsync(wh => wh.WorkedMonth == month && wh.WorkedYear == year);
         return workHours;

@@ -24,7 +24,7 @@ public class ProductRepository : IProductRepository
             .SumAsync(b => b.Amount);
     }
 
-    public async Task<List<ProductDomian>> GetOutOfStockProductsAsync()
+    public async Task<List<ProductDomain>> GetOutOfStockProductsAsync()
     {
 
         var outOfStockDbProducts = await _context.Products
@@ -32,7 +32,7 @@ public class ProductRepository : IProductRepository
                 _context.Batches.Where(b => b.ProductId == p.ProductId).Sum(b => b.Amount) <= 0)
             .ToListAsync();
         
-        var outOfStockProducts = _mapper.Map<List<ProductDomian>>(outOfStockDbProducts);
+        var outOfStockProducts = _mapper.Map<List<ProductDomain>>(outOfStockDbProducts);
         return outOfStockProducts;
     }
 

@@ -1,9 +1,11 @@
-﻿using Domain.Repositories.Interface;
+﻿using System.ComponentModel.DataAnnotations;
+using Domain.Repositories.Interface;
 
 namespace Domain.Models;
 
 public class SupplierDomain
 {
+    [Key] public string ProductId { get; set; }
     public string Name { get; set; }
 
     public string Address { get; set; }

@@ -1,8 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Domain.Models;
 
 public class BatchDomain
 {
-    public int BatchId { get; set; }
+    [Key] public int BatchId { get; set; }
 
     public int ProductId { get; set; }
 
