@@ -4,6 +4,7 @@ using AutoMapper;
 using Domain.Repositories.Interface;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Project_Test.GenericRepositoryUnitTests;
 
@@ -17,17 +18,29 @@ public abstract class BaseGenericRepositoryTests<TContext, TDbModel, TModel, TId
 
     public BaseGenericRepositoryTests()
     {
+        var loggerFactory = LoggerFactory.Create(builder => 
+        {
+            builder
+                .AddFilter("Microsoft.EntityFrameworkCore.Database.Command", LogLevel.Information)
+                .AddConsole();
+        });
+        
         _options = new DbContextOptionsBuilder<TContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString())
+            .LogTo(Console.WriteLine, LogLevel.Debug)
+            .EnableSensitiveDataLogging()
             .Options;
 
         _context = (TContext)Activator.CreateInstance(typeof(TContext), _options);
         _context.Database.EnsureCreated();
+        
         var mockMapperConfig = new MapperConfiguration(cfg =>
         {
             cfg.CreateMap<TDbModel, TModel>();
             cfg.CreateMap<TModel, TDbModel>();
         });
+        
+  
         _mapper = mockMapperConfig.CreateMapper();
         _fixture = new Fixture();
     }

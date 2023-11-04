@@ -13,22 +13,23 @@ public class PaymentGenericRepositoryTests : BaseGenericRepositoryTests<Pharmacy
     }
 
     [Fact]
-    public void FindProducts_ReturnsCorrectProducts()
+    public void FindPayment_ReturnsCorrectPayments()
     {
-        var product = CreateDomainModel();
-        _repository.Add(product);
+        var payment = CreateDomainModel();
+        _repository.Add(payment);
         _repository.Save();
 
-        var foundProducts = _repository.Find(p => p.PaymentAmount == product.PaymentAmount);
+        var paymentAmount = payment.PaymentAmount;
+        var foundProducts = _repository.Find(p => p.PaymentAmount == paymentAmount);
 
-        Assert.Contains(foundProducts, p => p.PaymentAmount == product.PaymentAmount);
+        Assert.Contains(foundProducts, p => p.PaymentAmount == payment.PaymentAmount);
     }
 
     [Fact]
-    public void FindProducts_ReturnsEmpty_WhenPredicateDoesNotMatch()
+    public void FindPayments_ReturnsEmpty_WhenPredicateDoesNotMatch()
     {
-        var foundProducts = _repository.Find(p => p.PaymentAmount == -1);
+        var foundPayment = _repository.Find(p => p.PaymentAmount == -1);
 
-        Assert.Empty(foundProducts);
+        Assert.Empty(foundPayment);
     }
 }

@@ -171,10 +171,11 @@ public class Repository<TDbModel, TModel, TId> : IRepository<TModel, TId>
 
         foreach (var predicate in predicates)
         {
-            var predicateExpression = _mapper.ConvertPredicate<TModel, TDbModel>(predicate);
-            query.Where(predicateExpression);
+            var predicateExpression = MapperExtensions.ConvertPredicate<TModel, TDbModel>(_mapper, predicate);
+            query = query.Where(predicateExpression);
         }
 
+        
         var result = query.ToList();
         return _mapper.Map<List<TModel>>(result);
     }
@@ -186,7 +187,7 @@ public class Repository<TDbModel, TModel, TId> : IRepository<TModel, TId>
         foreach (var predicate in predicates)
         {
             var predicateExpression = _mapper.ConvertPredicate<TModel, TDbModel>(predicate);
-            query.Where(predicateExpression);
+            query = query.Where(predicateExpression);
         }
 
         var result = await query.ToListAsync();
