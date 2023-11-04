@@ -15,16 +15,12 @@ public abstract class BaseGenericRepositoryTests<TContext, TDbModel, TModel, TId
 {
     private readonly Fixture _fixture;
     private readonly DbContextOptions<TContext> _options;
-
+    protected TContext _context { get; }
+    protected IRepository<TModel, TId> _repository { get; set; }
+    protected IMapper _mapper { get; }
+    
     public BaseGenericRepositoryTests()
     {
-        var loggerFactory = LoggerFactory.Create(builder => 
-        {
-            builder
-                .AddFilter("Microsoft.EntityFrameworkCore.Database.Command", LogLevel.Information)
-                .AddConsole();
-        });
-        
         _options = new DbContextOptionsBuilder<TContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString())
             .LogTo(Console.WriteLine, LogLevel.Debug)
@@ -45,11 +41,7 @@ public abstract class BaseGenericRepositoryTests<TContext, TDbModel, TModel, TId
         _fixture = new Fixture();
     }
 
-    protected TContext _context { get; }
-    protected IRepository<TModel, TId> _repository { get; set; }
-    protected IMapper _mapper { get; }
-
-
+    
     protected TModel CreateDomainModel()
     {
         var domain = _fixture.Build<TModel>()
