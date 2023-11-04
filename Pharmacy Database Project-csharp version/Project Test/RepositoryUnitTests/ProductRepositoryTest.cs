@@ -11,11 +11,11 @@ namespace Project_Test;
 
 public class ProductRepositoryTest : BaseTest<PharmacyDbContext>
 {
-    private readonly IRepository<ProductDomain, int> _productRepository;
-    private readonly IMapper _mapper;
     private readonly Fixture _fixture;
-    
-    public ProductRepositoryTest() : base()
+    private readonly IMapper _mapper;
+    private readonly IRepository<ProductDomain, int> _productRepository;
+
+    public ProductRepositoryTest()
     {
         var mockMapperConfig = new MapperConfiguration(cfg =>
         {
@@ -33,24 +33,23 @@ public class ProductRepositoryTest : BaseTest<PharmacyDbContext>
     private ProductDomain CreateProductDomain()
     {
         return _fixture.Build<ProductDomain>()
-            .Without(p => p.ProductId) 
+            .Without(p => p.ProductId)
             .Create();
     }
-    
+
     [Fact]
     public void AddProduct_AddsToDatabase()
     {
-
         var domainModel = CreateProductDomain();
         domainModel.ProductId = _productRepository.Add(domainModel);
         _productRepository.Save();
-        
+
         var productDb = Context.Products.FirstOrDefault(p => p.ProductId == domainModel.ProductId);
         Assert.NotNull(productDb);
         var expectedProduct = _mapper.Map<Product>(domainModel);
         productDb.Should().BeEquivalentTo(expectedProduct, options => options.ExcludingMissingMembers());
     }
-    
+
     [Fact]
     public void AddProduct_ReturnsCorrectId()
     {
@@ -61,27 +60,27 @@ public class ProductRepositoryTest : BaseTest<PharmacyDbContext>
 
         Assert.NotEqual(0, addedProductId);
     }
-    
+
     [Fact]
     public void AddProduct_ThrowsException_WhenNull()
     {
         Assert.Throws<ArgumentNullException>(() => _productRepository.Add(null));
     }
-    
+
     [Fact]
     public void GetProductById_ReturnsNull_WhenInvalidId()
     {
         var product = _productRepository.GetById(-1);
         Assert.Null(product);
     }
-    
+
     [Fact]
     public void GetAllProducts_ReturnsAllProducts()
     {
-        int numberOfProducts = 5;
+        var numberOfProducts = 5;
         var generatedProducts = new ProductDomain[numberOfProducts];
 
-        for (int i = 0; i < numberOfProducts; i++)
+        for (var i = 0; i < numberOfProducts; i++)
         {
             generatedProducts[i] = CreateProductDomain();
             generatedProducts[i].ProductId = _productRepository.Add(generatedProducts[i]);
@@ -95,7 +94,7 @@ public class ProductRepositoryTest : BaseTest<PharmacyDbContext>
         Assert.Equal(numberOfProducts, products.Count());
         generatedProducts.Should().BeEquivalentTo(products, options => options.ExcludingMissingMembers());
     }
-    
+
     [Fact]
     public void GetAllProducts_ReturnsEmpty_WhenNoProducts()
     {
@@ -103,7 +102,7 @@ public class ProductRepositoryTest : BaseTest<PharmacyDbContext>
 
         Assert.Empty(products);
     }
-    
+
     [Fact]
     public void UpdateProduct_UpdatesExistingProduct()
     {
@@ -122,7 +121,7 @@ public class ProductRepositoryTest : BaseTest<PharmacyDbContext>
 
         updatedProduct.Should().BeEquivalentTo(productInDb, options => options.ExcludingMissingMembers());
     }
-    
+
     [Fact]
     public void UpdateProduct_UpdatesShouldThroughException()
     {
@@ -136,7 +135,7 @@ public class ProductRepositoryTest : BaseTest<PharmacyDbContext>
             _productRepository.Save();
         });
     }
-    
+
     [Fact]
     public void DeleteProduct_RemovesProduct()
     {
@@ -150,17 +149,17 @@ public class ProductRepositoryTest : BaseTest<PharmacyDbContext>
         var foundProduct = _productRepository.GetById(addedProduct);
         Assert.Null(foundProduct);
     }
-    
+
     [Fact]
     public void DeleteProduct_ThrowsException_WhenProductDoesNotExist()
     {
         var product = _fixture.Build<ProductDomain>()
-            .Without(p => p.ProductId) 
+            .Without(p => p.ProductId)
             .Create();
 
         Assert.Throws<ArgumentException>(() => _productRepository.Delete(product));
     }
-    
+
     [Fact]
     public void FindProducts_ReturnsCorrectProducts()
     {
@@ -172,7 +171,7 @@ public class ProductRepositoryTest : BaseTest<PharmacyDbContext>
 
         Assert.Contains(foundProducts, p => p.Name == product.Name);
     }
-    
+
     [Fact]
     public void FindProducts_ReturnsEmpty_WhenPredicateDoesNotMatch()
     {

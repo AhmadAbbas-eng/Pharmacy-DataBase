@@ -19,7 +19,7 @@ public static class ServiceConfiguration
         var serviceCollection = new ServiceCollection();
 
         //serviceCollection.AddLogging(configure => configure.AddConsole());
-        
+
         //serviceCollection.AddScoped<ICustomerService, CustomerService>();
 
         //serviceCollection.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -35,36 +35,35 @@ public static class ServiceConfiguration
         serviceCollection.AddScoped<IRepository<PaymentDomain, int>, Repository<Payment, PaymentDomain, int>>();
         serviceCollection.AddScoped<IRepository<ChequeDomain, int>, Repository<Cheque, ChequeDomain, int>>();
         serviceCollection.AddScoped<IWorkHoursService, WorkHoursService>();
-        
+
         var config = new MapperConfiguration(cfg =>
         {
             cfg.AddExpressionMapping();
-            
+
             cfg.CreateMap<Product, ProductDomain>();
             cfg.CreateMap<Supplier, SupplierDomain>();
             cfg.CreateMap<SupplierDomain, Supplier>();
-            
+
             cfg.CreateMap<EmployeeDomain, Employee>();
             cfg.CreateMap<Employee, EmployeeDomain>();
 
             cfg.CreateMap<SupplierPhone, SupplierPhoneDomain>();
             cfg.CreateMap<SupplierPhoneDomain, SupplierPhone>();
-            
+
             cfg.CreateMap<WorkHours, WorkHoursDomain>();
             cfg.CreateMap<WorkHoursDomain, WorkHours>();
 
             cfg.CreateMap<TaxDomain, Tax>();
             cfg.CreateMap<Tax, TaxDomain>();
-            
+
             cfg.CreateMap<ChequeDomain, Cheque>();
             cfg.CreateMap<Cheque, ChequeDomain>();
-            
+
             cfg.CreateMap<PaymentDomain, Payment>();
             cfg.CreateMap<Payment, PaymentDomain>();
-
         });
 
-        IMapper mapper = config.CreateMapper();
+        var mapper = config.CreateMapper();
         serviceCollection.AddSingleton(mapper);
         return serviceCollection.BuildServiceProvider();
     }

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Domain.Models;
 using Domain.Repositories.Interface;
-using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository;
@@ -10,14 +9,14 @@ public class ProductRepository : IProductRepository
 {
     private readonly PharmacyDbContext _context;
     private readonly IMapper _mapper;
-    
+
     public ProductRepository(PharmacyDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
     }
 
-    
+
     public async Task<int> GetTotalAmountByProductIdAsync(int productId)
     {
         return await _context.Batches.Where(b => b.ProductId == productId)
@@ -26,12 +25,11 @@ public class ProductRepository : IProductRepository
 
     public async Task<List<ProductDomain>> GetOutOfStockProductsAsync()
     {
-
         var outOfStockDbProducts = await _context.Products
-            .Where(p => 
+            .Where(p =>
                 _context.Batches.Where(b => b.ProductId == p.ProductId).Sum(b => b.Amount) <= 0)
             .ToListAsync();
-        
+
         var outOfStockProducts = _mapper.Map<List<ProductDomain>>(outOfStockDbProducts);
         return outOfStockProducts;
     }

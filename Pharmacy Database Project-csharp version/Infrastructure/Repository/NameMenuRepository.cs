@@ -8,13 +8,13 @@ public class NameMenuRepository : INameMenuRepository
 {
     private readonly PharmacyDbContext _context;
     private readonly IMapper _mapper;
-    
+
     public NameMenuRepository(PharmacyDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
     }
-    
+
     public async Task<IEnumerable<string>> GetAllDistinctManufacturersAsync()
     {
         return await _context.NameMenus
@@ -22,7 +22,7 @@ public class NameMenuRepository : INameMenuRepository
             .Distinct()
             .ToListAsync();
     }
-    
+
     public async Task UpdateManufacturerNameAsync(string oldName, string newName)
     {
         var productsToUpdate = await _context.NameMenus

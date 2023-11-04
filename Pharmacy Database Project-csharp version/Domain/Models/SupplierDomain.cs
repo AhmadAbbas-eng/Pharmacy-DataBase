@@ -11,7 +11,7 @@ public class SupplierDomain
     public string Address { get; set; }
 
     public string? Email { get; set; }
-    
+
     public double Dues { get; set; } = 0.0;
     public ICollection<SupplierPhoneDomain> SupplierPhones { get; set; }
 }

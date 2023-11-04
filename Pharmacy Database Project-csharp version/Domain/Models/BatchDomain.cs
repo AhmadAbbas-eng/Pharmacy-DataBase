@@ -11,6 +11,6 @@ public class BatchDomain
     public DateTime ProductionDate { get; set; }
 
     public DateTime ExpiryDate { get; set; }
-    
+
     public int Amount { get; set; }
 }

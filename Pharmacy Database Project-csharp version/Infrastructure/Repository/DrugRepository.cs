@@ -1,7 +1,6 @@
 using AutoMapper;
 using Domain.Models;
 using Domain.Repositories.Interface;
-using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository;
@@ -23,6 +22,5 @@ public class DrugRepository : IDrugRepository
             .Where(d => d.DrugRiskPregnancyCategory.Contains(riskCategory))
             .ToListAsync();
         return _mapper.Map<List<DrugDomain>>(drugs);
-
     }
 }

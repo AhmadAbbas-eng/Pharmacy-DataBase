@@ -11,7 +11,7 @@ public class ProductGenericRepositoryTests : BaseGenericRepositoryTests<Pharmacy
     {
         _repository = new Repository<Product, ProductDomain, int>(_context, _mapper);
     }
-    
+
     [Fact]
     public void FindProducts_ReturnsCorrectProducts()
     {
@@ -23,7 +23,7 @@ public class ProductGenericRepositoryTests : BaseGenericRepositoryTests<Pharmacy
 
         Assert.Contains(foundProducts, p => p.Name == product.Name);
     }
-    
+
     [Fact]
     public void FindProducts_ReturnsEmpty_WhenPredicateDoesNotMatch()
     {

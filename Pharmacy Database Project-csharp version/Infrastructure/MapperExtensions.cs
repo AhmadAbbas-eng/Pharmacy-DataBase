@@ -1,34 +1,36 @@
 ﻿using System.Linq.Expressions;
-using System.Reflection;
 using AutoMapper;
+
 namespace Infrastructure;
 
 public static class MapperExtensions
 {
-    
-    public static Expression<Func<TEntity, bool>> ConvertPredicate<TDto, TEntity>(this IMapper mapper, Expression<Func<TDto, bool>> predicate)
+    public static Expression<Func<TEntity, bool>> ConvertPredicate<TDto, TEntity>(this IMapper mapper,
+        Expression<Func<TDto, bool>> predicate)
     {
         return (Expression<Func<TEntity, bool>>)new PredicateVisitor<TDto, TEntity>(mapper).Visit(predicate);
     }
 
-    public static Expression<Func<TDbModel, object>> Convert<TModel, TDbModel>(Expression<Func<TModel, object>> sourceMember)
+    public static Expression<Func<TDbModel, object>> Convert<TModel, TDbModel>(
+        Expression<Func<TModel, object>> sourceMember)
     {
         var memberName = ((MemberExpression)sourceMember.Body).Member.Name;
         var parameter = Expression.Parameter(typeof(TDbModel), "src");
         var property = Expression.Property(parameter, memberName);
         return Expression.Lambda<Func<TDbModel, object>>(property, parameter);
     }
-    
-    
+
+
     private class PredicateVisitor<TDto, TEntity> : ExpressionVisitor
     {
-        private readonly ParameterExpression _entityParameter;
         private readonly MemberAssignment[] _bindings;
+        private readonly ParameterExpression _entityParameter;
 
         public PredicateVisitor(IMapper mapper)
         {
-            IQueryable<TDto> mockQuery = mapper.ProjectTo<TDto>(new TEntity[0].AsQueryable(), null);
-            LambdaExpression lambdaExpression = (LambdaExpression)((UnaryExpression)((MethodCallExpression) mockQuery.Expression).Arguments[1]).Operand;
+            var mockQuery = mapper.ProjectTo<TDto>(new TEntity[0].AsQueryable(), null);
+            var lambdaExpression =
+                (LambdaExpression)((UnaryExpression)((MethodCallExpression)mockQuery.Expression).Arguments[1]).Operand;
 
             _bindings = ((MemberInitExpression)lambdaExpression.Body).Bindings.Cast<MemberAssignment>().ToArray();
             _entityParameter = Expression.Parameter(typeof(TEntity));
@@ -46,13 +48,10 @@ public static class MapperExtensions
         // Do member mapping
         protected override Expression VisitMember(MemberExpression node)
         {
-            MemberInfo member = node.Member;
-            MemberAssignment? binding = _bindings.FirstOrDefault(b => b.Member == member);
+            var member = node.Member;
+            var binding = _bindings.FirstOrDefault(b => b.Member == member);
 
-            if (binding != null)
-            {
-                return base.Visit(binding.Expression);
-            }
+            if (binding != null) return base.Visit(binding.Expression);
 
             return base.VisitMember(node);
         }
@@ -60,14 +59,8 @@ public static class MapperExtensions
         // Replace parameters reference
         protected override Expression VisitParameter(ParameterExpression node)
         {
-            if (node.Type == typeof(TDto))
-            {
-                return _entityParameter;
-            }
-            if (node.Type == typeof(TEntity))
-            {
-                return _entityParameter;
-            }
+            if (node.Type == typeof(TDto)) return _entityParameter;
+            if (node.Type == typeof(TEntity)) return _entityParameter;
 
             return base.VisitParameter(node);
         }

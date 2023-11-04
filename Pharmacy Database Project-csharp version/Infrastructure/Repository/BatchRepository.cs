@@ -1,7 +1,6 @@
 using AutoMapper;
 using Domain.Models;
 using Domain.Repositories.Interface;
-using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository;
@@ -30,7 +29,8 @@ public class BatchRepository : IBatchRepository
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<BatchDomain>> FindBatchesByProductionDateRangeAsync(DateTime startDate, DateTime endDate)
+    public async Task<IEnumerable<BatchDomain>> FindBatchesByProductionDateRangeAsync(DateTime startDate,
+        DateTime endDate)
     {
         var batches = await _context.Batches
             .Where(b => b.ProductionDate >= startDate && b.ProductionDate <= endDate)
@@ -38,7 +38,7 @@ public class BatchRepository : IBatchRepository
 
         return _mapper.Map<IEnumerable<BatchDomain>>(batches);
     }
-    
+
     public async Task<IEnumerable<BatchDomain>> FindBatchesByExpiryDateRangeAsync(DateTime startDate, DateTime endDate)
     {
         var batches = await _context.Batches

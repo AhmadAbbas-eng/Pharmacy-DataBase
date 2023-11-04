@@ -2,7 +2,7 @@
 
 namespace Domain.Repositories.Interface;
 
-public interface IRepository<TModel, TId> 
+public interface IRepository<TModel, TId>
 {
     TModel GetById(TId id, params Expression<Func<TModel, object>>[] includeProperties);
     Task<TModel> GetByIdAsync(TId id, params Expression<Func<TModel, object>>[] includeProperties);
