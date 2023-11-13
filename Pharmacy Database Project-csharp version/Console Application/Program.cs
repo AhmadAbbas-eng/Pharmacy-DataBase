@@ -25,8 +25,10 @@ var configuration = new ConfigurationBuilder()
 services.AddConnectionStringConfiguration(configuration)
     .AddDatabaseConfiguration()
     .AddLogging()
-    .AddApplicationServices();
+    .AddApplicationServices()
+    .AddAutoMapper();
     
 var serviceProvider = services.BuildServiceProvider();
+
 serviceProvider.GetService<PharmacyDbContext>().Database.EnsureCreated();
 serviceProvider.GetService<IWorkHoursService>().CalculateMonthlyWagesAsync(1, 6, 2001);

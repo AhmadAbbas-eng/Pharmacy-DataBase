@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
@@ -16,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Pharmacy.Configuration;
+using SupplierPhoneDomain = Domain.Repositories.Interface.SupplierPhoneDomain;
 
 namespace Console_Application;
 
@@ -67,6 +69,39 @@ public static class ServiceConfiguration
         serviceCollection.AddScoped<IRepository<WorkHoursDomain, int>, Repository<WorkHours, WorkHoursDomain, int>>();
         serviceCollection.AddScoped<IWorkHoursService, WorkHoursService>();
 
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddAutoMapper(this IServiceCollection serviceCollection)
+    {
+        
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.AddExpressionMapping();
+
+            var entityAssembly = Assembly.GetAssembly(typeof(BaseModel));
+            var entityTypes = entityAssembly.GetTypes()
+                .Where(t => t.Namespace == "Infrastructure.Entities");
+
+            var modelAssembly = Assembly.GetAssembly(typeof(BaseModelDomain)); 
+            var modelTypes = modelAssembly.GetTypes()
+                .Where(t => t.Namespace == "Domain.Models");
+
+            foreach (var entityType in entityTypes)
+            {
+                var modelName = entityType.Name + "Domain";
+                var modelType = modelTypes.FirstOrDefault(t => t.Name == modelName);
+
+                if (modelType != null)
+                {
+                    cfg.CreateMap(entityType, modelType);
+                    cfg.CreateMap(modelType, entityType);
+                }
+            }
+        });
+
+        var mapper = config.CreateMapper();
+        serviceCollection.AddSingleton(mapper);
         return serviceCollection;
     }
 }
