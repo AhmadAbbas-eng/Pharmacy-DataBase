@@ -6,19 +6,20 @@ namespace Domain.Services.Implementations;
 
 public class SupplierOrderService : ISupplierOrderService
 {
-    private readonly IRepository<SupplierOrderDomain, int> _orderRepository;
+    private readonly ISupplierOrderRepository _orderRepository;
 
-    public SupplierOrderService(IRepository<SupplierOrderDomain, int> orderRepository)
+    public SupplierOrderService(ISupplierOrderRepository orderRepository)
     {
         _orderRepository = orderRepository;
     }
 
-    public float CalculateOrderTotalAfterDiscount(int orderId)
+    public async Task<float> CalculateOrderTotalAfterDiscount(int orderId)
     {
-        var order = _orderRepository.GetById(orderId);
-        if (order == null) throw new ArgumentException("Order not found.");
+        var order = await _orderRepository.GetByIdAsync(orderId);
+        if (order is null) throw new ArgumentException("Order not found.");
 
         var discountAmount = order.OrderCost * (order.OrderDiscount / 100);
-        return order.OrderCost - discountAmount;
+        var result =  order.OrderCost - discountAmount;
+        return result;
     }
 }

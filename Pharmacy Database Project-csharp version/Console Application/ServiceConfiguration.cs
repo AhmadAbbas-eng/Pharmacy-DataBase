@@ -30,7 +30,7 @@ public static class ServiceConfiguration
         var config = new ApplicationConfiguration();
         configuration.GetSection("ApplicationConfiguration").Bind(config);
 
-        if (config.DbConnection == null || string.IsNullOrEmpty(config.DbConnection.ConnectionString))
+        if (config.DbConnection is null || string.IsNullOrEmpty(config.DbConnection.ConnectionString))
         {
             throw new InvalidOperationException("Database configuration is not properly loaded.");
         }

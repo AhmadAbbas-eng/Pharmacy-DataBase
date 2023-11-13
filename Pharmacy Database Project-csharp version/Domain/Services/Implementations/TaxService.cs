@@ -6,9 +6,9 @@ namespace Domain.Services.Implementations;
 
 public class TaxService : ITaxService
 {
-    private readonly IRepository<TaxDomain, string> _taxRepository;
+    private readonly ITaxRepository _taxRepository;
 
-    public TaxService(IRepository<TaxDomain, string> taxRepository)
+    public TaxService(ITaxRepository taxRepository)
     {
         _taxRepository = taxRepository;
     }

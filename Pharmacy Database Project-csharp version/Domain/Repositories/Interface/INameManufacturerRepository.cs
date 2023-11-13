@@ -4,6 +4,6 @@ namespace Domain.Repositories.Interface;
 
 public interface INameManufacturerRepository : IRepository<NameManufacturerDomain, int>
 {
-    Task<IEnumerable<string>> GetAllDistinctManufacturersAsync();
-    Task UpdateManufacturerNameAsync(string oldName, string newName);
+    Task<IEnumerable<string>> GetDistinctAsync();
+    Task UpdateAsync(string oldName, string newName);
 }

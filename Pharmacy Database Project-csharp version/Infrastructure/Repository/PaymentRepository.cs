@@ -17,7 +17,7 @@ public class PaymentRepository : Repository<Payment, PaymentDomain, int>, IPayme
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<PendingPayment>> GetPendingPaymentsAsync()
+    public async Task<IEnumerable<PendingPayment>> GetPendingAsync()
     {
         var thirtyDaysFromNow = DateTime.Now.AddDays(30);
 
@@ -29,5 +29,12 @@ public class PaymentRepository : Repository<Payment, PaymentDomain, int>, IPayme
         var pendingPayment = _mapper.Map<List<PendingPayment>>(pendingPayments);
 
         return pendingPayment;
+    }
+
+    public async Task AddAllBatchesAsync(IEnumerable<BatchDomain> batches)
+    {
+        var entities = batches.Select(model => _mapper.Map<Batch>(model));
+        await _context.Batches.AddRangeAsync(entities);
+        await _context.SaveChangesAsync();
     }
 }

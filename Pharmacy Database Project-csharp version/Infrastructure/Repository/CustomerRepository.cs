@@ -25,7 +25,7 @@ public class CustomerRepository : Repository<Customer, CustomerDomain, int>, ICu
             .SumAsync();
     }
 
-    public async Task<IEnumerable<CustomerDomain>> FindCustomersWithOrdersAsync()
+    public async Task<IEnumerable<CustomerDomain>> FindWithOrdersAsync()
     {
         var customers = await _context.Customers
             .Where(c => c.CustomerOrders.Any())
@@ -34,7 +34,7 @@ public class CustomerRepository : Repository<Customer, CustomerDomain, int>, ICu
     }
 
 
-    public async Task UpdateCustomerPhoneAsync(string oldPhoneNumber, string newPhoneNumber)
+    public async Task UpdatePhoneAsync(string oldPhoneNumber, string newPhoneNumber)
     {
         var customerPhone = await _context.CustomerPhones
             .FirstOrDefaultAsync(cp => cp.Phone == oldPhoneNumber);

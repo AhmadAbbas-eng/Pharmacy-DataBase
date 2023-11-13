@@ -17,7 +17,7 @@ public class NameManufacturerRepository : Repository<NameManufacturer, NameManuf
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<string>> GetAllDistinctManufacturersAsync()
+    public async Task<IEnumerable<string>> GetDistinctAsync()
     {
         return await _context.NameMenus
             .Select(nm => nm.ProductManufacturer)
@@ -25,7 +25,7 @@ public class NameManufacturerRepository : Repository<NameManufacturer, NameManuf
             .ToListAsync();
     }
 
-    public async Task UpdateManufacturerNameAsync(string oldName, string newName)
+    public async Task UpdateAsync(string oldName, string newName)
     {
         var productsToUpdate = await _context.NameMenus
             .Where(nm => nm.ProductManufacturer == oldName)

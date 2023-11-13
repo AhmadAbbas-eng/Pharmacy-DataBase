@@ -6,16 +6,15 @@ namespace Domain.Services.Implementations;
 
 public class PaymentService : IPaymentService
 {
-    private readonly IRepository<PaymentDomain, int> _paymentRepository;
+    private readonly IPaymentRepository _paymentRepository;
 
-    public PaymentService(IRepository<PaymentDomain, int> paymentRepository)
+    public PaymentService(IPaymentRepository paymentRepository)
     {
         _paymentRepository = paymentRepository;
     }
 
-    public async Task ProcessPaymentsBatchAsync(IEnumerable<PaymentDomain> payments)
+    public async Task ProcessPaymentsBatchAsync(IEnumerable<BatchDomain> batches)
     {
-        foreach (var payment in payments) await _paymentRepository.AddAsync(payment);
-        await _paymentRepository.SaveAsync();
+        await _paymentRepository.AddAllBatchesAsync(batches);
     }
 }
