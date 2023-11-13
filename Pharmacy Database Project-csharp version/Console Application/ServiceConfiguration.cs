@@ -21,18 +21,31 @@ namespace Console_Application;
 
 public static class ServiceConfiguration
 {
-    
-    public static IServiceCollection AddDatabaseConfiguration(this IServiceCollection services, IConfiguration configuration)
+
+    public static IServiceCollection AddConnectionStringConfiguration(this IServiceCollection services,
+        IConfiguration configuration)
     {
         var config = new ApplicationConfiguration();
         configuration.GetSection("ApplicationConfiguration").Bind(config);
-        
-        if (config == null || config.DbConnection == null || string.IsNullOrEmpty(config.DbConnection.ConnectionString))
+
+        if (config.DbConnection == null || string.IsNullOrEmpty(config.DbConnection.ConnectionString))
         {
             throw new InvalidOperationException("Database configuration is not properly loaded.");
         }
-        services.AddDbContext<PharmacyDbContext>(options =>
-            options.UseSqlServer(config.DbConnection.ConnectionString), ServiceLifetime.Scoped);
+
+        services.AddSingleton<IPharmacyDbConnectionStringProvider>(provider => new PharmacyDbConnectionStringProvider(config));
+        return services;
+    }
+    
+    public static IServiceCollection AddDatabaseConfiguration(this IServiceCollection services)
+    {
+        services.AddDbContext<PharmacyDbContext>((serviceProvider, options) =>
+        {
+            var connectionStringProvider = serviceProvider.GetRequiredService<IPharmacyDbConnectionStringProvider>();
+            var connectionString = connectionStringProvider.GetPharmacyReadOnlyConnectionString();
+            options.UseSqlServer(connectionString);
+        }, ServiceLifetime.Transient);
+
         return services;
     }
 

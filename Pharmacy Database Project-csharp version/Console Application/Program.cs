@@ -22,7 +22,8 @@ var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .Build();
 
-services.AddDatabaseConfiguration(configuration)
+services.AddConnectionStringConfiguration(configuration)
+    .AddDatabaseConfiguration()
     .AddLogging()
     .AddApplicationServices();
     
