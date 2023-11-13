@@ -1,5 +1,5 @@
 namespace Domain.Models;
-public class NameMenuDomain
+public class NameManufacturerDomain
 {
     public int ProductId { get; set; }
     public string ProductName { get; set; }

@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Infrastructure.Entities;
 
-public class NameMenu
+public class NameManufacturer
 {
     [Key] public int ProductId { get; set; }
 

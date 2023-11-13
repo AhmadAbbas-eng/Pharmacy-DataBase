@@ -1,16 +1,17 @@
 ﻿using AutoMapper;
 using Domain.Models;
 using Domain.Repositories.Interface;
+using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository;
 
-public class SupplierRepository : ISupplierRepository
+public class SupplierRepository : Repository<Supplier, SupplierDomain, int>, ISupplierRepository
 {
     private readonly PharmacyDbContext _context;
     private readonly IMapper _mapper;
 
-    public SupplierRepository(PharmacyDbContext context, IMapper mapper)
+    public SupplierRepository(PharmacyDbContext context, IMapper mapper) : base(context, mapper)
     {
         _context = context;
         _mapper = mapper;
@@ -24,7 +25,7 @@ public class SupplierRepository : ISupplierRepository
         return _mapper.Map<List<SupplierDomain>>(suppliers);
     }
 
-    public async Task<IEnumerable<SupplierDomain>> FindSuppliersByProductAsync(string productName)
+    public async Task<IEnumerable<SupplierDomain>> FindByProductAsync(string productName)
     {
         var suppliers = await _context.Suppliers
             .Where(s => _context.SupplierOrderBatches.Any(sob => sob.Batch.Product.Name == productName))

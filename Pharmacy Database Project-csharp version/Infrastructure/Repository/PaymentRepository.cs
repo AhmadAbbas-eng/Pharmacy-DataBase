@@ -1,16 +1,17 @@
 ﻿using AutoMapper;
 using Domain.Models;
 using Domain.Repositories.Interface;
+using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository;
 
-public class PaymentRepository : IPaymentRepository
+public class PaymentRepository : Repository<Payment, PaymentDomain, int>, IPaymentRepository
 {
     private readonly PharmacyDbContext _context;
     private readonly IMapper _mapper;
 
-    public PaymentRepository(PharmacyDbContext context, IMapper mapper)
+    public PaymentRepository(PharmacyDbContext context, IMapper mapper) : base(context, mapper)
     {
         _context = context;
         _mapper = mapper;

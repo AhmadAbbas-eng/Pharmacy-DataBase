@@ -2,6 +2,6 @@
 
 public enum OrderStatus
 {
-    UNPAID = 0,
-    PAID = 1
+    Unpaid = 0,
+    Paid = 1
 }

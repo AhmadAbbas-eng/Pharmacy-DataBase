@@ -2,8 +2,8 @@
 
 namespace Domain.Repositories.Interface;
 
-public interface ISupplierRepository
+public interface ISupplierRepository : IRepository<SupplierDomain, int>
 {
     Task<IEnumerable<SupplierDomain>> ListSuppliersWithDueAmountsAsync();
-    Task<IEnumerable<SupplierDomain>> FindSuppliersByProductAsync(string productName);
+    Task<IEnumerable<SupplierDomain>> FindByProductAsync(string productName);
 }

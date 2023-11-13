@@ -1,15 +1,17 @@
 ﻿using AutoMapper;
+using Domain.Models;
 using Domain.Repositories.Interface;
+using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository;
 
-public class NameMenuRepository : INameMenuRepository
+public class NameManufacturerRepository : Repository<NameManufacturer, NameManufacturerDomain, int>, INameManufacturerRepository
 {
     private readonly PharmacyDbContext _context;
     private readonly IMapper _mapper;
 
-    public NameMenuRepository(PharmacyDbContext context, IMapper mapper)
+    public NameManufacturerRepository(PharmacyDbContext context, IMapper mapper) : base(context, mapper)
     {
         _context = context;
         _mapper = mapper;

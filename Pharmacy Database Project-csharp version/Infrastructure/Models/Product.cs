@@ -24,7 +24,7 @@ public class Product
     [StringLength(100, MinimumLength = 2, ErrorMessage = "Manufacturer Name must be between 2 and 100 characters.")]
     public string Manufacturer { get; set; }
 
-    public NameMenu NameMenu { get; set; }
+    public NameManufacturer NameManufacturer { get; set; }
     public ICollection<Batch> Batches { get; set; }
     public Drug Drug { get; set; }
 }

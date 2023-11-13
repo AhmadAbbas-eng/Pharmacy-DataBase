@@ -2,7 +2,7 @@
 
 namespace Domain.Repositories.Interface;
 
-public interface IPaymentRepository
+public interface IPaymentRepository : IRepository<PaymentDomain, int>
 {
     Task<IEnumerable<PendingPayment>> GetPendingPaymentsAsync();
 }

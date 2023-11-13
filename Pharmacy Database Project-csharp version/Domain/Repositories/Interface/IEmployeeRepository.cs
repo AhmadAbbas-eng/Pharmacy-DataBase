@@ -2,8 +2,8 @@ using Domain.Models;
 
 namespace Domain.Repositories.Interface;
 
-public interface IEmployeeRepository
+public interface IEmployeeRepository : IRepository<EmployeeDomain, int>
 {
-    Task<IEnumerable<EmployeeDomain>> ListEmployeesByStartDateAsync(DateTime startDate, DateTime endDate);
-    Task DeleteEmployeePhoneAsync(int employeeId, string phoneNumber);
+    Task<IEnumerable<EmployeeDomain>> ListByStartDateAsync(DateTime startDate, DateTime endDate);
+    Task DeletePhoneAsync(int employeeId, string phoneNumber);
 }
