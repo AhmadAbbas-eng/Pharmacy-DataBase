@@ -1,4 +1,6 @@
-﻿using Domain.Models;
+﻿using Domain.Exceptions;
+using Domain.Exceptions.ErrorCodes;
+using Domain.Models;
 using Domain.Repositories.Interface;
 using Domain.Services.Interfaces;
 
@@ -16,7 +18,7 @@ public class SupplierOrderService : ISupplierOrderService
     public float CalculateOrderTotalAfterDiscount(int orderId)
     {
         var order = _orderRepository.GetById(orderId);
-        if (order == null) throw new ArgumentException("Order not found.");
+        if (order == null) throw new EntityNotFoundException(SupplierOrder.OrderNotFoundCode);
 
         var discountAmount = order.OrderCost * (order.OrderDiscount / 100);
         return order.OrderCost - discountAmount;

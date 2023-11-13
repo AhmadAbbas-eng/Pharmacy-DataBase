@@ -4,11 +4,6 @@ namespace Infrastructure.Entities;
 
 public class Product
 {
-    public Product()
-    {
-        Name = string.Empty;
-        Manufacturer = string.Empty;
-    }
 
     [Key] public int ProductId { get; set; }
 
