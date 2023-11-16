@@ -4,11 +4,14 @@ namespace Infrastructure.Entities;
 
 public class SupplierOrder
 {
-    [Key] public int OrderId { get; set; }
+    [Key]
+    public int OrderId { get; set; }
 
-    [Required] public DateTime DateOfOrder { get; set; }
+    [Required] 
+    public DateTime DateOfOrder { get; set; }
 
-    [Required] public float OrderCost { get; set; }
+    [Required] 
+    public float OrderCost { get; set; }
 
     public float OrderDiscount { get; set; }
 

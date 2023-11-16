@@ -4,13 +4,16 @@ namespace Infrastructure.Entities;
 
 public class Batch
 {
-    [Key] public int BatchId { get; set; }
+    [Key] 
+    public int BatchId { get; set; }
 
     public int ProductId { get; set; }
 
-    [DataType(DataType.Date)] public DateTime ProductionDate { get; set; }
+    [DataType(DataType.Date)] 
+    public DateTime ProductionDate { get; set; }
 
-    [DataType(DataType.Date)] public DateTime ExpiryDate { get; set; }
+    [DataType(DataType.Date)] 
+    public DateTime ExpiryDate { get; set; }
 
     [Required]
     [Range(1, int.MaxValue, ErrorMessage = "Amount must be greater than 0")]

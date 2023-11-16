@@ -17,7 +17,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Pharmacy.Configuration;
-using SupplierPhoneDomain = Domain.Repositories.Interface.SupplierPhoneDomain;
 
 namespace Console_Application;
 
