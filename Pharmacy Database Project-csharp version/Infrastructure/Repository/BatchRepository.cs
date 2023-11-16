@@ -20,12 +20,12 @@ public class BatchRepository : Repository<Batch, BatchDomain, int>, IBatchReposi
     {
         return await _context.Batches
             .Select(b => new BatchLifetime
-            {
-                ProductId = b.ProductId,
-                ProductName = b.Product.Name,
-                ProductionDate = b.ProductionDate,
-                DaysUntilExpiry = EF.Functions.DateDiffDay(DateTime.UtcNow, b.ExpiryDate)
-            })
+            (
+                b.ProductId,
+                b.Product.Name,
+                b.ProductionDate,
+                EF.Functions.DateDiffDay(DateTime.UtcNow, b.ExpiryDate)
+            ))
             .ToListAsync();
     }
 

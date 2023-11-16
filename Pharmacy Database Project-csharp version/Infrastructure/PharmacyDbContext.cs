@@ -38,18 +38,7 @@ public class PharmacyDbContext : DbContext
     public DbSet<SupplierPhone> SupplierPhones { get; set; }
     public DbSet<TaxesPayment> TaxesPayments { get; set; }
 
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        if (!optionsBuilder.IsConfigured)
-        {
-            var connectionString =
-                @"Server=localhost, 11433;Database=PharmacyEFMigrations;User Id=sa;Password=Itsmine123!;";
-
-            optionsBuilder.UseSqlServer(connectionString);
-        }
-    }
-
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<NameManufacturer>(
