@@ -61,7 +61,9 @@ public static class ServiceConfiguration
         serviceCollection.AddScoped<IRepository<ChequeDomain, int>, Repository<Cheque, ChequeDomain, int>>();
         serviceCollection.AddScoped<IRepository<WorkHoursDomain, int>, Repository<WorkHours, WorkHoursDomain, int>>();
         serviceCollection.AddScoped<IWorkHoursRepository, WorkHoursRepository>();
-
+        serviceCollection.AddScoped<ICustomerRepository, CustomerRepository>();
+        serviceCollection.AddScoped<ICustomerService, CustomerService>();
+        
         serviceCollection.AddScoped<IEmployeeService, EmployeeService>();
         serviceCollection.AddScoped<IWorkHoursService, WorkHoursService>();
 
@@ -105,6 +107,8 @@ public static class ServiceConfiguration
     public static IServiceCollection AddMapperly(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddSingleton<EmployeeMapper>();
+        serviceCollection.AddSingleton<CustomerMapper>();
+
         return serviceCollection;
     }
     
