@@ -2,6 +2,7 @@
 using System.Text;
 using AutoMapper;
 using AutoMapper.Extensions.ExpressionMapping;
+using Controllers.Mappers;
 using Controllers.Model.Dto;
 using Domain.Models;
 using Domain.Repositories.Interface;
@@ -94,24 +95,16 @@ public static class ServiceConfiguration
                 }
             }
             
-            var dtoAssembly = Assembly.GetAssembly(typeof(BaseModelDto)); 
-            var modelDtos = dtoAssembly.GetTypes()
-                .Where(t => t.Namespace == "Controllers.Model.Dto");
-            
-            foreach (var modelDto in modelDtos)
-            {
-                var modelName = modelDto.Name.Replace("Dto", "Domain");
-                var modelType = modelTypes.FirstOrDefault(t => t.Name == modelName);
-
-                if (modelType != null)
-                {
-                    cfg.CreateMap(modelDto, modelType).ReverseMap();
-                }
-            }
         });
 
         var mapper = config.CreateMapper();
         serviceCollection.AddSingleton(mapper);
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddMapperly(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddSingleton<EmployeeMapper>();
         return serviceCollection;
     }
     

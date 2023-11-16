@@ -16,17 +16,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson();
 
 builder.Services.AddConnectionStringConfiguration(builder.Configuration);
 builder.Services.AddDatabaseConfiguration();
 builder.Services.AddLoggerConfiguration();
 builder.Services.AddApplicationServices();
 builder.Services.AddAutoMapper();
+builder.Services.AddMapperly();
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddSwaggerConfiguration();
-
-
 
 // builder.Services.AddAuthorization(options =>
 // {

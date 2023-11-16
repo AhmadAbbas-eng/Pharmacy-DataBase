@@ -89,7 +89,7 @@ public class Repository<TDbModel, TModel, TId> : IRepository<TModel, TId>
             query.Where(predicateExpression);
         }
 
-        var dbEntity =query.FirstOrDefaultAsync();
+        var dbEntity = await query.FirstOrDefaultAsync();
 
         if (dbEntity is not null)
         {

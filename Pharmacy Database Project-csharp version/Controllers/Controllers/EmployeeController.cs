@@ -1,8 +1,11 @@
 using AutoMapper;
+using Controllers.Mappers;
 using Controllers.Model.Dto;
+using Domain.Exceptions;
 using Domain.Models;
 using Domain.Services.Interfaces;
 using Infrastructure.Entities;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Controllers.Controllers;
@@ -13,13 +16,12 @@ public class EmployeeController : ControllerBase
 {
     private readonly IEmployeeService _employeeService;
     private readonly ILogger<EmployeeController> _logger;
-    private readonly IMapper _mapper;
-
-    public EmployeeController(IEmployeeService employeeService, ILogger<EmployeeController> logger, IMapper mapper)
+    private readonly EmployeeMapper _employeeMapper;
+    public EmployeeController(IEmployeeService employeeService, ILogger<EmployeeController> logger, EmployeeMapper employeeMapper)
     {
         _employeeService = employeeService;
         _logger = logger;
-        _mapper = mapper;
+        _employeeMapper = employeeMapper;
     }
     
     [HttpGet]
@@ -28,7 +30,8 @@ public class EmployeeController : ControllerBase
         try
         {
             var employees = await _employeeService.GetAllAsync();
-            return Ok(employees);
+            var employeeDto = _employeeMapper.EmployeeToDto(employees);
+            return Ok(employeeDto);
         }
         catch (Exception ex)
         {
@@ -43,7 +46,13 @@ public class EmployeeController : ControllerBase
         try
         {
             var employee = await _employeeService.GetEmployeeById(id);
-            return Ok(employee);
+            var employeeDto = _employeeMapper.EmployeeToDto(employee);
+            return Ok(employeeDto);
+        }
+        catch (NoUserFoundException ex)
+        {
+            _logger.LogError(ex.Message);
+            return NotFound();
         }
         catch (Exception ex)
         {
@@ -57,7 +66,7 @@ public class EmployeeController : ControllerBase
     {
         try
         {
-            var employeeDomain = _mapper.Map<EmployeeDomain>(employee);
+            var employeeDomain = _employeeMapper.EmployeeToDomain(employee);
             employeeDomain.DateOfWork = DateTime.Today;
             var createdEmployeeId = await _employeeService.AddAsync(employeeDomain);
             
@@ -90,7 +99,7 @@ public class EmployeeController : ControllerBase
     {
         try
         {
-            var employeeToUpdate = _mapper.Map<EmployeeDomain>(employee);
+            var employeeToUpdate =  _employeeMapper.EmployeeToDomain(employee);
             await _employeeService.UpdateAsync(id, employeeToUpdate);
             return Ok(employeeToUpdate);
         }
@@ -107,7 +116,7 @@ public class EmployeeController : ControllerBase
         try
         {
             var employees = await _employeeService.SearchAsync(keyword);
-            var employeesDto = _mapper.Map<IEnumerable<EmployeeDto>>(employees);
+            var employeesDto =  _employeeMapper.EmployeeToDto(employees);
             return Ok(employeesDto);
         }
         catch (Exception ex)
@@ -115,6 +124,41 @@ public class EmployeeController : ControllerBase
             _logger.LogError(ex, "Error occurred in SearchEmployees");
             return StatusCode(500, "Internal server error");
         }
+    }
+    
+    [HttpPatch("{id}")]
+    public async Task<IActionResult> PatchEmployee(int id, [FromBody] JsonPatchDocument<EmployeeDto>? patchDoc)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        
+        if (patchDoc is null)
+        {
+            return BadRequest();
+        }
+
+        var employeeDomain = await _employeeService.GetEmployeeById(id);
+
+        if (employeeDomain is null)
+        {
+            return NotFound();
+        }
+
+        var employeeDto = _employeeMapper.EmployeeToDto(employeeDomain); 
+
+        patchDoc.ApplyTo(employeeDto, error =>
+        {
+            ModelState.AddModelError(error.Operation.path, error.ErrorMessage);
+        });
+        
+
+        employeeDomain = _employeeMapper.EmployeeToDomain(employeeDto);
+
+        await _employeeService.UpdateAsync(employeeDomain.EmployeeId, employeeDomain);
+
+        return Ok(employeeDomain);
     }
 
 }
