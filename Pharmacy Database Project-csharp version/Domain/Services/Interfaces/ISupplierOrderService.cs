@@ -2,5 +2,5 @@
 
 public interface ISupplierOrderService
 {
-    float CalculateOrderTotalAfterDiscount(int orderId);
+    Task<float> CalculateOrderTotalAfterDiscount(int orderId);
 }

@@ -1,22 +1,23 @@
 using AutoMapper;
 using Domain.Models;
 using Domain.Repositories.Interface;
+using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository;
 
-public class CustomerRepository : ICustomerRepository
+public class CustomerRepository : Repository<Customer, CustomerDomain, int>, ICustomerRepository
 {
     private readonly PharmacyDbContext _context;
     private readonly IMapper _mapper;
 
-    public CustomerRepository(PharmacyDbContext context, IMapper mapper)
+    public CustomerRepository(PharmacyDbContext context, IMapper mapper) : base(context, mapper)
     {
         _context = context;
         _mapper = mapper;
     }
 
-    public async Task<double> CalculateTotalDebtByCustomerAsync(string customerId)
+    public async Task<double> CalculateTotalDebtByIdAsync(string customerId)
     {
         return await _context.Customers
             .Where(c => c.CustomerNID == customerId)
@@ -24,7 +25,7 @@ public class CustomerRepository : ICustomerRepository
             .SumAsync();
     }
 
-    public async Task<IEnumerable<CustomerDomain>> FindCustomersWithOrdersAsync()
+    public async Task<IEnumerable<CustomerDomain>> FindWithOrdersAsync()
     {
         var customers = await _context.Customers
             .Where(c => c.CustomerOrders.Any())
@@ -33,7 +34,7 @@ public class CustomerRepository : ICustomerRepository
     }
 
 
-    public async Task UpdateCustomerPhoneAsync(string oldPhoneNumber, string newPhoneNumber)
+    public async Task UpdatePhoneAsync(string oldPhoneNumber, string newPhoneNumber)
     {
         var customerPhone = await _context.CustomerPhones
             .FirstOrDefaultAsync(cp => cp.Phone == oldPhoneNumber);

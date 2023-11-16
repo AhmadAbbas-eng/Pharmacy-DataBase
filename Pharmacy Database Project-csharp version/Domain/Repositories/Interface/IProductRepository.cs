@@ -2,9 +2,9 @@
 
 namespace Domain.Repositories.Interface;
 
-public interface IProductRepository
+public interface IProductRepository : IRepository<ProductDomain, int>
 {
-    Task<int> GetTotalAmountByProductIdAsync(int productId);
-    Task<List<ProductDomain>> GetOutOfStockProductsAsync();
-    Task<double> CalculateAverageProductPriceAsync();
+    Task<int> GetTotalAmountByIdAsync(int id);
+    Task<List<ProductDomain>> GetOutOfStockAsync();
+    Task<double> CalculateAveragePriceAsync();
 }

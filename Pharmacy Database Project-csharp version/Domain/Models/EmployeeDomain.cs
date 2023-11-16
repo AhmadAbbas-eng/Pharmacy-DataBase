@@ -1,10 +1,7 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace Domain.Models;
-
 public class EmployeeDomain
 {
-    [Key] public int EmployeeId { get; set; }
+    public int EmployeeId { get; set; }
     public string Name { get; set; }
     public string NationalId { get; set; }
     public  DateTime DateOfWork { get; set; }

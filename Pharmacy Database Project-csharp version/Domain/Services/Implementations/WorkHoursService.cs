@@ -6,9 +6,9 @@ namespace Domain.Services.Implementations;
 
 public class WorkHoursService : IWorkHoursService
 {
-    private readonly IRepository<WorkHoursDomain, int> _workHoursRepository;
+    private readonly IWorkHoursRepository _workHoursRepository;
 
-    public WorkHoursService(IRepository<WorkHoursDomain, int> workHoursRepository)
+    public WorkHoursService(IWorkHoursRepository workHoursRepository)
     {
         _workHoursRepository = workHoursRepository;
     }

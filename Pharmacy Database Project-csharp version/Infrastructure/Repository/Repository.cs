@@ -22,33 +22,6 @@ public class Repository<TDbModel, TModel, TId> : IRepository<TModel, TId>
         _mapper = mapper;
     }
 
-    public TModel GetById(TId id, params Expression<Func<TModel, object>>[] includeProperties)
-    {
-        IQueryable<TDbModel> query = _dbSet;
-
-        foreach (var includeProperty in includeProperties)
-        {
-            var includeExpression = MapperExtensions.Convert<TModel, TDbModel>(includeProperty);
-            query = query.Include(includeExpression);
-        }
-
-        var entityType = typeof(TDbModel);
-
-        var primaryKeyProperty = entityType.GetProperties()
-            .FirstOrDefault(prop => prop.CustomAttributes.Any(attr => attr.AttributeType == typeof(KeyAttribute)));
-
-        if (primaryKeyProperty == null)
-            throw new InvalidOperationException($"No primary key attribute found on the entity {entityType}.");
-
-        var parameter = Expression.Parameter(entityType, "x");
-        Expression propertyAccess = Expression.Property(parameter, primaryKeyProperty);
-        Expression idMatch = Expression.Equal(propertyAccess, Expression.Constant(id));
-        var lambda = Expression.Lambda<Func<TDbModel, bool>>(idMatch, parameter);
-
-        var result = query.FirstOrDefault(lambda);
-        return _mapper.Map<TModel>(result);
-    }
-
     public async Task<TModel> GetByIdAsync(TId id, params Expression<Func<TModel, object>>[] includeProperties)
     {
         IQueryable<TDbModel> query = _dbSet;
@@ -64,7 +37,7 @@ public class Repository<TDbModel, TModel, TId> : IRepository<TModel, TId>
         var primaryKeyProperty = entityType.GetProperties()
             .FirstOrDefault(prop => prop.CustomAttributes.Any(attr => attr.AttributeType == typeof(KeyAttribute)));
 
-        if (primaryKeyProperty == null)
+        if (primaryKeyProperty is null)
             throw new InvalidOperationException($"No primary key attribute found on the entity {entityType}.");
 
         var parameter = Expression.Parameter(entityType, "x");
@@ -75,39 +48,16 @@ public class Repository<TDbModel, TModel, TId> : IRepository<TModel, TId>
         var result = await query.FirstOrDefaultAsync(lambda);
         return _mapper.Map<TModel>(result);
     }
-
-    public IEnumerable<TModel> GetAll()
-    {
-        var list = _dbSet.ToList();
-        return _mapper.Map<List<TModel>>(list);
-    }
-
+    
     public async Task<IEnumerable<TModel>> GetAllAsync()
     {
         var result = await _dbSet.ToListAsync();
         return _mapper.Map<List<TModel>>(result);
     }
-
-
-    public TId Add(TModel entity)
-    {
-        if (entity == null) throw new ArgumentNullException("entity", "Entity Must Not be Null");
-
-        var dbModel = _mapper.Map<TDbModel>(entity);
-        _dbSet.Add(dbModel);
-        _context.SaveChanges();
-
-        var primaryKey = _context.Entry(dbModel).Metadata.FindPrimaryKey();
-        var primaryKeyProperty = primaryKey.Properties[0];
-        var primaryKeyValue = _context.Entry(dbModel).Property(primaryKeyProperty.Name).CurrentValue;
-
-        return (TId)primaryKeyValue;
-    }
-
-
+    
     public async Task<TId> AddAsync(TModel entity)
     {
-        if (entity == null) throw new ArgumentNullException("entity", "Entity Must Not be Null");
+        if (entity is null) throw new ArgumentNullException("entity", "Entity Must Not be Null");
 
         var dbModel = _mapper.Map<TDbModel>(entity);
         await _dbSet.AddAsync(dbModel);
@@ -120,6 +70,13 @@ public class Repository<TDbModel, TModel, TId> : IRepository<TModel, TId>
         return (TId)primaryKeyValue;
     }
 
+    public async Task AddAllAsync(IEnumerable<TModel> models)
+    {
+        var entities = models.Select(model => _mapper.Map<TDbModel>(model));
+        await _dbSet.AddRangeAsync(entities);
+        await _context.SaveChangesAsync();
+    }
+    
     public void Update(TModel entity)
     {
         var predicates = BuildPredicatesForNonNullProperties(entity);
@@ -145,39 +102,10 @@ public class Repository<TDbModel, TModel, TId> : IRepository<TModel, TId>
         }
     }
 
-    public void Delete(TModel entity)
+    public async Task DeleteAsync(TId id)
     {
-        var predicates = BuildPredicatesForNonNullProperties(entity);
-
-        IQueryable<TDbModel> query = _dbSet;
-
-        foreach (var predicate in predicates)
-        {
-            var predicateExpression = _mapper.ConvertPredicate<TModel, TDbModel>(predicate);
-            query.Where(predicateExpression);
-        }
-
-        var dbEntity = query.ToList().FirstOrDefault();
-
-        if (dbEntity == null) throw new ArgumentException("Entity was not Found", "entity");
-
-        if (_context.Entry(dbEntity).State == EntityState.Detached) _dbSet.Attach(dbEntity);
-        _dbSet.Remove(dbEntity);
-    }
-
-    public IEnumerable<TModel> Find(params Expression<Func<TModel, bool>>[] predicates)
-    {
-        IQueryable<TDbModel> query = _dbSet;
-
-        foreach (var predicate in predicates)
-        {
-            var predicateExpression = MapperExtensions.ConvertPredicate<TModel, TDbModel>(_mapper, predicate);
-            query = query.Where(predicateExpression);
-        }
-
-        
-        var result = query.ToList();
-        return _mapper.Map<List<TModel>>(result);
+        TDbModel dbModel = await _dbSet.FindAsync(id);
+        _dbSet.Remove(dbModel);
     }
 
     public async Task<IEnumerable<TModel>> FindAsync(params Expression<Func<TModel, bool>>[] predicates)
@@ -193,12 +121,7 @@ public class Repository<TDbModel, TModel, TId> : IRepository<TModel, TId>
         var result = await query.ToListAsync();
         return _mapper.Map<List<TModel>>(result);
     }
-
-    public void Save()
-    {
-        _context.SaveChanges();
-    }
-
+    
     public async Task SaveAsync()
     {
         await _context.SaveChangesAsync();

@@ -1,4 +1,8 @@
-﻿using AutoMapper;
+﻿using System.Diagnostics;
+using System.Reflection;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using AutoMapper;
 using AutoMapper.Extensions.ExpressionMapping;
 using Domain.Models;
 using Domain.Repositories.Interface;
@@ -8,63 +12,96 @@ using Infrastructure;
 using Infrastructure.Entities;
 using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
+using Pharmacy.Configuration;
 
 namespace Console_Application;
 
 public static class ServiceConfiguration
 {
-    public static ServiceProvider ConfigureServices()
+
+    public static IServiceCollection AddConnectionStringConfiguration(this IServiceCollection services,
+        IConfiguration configuration)
     {
-        var serviceCollection = new ServiceCollection();
+        var config = new ApplicationConfiguration();
+        configuration.GetSection("ApplicationConfiguration").Bind(config);
 
-        //serviceCollection.AddLogging(configure => configure.AddConsole());
+        if (config.DbConnection is null || string.IsNullOrEmpty(config.DbConnection.ConnectionString))
+        {
+            throw new InvalidOperationException("Database configuration is not properly loaded.");
+        }
 
-        //serviceCollection.AddScoped<ICustomerService, CustomerService>();
+        services.AddSingleton<IPharmacyDbConnectionStringProvider>(provider => new PharmacyDbConnectionStringProvider(config));
+        return services;
+    }
+    
+    public static IServiceCollection AddDatabaseConfiguration(this IServiceCollection services)
+    {
+        services.AddDbContext<PharmacyDbContext>((serviceProvider, options) =>
+        {
+            var connectionStringProvider = serviceProvider.GetRequiredService<IPharmacyDbConnectionStringProvider>();
+            var connectionString = connectionStringProvider.GetPharmacyReadOnlyConnectionString();
+            options.UseSqlServer(connectionString);
+        }, ServiceLifetime.Transient);
 
-        //serviceCollection.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        return services;
+    }
 
-        // TODO: manage the DbContext lifetime appropriately
-        serviceCollection.AddDbContext<PharmacyDbContext>(options =>
-            options.UseSqlServer("Server=localhost;Database=master;Trusted_Connection=True;Database=Pharmacy;"));
-        serviceCollection.AddScoped<IRepository<WorkHoursDomain, int>, Repository<WorkHours, WorkHoursDomain, int>>();
+
+    public static IServiceCollection AddLogging(IServiceCollection services)
+    {
+        services.AddLogging(configure => configure.AddConsole());
+        return services;
+    }
+    
+    public static IServiceCollection AddApplicationServices(this IServiceCollection serviceCollection)
+    {
         serviceCollection.AddScoped<IRepository<SupplierDomain, int>, Repository<Supplier, SupplierDomain, int>>();
         serviceCollection.AddScoped<IRepository<EmployeeDomain, int>, Repository<Employee, EmployeeDomain, int>>();
         serviceCollection.AddScoped<IRepository<SupplierPhone, int>, Repository<SupplierPhone, SupplierPhone, int>>();
         serviceCollection.AddScoped<IRepository<TaxDomain, string>, Repository<Tax, TaxDomain, string>>();
         serviceCollection.AddScoped<IRepository<PaymentDomain, int>, Repository<Payment, PaymentDomain, int>>();
         serviceCollection.AddScoped<IRepository<ChequeDomain, int>, Repository<Cheque, ChequeDomain, int>>();
+        serviceCollection.AddScoped<IRepository<WorkHoursDomain, int>, Repository<WorkHours, WorkHoursDomain, int>>();
         serviceCollection.AddScoped<IWorkHoursService, WorkHoursService>();
 
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddAutoMapper(this IServiceCollection serviceCollection)
+    {
+        
         var config = new MapperConfiguration(cfg =>
         {
             cfg.AddExpressionMapping();
 
-            cfg.CreateMap<Product, ProductDomain>();
-            cfg.CreateMap<Supplier, SupplierDomain>();
-            cfg.CreateMap<SupplierDomain, Supplier>();
+            var entityAssembly = Assembly.GetAssembly(typeof(BaseModel));
+            var entityTypes = entityAssembly.GetTypes()
+                .Where(t => t.Namespace == "Infrastructure.Entities");
 
-            cfg.CreateMap<EmployeeDomain, Employee>();
-            cfg.CreateMap<Employee, EmployeeDomain>();
+            var modelAssembly = Assembly.GetAssembly(typeof(BaseModelDomain)); 
+            var modelTypes = modelAssembly.GetTypes()
+                .Where(t => t.Namespace == "Domain.Models");
 
-            cfg.CreateMap<SupplierPhone, SupplierPhoneDomain>();
-            cfg.CreateMap<SupplierPhoneDomain, SupplierPhone>();
+            foreach (var entityType in entityTypes)
+            {
+                var modelName = entityType.Name + "Domain";
+                var modelType = modelTypes.FirstOrDefault(t => t.Name == modelName);
 
-            cfg.CreateMap<WorkHours, WorkHoursDomain>();
-            cfg.CreateMap<WorkHoursDomain, WorkHours>();
-
-            cfg.CreateMap<TaxDomain, Tax>();
-            cfg.CreateMap<Tax, TaxDomain>();
-
-            cfg.CreateMap<ChequeDomain, Cheque>();
-            cfg.CreateMap<Cheque, ChequeDomain>();
-
-            cfg.CreateMap<PaymentDomain, Payment>();
-            cfg.CreateMap<Payment, PaymentDomain>();
+                if (modelType != null)
+                {
+                    cfg.CreateMap(entityType, modelType);
+                    cfg.CreateMap(modelType, entityType);
+                }
+            }
         });
 
         var mapper = config.CreateMapper();
         serviceCollection.AddSingleton(mapper);
-        return serviceCollection.BuildServiceProvider();
+        return serviceCollection;
     }
 }
+

@@ -20,7 +20,7 @@ public class PharmacyDbContext : DbContext
     public DbSet<Drug> Drugs { get; set; }
     public DbSet<Employee> Employees { get; set; }
     public DbSet<EmployeeSalary> EmployeeSalaries { get; set; }
-    public DbSet<NameMenu> NameMenus { get; set; }
+    public DbSet<NameManufacturer> NameMenus { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<SupplierOrderBatch> SupplierOrderBatches { get; set; }
     public DbSet<SupplierPayment> SupplierPayments { get; set; }
@@ -38,29 +38,18 @@ public class PharmacyDbContext : DbContext
     public DbSet<SupplierPhone> SupplierPhones { get; set; }
     public DbSet<TaxesPayment> TaxesPayments { get; set; }
 
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        if (!optionsBuilder.IsConfigured)
-        {
-            var connectionString =
-                @"Server=localhost, 11433;Database=PharmacyEFMigrations;User Id=sa;Password=Itsmine123!;";
-
-            optionsBuilder.UseSqlServer(connectionString);
-        }
-    }
-
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<NameMenu>(
+        modelBuilder.Entity<NameManufacturer>(
             nm => { });
 
         modelBuilder.Entity<Product>(
             product =>
             {
-                product.HasOne<NameMenu>(p => p.NameMenu)
+                product.HasOne<NameManufacturer>(p => p.NameManufacturer)
                     .WithOne(nm => nm.Product)
-                    .HasForeignKey<NameMenu>(nm => nm.ProductId)
+                    .HasForeignKey<NameManufacturer>(nm => nm.ProductId)
                     .OnDelete(DeleteBehavior.Cascade);
 
                 product.HasMany<Batch>(p => p.Batches)
