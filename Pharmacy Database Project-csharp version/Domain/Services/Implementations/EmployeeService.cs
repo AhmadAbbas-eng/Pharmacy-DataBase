@@ -20,7 +20,7 @@ public class EmployeeService : IEmployeeService
 
     public async Task<IEnumerable<EmployeeDomain>> GetAllAsync()
     {
-        return await Task.Run(() => _employeeRepository.GetAll());
+        return await Task.Run(() => _employeeRepository.GetAllAsync());
     }
 
     public async Task<EmployeeDomain> GetEmployeeById(int id)
@@ -40,9 +40,30 @@ public class EmployeeService : IEmployeeService
         return await _employeeRepository.AddAsync(employeeDomain);
     }
 
+    public async Task DeleteAsync(int id)
+    {
+        await _employeeRepository.DeleteAsync(id);
+    }
+
+    public async Task UpdateAsync(int id, EmployeeDomain employeeDomain)
+    {
+        employeeDomain.EmployeeId = id;
+        await _employeeRepository.UpdateAsync(employeeDomain);
+    }
+
+    public async Task<IEnumerable<EmployeeDomain>> SearchAsync(string keyword)
+    {
+        if (string.IsNullOrWhiteSpace(keyword))
+        {
+            return new List<EmployeeDomain>();
+        }
+
+        return await _employeeRepository.FindAsync(e => e.Name.Contains(keyword) || e.NationalId.Contains(keyword));
+    }
+    
     public EmployeeDomain ValidatePassword(string userName, string password)
     {
-        var users = _employeeRepository.Find(e => e.Name.Equals(userName)).ToList();
+        var users = _employeeRepository.FindAsync(e => e.Name.Equals(userName)).Result.ToList();
 
         if (!users.Any())
         {

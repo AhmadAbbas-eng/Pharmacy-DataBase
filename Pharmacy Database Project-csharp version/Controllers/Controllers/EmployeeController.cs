@@ -9,7 +9,7 @@ namespace Controllers.Controllers;
 
 [ApiController]
 [Route("/api/employee")]
-public class EmployeeController :ControllerBase
+public class EmployeeController : ControllerBase
 {
     private readonly IEmployeeService _employeeService;
     private readonly ILogger<EmployeeController> _logger;
@@ -69,6 +69,52 @@ public class EmployeeController :ControllerBase
             return StatusCode(500, "Internal server error");
         }
     }
+    
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteEmployee(int id)
+    {
+        try
+        {
+            await _employeeService.DeleteAsync(id);
+            return Ok($"Employee with ID {id} has been deleted.");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Error occurred in DeleteEmployee for ID {id}");
+            return StatusCode(500, "Internal server error");
+        }
+    }
+    
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateEmployee(int id, [FromBody] EmployeeDto employee)
+    {
+        try
+        {
+            var employeeToUpdate = _mapper.Map<EmployeeDomain>(employee);
+            await _employeeService.UpdateAsync(id, employeeToUpdate);
+            return Ok(employeeToUpdate);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Error occurred while updating employee with ID {id}.");
+            return StatusCode(500, "Internal server error");
+        }
+    }
 
+    [HttpGet("search")]
+    public async Task<IActionResult> SearchEmployees(string keyword)
+    {
+        try
+        {
+            var employees = await _employeeService.SearchAsync(keyword);
+            var employeesDto = _mapper.Map<IEnumerable<EmployeeDto>>(employees);
+            return Ok(employeesDto);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error occurred in SearchEmployees");
+            return StatusCode(500, "Internal server error");
+        }
+    }
 
 }

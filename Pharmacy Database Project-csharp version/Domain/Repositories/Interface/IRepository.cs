@@ -8,7 +8,7 @@ public interface IRepository<TModel, TId>
     Task<IEnumerable<TModel>> GetAllAsync();
     Task<TId> AddAsync(TModel entity);
     Task AddAllAsync(IEnumerable<TModel> models);
-    void Update(TModel entity);
+    Task UpdateAsync(TModel entity);
     Task DeleteAsync(TId id);
     Task<IEnumerable<TModel>> FindAsync(params Expression<Func<TModel, bool>>[] predicate);
     Task SaveAsync();

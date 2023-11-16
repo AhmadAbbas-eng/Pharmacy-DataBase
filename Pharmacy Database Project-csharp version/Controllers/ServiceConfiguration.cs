@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System.Reflection;
+using System.Text;
+using AutoMapper;
 using AutoMapper.Extensions.ExpressionMapping;
 using Controllers.Model.Dto;
 using Domain.Models;
@@ -10,67 +12,159 @@ using Infrastructure.Entities;
 using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Pharmacy.Configuration;
+using Serilog;
 
 namespace Controllers;
-
 public static class ServiceConfiguration
 {
-    public static ServiceProvider ConfigureServices(IServiceCollection serviceCollection)
+
+    public static IServiceCollection AddConnectionStringConfiguration(this IServiceCollection services,
+        IConfiguration configuration)
     {
-        
+        var config = new ApplicationConfiguration();
+        configuration.GetSection("ApplicationConfiguration").Bind(config);
 
-        //serviceCollection.AddLogging(configure => configure.AddConsole());
+        if (config.DbConnection is null || string.IsNullOrEmpty(config.DbConnection.ConnectionString))
+        {
+            throw new InvalidOperationException("Database configuration is not properly loaded.");
+        }
 
-        //serviceCollection.AddScoped<ICustomerService, CustomerService>();
+        services.AddSingleton<IPharmacyDbConnectionStringProvider>(provider => new PharmacyDbConnectionStringProvider(config));
+        return services;
+    }
+    
+    public static IServiceCollection AddDatabaseConfiguration(this IServiceCollection services)
+    {
+        services.AddDbContext<PharmacyDbContext>((serviceProvider, options) =>
+        {
+            var connectionStringProvider = serviceProvider.GetRequiredService<IPharmacyDbConnectionStringProvider>();
+            var connectionString = connectionStringProvider.GetPharmacyReadOnlyConnectionString();
+            options.UseSqlServer(connectionString);
+        }, ServiceLifetime.Transient);
 
-        //serviceCollection.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        return services;
+    }
 
-        // TODO: manage the DbContext lifetime appropriately
-        serviceCollection.AddDbContext<PharmacyDbContext>(options =>
-            options.UseSqlServer("Server=localhost,11433;Database=Pharmacy;User Id=sa;Password=Itsmine123!;"));
-        serviceCollection.AddScoped<IRepository<WorkHoursDomain, int>, Repository<WorkHours, WorkHoursDomain, int>>();
+    
+    
+    public static IServiceCollection AddApplicationServices(this IServiceCollection serviceCollection)
+    {
         serviceCollection.AddScoped<IRepository<SupplierDomain, int>, Repository<Supplier, SupplierDomain, int>>();
         serviceCollection.AddScoped<IRepository<EmployeeDomain, int>, Repository<Employee, EmployeeDomain, int>>();
         serviceCollection.AddScoped<IRepository<SupplierPhone, int>, Repository<SupplierPhone, SupplierPhone, int>>();
         serviceCollection.AddScoped<IRepository<TaxDomain, string>, Repository<Tax, TaxDomain, string>>();
         serviceCollection.AddScoped<IRepository<PaymentDomain, int>, Repository<Payment, PaymentDomain, int>>();
         serviceCollection.AddScoped<IRepository<ChequeDomain, int>, Repository<Cheque, ChequeDomain, int>>();
-        serviceCollection.AddScoped<IWorkHoursService, WorkHoursService>();
+        serviceCollection.AddScoped<IRepository<WorkHoursDomain, int>, Repository<WorkHours, WorkHoursDomain, int>>();
+        serviceCollection.AddScoped<IWorkHoursRepository, WorkHoursRepository>();
+
         serviceCollection.AddScoped<IEmployeeService, EmployeeService>();
+        serviceCollection.AddScoped<IWorkHoursService, WorkHoursService>();
+
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddAutoMapper(this IServiceCollection serviceCollection)
+    {
         
         var config = new MapperConfiguration(cfg =>
         {
             cfg.AddExpressionMapping();
 
-            cfg.CreateMap<Product, ProductDomain>();
-            cfg.CreateMap<Supplier, SupplierDomain>();
-            cfg.CreateMap<SupplierDomain, Supplier>();
+            var entityAssembly = Assembly.GetAssembly(typeof(BaseModel));
+            var entityTypes = entityAssembly.GetTypes()
+                .Where(t => t.Namespace == "Infrastructure.Entities");
 
-            cfg.CreateMap<EmployeeDomain, Employee>();
-            cfg.CreateMap<Employee, EmployeeDomain>();
+            var modelAssembly = Assembly.GetAssembly(typeof(BaseModelDomain)); 
+            var modelTypes = modelAssembly.GetTypes()
+                .Where(t => t.Namespace == "Domain.Models");
 
-            cfg.CreateMap<SupplierPhone, SupplierPhoneDomain>();
-            cfg.CreateMap<SupplierPhoneDomain, SupplierPhone>();
+            foreach (var entityType in entityTypes)
+            {
+                var modelName = entityType.Name + "Domain";
+                var modelType = modelTypes.FirstOrDefault(t => t.Name == modelName);
 
-            cfg.CreateMap<WorkHours, WorkHoursDomain>();
-            cfg.CreateMap<WorkHoursDomain, WorkHours>();
+                if (modelType != null)
+                {
+                    cfg.CreateMap(entityType, modelType);
+                    cfg.CreateMap(modelType, entityType);
+                }
+            }
+            
+            var dtoAssembly = Assembly.GetAssembly(typeof(BaseModelDto)); 
+            var modelDtos = dtoAssembly.GetTypes()
+                .Where(t => t.Namespace == "Controllers.Model.Dto");
+            
+            foreach (var modelDto in modelDtos)
+            {
+                var modelName = modelDto.Name.Replace("Dto", "Domain");
+                var modelType = modelTypes.FirstOrDefault(t => t.Name == modelName);
 
-            cfg.CreateMap<TaxDomain, Tax>();
-            cfg.CreateMap<Tax, TaxDomain>();
-
-            cfg.CreateMap<ChequeDomain, Cheque>();
-            cfg.CreateMap<Cheque, ChequeDomain>();
-
-            cfg.CreateMap<PaymentDomain, Payment>();
-            cfg.CreateMap<Payment, PaymentDomain>();
-
-            cfg.CreateMap<EmployeeDomain, EmployeeDto>();
-            cfg.CreateMap<EmployeeDto, EmployeeDomain>();
-
+                if (modelType != null)
+                {
+                    cfg.CreateMap(modelDto, modelType).ReverseMap();
+                }
+            }
         });
 
         var mapper = config.CreateMapper();
         serviceCollection.AddSingleton(mapper);
-        return serviceCollection.BuildServiceProvider();
+        return serviceCollection;
+    }
+    
+    public static IServiceCollection AddLoggerConfiguration(this IServiceCollection services)
+    {
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+            .WriteTo.Console()
+            .WriteTo.File("logs/userinfo.txt", rollingInterval: RollingInterval.Day)
+            .CreateLogger();
+
+        services.AddLogging(loggingBuilder => 
+            loggingBuilder.AddSerilog(dispose: true));
+
+        return services;
+    }
+
+    public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddAuthentication("Bearer")
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = configuration["Authentication:Issuer"],
+                    ValidAudience = configuration["Authentication:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.ASCII.GetBytes(configuration["Authentication:SecretForKey"]))
+                };
+            });
+
+        return services;
+    }
+    
+    public static IServiceCollection AddSwaggerConfiguration(this IServiceCollection services)
+    {
+        services.AddSwaggerGen(options =>
+        {
+            options.SwaggerDoc("v1", new OpenApiInfo 
+            { 
+                Title = "Your API", 
+                Version = "v1",
+                Description = "Description for the API goes here."
+            });
+
+            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            options.IncludeXmlComments(xmlPath);
+        });
+
+        return services;
     }
 }
