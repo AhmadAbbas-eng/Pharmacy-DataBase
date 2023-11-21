@@ -67,47 +67,53 @@ public abstract class BaseGenericRepositoryTests<TContext, TDbModel, TModel, TId
     }
 
     [Fact]
-    public void Add_AddsToDatabase()
+    public async Task Add_AddsToDatabase()
     {
         var domainModel = CreateDomainModel();
-        var dbModel = _mapper.Map<TDbModel>(domainModel);
-
-        var id = _repository.AddAsync(domainModel);
-        _repository.SaveAsync();
-
-        var entityDb = _context.Entry(dbModel);
-        Assert.NotNull(entityDb);
-
         var expectedEntity = _mapper.Map<TDbModel>(domainModel);
+
+        var id = _repository.AddAsync(domainModel).Result;
+        
+        var entityType = typeof(TDbModel);
+        var idProperty = entityType.GetProperties()
+            .FirstOrDefault(prop => prop.Name.Contains("Id"));
+
+        if (idProperty != null && typeof(TId).IsAssignableFrom(idProperty.PropertyType))
+            idProperty.SetValue(expectedEntity, id);
+        
+        await _repository.SaveAsync();
+
+        var entityDb = await _repository.GetByIdAsync(id);
+        entityDb.Should().NotBeNull();
+
         entityDb.Should().BeEquivalentTo(expectedEntity, options => options.ExcludingMissingMembers());
     }
 
     [Fact]
-    public void AddEntity_ReturnsCorrectId()
+    public async Task  AddEntity_ReturnsCorrectId()
     {
         var domainModel = CreateDomainModel();
 
-        var addedEntityId = _repository.AddAsync(domainModel);
-        _repository.SaveAsync();
-
-        Assert.NotEqual(default, addedEntityId);
+        var addedEntityId = await _repository.AddAsync(domainModel);
+        await _repository.SaveAsync();
+        addedEntityId.Should().NotBeNull();
     }
 
     [Fact]
-    public void AddEntity_ThrowsException_WhenNull()
+    public async Task  AddEntity_ThrowsException_WhenNull()
     {
-        Assert.ThrowsAsync<ArgumentNullException>(() => _repository.AddAsync(null));
+        await Assert.ThrowsAsync<ArgumentNullException>(() => _repository.AddAsync(null));
     }
 
     [Fact]
-    public void GetEntityById_ReturnsNull_WhenInvalidId()
+    public async Task GetEntityById_ReturnsNull_WhenInvalidId()
     {
-        var model = _repository.GetByIdAsync(default).Result;
-        Assert.Null(model);
+        var model = await _repository.GetByIdAsync(default);
+        model.Should().BeNull();
     }
 
     [Fact]
-    public void GetAllEntities_ReturnsAllEntities()
+    public async Task GetAllEntities_ReturnsAllEntities()
     {
         var numberOfEntities = 5;
         var generatedEntities = new TModel[numberOfEntities];
@@ -120,37 +126,37 @@ public abstract class BaseGenericRepositoryTests<TContext, TDbModel, TModel, TId
             var idProperty = entityType.GetProperties()
                 .FirstOrDefault(prop => prop.Name.Contains("Id"));
 
-            var id = _repository.AddAsync(generatedEntities[i]).Result;
+            var id = await _repository.AddAsync(generatedEntities[i]);
 
             if (idProperty != null && typeof(TId).IsAssignableFrom(idProperty.PropertyType))
                 idProperty.SetValue(generatedEntities[i], id);
         }
 
-        _repository.SaveAsync();
+        await _repository.SaveAsync();
 
-        var entities = _repository.GetAllAsync().Result.ToList();
-
-        Assert.NotEmpty(entities);
-        Assert.Equal(numberOfEntities, entities.Count());
+        var entities = await _repository.GetAllAsync();
+        entities.Should().NotBeNull();
+        entities.Should().HaveCount(numberOfEntities);
+        
         generatedEntities.Should().BeEquivalentTo(entities, options => options.ExcludingMissingMembers());
     }
 
     [Fact]
-    public void GetAllEntities_ReturnsEmpty_WhenNoEntities()
+    public async Task GetAllEntities_ReturnsEmpty_WhenNoEntities()
     {
-        var entities = _repository.GetAllAsync().Result;
-
-        Assert.Empty(entities);
+        var entities = await _repository.GetAllAsync();
+        entities.Should().BeEmpty();
     }
 
     [Fact]
-    public void UpdateEntity_UpdatesExistingEntity()
+    public async Task UpdateEntity_UpdatesExistingEntity()
     {
         var domainModel = CreateDomainModel();
-        var addedProductId = _repository.AddAsync(domainModel).Result;
-        _repository.SaveAsync();
+        var addedProductId = await _repository.AddAsync(domainModel);
+        await _repository.SaveAsync();
 
-        var updatedProduct = _repository.GetByIdAsync(addedProductId).Result;
+        var updatedProduct = await _repository.GetByIdAsync(addedProductId);
+        
         var newDomainModel = CreateDomainModel();
         var entityType = typeof(TModel);
         var idProperty = entityType.GetProperties()
@@ -160,25 +166,25 @@ public abstract class BaseGenericRepositoryTests<TContext, TDbModel, TModel, TId
             if (!property.Equals(idProperty))
                 property.SetValue(updatedProduct, property.GetValue(newDomainModel));
 
-        _repository.UpdateAsync(updatedProduct);
-        _repository.SaveAsync();
+        await _repository.UpdateAsync(updatedProduct);
+        await _repository.SaveAsync();
 
-        var productInDb = _repository.GetByIdAsync(addedProductId).Result;
+        var productInDb = await _repository.GetByIdAsync(addedProductId);
 
         updatedProduct.Should().BeEquivalentTo(productInDb, options => options.ExcludingMissingMembers());
     }
 
     [Fact]
-    public void DeleteEntity_RemovesEntity()
+    public async Task DeleteEntity_RemovesEntity()
     {
         var product = _fixture.Create<TModel>();
-        var addedProduct = _repository.AddAsync(product).Result;
-        _repository.SaveAsync();
+        var addedProduct = await _repository.AddAsync(product);
+        await _repository.SaveAsync();
 
-        _repository.DeleteAsync(addedProduct);
-        _repository.SaveAsync();
+        await _repository.DeleteAsync(addedProduct);
+        await _repository.SaveAsync();
 
-        var foundProduct = _repository.GetByIdAsync(addedProduct).Result;
-        Assert.Null(foundProduct);
+        var foundProduct = await _repository.GetByIdAsync(addedProduct);
+        foundProduct.Should().BeNull();
     }
 }
