@@ -16,10 +16,10 @@ public class ProductGenericRepositoryTests : BaseGenericRepositoryTests<Pharmacy
     public void FindProducts_ReturnsCorrectProducts()
     {
         var product = CreateDomainModel();
-        _repository.Add(product);
-        _repository.Save();
+        _repository.AddAsync(product);
+        _repository.SaveAsync();
 
-        var foundProducts = _repository.Find(p => p.Name == product.Name);
+        var foundProducts = _repository.FindAsync(p => p.Name == product.Name).Result;
 
         Assert.Contains(foundProducts, p => p.Name == product.Name);
     }
@@ -27,7 +27,7 @@ public class ProductGenericRepositoryTests : BaseGenericRepositoryTests<Pharmacy
     [Fact]
     public void FindProducts_ReturnsEmpty_WhenPredicateDoesNotMatch()
     {
-        var foundProducts = _repository.Find(p => p.Name == "NonExistentName");
+        var foundProducts = _repository.FindAsync(p => p.Name == "NonExistentName").Result;
 
         Assert.Empty(foundProducts);
     }

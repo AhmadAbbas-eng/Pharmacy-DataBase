@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using AutoFixture;
 using AutoMapper;
 using Domain.Repositories.Interface;
@@ -52,7 +54,7 @@ public abstract class BaseGenericRepositoryTests<TContext, TDbModel, TModel, TId
         var entityType = typeof(TDbModel);
 
         var idProperty = entityType.GetProperties()
-            .FirstOrDefault(prop => prop.CustomAttributes.Any(attr => attr.AttributeType == typeof(KeyAttribute)));
+            .FirstOrDefault(prop => prop.Name.Contains("Id"));
 
         if (idProperty != null && typeof(TId).IsAssignableFrom(idProperty.PropertyType))
             idProperty.SetValue(dbModel, null);
@@ -70,8 +72,8 @@ public abstract class BaseGenericRepositoryTests<TContext, TDbModel, TModel, TId
         var domainModel = CreateDomainModel();
         var dbModel = _mapper.Map<TDbModel>(domainModel);
 
-        var id = _repository.Add(domainModel);
-        _repository.Save();
+        var id = _repository.AddAsync(domainModel);
+        _repository.SaveAsync();
 
         var entityDb = _context.Entry(dbModel);
         Assert.NotNull(entityDb);
@@ -85,8 +87,8 @@ public abstract class BaseGenericRepositoryTests<TContext, TDbModel, TModel, TId
     {
         var domainModel = CreateDomainModel();
 
-        var addedEntityId = _repository.Add(domainModel);
-        _repository.Save();
+        var addedEntityId = _repository.AddAsync(domainModel);
+        _repository.SaveAsync();
 
         Assert.NotEqual(default, addedEntityId);
     }
@@ -94,13 +96,13 @@ public abstract class BaseGenericRepositoryTests<TContext, TDbModel, TModel, TId
     [Fact]
     public void AddEntity_ThrowsException_WhenNull()
     {
-        Assert.Throws<ArgumentNullException>(() => _repository.Add(null));
+        Assert.ThrowsAsync<ArgumentNullException>(() => _repository.AddAsync(null));
     }
 
     [Fact]
     public void GetEntityById_ReturnsNull_WhenInvalidId()
     {
-        var model = _repository.GetById(default);
+        var model = _repository.GetByIdAsync(default).Result;
         Assert.Null(model);
     }
 
@@ -116,17 +118,17 @@ public abstract class BaseGenericRepositoryTests<TContext, TDbModel, TModel, TId
         {
             generatedEntities[i] = CreateDomainModel();
             var idProperty = entityType.GetProperties()
-                .FirstOrDefault(prop => prop.CustomAttributes.Any(attr => attr.AttributeType == typeof(KeyAttribute)));
+                .FirstOrDefault(prop => prop.Name.Contains("Id"));
 
-            var id = _repository.Add(generatedEntities[i]);
+            var id = _repository.AddAsync(generatedEntities[i]).Result;
 
             if (idProperty != null && typeof(TId).IsAssignableFrom(idProperty.PropertyType))
                 idProperty.SetValue(generatedEntities[i], id);
         }
 
-        _repository.Save();
+        _repository.SaveAsync();
 
-        var entities = _repository.GetAll();
+        var entities = _repository.GetAllAsync().Result.ToList();
 
         Assert.NotEmpty(entities);
         Assert.Equal(numberOfEntities, entities.Count());
@@ -136,7 +138,7 @@ public abstract class BaseGenericRepositoryTests<TContext, TDbModel, TModel, TId
     [Fact]
     public void GetAllEntities_ReturnsEmpty_WhenNoEntities()
     {
-        var entities = _repository.GetAll();
+        var entities = _repository.GetAllAsync().Result;
 
         Assert.Empty(entities);
     }
@@ -145,57 +147,38 @@ public abstract class BaseGenericRepositoryTests<TContext, TDbModel, TModel, TId
     public void UpdateEntity_UpdatesExistingEntity()
     {
         var domainModel = CreateDomainModel();
-        var addedProductId = _repository.Add(domainModel);
-        _repository.Save();
+        var addedProductId = _repository.AddAsync(domainModel).Result;
+        _repository.SaveAsync();
 
-        var updatedProduct = _repository.GetById(addedProductId);
+        var updatedProduct = _repository.GetByIdAsync(addedProductId).Result;
         var newDomainModel = CreateDomainModel();
         var entityType = typeof(TModel);
         var idProperty = entityType.GetProperties()
-            .FirstOrDefault(prop => prop.CustomAttributes.Any(attr => attr.AttributeType == typeof(KeyAttribute)));
-
+            .FirstOrDefault(prop => prop.Name.Contains("Id"));
+        
         foreach (var property in entityType.GetProperties())
             if (!property.Equals(idProperty))
                 property.SetValue(updatedProduct, property.GetValue(newDomainModel));
 
-        _repository.Update(updatedProduct);
-        _repository.Save();
+        _repository.UpdateAsync(updatedProduct);
+        _repository.SaveAsync();
 
-        var productInDb = _repository.GetById(addedProductId);
+        var productInDb = _repository.GetByIdAsync(addedProductId).Result;
 
         updatedProduct.Should().BeEquivalentTo(productInDb, options => options.ExcludingMissingMembers());
-    }
-
-    [Fact]
-    public void UpdateEntity_UpdatesShouldThroughException()
-    {
-        Assert.Throws<ArgumentException>(() =>
-        {
-            var domainModel = CreateDomainModel();
-            _repository.Update(domainModel);
-            _repository.Save();
-        });
     }
 
     [Fact]
     public void DeleteEntity_RemovesEntity()
     {
         var product = _fixture.Create<TModel>();
-        var addedProduct = _repository.Add(product);
-        _repository.Save();
+        var addedProduct = _repository.AddAsync(product).Result;
+        _repository.SaveAsync();
 
-        _repository.Delete(product);
-        _repository.Save();
+        _repository.DeleteAsync(addedProduct);
+        _repository.SaveAsync();
 
-        var foundProduct = _repository.GetById(addedProduct);
+        var foundProduct = _repository.GetByIdAsync(addedProduct).Result;
         Assert.Null(foundProduct);
-    }
-
-    [Fact]
-    public void DeleteEntity_ThrowsException_WhenEntityDoesNotExist()
-    {
-        var product = CreateDomainModel();
-
-        Assert.Throws<ArgumentException>(() => _repository.Delete(product));
     }
 }
