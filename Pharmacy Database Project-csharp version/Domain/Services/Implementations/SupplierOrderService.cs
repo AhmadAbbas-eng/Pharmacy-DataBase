@@ -1,4 +1,6 @@
-﻿using Domain.Models;
+﻿using Domain.Exceptions;
+using Domain.Exceptions.ErrorCodes;
+using Domain.Models;
 using Domain.Repositories.Interface;
 using Domain.Services.Interfaces;
 
@@ -15,6 +17,7 @@ public class SupplierOrderService : ISupplierOrderService
 
     public async Task<float> CalculateOrderTotalAfterDiscount(int orderId)
     {
+
         var order = await _orderRepository.GetByIdAsync(orderId);
         if (order is null) throw new ArgumentException("Order not found.");
 

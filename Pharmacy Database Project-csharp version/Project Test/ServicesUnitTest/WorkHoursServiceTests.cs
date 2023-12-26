@@ -1,4 +1,8 @@
-﻿using System.Linq.Expressions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AutoFixture;
 using Domain.Models;
 using Domain.Repositories.Interface;
@@ -9,14 +13,14 @@ namespace Project_Test.ServicesUnitTest;
 
 public class WorkHoursServiceTests
 {
-    private readonly Mock<IRepository<WorkHoursDomain, int>> _mockRepository;
+    private readonly Mock<IWorkHoursRepository> _mockRepository;
     private readonly WorkHoursService _workHoursService;
     private readonly Fixture _fixture;
     private readonly List<WorkHoursDomain> _workHoursBatch;
 
     public WorkHoursServiceTests()
     {
-        _mockRepository = new Mock<IRepository<WorkHoursDomain, int>>();
+        _mockRepository = new Mock<IWorkHoursRepository>();
         _workHoursService = new WorkHoursService(_mockRepository.Object);
         _fixture = new Fixture();
         
