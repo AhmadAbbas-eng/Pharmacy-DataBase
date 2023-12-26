@@ -698,3 +698,17 @@ fabric.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/java,dotenv,dotnetcore,csharp,rider,visualstudio
 
+.settings/
+bin/
+tmp/
+.metadata
+.classpath
+.project
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+.factorypath
+
