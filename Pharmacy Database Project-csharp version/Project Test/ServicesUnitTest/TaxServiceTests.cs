@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 using AutoFixture;
 using Domain.Models;
 using Domain.Repositories.Interface;
@@ -13,14 +9,14 @@ namespace Project_Test.ServicesUnitTest;
 
 public class TaxServiceTests
 {
-    private readonly Mock<ITaxRepository> _mockRepository;
+    private readonly Mock<IRepository<TaxDomain, string>> _mockRepository;
     private readonly TaxService _taxService;
     private readonly List<TaxDomain> _taxesBatch;
     private readonly Fixture _fixture;
 
     public TaxServiceTests()
     {
-        _mockRepository = new Mock<ITaxRepository>();
+        _mockRepository = new Mock<IRepository<TaxDomain, string>>();
         _taxService = new TaxService(_mockRepository.Object);
         _fixture = new Fixture();
 

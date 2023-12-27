@@ -4,7 +4,6 @@ namespace Infrastructure.Entities;
 
 public class Product
 {
-    
     [Key] 
     public int ProductId { get; set; }
 

@@ -1,5 +1,4 @@
-﻿using System;
-using Infrastructure.Entities;
+﻿using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Project_Test;

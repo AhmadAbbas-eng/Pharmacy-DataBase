@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
 using AutoFixture;
 using AutoMapper;
 using Domain.Repositories.Interface;
@@ -54,7 +52,7 @@ public abstract class BaseGenericRepositoryTests<TContext, TDbModel, TModel, TId
         var entityType = typeof(TDbModel);
 
         var idProperty = entityType.GetProperties()
-            .FirstOrDefault(prop => prop.Name.Contains("Id"));
+            .FirstOrDefault(prop => prop.CustomAttributes.Any(attr => attr.AttributeType == typeof(KeyAttribute)));
 
         if (idProperty != null && typeof(TId).IsAssignableFrom(idProperty.PropertyType))
             idProperty.SetValue(dbModel, null);
@@ -67,53 +65,47 @@ public abstract class BaseGenericRepositoryTests<TContext, TDbModel, TModel, TId
     }
 
     [Fact]
-    public async Task Add_AddsToDatabase()
+    public void Add_AddsToDatabase()
     {
         var domainModel = CreateDomainModel();
+        var dbModel = _mapper.Map<TDbModel>(domainModel);
+
+        var id = _repository.Add(domainModel);
+        _repository.Save();
+
+        var entityDb = _context.Entry(dbModel);
+        Assert.NotNull(entityDb);
+
         var expectedEntity = _mapper.Map<TDbModel>(domainModel);
-
-        var id = _repository.AddAsync(domainModel).Result;
-        
-        var entityType = typeof(TDbModel);
-        var idProperty = entityType.GetProperties()
-            .FirstOrDefault(prop => prop.Name.Contains("Id"));
-
-        if (idProperty != null && typeof(TId).IsAssignableFrom(idProperty.PropertyType))
-            idProperty.SetValue(expectedEntity, id);
-        
-        await _repository.SaveAsync();
-
-        var entityDb = await _repository.GetByIdAsync(id);
-        entityDb.Should().NotBeNull();
-
         entityDb.Should().BeEquivalentTo(expectedEntity, options => options.ExcludingMissingMembers());
     }
 
     [Fact]
-    public async Task  AddEntity_ReturnsCorrectId()
+    public void AddEntity_ReturnsCorrectId()
     {
         var domainModel = CreateDomainModel();
 
-        var addedEntityId = await _repository.AddAsync(domainModel);
-        await _repository.SaveAsync();
-        addedEntityId.Should().NotBeNull();
+        var addedEntityId = _repository.Add(domainModel);
+        _repository.Save();
+
+        Assert.NotEqual(default, addedEntityId);
     }
 
     [Fact]
-    public async Task  AddEntity_ThrowsException_WhenNull()
+    public void AddEntity_ThrowsException_WhenNull()
     {
-        await Assert.ThrowsAsync<ArgumentNullException>(() => _repository.AddAsync(null));
+        Assert.Throws<ArgumentNullException>(() => _repository.Add(null));
     }
 
     [Fact]
-    public async Task GetEntityById_ReturnsNull_WhenInvalidId()
+    public void GetEntityById_ReturnsNull_WhenInvalidId()
     {
-        var model = await _repository.GetByIdAsync(default);
-        model.Should().BeNull();
+        var model = _repository.GetById(default);
+        Assert.Null(model);
     }
 
     [Fact]
-    public async Task GetAllEntities_ReturnsAllEntities()
+    public void GetAllEntities_ReturnsAllEntities()
     {
         var numberOfEntities = 5;
         var generatedEntities = new TModel[numberOfEntities];
@@ -124,67 +116,86 @@ public abstract class BaseGenericRepositoryTests<TContext, TDbModel, TModel, TId
         {
             generatedEntities[i] = CreateDomainModel();
             var idProperty = entityType.GetProperties()
-                .FirstOrDefault(prop => prop.Name.Contains("Id"));
+                .FirstOrDefault(prop => prop.CustomAttributes.Any(attr => attr.AttributeType == typeof(KeyAttribute)));
 
-            var id = await _repository.AddAsync(generatedEntities[i]);
+            var id = _repository.Add(generatedEntities[i]);
 
             if (idProperty != null && typeof(TId).IsAssignableFrom(idProperty.PropertyType))
                 idProperty.SetValue(generatedEntities[i], id);
         }
 
-        await _repository.SaveAsync();
+        _repository.Save();
 
-        var entities = await _repository.GetAllAsync();
-        entities.Should().NotBeNull();
-        entities.Should().HaveCount(numberOfEntities);
-        
+        var entities = _repository.GetAll();
+
+        Assert.NotEmpty(entities);
+        Assert.Equal(numberOfEntities, entities.Count());
         generatedEntities.Should().BeEquivalentTo(entities, options => options.ExcludingMissingMembers());
     }
 
     [Fact]
-    public async Task GetAllEntities_ReturnsEmpty_WhenNoEntities()
+    public void GetAllEntities_ReturnsEmpty_WhenNoEntities()
     {
-        var entities = await _repository.GetAllAsync();
-        entities.Should().BeEmpty();
+        var entities = _repository.GetAll();
+
+        Assert.Empty(entities);
     }
 
     [Fact]
-    public async Task UpdateEntity_UpdatesExistingEntity()
+    public void UpdateEntity_UpdatesExistingEntity()
     {
         var domainModel = CreateDomainModel();
-        var addedProductId = await _repository.AddAsync(domainModel);
-        await _repository.SaveAsync();
+        var addedProductId = _repository.Add(domainModel);
+        _repository.Save();
 
-        var updatedProduct = await _repository.GetByIdAsync(addedProductId);
-        
+        var updatedProduct = _repository.GetById(addedProductId);
         var newDomainModel = CreateDomainModel();
         var entityType = typeof(TModel);
         var idProperty = entityType.GetProperties()
-            .FirstOrDefault(prop => prop.Name.Contains("Id"));
-        
+            .FirstOrDefault(prop => prop.CustomAttributes.Any(attr => attr.AttributeType == typeof(KeyAttribute)));
+
         foreach (var property in entityType.GetProperties())
             if (!property.Equals(idProperty))
                 property.SetValue(updatedProduct, property.GetValue(newDomainModel));
 
-        await _repository.UpdateAsync(updatedProduct);
-        await _repository.SaveAsync();
+        _repository.Update(updatedProduct);
+        _repository.Save();
 
-        var productInDb = await _repository.GetByIdAsync(addedProductId);
+        var productInDb = _repository.GetById(addedProductId);
 
         updatedProduct.Should().BeEquivalentTo(productInDb, options => options.ExcludingMissingMembers());
     }
 
     [Fact]
-    public async Task DeleteEntity_RemovesEntity()
+    public void UpdateEntity_UpdatesShouldThroughException()
+    {
+        Assert.Throws<ArgumentException>(() =>
+        {
+            var domainModel = CreateDomainModel();
+            _repository.Update(domainModel);
+            _repository.Save();
+        });
+    }
+
+    [Fact]
+    public void DeleteEntity_RemovesEntity()
     {
         var product = _fixture.Create<TModel>();
-        var addedProduct = await _repository.AddAsync(product);
-        await _repository.SaveAsync();
+        var addedProduct = _repository.Add(product);
+        _repository.Save();
 
-        await _repository.DeleteAsync(addedProduct);
-        await _repository.SaveAsync();
+        _repository.Delete(product);
+        _repository.Save();
 
-        var foundProduct = await _repository.GetByIdAsync(addedProduct);
-        foundProduct.Should().BeNull();
+        var foundProduct = _repository.GetById(addedProduct);
+        Assert.Null(foundProduct);
+    }
+
+    [Fact]
+    public void DeleteEntity_ThrowsException_WhenEntityDoesNotExist()
+    {
+        var product = CreateDomainModel();
+
+        Assert.Throws<ArgumentException>(() => _repository.Delete(product));
     }
 }

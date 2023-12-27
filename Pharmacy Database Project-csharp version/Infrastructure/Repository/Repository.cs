@@ -77,7 +77,7 @@ public class Repository<TDbModel, TModel, TId> : IRepository<TModel, TId>
         await _context.SaveChangesAsync();
     }
     
-    public async Task UpdateAsync(TModel entity)
+    public void Update(TModel entity)
     {
         var predicates = BuildPredicatesForNonNullProperties(entity);
 
@@ -89,16 +89,12 @@ public class Repository<TDbModel, TModel, TId> : IRepository<TModel, TId>
             query.Where(predicateExpression);
         }
 
-        var dbEntity = await query.FirstOrDefaultAsync();
+        var dbEntity = query.ToList().FirstOrDefault();
 
-        if (dbEntity is not null)
+        if (dbEntity != null)
         {
             _context.Entry(dbEntity).State = EntityState.Detached;
-            
-            var mappedEntity = _mapper.Map<TDbModel>(entity);
-            _context.Entry(mappedEntity).State = EntityState.Modified;
-
-            await _context.SaveChangesAsync();
+            _context.Entry(_mapper.Map<TDbModel>(entity)).State = EntityState.Modified;
         }
         else
         {
@@ -110,7 +106,6 @@ public class Repository<TDbModel, TModel, TId> : IRepository<TModel, TId>
     {
         TDbModel dbModel = await _dbSet.FindAsync(id);
         _dbSet.Remove(dbModel);
-        await _context.SaveChangesAsync();
     }
 
     public async Task<IEnumerable<TModel>> FindAsync(params Expression<Func<TModel, bool>>[] predicates)
