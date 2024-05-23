@@ -46,7 +46,7 @@ public class Repository<TDbModel, TModel, TId> : IRepository<TModel, TId>
         return _mapper.Map<TModel>(result);
     }
 
-    public async Task<IEnumerable<TModel>> GetAllAsync()
+    public async Task<ICollection<TModel>> GetAllAsync()
     {
         var result = await _dbSet.ToListAsync();
         return _mapper.Map<List<TModel>>(result);
@@ -105,7 +105,7 @@ public class Repository<TDbModel, TModel, TId> : IRepository<TModel, TId>
         _dbSet.Remove(dbModel);
     }
 
-    public async Task<IEnumerable<TModel>> FindAsync(params Expression<Func<TModel, bool>>[] predicates)
+    public async Task<ICollection<TModel>> FindAsync(params Expression<Func<TModel, bool>>[] predicates)
     {
         IQueryable<TDbModel> query = _dbSet;
 

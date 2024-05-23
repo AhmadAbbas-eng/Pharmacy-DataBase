@@ -157,7 +157,7 @@ public class ProductRepositoryTest : BaseTest<PharmacyDbContext>
             .Without(p => p.ProductId)
             .Create();
 
-        await Assert.ThrowsAsync<ArgumentException>(() => _productRepository.DeleteAsync(product.ProductId));
+        await Assert.ThrowsAsync<ArgumentNullException>(() => _productRepository.DeleteAsync(product.ProductId));
     }
 
     [Fact]

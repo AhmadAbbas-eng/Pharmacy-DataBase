@@ -193,9 +193,8 @@ public abstract class BaseGenericRepositoryTests<TContext, TDbModel, TModel, TId
     [Fact]
     public async Task DeleteEntity_ThrowsException_WhenEntityDoesNotExist()
     {
-        var product = CreateDomainModel();
         var id = _fixture.Create<TId>();
 
-        await Assert.ThrowsAsync<ArgumentException>(() => _repository.DeleteAsync(id));
+        await Assert.ThrowsAsync<ArgumentNullException>(() => _repository.DeleteAsync(id));
     }
 }
