@@ -1,4 +1,5 @@
 namespace Domain.Models;
+
 public class EmployeePhoneDomain
 {
     public string Phone { get; set; }

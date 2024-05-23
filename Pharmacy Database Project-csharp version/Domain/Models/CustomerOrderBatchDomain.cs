@@ -1,4 +1,5 @@
 namespace Domain.Models;
+
 public class CustomerOrderBatchDomain
 {
     public int OrderId { get; set; }

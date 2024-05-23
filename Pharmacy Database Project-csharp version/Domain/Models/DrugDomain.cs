@@ -1,4 +1,5 @@
 namespace Domain.Models;
+
 public class DrugDomain
 {
     public int ProductId { get; set; }

@@ -1,4 +1,5 @@
 namespace Domain.Models;
+
 public class EmployeeDomain
 {
     public int EmployeeId { get; set; }

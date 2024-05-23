@@ -1,5 +1,4 @@
-﻿using Domain.Models;
-using Domain.Repositories.Interface;
+﻿using Domain.Repositories.Interface;
 using Domain.Services.Interfaces;
 
 namespace Domain.Services.Implementations;

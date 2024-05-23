@@ -1,4 +1,5 @@
 namespace Domain.Models;
+
 public class DrugDisposalDomain
 {
     public int DisposalId { get; set; }

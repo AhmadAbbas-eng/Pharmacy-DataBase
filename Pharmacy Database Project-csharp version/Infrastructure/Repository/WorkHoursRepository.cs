@@ -15,5 +15,4 @@ public class WorkHoursRepository : Repository<WorkHours, WorkHoursDomain, int>, 
         _context = context;
         _mapper = mapper;
     }
-
 }

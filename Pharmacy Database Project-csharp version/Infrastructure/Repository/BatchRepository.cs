@@ -10,6 +10,7 @@ public class BatchRepository : Repository<Batch, BatchDomain, int>, IBatchReposi
 {
     private readonly PharmacyDbContext _context;
     private readonly IMapper _mapper;
+
     public BatchRepository(PharmacyDbContext context, IMapper mapper) : base(context, mapper)
     {
         _context = context;
@@ -32,7 +33,6 @@ public class BatchRepository : Repository<Batch, BatchDomain, int>, IBatchReposi
     public async Task<IEnumerable<BatchDomain>> FindByProductionDateRangeAsync(DateTime startDate,
         DateTime endDate)
     {
-
         var batches = await _context.Batches
             .Where(b => b.ProductionDate >= startDate && b.ProductionDate <= endDate)
             .ToListAsync();

@@ -38,11 +38,11 @@ public class ProductRepositoryTest : BaseTest<PharmacyDbContext>
     }
 
     [Fact]
-    public void AddProduct_AddsToDatabase()
+    public async Task AddProduct_AddsToDatabase()
     {
         var domainModel = CreateProductDomain();
-        domainModel.ProductId = _productRepository.Add(domainModel);
-        _productRepository.Save();
+        domainModel.ProductId = await _productRepository.AddAsync(domainModel);
+        await _productRepository.SaveAsync();
 
         var productDb = Context.Products.FirstOrDefault(p => p.ProductId == domainModel.ProductId);
         Assert.NotNull(productDb);
@@ -51,31 +51,31 @@ public class ProductRepositoryTest : BaseTest<PharmacyDbContext>
     }
 
     [Fact]
-    public void AddProduct_ReturnsCorrectId()
+    public async Task AddProduct_ReturnsCorrectId()
     {
         var domainModel = CreateProductDomain();
 
-        var addedProductId = _productRepository.Add(domainModel);
-        _productRepository.Save();
+        var addedProductId = await _productRepository.AddAsync(domainModel);
+        await _productRepository.SaveAsync();
 
         Assert.NotEqual(0, addedProductId);
     }
 
     [Fact]
-    public void AddProduct_ThrowsException_WhenNull()
+    public async Task AddProduct_ThrowsException_WhenNull()
     {
-        Assert.Throws<ArgumentNullException>(() => _productRepository.Add(null));
+        await Assert.ThrowsAsync<ArgumentNullException>(() => _productRepository.AddAsync(null));
     }
 
     [Fact]
-    public void GetProductById_ReturnsNull_WhenInvalidId()
+    public async Task GetProductById_ReturnsNull_WhenInvalidId()
     {
-        var product = _productRepository.GetById(-1);
+        var product = await _productRepository.GetByIdAsync(-1);
         Assert.Null(product);
     }
 
     [Fact]
-    public void GetAllProducts_ReturnsAllProducts()
+    public async Task GetAllProducts_ReturnsAllProducts()
     {
         var numberOfProducts = 5;
         var generatedProducts = new ProductDomain[numberOfProducts];
@@ -83,12 +83,12 @@ public class ProductRepositoryTest : BaseTest<PharmacyDbContext>
         for (var i = 0; i < numberOfProducts; i++)
         {
             generatedProducts[i] = CreateProductDomain();
-            generatedProducts[i].ProductId = _productRepository.Add(generatedProducts[i]);
+            generatedProducts[i].ProductId = await _productRepository.AddAsync(generatedProducts[i]);
         }
 
-        _productRepository.Save();
+        await _productRepository.SaveAsync();
 
-        var products = _productRepository.GetAll();
+        var products = await _productRepository.GetAllAsync();
 
         Assert.NotEmpty(products);
         Assert.Equal(numberOfProducts, products.Count());
@@ -96,86 +96,86 @@ public class ProductRepositoryTest : BaseTest<PharmacyDbContext>
     }
 
     [Fact]
-    public void GetAllProducts_ReturnsEmpty_WhenNoProducts()
+    public async Task GetAllProducts_ReturnsEmpty_WhenNoProducts()
     {
-        var products = _productRepository.GetAll();
+        var products = await _productRepository.GetAllAsync();
 
         Assert.Empty(products);
     }
 
     [Fact]
-    public void UpdateProduct_UpdatesExistingProduct()
+    public async Task UpdateProduct_UpdatesExistingProduct()
     {
         var domainModel = CreateProductDomain();
-        var addedProductId = _productRepository.Add(domainModel);
-        _productRepository.Save();
+        var addedProductId = await _productRepository.AddAsync(domainModel);
+        await _productRepository.SaveAsync();
 
-        var updatedProduct = _productRepository.GetById(addedProductId);
+        var updatedProduct = await _productRepository.GetByIdAsync(addedProductId);
         var newName = "New Name";
         updatedProduct.Name = newName;
 
         _productRepository.Update(updatedProduct);
-        _productRepository.Save();
+        await _productRepository.SaveAsync();
 
-        var productInDb = _productRepository.GetById(addedProductId);
+        var productInDb = await _productRepository.GetByIdAsync(addedProductId);
 
         updatedProduct.Should().BeEquivalentTo(productInDb, options => options.ExcludingMissingMembers());
     }
 
     [Fact]
-    public void UpdateProduct_UpdatesShouldThroughException()
+    public async Task UpdateProduct_UpdatesShouldThroughException()
     {
-        Assert.Throws<ArgumentException>(() =>
+        await Assert.ThrowsAsync<ArgumentException>(() =>
         {
             var updatedProduct = CreateProductDomain();
             var newName = "New Name";
             updatedProduct.Name = newName;
 
             _productRepository.Update(updatedProduct);
-            _productRepository.Save();
+            return _productRepository.SaveAsync();
         });
     }
 
     [Fact]
-    public void DeleteProduct_RemovesProduct()
+    public async Task DeleteProduct_RemovesProduct()
     {
         var product = _fixture.Create<ProductDomain>();
-        var addedProduct = _productRepository.Add(product);
-        _productRepository.Save();
+        var addedProduct = await _productRepository.AddAsync(product);
+        await _productRepository.SaveAsync();
 
-        _productRepository.Delete(product);
-        _productRepository.Save();
+        await _productRepository.DeleteAsync(addedProduct);
+        await _productRepository.SaveAsync();
 
-        var foundProduct = _productRepository.GetById(addedProduct);
+        var foundProduct = await _productRepository.GetByIdAsync(addedProduct);
         Assert.Null(foundProduct);
     }
 
     [Fact]
-    public void DeleteProduct_ThrowsException_WhenProductDoesNotExist()
+    public async Task DeleteProduct_ThrowsException_WhenProductDoesNotExist()
     {
         var product = _fixture.Build<ProductDomain>()
             .Without(p => p.ProductId)
             .Create();
 
-        Assert.Throws<ArgumentException>(() => _productRepository.Delete(product));
+        await Assert.ThrowsAsync<ArgumentException>(() => _productRepository.DeleteAsync(product.ProductId));
     }
 
     [Fact]
-    public void FindProducts_ReturnsCorrectProducts()
+    public async Task FindProducts_ReturnsCorrectProducts()
     {
         var product = _fixture.Create<ProductDomain>();
-        _productRepository.Add(product);
-        _productRepository.Save();
+        await _productRepository.AddAsync(product);
+        await _productRepository.SaveAsync();
 
-        var foundProducts = _productRepository.Find(p => p.Name == product.Name);
+        var foundProducts = await _productRepository.FindAsync(p => p.Name == product.Name);
 
         Assert.Contains(foundProducts, p => p.Name == product.Name);
     }
 
     [Fact]
-    public void FindProducts_ReturnsEmpty_WhenPredicateDoesNotMatch()
+    public async Task FindProducts_ReturnsEmpty_WhenPredicateDoesNotMatch()
     {
-        var foundProducts = _productRepository.Find(p => p.Name == "NonExistentName");
+        var foundProducts = await _productRepository.FindAsync(p => p.Name == "NonExistentName");
 
         Assert.Empty(foundProducts);
     }

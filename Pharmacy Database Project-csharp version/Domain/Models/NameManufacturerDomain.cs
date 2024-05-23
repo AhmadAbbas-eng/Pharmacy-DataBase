@@ -1,4 +1,5 @@
 namespace Domain.Models;
+
 public class NameManufacturerDomain
 {
     public int ProductId { get; set; }

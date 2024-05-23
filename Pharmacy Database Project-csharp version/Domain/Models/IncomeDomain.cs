@@ -1,4 +1,5 @@
 namespace Domain.Models;
+
 public class IncomeDomain
 {
     public int IncomeId { get; set; }

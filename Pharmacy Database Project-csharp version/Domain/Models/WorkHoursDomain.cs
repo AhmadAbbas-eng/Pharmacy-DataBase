@@ -1,4 +1,5 @@
 namespace Domain.Models;
+
 public class WorkHoursDomain
 {
     public int EmployeeId { get; set; }

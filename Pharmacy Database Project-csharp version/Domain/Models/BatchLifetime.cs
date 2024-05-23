@@ -2,11 +2,6 @@ namespace Domain.Models;
 
 public class BatchLifetime
 {
-    public int ProductId { get; set; }
-    public string ProductName { get; set; }
-    public DateTime ProductionDate { get; set; }
-    public int DaysUntilExpiry { get; set; }
-    
     public BatchLifetime(int productId, string productName, DateTime productionDate, int daysUntilExpiry)
     {
         ProductId = productId;
@@ -15,4 +10,8 @@ public class BatchLifetime
         DaysUntilExpiry = DaysUntilExpiry;
     }
 
+    public int ProductId { get; set; }
+    public string ProductName { get; set; }
+    public DateTime ProductionDate { get; set; }
+    public int DaysUntilExpiry { get; set; }
 }

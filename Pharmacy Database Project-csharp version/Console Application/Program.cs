@@ -1,25 +1,15 @@
-﻿using AutoMapper;
-
-using Console_Application;
-using Domain.Models;
-using Domain.Repositories.Interface;
-using Domain.Services.Implementations;
+﻿using Console_Application;
 using Domain.Services.Interfaces;
 using Infrastructure;
-using Infrastructure.Entities;
-using Infrastructure.Repository;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using Pharmacy.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 var services = new ServiceCollection();
 
 
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile("appsettings.json", false, true)
     .Build();
 
 services.AddConnectionStringConfiguration(configuration)
@@ -27,7 +17,7 @@ services.AddConnectionStringConfiguration(configuration)
     .AddLogging()
     .AddApplicationServices()
     .AddAutoMapper();
-    
+
 var serviceProvider = services.BuildServiceProvider();
 
 serviceProvider.GetService<PharmacyDbContext>().Database.EnsureCreated();

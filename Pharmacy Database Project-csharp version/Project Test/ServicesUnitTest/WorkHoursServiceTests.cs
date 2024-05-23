@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using AutoFixture;
+using AutoFixture.AutoMoq;
 using Domain.Models;
 using Domain.Repositories.Interface;
 using Domain.Services.Implementations;
@@ -9,21 +10,22 @@ namespace Project_Test.ServicesUnitTest;
 
 public class WorkHoursServiceTests
 {
+    private readonly IFixture _fixture;
     private readonly Mock<IRepository<WorkHoursDomain, int>> _mockRepository;
-    private readonly WorkHoursService _workHoursService;
-    private readonly Fixture _fixture;
     private readonly List<WorkHoursDomain> _workHoursBatch;
+    private readonly WorkHoursService _workHoursService;
 
     public WorkHoursServiceTests()
     {
-        _mockRepository = new Mock<IRepository<WorkHoursDomain, int>>();
-        _workHoursService = new WorkHoursService(_mockRepository.Object);
-        _fixture = new Fixture();
-        
-        int employeeId = 1;
-        int month = 5;
-        int year = 2023;
-        
+        _fixture = new Fixture().Customize(new AutoMoqCustomization());
+
+        _mockRepository = _fixture.Freeze<Mock<IRepository<WorkHoursDomain, int>>>();
+        _workHoursService = _fixture.Create<WorkHoursService>();
+
+        var employeeId = 1;
+        var month = 5;
+        var year = 2023;
+
         _workHoursBatch = _fixture.Build<WorkHoursDomain>()
             .With(wh => wh.EmployeeId, employeeId)
             .With(wh => wh.WorkedMonth, month)
@@ -40,9 +42,9 @@ public class WorkHoursServiceTests
     [Fact]
     public async Task CalculateMonthlyWagesAsync_ReturnsCorrectSum()
     {
-        int employeeId = 1;
-        int month = 5;
-        int year = 2023;
+        var employeeId = 1;
+        var month = 5;
+        var year = 2023;
 
         var wages = await _workHoursService.CalculateMonthlyWagesAsync(employeeId, month, year);
 
@@ -53,8 +55,8 @@ public class WorkHoursServiceTests
     [Fact]
     public async Task GenerateMonthlyWorkReportsAsync_ReturnsAllRecordsForMonthAndYear()
     {
-        int month = 5; 
-        int year = 2023;
+        var month = 5;
+        var year = 2023;
 
         var reports = await _workHoursService.GenerateMonthlyWorkReportsAsync(month, year);
 

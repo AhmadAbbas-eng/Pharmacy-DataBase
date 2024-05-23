@@ -1,4 +1,5 @@
 namespace Domain.Models;
+
 public class SupplierPaymentDomain
 {
     public int SupplierId { get; set; }

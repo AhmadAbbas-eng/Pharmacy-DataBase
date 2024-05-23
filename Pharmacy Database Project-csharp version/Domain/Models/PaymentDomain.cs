@@ -1,4 +1,5 @@
 namespace Domain.Models;
+
 public class PaymentDomain
 {
     public int PaymentId { get; set; }

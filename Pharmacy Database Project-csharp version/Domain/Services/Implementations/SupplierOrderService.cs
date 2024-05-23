@@ -1,5 +1,4 @@
-﻿using Domain.Models;
-using Domain.Repositories.Interface;
+﻿using Domain.Repositories.Interface;
 using Domain.Services.Interfaces;
 
 namespace Domain.Services.Implementations;
@@ -19,7 +18,7 @@ public class SupplierOrderService : ISupplierOrderService
         if (order is null) throw new ArgumentException("Order not found.");
 
         var discountAmount = order.OrderCost * (order.OrderDiscount / 100);
-        var result =  order.OrderCost - discountAmount;
+        var result = order.OrderCost - discountAmount;
         return result;
     }
 }

@@ -6,7 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository;
 
-public class NameManufacturerRepository : Repository<NameManufacturer, NameManufacturerDomain, int>, INameManufacturerRepository
+public class NameManufacturerRepository : Repository<NameManufacturer, NameManufacturerDomain, int>,
+    INameManufacturerRepository
 {
     private readonly PharmacyDbContext _context;
     private readonly IMapper _mapper;

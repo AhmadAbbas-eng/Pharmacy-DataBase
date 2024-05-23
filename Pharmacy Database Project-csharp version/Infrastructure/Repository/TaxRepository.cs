@@ -15,5 +15,4 @@ public class TaxRepository : Repository<Tax, TaxDomain, string>, ITaxRepository
         _context = context;
         _mapper = mapper;
     }
-
 }

@@ -1,4 +1,5 @@
 namespace Domain.Models;
+
 public class BatchDomain
 {
     public int BatchId { get; set; }

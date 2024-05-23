@@ -1,4 +1,5 @@
 namespace Domain.Models;
+
 public class ChequeDomain
 {
     public int ChequeId { get; set; }

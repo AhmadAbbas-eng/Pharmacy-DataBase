@@ -1,5 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
-
 namespace Pharmacy.Configuration;
 
 public class PharmacyDbConnectionStringProvider : IPharmacyDbConnectionStringProvider

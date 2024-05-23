@@ -4,8 +4,7 @@ namespace Infrastructure.Entities;
 
 public class Product
 {
-    [Key] 
-    public int ProductId { get; set; }
+    [Key] public int ProductId { get; set; }
 
     [Required(ErrorMessage = "The Name cannot be empty or null")]
     [StringLength(100, MinimumLength = 2, ErrorMessage = "Name must be between 2 and 100 characters.")]

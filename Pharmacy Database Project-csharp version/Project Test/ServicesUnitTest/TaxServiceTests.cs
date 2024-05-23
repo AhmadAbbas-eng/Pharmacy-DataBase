@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using AutoFixture;
+using AutoFixture.AutoMoq;
 using Domain.Models;
 using Domain.Repositories.Interface;
 using Domain.Services.Implementations;
@@ -9,16 +10,16 @@ namespace Project_Test.ServicesUnitTest;
 
 public class TaxServiceTests
 {
+    private readonly IFixture _fixture;
     private readonly Mock<IRepository<TaxDomain, string>> _mockRepository;
-    private readonly TaxService _taxService;
     private readonly List<TaxDomain> _taxesBatch;
-    private readonly Fixture _fixture;
+    private readonly TaxService _taxService;
 
     public TaxServiceTests()
     {
-        _mockRepository = new Mock<IRepository<TaxDomain, string>>();
-        _taxService = new TaxService(_mockRepository.Object);
-        _fixture = new Fixture();
+        _fixture = new Fixture().Customize(new AutoMoqCustomization());
+        _mockRepository = _fixture.Freeze<Mock<IRepository<TaxDomain, string>>>();
+        _taxService = _fixture.Create<TaxService>();
 
         _taxesBatch = _fixture.Build<TaxDomain>()
             .With(t => t.TaxDate, _fixture.Create<DateTime>())
@@ -33,12 +34,12 @@ public class TaxServiceTests
     [Fact]
     public async Task CalculateTaxForPeriodAsync_ReturnsCorrectSum()
     {
-        DateTime startDate = _taxesBatch.Min(t => t.TaxDate);
-        DateTime endDate = _taxesBatch.Max(t => t.TaxDate);
+        var startDate = _taxesBatch.Min(t => t.TaxDate);
+        var endDate = _taxesBatch.Max(t => t.TaxDate);
 
         var calculatedTax = await _taxService.CalculateTaxForPeriodAsync(startDate, endDate);
 
         var expectedSum = _taxesBatch.Sum(t => t.TaxValue);
-        Assert.Equal(expectedSum, calculatedTax, precision: 2);
+        Assert.Equal(expectedSum, calculatedTax, 2);
     }
 }

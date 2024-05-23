@@ -38,7 +38,7 @@ public class PharmacyDbContext : DbContext
     public DbSet<SupplierPhone> SupplierPhones { get; set; }
     public DbSet<TaxesPayment> TaxesPayments { get; set; }
 
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<NameManufacturer>(

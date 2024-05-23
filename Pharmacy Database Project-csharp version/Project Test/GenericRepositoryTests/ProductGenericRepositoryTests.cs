@@ -13,21 +13,21 @@ public class ProductGenericRepositoryTests : BaseGenericRepositoryTests<Pharmacy
     }
 
     [Fact]
-    public void FindProducts_ReturnsCorrectProducts()
+    public async Task FindProducts_ReturnsCorrectProducts()
     {
         var product = CreateDomainModel();
-        _repository.Add(product);
-        _repository.Save();
+        await _repository.AddAsync(product);
+        await _repository.SaveAsync();
 
-        var foundProducts = _repository.Find(p => p.Name == product.Name);
+        var foundProducts = await _repository.FindAsync(p => p.Name == product.Name);
 
         Assert.Contains(foundProducts, p => p.Name == product.Name);
     }
 
     [Fact]
-    public void FindProducts_ReturnsEmpty_WhenPredicateDoesNotMatch()
+    public async Task FindProducts_ReturnsEmpty_WhenPredicateDoesNotMatch()
     {
-        var foundProducts = _repository.Find(p => p.Name == "NonExistentName");
+        var foundProducts = await _repository.FindAsync(p => p.Name == "NonExistentName");
 
         Assert.Empty(foundProducts);
     }

@@ -4,7 +4,6 @@ using AutoMapper;
 using Domain.Repositories.Interface;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace Project_Test.GenericRepositoryUnitTests;
 
@@ -15,33 +14,34 @@ public abstract class BaseGenericRepositoryTests<TContext, TDbModel, TModel, TId
 {
     private readonly Fixture _fixture;
     private readonly DbContextOptions<TContext> _options;
-    protected TContext _context { get; }
-    protected IRepository<TModel, TId> _repository { get; set; }
-    protected IMapper _mapper { get; }
-    
+
     public BaseGenericRepositoryTests()
     {
         _options = new DbContextOptionsBuilder<TContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString())
-            .LogTo(Console.WriteLine, LogLevel.Debug)
+            .LogTo(Console.WriteLine)
             .EnableSensitiveDataLogging()
             .Options;
 
         _context = (TContext)Activator.CreateInstance(typeof(TContext), _options);
         _context.Database.EnsureCreated();
-        
+
         var mockMapperConfig = new MapperConfiguration(cfg =>
         {
             cfg.CreateMap<TDbModel, TModel>();
             cfg.CreateMap<TModel, TDbModel>();
         });
-        
-  
+
+
         _mapper = mockMapperConfig.CreateMapper();
         _fixture = new Fixture();
     }
 
-    
+    protected TContext _context { get; }
+    protected IRepository<TModel, TId> _repository { get; set; }
+    protected IMapper _mapper { get; }
+
+
     protected TModel CreateDomainModel()
     {
         var domain = _fixture.Build<TModel>()
@@ -65,13 +65,13 @@ public abstract class BaseGenericRepositoryTests<TContext, TDbModel, TModel, TId
     }
 
     [Fact]
-    public void Add_AddsToDatabase()
+    public async Task Add_AddsToDatabase()
     {
         var domainModel = CreateDomainModel();
         var dbModel = _mapper.Map<TDbModel>(domainModel);
 
-        var id = _repository.Add(domainModel);
-        _repository.Save();
+        var id = await _repository.AddAsync(domainModel);
+        await _repository.SaveAsync();
 
         var entityDb = _context.Entry(dbModel);
         Assert.NotNull(entityDb);
@@ -81,31 +81,31 @@ public abstract class BaseGenericRepositoryTests<TContext, TDbModel, TModel, TId
     }
 
     [Fact]
-    public void AddEntity_ReturnsCorrectId()
+    public async Task AddEntity_ReturnsCorrectId()
     {
         var domainModel = CreateDomainModel();
 
-        var addedEntityId = _repository.Add(domainModel);
-        _repository.Save();
+        var addedEntityId = await _repository.AddAsync(domainModel);
+        await _repository.SaveAsync();
 
         Assert.NotEqual(default, addedEntityId);
     }
 
     [Fact]
-    public void AddEntity_ThrowsException_WhenNull()
+    public async Task AddEntity_ThrowsException_WhenNull()
     {
-        Assert.Throws<ArgumentNullException>(() => _repository.Add(null));
+        await Assert.ThrowsAsync<ArgumentNullException>(() => _repository.AddAsync(null));
     }
 
     [Fact]
-    public void GetEntityById_ReturnsNull_WhenInvalidId()
+    public async Task GetEntityById_ReturnsNull_WhenInvalidId()
     {
-        var model = _repository.GetById(default);
+        var model = await _repository.GetByIdAsync(default);
         Assert.Null(model);
     }
 
     [Fact]
-    public void GetAllEntities_ReturnsAllEntities()
+    public async Task GetAllEntities_ReturnsAllEntities()
     {
         var numberOfEntities = 5;
         var generatedEntities = new TModel[numberOfEntities];
@@ -118,15 +118,15 @@ public abstract class BaseGenericRepositoryTests<TContext, TDbModel, TModel, TId
             var idProperty = entityType.GetProperties()
                 .FirstOrDefault(prop => prop.CustomAttributes.Any(attr => attr.AttributeType == typeof(KeyAttribute)));
 
-            var id = _repository.Add(generatedEntities[i]);
+            var id = await _repository.AddAsync(generatedEntities[i]);
 
             if (idProperty != null && typeof(TId).IsAssignableFrom(idProperty.PropertyType))
                 idProperty.SetValue(generatedEntities[i], id);
         }
 
-        _repository.Save();
+        await _repository.SaveAsync();
 
-        var entities = _repository.GetAll();
+        var entities = await _repository.GetAllAsync();
 
         Assert.NotEmpty(entities);
         Assert.Equal(numberOfEntities, entities.Count());
@@ -134,68 +134,68 @@ public abstract class BaseGenericRepositoryTests<TContext, TDbModel, TModel, TId
     }
 
     [Fact]
-    public void GetAllEntities_ReturnsEmpty_WhenNoEntities()
+    public async Task GetAllEntities_ReturnsEmpty_WhenNoEntities()
     {
-        var entities = _repository.GetAll();
+        var entities = await _repository.GetAllAsync();
 
         Assert.Empty(entities);
     }
 
     [Fact]
-    public void UpdateEntity_UpdatesExistingEntity()
+    public async Task UpdateEntity_UpdatesExistingEntity()
     {
         var domainModel = CreateDomainModel();
-        var addedProductId = _repository.Add(domainModel);
-        _repository.Save();
+        var addedProductId = await _repository.AddAsync(domainModel);
+        await _repository.SaveAsync();
 
-        var updatedProduct = _repository.GetById(addedProductId);
+        var updatedProduct = await _repository.GetByIdAsync(addedProductId);
         var newDomainModel = CreateDomainModel();
         var entityType = typeof(TModel);
         var idProperty = entityType.GetProperties()
             .FirstOrDefault(prop => prop.CustomAttributes.Any(attr => attr.AttributeType == typeof(KeyAttribute)));
 
-        foreach (var property in entityType.GetProperties())
-            if (!property.Equals(idProperty))
-                property.SetValue(updatedProduct, property.GetValue(newDomainModel));
+        foreach (var property in entityType.GetProperties().Where(property => !property.Equals(idProperty)))
+            property.SetValue(updatedProduct, property.GetValue(newDomainModel));
 
         _repository.Update(updatedProduct);
-        _repository.Save();
+        await _repository.SaveAsync();
 
-        var productInDb = _repository.GetById(addedProductId);
+        var productInDb = await _repository.GetByIdAsync(addedProductId);
 
         updatedProduct.Should().BeEquivalentTo(productInDb, options => options.ExcludingMissingMembers());
     }
 
     [Fact]
-    public void UpdateEntity_UpdatesShouldThroughException()
+    public async Task UpdateEntity_UpdatesShouldThroughException()
     {
-        Assert.Throws<ArgumentException>(() =>
+        await Assert.ThrowsAsync<ArgumentException>(() =>
         {
             var domainModel = CreateDomainModel();
             _repository.Update(domainModel);
-            _repository.Save();
+            return _repository.SaveAsync();
         });
     }
 
     [Fact]
-    public void DeleteEntity_RemovesEntity()
+    public async Task DeleteEntity_RemovesEntity()
     {
         var product = _fixture.Create<TModel>();
-        var addedProduct = _repository.Add(product);
-        _repository.Save();
+        var addedProduct = await _repository.AddAsync(product);
+        await _repository.SaveAsync();
 
-        _repository.Delete(product);
-        _repository.Save();
+        await _repository.DeleteAsync(addedProduct);
+        await _repository.SaveAsync();
 
-        var foundProduct = _repository.GetById(addedProduct);
+        var foundProduct = await _repository.GetByIdAsync(addedProduct);
         Assert.Null(foundProduct);
     }
 
     [Fact]
-    public void DeleteEntity_ThrowsException_WhenEntityDoesNotExist()
+    public async Task DeleteEntity_ThrowsException_WhenEntityDoesNotExist()
     {
         var product = CreateDomainModel();
+        var id = _fixture.Create<TId>();
 
-        Assert.Throws<ArgumentException>(() => _repository.Delete(product));
+        await Assert.ThrowsAsync<ArgumentException>(() => _repository.DeleteAsync(id));
     }
 }

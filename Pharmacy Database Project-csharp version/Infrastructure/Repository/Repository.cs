@@ -24,13 +24,10 @@ public class Repository<TDbModel, TModel, TId> : IRepository<TModel, TId>
 
     public async Task<TModel> GetByIdAsync(TId id, params Expression<Func<TModel, object>>[] includeProperties)
     {
-        IQueryable<TDbModel> query = _dbSet;
-
-        foreach (var includeProperty in includeProperties)
-        {
-            var includeExpression = MapperExtensions.Convert<TModel, TDbModel>(includeProperty);
-            query = query.Include(includeExpression);
-        }
+        var query = includeProperties
+            .Select(includeProperty => MapperExtensions.Convert<TModel, TDbModel>(includeProperty))
+            .Aggregate<Expression<Func<TDbModel, object>>?, IQueryable<TDbModel>>(_dbSet,
+                (current, includeExpression) => current.Include(includeExpression));
 
         var entityType = typeof(TDbModel);
 
@@ -48,13 +45,13 @@ public class Repository<TDbModel, TModel, TId> : IRepository<TModel, TId>
         var result = await query.FirstOrDefaultAsync(lambda);
         return _mapper.Map<TModel>(result);
     }
-    
+
     public async Task<IEnumerable<TModel>> GetAllAsync()
     {
         var result = await _dbSet.ToListAsync();
         return _mapper.Map<List<TModel>>(result);
     }
-    
+
     public async Task<TId> AddAsync(TModel entity)
     {
         if (entity is null) throw new ArgumentNullException("entity", "Entity Must Not be Null");
@@ -76,7 +73,7 @@ public class Repository<TDbModel, TModel, TId> : IRepository<TModel, TId>
         await _dbSet.AddRangeAsync(entities);
         await _context.SaveChangesAsync();
     }
-    
+
     public void Update(TModel entity)
     {
         var predicates = BuildPredicatesForNonNullProperties(entity);
@@ -104,7 +101,7 @@ public class Repository<TDbModel, TModel, TId> : IRepository<TModel, TId>
 
     public async Task DeleteAsync(TId id)
     {
-        TDbModel dbModel = await _dbSet.FindAsync(id);
+        var dbModel = await _dbSet.FindAsync(id);
         _dbSet.Remove(dbModel);
     }
 
@@ -121,7 +118,7 @@ public class Repository<TDbModel, TModel, TId> : IRepository<TModel, TId>
         var result = await query.ToListAsync();
         return _mapper.Map<List<TModel>>(result);
     }
-    
+
     public async Task SaveAsync()
     {
         await _context.SaveChangesAsync();

@@ -1,4 +1,5 @@
 namespace Domain.Models;
+
 public class TaxDomain
 {
     public string TaxId { get; set; }

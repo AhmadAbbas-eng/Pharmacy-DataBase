@@ -1,7 +1,4 @@
-﻿using System.Diagnostics;
-using System.Reflection;
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
+﻿using System.Reflection;
 using AutoMapper;
 using AutoMapper.Extensions.ExpressionMapping;
 using Domain.Models;
@@ -14,7 +11,6 @@ using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Pharmacy.Configuration;
 
@@ -22,7 +18,6 @@ namespace Console_Application;
 
 public static class ServiceConfiguration
 {
-
     public static IServiceCollection AddConnectionStringConfiguration(this IServiceCollection services,
         IConfiguration configuration)
     {
@@ -30,14 +25,13 @@ public static class ServiceConfiguration
         configuration.GetSection("ApplicationConfiguration").Bind(config);
 
         if (config.DbConnection is null || string.IsNullOrEmpty(config.DbConnection.ConnectionString))
-        {
             throw new InvalidOperationException("Database configuration is not properly loaded.");
-        }
 
-        services.AddSingleton<IPharmacyDbConnectionStringProvider>(provider => new PharmacyDbConnectionStringProvider(config));
+        services.AddSingleton<IPharmacyDbConnectionStringProvider>(provider =>
+            new PharmacyDbConnectionStringProvider(config));
         return services;
     }
-    
+
     public static IServiceCollection AddDatabaseConfiguration(this IServiceCollection services)
     {
         services.AddDbContext<PharmacyDbContext>((serviceProvider, options) =>
@@ -56,7 +50,7 @@ public static class ServiceConfiguration
         services.AddLogging(configure => configure.AddConsole());
         return services;
     }
-    
+
     public static IServiceCollection AddApplicationServices(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddScoped<IRepository<SupplierDomain, int>, Repository<Supplier, SupplierDomain, int>>();
@@ -73,7 +67,6 @@ public static class ServiceConfiguration
 
     public static IServiceCollection AddAutoMapper(this IServiceCollection serviceCollection)
     {
-        
         var config = new MapperConfiguration(cfg =>
         {
             cfg.AddExpressionMapping();
@@ -82,7 +75,7 @@ public static class ServiceConfiguration
             var entityTypes = entityAssembly.GetTypes()
                 .Where(t => t.Namespace == "Infrastructure.Entities");
 
-            var modelAssembly = Assembly.GetAssembly(typeof(BaseModelDomain)); 
+            var modelAssembly = Assembly.GetAssembly(typeof(BaseModelDomain));
             var modelTypes = modelAssembly.GetTypes()
                 .Where(t => t.Namespace == "Domain.Models");
 
@@ -104,4 +97,3 @@ public static class ServiceConfiguration
         return serviceCollection;
     }
 }
-

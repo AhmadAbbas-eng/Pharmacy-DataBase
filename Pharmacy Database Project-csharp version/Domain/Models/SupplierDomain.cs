@@ -1,4 +1,5 @@
 namespace Domain.Models;
+
 public class SupplierDomain
 {
     public int SupplierId { get; set; }

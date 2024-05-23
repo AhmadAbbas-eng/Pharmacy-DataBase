@@ -4,14 +4,11 @@ namespace Infrastructure.Entities;
 
 public class Income
 {
-    [Key] 
-    public int IncomeId { get; set; }
+    [Key] public int IncomeId { get; set; }
 
-    [Required] 
-    public int Amount { get; set; }
+    [Required] public int Amount { get; set; }
 
-    [Required] 
-    public DateTime IncomeDate { get; set; }
+    [Required] public DateTime IncomeDate { get; set; }
 
     public int EmployeeId { get; set; }
     public virtual Employee Employee { get; set; }
