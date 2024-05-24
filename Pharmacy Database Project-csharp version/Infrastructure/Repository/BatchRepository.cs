@@ -1,17 +1,16 @@
 using AutoMapper;
 using Domain.Models;
 using Domain.Repositories.Interface;
-using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository;
 
-public class BatchRepository : Repository<Batch, BatchDomain, int>, IBatchRepository
+public class BatchRepository : IBatchRepository
 {
     private readonly PharmacyDbContext _context;
     private readonly IMapper _mapper;
 
-    public BatchRepository(PharmacyDbContext context, IMapper mapper) : base(context, mapper)
+    public BatchRepository(PharmacyDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;

@@ -14,7 +14,7 @@ public class SupplierOrderService : ISupplierOrderService
 
     public async Task<float> CalculateOrderTotalAfterDiscount(int orderId)
     {
-        var order = await _orderRepository.GetByIdAsync(orderId);
+        var order = await _orderRepository.GetByOrderIdAsync(orderId);
         if (order is null) throw new ArgumentException("Order not found.");
 
         var discountAmount = order.OrderCost * (order.OrderDiscount / 100);

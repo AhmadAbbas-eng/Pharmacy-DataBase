@@ -2,6 +2,7 @@ using Domain.Models;
 
 namespace Domain.Repositories.Interface;
 
-public interface ISupplierOrderRepository : IRepository<SupplierOrderDomain, int>
+public interface ISupplierOrderRepository
 {
+    Task<SupplierOrderDomain> GetByOrderIdAsync(int orderId);
 }

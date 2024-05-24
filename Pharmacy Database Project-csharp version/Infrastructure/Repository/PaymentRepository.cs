@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository;
 
-public class PaymentRepository : Repository<Payment, PaymentDomain, int>, IPaymentRepository
+public class PaymentRepository : IPaymentRepository
 {
     private readonly PharmacyDbContext _context;
     private readonly IMapper _mapper;
 
-    public PaymentRepository(PharmacyDbContext context, IMapper mapper) : base(context, mapper)
+    public PaymentRepository(PharmacyDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;

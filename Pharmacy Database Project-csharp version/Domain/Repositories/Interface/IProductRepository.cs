@@ -2,7 +2,7 @@
 
 namespace Domain.Repositories.Interface;
 
-public interface IProductRepository : IRepository<ProductDomain, int>
+public interface IProductRepository
 {
     Task<int> GetTotalAmountByIdAsync(int id);
     Task<List<ProductDomain>> GetOutOfStockAsync();

@@ -14,7 +14,7 @@ public class TaxService : ITaxService
 
     public async Task<double> CalculateTaxForPeriodAsync(DateTime startDate, DateTime endDate)
     {
-        var taxes = await _taxRepository.FindAsync(t => t.TaxDate >= startDate && t.TaxDate <= endDate);
-        return taxes.Sum(t => t.TaxValue);
+        var taxes = await _taxRepository.FindByStartAndEndDateAsync(startDate, endDate);
+        return taxes.Sum(x => x.TaxValue);
     }
 }

@@ -2,7 +2,7 @@ using Domain.Models;
 
 namespace Domain.Repositories.Interface;
 
-public interface ICustomerRepository : IRepository<CustomerDomain, int>
+public interface ICustomerRepository
 {
     Task<double> CalculateTotalDebtByIdAsync(string id);
     Task<IEnumerable<CustomerDomain>> FindWithOrdersAsync();

@@ -2,7 +2,7 @@ using Domain.Models;
 
 namespace Domain.Repositories.Interface;
 
-public interface IBatchRepository : IRepository<BatchDomain, int>
+public interface IBatchRepository
 {
     Task<IEnumerable<BatchLifetime>> CalculateLifetimeAsync();
     Task<IEnumerable<BatchDomain>> FindByProductionDateRangeAsync(DateTime startDate, DateTime endDate);

@@ -1,14 +1,10 @@
 ﻿using System.Reflection;
 using AutoMapper;
-using AutoMapper.Extensions.ExpressionMapping;
 using Domain.Services.Implementations;
 using Domain.Services.Interfaces;
 using Infrastructure;
 using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Pharmacy.Configuration;
 
 namespace Console_Application;
@@ -59,7 +55,7 @@ public static class ServiceConfiguration
     {
         var config = new MapperConfiguration(cfg =>
         {
-            cfg.AddExpressionMapping();
+            // cfg.AddExpressionMapping();
 
             var entityAssembly = Assembly.GetAssembly(typeof(BaseModel));
             var entityTypes = entityAssembly.GetTypes()

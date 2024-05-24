@@ -2,7 +2,7 @@ using Domain.Models;
 
 namespace Domain.Repositories.Interface;
 
-public interface IDrugRepository : IRepository<DrugDomain, int>
+public interface IDrugRepository
 {
     Task<IEnumerable<DrugDomain>> FindByRiskCategoryAsync(char riskCategory);
 }

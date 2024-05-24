@@ -1,8 +1,6 @@
-﻿using Domain.Models;
+﻿namespace Domain.Repositories.Interface;
 
-namespace Domain.Repositories.Interface;
-
-public interface INameManufacturerRepository : IRepository<NameManufacturerDomain, int>
+public interface INameManufacturerRepository
 {
     Task<IEnumerable<string>> GetDistinctAsync();
     Task UpdateAsync(string oldName, string newName);
