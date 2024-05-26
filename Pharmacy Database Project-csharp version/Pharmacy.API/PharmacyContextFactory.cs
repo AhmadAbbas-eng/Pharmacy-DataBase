@@ -1,9 +1,9 @@
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Pharmacy.Configuration;
+using Pharmacy.API.Configuration.Models;
 
-namespace Console_Application;
+namespace Pharmacy.API;
 
 public class PharmacyContextFactory : IDesignTimeDbContextFactory<PharmacyDbContext>
 {

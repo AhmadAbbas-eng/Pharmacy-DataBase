@@ -5,9 +5,9 @@ using Domain.Services.Interfaces;
 using Infrastructure;
 using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
-using Pharmacy.Configuration;
+using Pharmacy.API.Configuration.Models;
 
-namespace Console_Application;
+namespace Pharmacy.API;
 
 public static class ServiceConfiguration
 {

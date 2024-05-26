@@ -1,8 +1,7 @@
-using Console_Application;
 using Infrastructure;
+using Pharmacy.API;
 
 var services = new ServiceCollection();
-
 
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())

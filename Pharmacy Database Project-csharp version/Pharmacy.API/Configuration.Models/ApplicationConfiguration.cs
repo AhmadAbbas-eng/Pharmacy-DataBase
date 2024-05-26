@@ -1,6 +1,6 @@
-namespace Pharmacy.Configuration;
+namespace Pharmacy.API.Configuration.Models;
 
 public class ApplicationConfiguration
 {
-    public DBConnection DbConnection { get; set; }
+    public DbConnection DbConnection { get; set; }
 }

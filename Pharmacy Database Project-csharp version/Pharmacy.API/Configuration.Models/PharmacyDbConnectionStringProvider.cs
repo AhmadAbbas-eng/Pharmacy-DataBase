@@ -1,4 +1,4 @@
-namespace Pharmacy.Configuration;
+namespace Pharmacy.API.Configuration.Models;
 
 public class PharmacyDbConnectionStringProvider : IPharmacyDbConnectionStringProvider
 {
