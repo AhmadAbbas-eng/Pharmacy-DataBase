@@ -11,7 +11,7 @@ public class Drug : Product
     [Required]
     [StringLength(2)]
     [RegularExpression("A|B|C")]
-    public string DrugRiskPregnancyCategory { get; set; }
+    public char DrugRiskPregnancyCategory { get; set; }
 
     [StringLength(64)] public string? DrugDosage { get; set; }
 

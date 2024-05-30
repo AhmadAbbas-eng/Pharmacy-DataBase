@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Riok.Mapperly" Version="3.6.0-next.1" />
+    </ItemGroup>
+
 </Project>

@@ -1,7 +1,6 @@
-﻿using AutoMapper;
-using Domain.Models;
+﻿using Domain.Models;
 using Domain.Repositories.Interface;
-using Infrastructure.Entities;
+using Infrastructure.Mappers;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository;
@@ -9,9 +8,9 @@ namespace Infrastructure.Repository;
 public class PaymentRepository : IPaymentRepository
 {
     private readonly PharmacyDbContext _context;
-    private readonly IMapper _mapper;
+    private readonly PaymentMapper _mapper;
 
-    public PaymentRepository(PharmacyDbContext context, IMapper mapper)
+    public PaymentRepository(PharmacyDbContext context, PaymentMapper mapper)
     {
         _context = context;
         _mapper = mapper;
@@ -26,15 +25,54 @@ public class PaymentRepository : IPaymentRepository
             .Where(o => o.DueDateForPayment <= thirtyDaysFromNow)
             .ToListAsync();
 
-        var pendingPayment = _mapper.Map<List<PendingPayment>>(pendingPayments);
-
-        return pendingPayment;
+        return pendingPayments.Select(o => _mapper.MapToPendingPayment(o));
     }
 
     public async Task AddAllBatchesAsync(IEnumerable<BatchDomain> batches)
     {
-        var entities = batches.Select(model => _mapper.Map<Batch>(model));
+        var entities = batches.Select(b => _mapper.MapToEntity(b));
         await _context.Batches.AddRangeAsync(entities);
         await _context.SaveChangesAsync();
+    }
+
+    public async Task<IEnumerable<PaymentDomain>> GetAllAsync()
+    {
+        var payments = await _context.Payments.ToListAsync();
+        return payments.Select(p => _mapper.MapToDomain(p));
+    }
+
+    public async Task<PaymentDomain?> GetByIdAsync(int id)
+    {
+        var payment = await _context.Payments.FindAsync(id);
+        return payment == null ? null : _mapper.MapToDomain(payment);
+    }
+
+    public async Task<PaymentDomain> AddAsync(PaymentDomain payment)
+    {
+        var entity = _mapper.MapToEntity(payment);
+        _context.Payments.Add(entity);
+        await _context.SaveChangesAsync();
+        return _mapper.MapToDomain(entity);
+    }
+
+    public async Task<PaymentDomain?> UpdateAsync(PaymentDomain payment)
+    {
+        var entity = await _context.Payments.FindAsync(payment.PaymentId);
+        if (entity == null) return null;
+
+        _mapper.MapToEntity(payment, entity);
+        _context.Payments.Update(entity);
+        await _context.SaveChangesAsync();
+        return _mapper.MapToDomain(entity);
+    }
+
+    public async Task<bool> DeleteAsync(int id)
+    {
+        var entity = await _context.Payments.FindAsync(id);
+        if (entity == null) return false;
+
+        _context.Payments.Remove(entity);
+        await _context.SaveChangesAsync();
+        return true;
     }
 }

@@ -2,6 +2,7 @@ namespace Domain.Models;
 
 public class WorkHoursDomain
 {
+    public int Id { get; set; }
     public int EmployeeId { get; set; }
     public int WorkedMonth { get; set; }
     public int WorkedYear { get; set; }

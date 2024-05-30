@@ -4,9 +4,12 @@ namespace Infrastructure.Entities;
 
 public class WorkHours
 {
-    [Key] public int EmployeeId { get; set; }
+    [Key]
+    public int Id { get; set; }
 
-    [Key] [Range(1, 12)] public int WorkedMonth { get; set; }
+    public int EmployeeId { get; set; }
+
+    [Range(1, 12)] public int WorkedMonth { get; set; }
 
     [Key] [Range(2000, int.MaxValue)] public int WorkedYear { get; set; }
 
