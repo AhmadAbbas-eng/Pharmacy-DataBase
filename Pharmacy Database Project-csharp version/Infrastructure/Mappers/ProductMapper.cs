@@ -5,7 +5,7 @@ using Riok.Mapperly.Abstractions;
 namespace Infrastructure.Mappers;
 
 [Mapper]
-public partial class ProductMapper
+public abstract partial class ProductMapper
 {
     public partial ProductDomain MapToDomain(Product product);
 

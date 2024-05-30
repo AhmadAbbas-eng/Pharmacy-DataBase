@@ -5,7 +5,7 @@ using Riok.Mapperly.Abstractions;
 namespace Infrastructure.Mappers;
 
 [Mapper]
-public partial class DrugMapper
+public abstract partial class DrugMapper
 {
     public partial DrugDomain MapToDomain(Drug drug);
 

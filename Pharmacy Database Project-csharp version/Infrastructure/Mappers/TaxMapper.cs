@@ -5,7 +5,7 @@ using Riok.Mapperly.Abstractions;
 namespace Infrastructure.Mappers;
 
 [Mapper]
-public partial class TaxMapper
+public abstract partial class TaxMapper
 {
     public partial TaxDomain MapToDomain(Tax tax);
 

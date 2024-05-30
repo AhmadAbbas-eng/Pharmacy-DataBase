@@ -5,7 +5,7 @@ using Riok.Mapperly.Abstractions;
 namespace Infrastructure.Mappers;
 
 [Mapper]
-public partial class BatchMapper
+public abstract partial class BatchMapper
 {
     public partial BatchDomain MapToDomain(Batch batch);
 

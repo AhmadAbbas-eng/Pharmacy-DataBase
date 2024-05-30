@@ -5,7 +5,7 @@ using Riok.Mapperly.Abstractions;
 namespace Infrastructure.Mappers;
 
 [Mapper]
-public partial class WorkHoursMapper
+public abstract partial class WorkHoursMapper
 {
     public partial WorkHoursDomain MapToDomain(WorkHours workHours);
 

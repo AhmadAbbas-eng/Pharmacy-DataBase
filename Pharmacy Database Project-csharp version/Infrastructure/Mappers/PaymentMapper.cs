@@ -5,7 +5,7 @@ using Riok.Mapperly.Abstractions;
 namespace Infrastructure.Mappers;
 
 [Mapper]
-public partial class PaymentMapper
+public abstract partial class PaymentMapper
 {
     public partial PaymentDomain MapToDomain(Payment payment);
 

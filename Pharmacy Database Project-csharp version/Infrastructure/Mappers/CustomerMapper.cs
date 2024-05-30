@@ -5,7 +5,7 @@ using Riok.Mapperly.Abstractions;
 namespace Infrastructure.Mappers;
 
 [Mapper]
-public partial class CustomerMapper
+public abstract partial class CustomerMapper
 {
     public partial CustomerDomain MapToDomain(Customer customer);
 
