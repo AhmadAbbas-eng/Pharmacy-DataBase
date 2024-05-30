@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Infrastructure.Entities;
+namespace Infrastructure.Models;
 
 public class Supplier
 {

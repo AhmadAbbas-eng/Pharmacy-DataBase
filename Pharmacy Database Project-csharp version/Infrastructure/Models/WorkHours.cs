@@ -1,11 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Infrastructure.Entities;
+namespace Infrastructure.Models;
 
 public class WorkHours
 {
-    [Key]
-    public int Id { get; set; }
+    [Key] public int Id { get; set; }
 
     public int EmployeeId { get; set; }
 

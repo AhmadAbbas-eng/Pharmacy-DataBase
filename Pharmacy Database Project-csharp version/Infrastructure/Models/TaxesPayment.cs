@@ -1,4 +1,4 @@
-namespace Infrastructure.Entities;
+namespace Infrastructure.Models;
 
 public class TaxesPayment
 {

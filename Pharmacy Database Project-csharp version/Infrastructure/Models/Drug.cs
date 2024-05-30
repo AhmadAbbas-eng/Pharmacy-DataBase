@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Infrastructure.Entities;
+namespace Infrastructure.Models;
 
 public class Drug : Product
 {

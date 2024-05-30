@@ -11,9 +11,7 @@ var configuration = new ConfigurationBuilder()
 services.AddConnectionStringConfiguration(configuration)
     .AddDatabaseConfiguration()
     .AddLogging()
-    .AddApplicationServices()
-    .AddAutoMapper();
-
+    .AddApplicationServices();
 var serviceProvider = services.BuildServiceProvider();
 
 serviceProvider.GetService<PharmacyDbContext>().Database.EnsureCreated();

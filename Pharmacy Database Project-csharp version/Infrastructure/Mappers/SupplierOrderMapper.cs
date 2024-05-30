@@ -1,5 +1,5 @@
 using Domain.Models;
-using Infrastructure.Entities;
+using Infrastructure.Models;
 using Riok.Mapperly.Abstractions;
 
 namespace Infrastructure.Mappers;
