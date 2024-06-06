@@ -2,7 +2,7 @@ namespace Domain.Models;
 
 public class SupplierOrderDomain
 {
-    public int OrderId { get; set; }
+    public int Id { get; set; }
     public DateTime DateOfOrder { get; set; }
     public float OrderCost { get; set; }
     public float OrderDiscount { get; set; }

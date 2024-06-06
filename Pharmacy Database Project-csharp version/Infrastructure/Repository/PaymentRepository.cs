@@ -57,7 +57,7 @@ public class PaymentRepository : IPaymentRepository
 
     public async Task<PaymentDomain?> UpdateAsync(PaymentDomain payment)
     {
-        var entity = await _context.Payments.FindAsync(payment.PaymentId);
+        var entity = await _context.Payments.FindAsync(payment.Id);
         if (entity == null) return null;
 
         _mapper.MapToEntity(payment, entity);

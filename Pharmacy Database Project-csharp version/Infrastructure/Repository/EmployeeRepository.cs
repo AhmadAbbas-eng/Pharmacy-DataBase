@@ -58,7 +58,7 @@ public class EmployeeRepository : IEmployeeRepository
 
     public async Task<EmployeeDomain?> UpdateAsync(EmployeeDomain employee)
     {
-        var entity = await _context.Employees.FindAsync(employee.EmployeeId);
+        var entity = await _context.Employees.FindAsync(employee.Id);
         if (entity == null) return null;
 
         _mapper.MapToEntity(employee, entity);

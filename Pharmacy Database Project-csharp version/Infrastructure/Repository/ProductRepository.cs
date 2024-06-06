@@ -59,7 +59,7 @@ public class ProductRepository : IProductRepository
 
     public async Task<ProductDomain?> UpdateAsync(ProductDomain product)
     {
-        var entity = await _context.Products.FindAsync(product.ProductId);
+        var entity = await _context.Products.FindAsync(product.Id);
         if (entity == null) return null;
 
         _mapper.MapToEntity(product, entity);

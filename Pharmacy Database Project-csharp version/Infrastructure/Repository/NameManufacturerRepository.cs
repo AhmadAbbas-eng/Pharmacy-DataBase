@@ -56,7 +56,7 @@ public class NameManufacturerRepository : INameManufacturerRepository
 
     public async Task<NameManufacturerDomain?> UpdateAsync(NameManufacturerDomain nameManufacturer)
     {
-        var entity = await _context.NameMenus.FindAsync(nameManufacturer.ProductId);
+        var entity = await _context.NameMenus.FindAsync(nameManufacturer.Id);
         if (entity == null) return null;
 
         _mapper.MapToEntity(nameManufacturer, entity);

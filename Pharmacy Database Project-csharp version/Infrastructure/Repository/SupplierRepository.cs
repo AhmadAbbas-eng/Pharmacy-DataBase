@@ -59,7 +59,7 @@ public class SupplierRepository : ISupplierRepository
 
     public async Task<SupplierDomain?> UpdateAsync(SupplierDomain supplier)
     {
-        var entity = await _context.Suppliers.FindAsync(supplier.SupplierId);
+        var entity = await _context.Suppliers.FindAsync(supplier.Id);
         if (entity == null) return null;
 
         _mapper.MapToEntity(supplier, entity);

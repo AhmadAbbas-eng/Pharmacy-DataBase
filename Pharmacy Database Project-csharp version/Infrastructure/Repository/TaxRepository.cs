@@ -46,7 +46,7 @@ public class TaxRepository : ITaxRepository
 
     public async Task<TaxDomain?> UpdateAsync(TaxDomain tax)
     {
-        var entity = await _context.Taxes.FindAsync(tax.TaxId);
+        var entity = await _context.Taxes.FindAsync(tax.Id);
         if (entity == null) return null;
 
         _mapper.MapToEntity(tax, entity);
