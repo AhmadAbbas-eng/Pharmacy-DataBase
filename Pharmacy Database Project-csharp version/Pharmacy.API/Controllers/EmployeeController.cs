@@ -1,6 +1,7 @@
-using Domain.Models;
 using Domain.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Pharmacy.API.Dtos;
+using Pharmacy.API.Mappers;
 
 namespace Pharmacy.API.Controllers;
 
@@ -8,18 +9,21 @@ namespace Pharmacy.API.Controllers;
 [Route("api/[controller]")]
 public class EmployeeController : ControllerBase
 {
+    private readonly EmployeeMapper _employeeMapper;
     private readonly IEmployeeService _employeeService;
 
-    public EmployeeController(IEmployeeService employeeService)
+    public EmployeeController(IEmployeeService employeeService, EmployeeMapper employeeMapper)
     {
         _employeeService = employeeService;
+        _employeeMapper = employeeMapper;
     }
 
     [HttpGet("start-date-range")]
     public async Task<IActionResult> GetByStartDateRange(DateTime startDate, DateTime endDate)
     {
         var employees = await _employeeService.GetEmployeesByStartDateRangeAsync(startDate, endDate);
-        return Ok(employees);
+        var employeeDtos = employees.Select(_employeeMapper.ToDto);
+        return Ok(employeeDtos);
     }
 
     [HttpDelete("phone/{employeeId}")]
@@ -33,7 +37,8 @@ public class EmployeeController : ControllerBase
     public async Task<IActionResult> GetAll()
     {
         var employees = await _employeeService.GetAllEmployeesAsync();
-        return Ok(employees);
+        var employeeDtos = employees.Select(_employeeMapper.ToDto);
+        return Ok(employeeDtos);
     }
 
     [HttpGet("{id}")]
@@ -41,24 +46,30 @@ public class EmployeeController : ControllerBase
     {
         var employee = await _employeeService.GetEmployeeByIdAsync(id);
         if (employee == null) return NotFound();
-        return Ok(employee);
+
+        var employeeDto = _employeeMapper.ToDto(employee);
+        return Ok(employeeDto);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Add(EmployeeDomain employee)
+    public async Task<IActionResult> Add(EmployeeDto employeeDto)
     {
-        var addedEmployee = await _employeeService.AddEmployeeAsync(employee);
-        return CreatedAtAction(nameof(GetById), new { id = addedEmployee.Id }, addedEmployee);
+        var employeeDomain = _employeeMapper.ToDomain(employeeDto);
+        var addedEmployee = await _employeeService.AddEmployeeAsync(employeeDomain);
+        var addedEmployeeDto = _employeeMapper.ToDto(addedEmployee);
+        return CreatedAtAction(nameof(GetById), new { id = addedEmployeeDto.Id }, addedEmployeeDto);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, EmployeeDomain employee)
+    public async Task<IActionResult> Update(int id, EmployeeDto employeeDto)
     {
-        if (id != employee.Id) return BadRequest();
+        if (id != employeeDto.Id) return BadRequest();
 
-        var updatedEmployee = await _employeeService.UpdateEmployeeAsync(employee);
+        var employeeDomain = _employeeMapper.ToDomain(employeeDto);
+        var updatedEmployee = await _employeeService.UpdateEmployeeAsync(employeeDomain);
         if (updatedEmployee == null) return NotFound();
-        return Ok(updatedEmployee);
+        var updatedEmployeeDto = _employeeMapper.ToDto(updatedEmployee);
+        return Ok(updatedEmployeeDto);
     }
 
     [HttpDelete("{id}")]
@@ -66,6 +77,7 @@ public class EmployeeController : ControllerBase
     {
         var deleted = await _employeeService.DeleteEmployeeAsync(id);
         if (!deleted) return NotFound();
+
         return NoContent();
     }
 }

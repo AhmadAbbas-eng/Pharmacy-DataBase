@@ -1,6 +1,7 @@
-using Domain.Models;
 using Domain.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Pharmacy.API.Dtos;
+using Pharmacy.API.Mappers;
 
 namespace Pharmacy.API.Controllers;
 
@@ -8,39 +9,47 @@ namespace Pharmacy.API.Controllers;
 [Route("api/[controller]")]
 public class BatchController : ControllerBase
 {
+    private readonly BatchLifetimeMapper _batchLifetimeMapper;
+    private readonly BatchMapper _batchMapper;
     private readonly IBatchService _batchService;
 
-    public BatchController(IBatchService batchService)
+    public BatchController(IBatchService batchService, BatchMapper batchMapper, BatchLifetimeMapper batchLifetimeMapper)
     {
         _batchService = batchService;
+        _batchMapper = batchMapper;
+        _batchLifetimeMapper = batchLifetimeMapper;
     }
 
     [HttpGet("calculate-lifetime")]
     public async Task<IActionResult> CalculateLifetime()
     {
         var result = await _batchService.CalculateBatchLifetimeAsync();
-        return Ok(result);
+        var resultDtos = result.Select(_batchLifetimeMapper.ToDto);
+        return Ok(resultDtos);
     }
 
     [HttpGet("production-date-range")]
     public async Task<IActionResult> GetByProductionDateRange(DateTime startDate, DateTime endDate)
     {
         var result = await _batchService.GetBatchesByProductionDateRangeAsync(startDate, endDate);
-        return Ok(result);
+        var resultDtos = result.Select(_batchMapper.ToDto);
+        return Ok(resultDtos);
     }
 
     [HttpGet("expiry-date-range")]
     public async Task<IActionResult> GetByExpiryDateRange(DateTime startDate, DateTime endDate)
     {
         var result = await _batchService.GetBatchesByExpiryDateRangeAsync(startDate, endDate);
-        return Ok(result);
+        var resultDtos = result.Select(_batchMapper.ToDto);
+        return Ok(resultDtos);
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
         var result = await _batchService.GetAllBatchesAsync();
-        return Ok(result);
+        var resultDtos = result.Select(_batchMapper.ToDto);
+        return Ok(resultDtos);
     }
 
     [HttpGet("{id}")]
@@ -48,24 +57,31 @@ public class BatchController : ControllerBase
     {
         var result = await _batchService.GetBatchByIdAsync(id);
         if (result == null) return NotFound();
-        return Ok(result);
+
+        var resultDto = _batchMapper.ToDto(result);
+        return Ok(resultDto);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Add(BatchDomain batch)
+    public async Task<IActionResult> Add(BatchDto batchDto)
     {
-        var result = await _batchService.AddBatchAsync(batch);
-        return CreatedAtAction(nameof(GetById), new { id = result.BatchId }, result);
+        var batchDomain = _batchMapper.ToDomain(batchDto);
+        var result = await _batchService.AddBatchAsync(batchDomain);
+        var resultDto = _batchMapper.ToDto(result);
+        return CreatedAtAction(nameof(GetById), new { id = resultDto.BatchId }, resultDto);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, BatchDomain batch)
+    public async Task<IActionResult> Update(int id, BatchDto batchDto)
     {
-        if (id != batch.BatchId) return BadRequest();
+        if (id != batchDto.BatchId) return BadRequest();
 
-        var result = await _batchService.UpdateBatchAsync(batch);
+        var batchDomain = _batchMapper.ToDomain(batchDto);
+        var result = await _batchService.UpdateBatchAsync(batchDomain);
         if (result == null) return NotFound();
-        return Ok(result);
+
+        var resultDto = _batchMapper.ToDto(result);
+        return Ok(resultDto);
     }
 
     [HttpDelete("{id}")]
@@ -73,6 +89,7 @@ public class BatchController : ControllerBase
     {
         var result = await _batchService.DeleteBatchAsync(id);
         if (!result) return NotFound();
+
         return NoContent();
     }
 }

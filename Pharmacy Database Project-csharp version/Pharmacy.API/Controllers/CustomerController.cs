@@ -1,6 +1,7 @@
-using Domain.Models;
 using Domain.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Pharmacy.API.Dtos;
+using Pharmacy.API.Mappers;
 
 namespace Pharmacy.API.Controllers;
 
@@ -8,11 +9,13 @@ namespace Pharmacy.API.Controllers;
 [Route("api/[controller]")]
 public class CustomerController : ControllerBase
 {
+    private readonly CustomerMapper _customerMapper;
     private readonly ICustomerService _customerService;
 
-    public CustomerController(ICustomerService customerService)
+    public CustomerController(ICustomerService customerService, CustomerMapper customerMapper)
     {
         _customerService = customerService;
+        _customerMapper = customerMapper;
     }
 
     [HttpGet("total-debt/{customerId}")]
@@ -26,7 +29,8 @@ public class CustomerController : ControllerBase
     public async Task<IActionResult> GetCustomersWithOrders()
     {
         var customers = await _customerService.GetCustomersWithOrdersAsync();
-        return Ok(customers);
+        var customerDtos = customers.Select(_customerMapper.ToDto);
+        return Ok(customerDtos);
     }
 
     [HttpPut("update-phone")]
@@ -40,7 +44,8 @@ public class CustomerController : ControllerBase
     public async Task<IActionResult> GetAll()
     {
         var customers = await _customerService.GetAllCustomersAsync();
-        return Ok(customers);
+        var customerDtos = customers.Select(_customerMapper.ToDto);
+        return Ok(customerDtos);
     }
 
     [HttpGet("{customerId}")]
@@ -48,24 +53,31 @@ public class CustomerController : ControllerBase
     {
         var customer = await _customerService.GetCustomerByIdAsync(customerId);
         if (customer == null) return NotFound();
-        return Ok(customer);
+
+        var customerDto = _customerMapper.ToDto(customer);
+        return Ok(customerDto);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Add(CustomerDomain customer)
+    public async Task<IActionResult> Add(CustomerDto customerDto)
     {
-        var addedCustomer = await _customerService.AddCustomerAsync(customer);
-        return CreatedAtAction(nameof(GetById), new { customerId = addedCustomer.Id }, addedCustomer);
+        var customerDomain = _customerMapper.ToDomain(customerDto);
+        var addedCustomer = await _customerService.AddCustomerAsync(customerDomain);
+        var addedCustomerDto = _customerMapper.ToDto(addedCustomer);
+        return CreatedAtAction(nameof(GetById), new { customerId = addedCustomerDto.Id }, addedCustomerDto);
     }
 
     [HttpPut("{customerId}")]
-    public async Task<IActionResult> Update(int customerId, CustomerDomain customer)
+    public async Task<IActionResult> Update(int customerId, CustomerDto customerDto)
     {
-        if (customerId != customer.Id) return BadRequest();
+        if (customerId != customerDto.Id) return BadRequest();
 
-        var updatedCustomer = await _customerService.UpdateCustomerAsync(customer);
+        var customerDomain = _customerMapper.ToDomain(customerDto);
+        var updatedCustomer = await _customerService.UpdateCustomerAsync(customerDomain);
         if (updatedCustomer == null) return NotFound();
-        return Ok(updatedCustomer);
+
+        var updatedCustomerDto = _customerMapper.ToDto(updatedCustomer);
+        return Ok(updatedCustomerDto);
     }
 
     [HttpDelete("{customerId}")]
@@ -73,6 +85,7 @@ public class CustomerController : ControllerBase
     {
         var deleted = await _customerService.DeleteCustomerAsync(customerId);
         if (!deleted) return NotFound();
+
         return NoContent();
     }
 }

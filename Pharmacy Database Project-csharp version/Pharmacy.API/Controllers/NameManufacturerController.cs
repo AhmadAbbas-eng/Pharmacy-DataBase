@@ -1,6 +1,7 @@
-using Domain.Models;
 using Domain.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Pharmacy.API.Dtos;
+using Pharmacy.API.Mappers;
 
 namespace Pharmacy.API.Controllers;
 
@@ -8,11 +9,14 @@ namespace Pharmacy.API.Controllers;
 [Route("api/[controller]")]
 public class NameManufacturerController : ControllerBase
 {
+    private readonly NameManufacturerMapper _nameManufacturerMapper;
     private readonly INameManufacturerService _nameManufacturerService;
 
-    public NameManufacturerController(INameManufacturerService nameManufacturerService)
+    public NameManufacturerController(INameManufacturerService nameManufacturerService,
+        NameManufacturerMapper nameManufacturerMapper)
     {
         _nameManufacturerService = nameManufacturerService;
+        _nameManufacturerMapper = nameManufacturerMapper;
     }
 
     [HttpGet("distinct")]
@@ -33,7 +37,8 @@ public class NameManufacturerController : ControllerBase
     public async Task<IActionResult> GetAll()
     {
         var nameManufacturers = await _nameManufacturerService.GetAllNameManufacturersAsync();
-        return Ok(nameManufacturers);
+        var nameManufacturerDtos = nameManufacturers.Select(_nameManufacturerMapper.ToDto);
+        return Ok(nameManufacturerDtos);
     }
 
     [HttpGet("{id}")]
@@ -41,24 +46,31 @@ public class NameManufacturerController : ControllerBase
     {
         var nameManufacturer = await _nameManufacturerService.GetNameManufacturerByIdAsync(id);
         if (nameManufacturer == null) return NotFound();
-        return Ok(nameManufacturer);
+
+        var nameManufacturerDto = _nameManufacturerMapper.ToDto(nameManufacturer);
+        return Ok(nameManufacturerDto);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Add(NameManufacturerDomain nameManufacturer)
+    public async Task<IActionResult> Add(NameManufacturerDto nameManufacturerDto)
     {
-        var addedNameManufacturer = await _nameManufacturerService.AddNameManufacturerAsync(nameManufacturer);
-        return CreatedAtAction(nameof(GetById), new { id = addedNameManufacturer.Id }, addedNameManufacturer);
+        var nameManufacturerDomain = _nameManufacturerMapper.ToDomain(nameManufacturerDto);
+        var addedNameManufacturer = await _nameManufacturerService.AddNameManufacturerAsync(nameManufacturerDomain);
+        var addedNameManufacturerDto = _nameManufacturerMapper.ToDto(addedNameManufacturer);
+        return CreatedAtAction(nameof(GetById), new { id = addedNameManufacturerDto.Id }, addedNameManufacturerDto);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, NameManufacturerDomain nameManufacturer)
+    public async Task<IActionResult> Update(int id, NameManufacturerDto nameManufacturerDto)
     {
-        if (id != nameManufacturer.Id) return BadRequest();
+        if (id != nameManufacturerDto.Id) return BadRequest();
 
-        var updatedNameManufacturer = await _nameManufacturerService.UpdateNameManufacturerAsync(nameManufacturer);
+        var nameManufacturerDomain = _nameManufacturerMapper.ToDomain(nameManufacturerDto);
+        var updatedNameManufacturer =
+            await _nameManufacturerService.UpdateNameManufacturerAsync(nameManufacturerDomain);
         if (updatedNameManufacturer == null) return NotFound();
-        return Ok(updatedNameManufacturer);
+        var updatedNameManufacturerDto = _nameManufacturerMapper.ToDto(updatedNameManufacturer);
+        return Ok(updatedNameManufacturerDto);
     }
 
     [HttpDelete("{id}")]
@@ -66,6 +78,7 @@ public class NameManufacturerController : ControllerBase
     {
         var deleted = await _nameManufacturerService.DeleteNameManufacturerAsync(id);
         if (!deleted) return NotFound();
+
         return NoContent();
     }
 }

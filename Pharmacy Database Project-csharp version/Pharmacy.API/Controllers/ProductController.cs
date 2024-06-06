@@ -1,6 +1,7 @@
-using Domain.Models;
 using Domain.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Pharmacy.API.Dtos;
+using Pharmacy.API.Mappers;
 
 namespace Pharmacy.API.Controllers;
 
@@ -8,11 +9,13 @@ namespace Pharmacy.API.Controllers;
 [Route("api/[controller]")]
 public class ProductController : ControllerBase
 {
+    private readonly ProductMapper _productMapper;
     private readonly IProductService _productService;
 
-    public ProductController(IProductService productService)
+    public ProductController(IProductService productService, ProductMapper productMapper)
     {
         _productService = productService;
+        _productMapper = productMapper;
     }
 
     [HttpGet("total-amount/{productId}")]
@@ -26,7 +29,8 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> GetOutOfStock()
     {
         var outOfStockProducts = await _productService.GetOutOfStockAsync();
-        return Ok(outOfStockProducts);
+        var outOfStockProductDtos = outOfStockProducts.Select(_productMapper.ToDto);
+        return Ok(outOfStockProductDtos);
     }
 
     [HttpGet("average-price")]
@@ -40,7 +44,8 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> GetAll()
     {
         var products = await _productService.GetAllProductsAsync();
-        return Ok(products);
+        var productDtos = products.Select(_productMapper.ToDto);
+        return Ok(productDtos);
     }
 
     [HttpGet("{id}")]
@@ -48,24 +53,31 @@ public class ProductController : ControllerBase
     {
         var product = await _productService.GetProductByIdAsync(id);
         if (product == null) return NotFound();
-        return Ok(product);
+
+        var productDto = _productMapper.ToDto(product);
+        return Ok(productDto);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Add(ProductDomain product)
+    public async Task<IActionResult> Add(ProductDto productDto)
     {
-        var addedProduct = await _productService.AddProductAsync(product);
-        return CreatedAtAction(nameof(GetById), new { id = addedProduct.Id }, addedProduct);
+        var productDomain = _productMapper.ToDomain(productDto);
+        var addedProduct = await _productService.AddProductAsync(productDomain);
+        var addedProductDto = _productMapper.ToDto(addedProduct);
+        return CreatedAtAction(nameof(GetById), new { id = addedProductDto.Id }, addedProductDto);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, ProductDomain product)
+    public async Task<IActionResult> Update(int id, ProductDto productDto)
     {
-        if (id != product.Id) return BadRequest();
+        if (id != productDto.Id) return BadRequest();
 
-        var updatedProduct = await _productService.UpdateProductAsync(product);
+        var productDomain = _productMapper.ToDomain(productDto);
+        var updatedProduct = await _productService.UpdateProductAsync(productDomain);
         if (updatedProduct == null) return NotFound();
-        return Ok(updatedProduct);
+
+        var updatedProductDto = _productMapper.ToDto(updatedProduct);
+        return Ok(updatedProductDto);
     }
 
     [HttpDelete("{id}")]
@@ -73,6 +85,7 @@ public class ProductController : ControllerBase
     {
         var deleted = await _productService.DeleteProductAsync(id);
         if (!deleted) return NotFound();
+
         return NoContent();
     }
 }
